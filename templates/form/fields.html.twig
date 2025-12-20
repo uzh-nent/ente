@@ -1,0 +1,14 @@
+{% block address_widget %}
+    {{ form_row(form.addressLines) }}
+    <div class="row">
+        <div class="col-md-2">
+            {{ form_row(form.countryCode) }}
+        </div>
+        <div class="col-md-3">
+            {{ form_row(form.postalCode) }}
+        </div>
+        <div class="col-md-7">
+            {{ form_row(form.city) }}
+        </div>
+    </div>
+{% endblock %}

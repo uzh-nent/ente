@@ -1,0 +1,11 @@
+index:
+    title: "ENTE"
+    description: "Probenadministration des UZH NENT Bereiches"
+    welcome: 'ENTE ist die Probenadministration des UZH NENT Bereiches.'
+    created_by: "Erstellt von"
+    open_source: "Open Source auf"
+
+error:
+    title: 'Fehler'
+    description: 'Fehler bei der Ausführung der Anfrage'
+    help: 'Bei der Ausführung der Anfrage ist ein Fehler aufgetreten. Bitte versuchen Sie es zu einem späteren Zeitpunkt noch einmal. Falls der Fehler bestehen bleibt, wenden Sie sich bitte an den technischen Support. Wir entschuldigen uns für die Umstände.'
