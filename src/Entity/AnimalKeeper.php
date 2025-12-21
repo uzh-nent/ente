@@ -12,9 +12,9 @@
 namespace App\Entity;
 
 use App\Entity\Traits\AddressTrait;
-use App\Entity\Traits\ThingTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\PersonTrait;
+use App\Entity\Traits\ThingTrait;
 use App\Entity\Traits\TimeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

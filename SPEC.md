@@ -3,8 +3,6 @@
 ## Next steps
 
 entities:
-    PDF report
-    BAG submission
     Login-user with password (shortname)
 
 then:

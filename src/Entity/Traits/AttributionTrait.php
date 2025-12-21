@@ -11,7 +11,6 @@
 
 namespace App\Entity\Traits;
 
-use App\Entity\Probe;
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 

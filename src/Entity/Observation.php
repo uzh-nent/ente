@@ -11,17 +11,11 @@
 
 namespace App\Entity;
 
-use App\Entity\Observation\InterpretationCopy;
-use App\Entity\Observation\OrganismCopy;
-use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
-use App\Entity\Traits\ThingTrait;
 use App\Entity\Traits\IdTrait;
-use App\Entity\Traits\PersonTrait;
 use App\Entity\Traits\TimeTrait;
 use App\Enum\AnalysisType;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -33,9 +27,6 @@ class Observation
     use TimeTrait;
     use AttributionTrait;
     use CommentTrait;
-
-    use InterpretationCopy;
-    use OrganismCopy;
 
     #[ORM\Column(type: Types::STRING, enumType: AnalysisType::class)]
     private ?AnalysisType $analysisType = null;

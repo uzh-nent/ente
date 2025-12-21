@@ -14,8 +14,6 @@ namespace App\Entity;
 use App\Entity\Probe\AnimalKeeperCopy;
 use App\Entity\Probe\OrdererCopy;
 use App\Entity\Probe\PatientCopy;
-use App\Entity\Probe\SpecimenCopy;
-use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
 use App\Entity\Traits\IdTrait;
@@ -25,14 +23,9 @@ use App\Enum\Pathogen;
 use App\Enum\SpecimenAnimalType;
 use App\Enum\SpecimenFoodType;
 use App\Enum\SpecimenSource;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * An Email is a sent email to the specified receivers.
- */
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 class Probe
@@ -45,7 +38,6 @@ class Probe
     use OrdererCopy;
     use AnimalKeeperCopy;
     use PatientCopy;
-    use SpecimenCopy;
 
     // Orderer
     #[ORM\Column(type: Types::STRING, nullable: true)]
