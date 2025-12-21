@@ -21,8 +21,5 @@ use Doctrine\ORM\Mapping as ORM;
 trait ThingTrait
 {
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $name = null {
-        get => $this->name;
-        set => $this->name = $value;
-    }
+    private ?string $name = null;
 }

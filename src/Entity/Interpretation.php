@@ -12,6 +12,8 @@
 namespace App\Entity;
 
 use App\Entity\Traits\AddressTrait;
+use App\Entity\Traits\AttributionTrait;
+use App\Entity\Traits\CodedIdentifierTrait;
 use App\Entity\Traits\ThingTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\PersonTrait;
@@ -22,16 +24,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
-class Patient
+class Interpretation
 {
     use IdTrait;
     use TimeTrait;
-    use PersonTrait;
-    use AddressTrait;
-
-    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?\DateTime $birthDate = null;
+    use CodedIdentifierTrait;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $ahvNumber = null;
+    private ?string $group = null;
 }

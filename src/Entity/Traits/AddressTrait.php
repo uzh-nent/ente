@@ -14,33 +14,17 @@ namespace App\Entity\Traits;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/*
- * automatically keeps track of creation time & last change time
- */
-
 trait AddressTrait
 {
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $addressLines = null {
-        get => $this->addressLines;
-        set => $this->addressLines = $value;
-    }
+    private ?string $addressLines = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $city = null {
-        get => $this->city;
-        set => $this->city = $value;
-    }
+    private ?string $city = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $postalCode = null {
-        get => $this->postalCode;
-        set => $this->postalCode = $value;
-    }
+    private ?string $postalCode = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $countryCode = null {
-        get => $this->countryCode;
-        set => $this->countryCode = $value;
-    }
+    private ?string $countryCode = null;
 }

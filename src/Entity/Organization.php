@@ -35,12 +35,15 @@ class Organization
      */
     #[Groups(['item:read'])]
     #[ORM\OneToMany(targetEntity: Probe::class, mappedBy: 'orderer')]
-    private Collection $probes {
-        get => $this->probes;
-    }
+    private Collection $probes;
 
     public function __construct()
     {
         $this->probes = new ArrayCollection();
+    }
+
+    public function getProbes(): Collection
+    {
+        return $this->probes;
     }
 }

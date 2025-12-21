@@ -15,10 +15,6 @@ use App\Entity\Probe;
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
-/*
- * automatically keeps track of creation time & last change time
- */
-
 trait AttributionTrait
 {
     #[ORM\ManyToOne(targetEntity: User::class)]

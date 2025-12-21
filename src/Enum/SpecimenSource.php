@@ -10,6 +10,4 @@ enum SpecimenSource : string
     case FEED = 'FEED'; // Futtermittel
     case ENVIRONMENT = 'ENVIRONMENT';
     case LABORATORY_STRAIN = 'LABORATORY_STRAIN'; // Laborstamm
-    case OTHER = 'OTHER';
-    case UNKNOWN = 'UNKNOWN';
 }

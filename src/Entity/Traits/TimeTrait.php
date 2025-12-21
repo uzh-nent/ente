@@ -21,10 +21,10 @@ use Doctrine\ORM\Mapping as ORM;
 trait TimeTrait
 {
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private ?\DateTimeImmutable $lastChangedAt = null;
+    private ?\DateTimeImmutable $lastChangedAt;
 
     /**
      * @throws \Exception
@@ -46,7 +46,7 @@ trait TimeTrait
         $this->lastChangedAt = new \DateTimeImmutable();
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }

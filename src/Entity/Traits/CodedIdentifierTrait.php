@@ -11,17 +11,14 @@
 
 namespace App\Entity\Traits;
 
+use App\Enum\CodeSystem;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/*
- * automatically keeps track of creation time & last change time
- */
-
 trait CodedIdentifierTrait
 {
-    #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $system = null;
+    #[ORM\Column(type: Types::STRING, enumType: CodeSystem::class, nullable: true)]
+    private ?CodeSystem $system = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $code = null;

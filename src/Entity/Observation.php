@@ -1,0 +1,52 @@
+<?php
+
+/*
+ * This file is part of the baupen project.
+ *
+ * (c) Florian Moser <git@famoser.ch>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace App\Entity;
+
+use App\Entity\Observation\InterpretationCopy;
+use App\Entity\Observation\OrganismCopy;
+use App\Entity\Traits\AddressTrait;
+use App\Entity\Traits\AttributionTrait;
+use App\Entity\Traits\ThingTrait;
+use App\Entity\Traits\IdTrait;
+use App\Entity\Traits\PersonTrait;
+use App\Entity\Traits\TimeTrait;
+use App\Enum\AnalysisType;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity]
+#[ORM\HasLifecycleCallbacks]
+class Observation
+{
+    use IdTrait;
+    use TimeTrait;
+    use AttributionTrait;
+
+    use InterpretationCopy;
+    use OrganismCopy;
+
+    #[ORM\Column(type: Types::STRING, enumType: AnalysisType::class)]
+    private ?AnalysisType $analysisType = null;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $analysisStartAt = null;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $analysisStopAt = null;
+
+    #[ORM\ManyToOne(targetEntity: Interpretation::class)]
+    private ?Interpretation $interpretation = null;
+
+    #[ORM\ManyToOne(targetEntity: Organism::class)]
+    private ?Organism $organism = null;
+}

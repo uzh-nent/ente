@@ -28,12 +28,4 @@ class AnimalKeeper
     use ThingTrait;
     use PersonTrait;
     use AddressTrait;
-
-    /**
-     * @return Collection<string, EraEntry>
-     */
-    public function getEntries(): Collection
-    {
-        return $this->entries;
-    }
 }
