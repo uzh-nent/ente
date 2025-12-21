@@ -25,4 +25,34 @@ trait CodedIdentifierTrait
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $displayName = null;
+
+    public function getSystem(): ?CodeSystem
+    {
+        return $this->system;
+    }
+
+    public function setSystem(?CodeSystem $system): void
+    {
+        $this->system = $system;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
+    }
+
+    public function getDisplayName(): ?string
+    {
+        return $this->displayName;
+    }
+
+    public function setDisplayName(?string $displayName): void
+    {
+        $this->displayName = $displayName;
+    }
 }

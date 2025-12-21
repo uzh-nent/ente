@@ -32,4 +32,14 @@ class Organism
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $group = null;
+
+    public function getGroup(): ?string
+    {
+        return $this->group;
+    }
+
+    public function setGroup(?string $group): void
+    {
+        $this->group = $group;
+    }
 }

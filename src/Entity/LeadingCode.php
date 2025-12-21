@@ -31,7 +31,7 @@ class LeadingCode
     use TimeTrait;
     use CodedIdentifierTrait;
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: Types::STRING, enumType: Pathogen::class, nullable: true)]
     private ?Pathogen $pathogen = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
@@ -44,5 +44,55 @@ class LeadingCode
     private ?string $interpretationGroup = null;
 
     #[ORM\OneToMany(targetEntity: Specimen::class)]
-    private ?string $specimen = null;
+    private ?Specimen $specimen = null;
+
+    public function getPathogen(): ?Pathogen
+    {
+        return $this->pathogen;
+    }
+
+    public function setPathogen(?Pathogen $pathogen): void
+    {
+        $this->pathogen = $pathogen;
+    }
+
+    public function getOrganismGroup(): ?string
+    {
+        return $this->organismGroup;
+    }
+
+    public function setOrganismGroup(?string $organismGroup): void
+    {
+        $this->organismGroup = $organismGroup;
+    }
+
+    public function getSpecimenGroup(): ?string
+    {
+        return $this->specimenGroup;
+    }
+
+    public function setSpecimenGroup(?string $specimenGroup): void
+    {
+        $this->specimenGroup = $specimenGroup;
+    }
+
+    public function getInterpretationGroup(): ?string
+    {
+        return $this->interpretationGroup;
+    }
+
+    public function setInterpretationGroup(?string $interpretationGroup): void
+    {
+        $this->interpretationGroup = $interpretationGroup;
+    }
+
+    public function getSpecimen(): ?Specimen
+    {
+        return $this->specimen;
+    }
+
+    public function setSpecimen(?Specimen $specimen): void
+    {
+        $this->specimen = $specimen;
+    }
 }

@@ -25,4 +25,24 @@ trait PersonTrait
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $familyName = null;
+
+    public function getGivenName(): ?string
+    {
+        return $this->givenName;
+    }
+
+    public function setGivenName(?string $givenName): void
+    {
+        $this->givenName = $givenName;
+    }
+
+    public function getFamilyName(): ?string
+    {
+        return $this->familyName;
+    }
+
+    public function setFamilyName(?string $familyName): void
+    {
+        $this->familyName = $familyName;
+    }
 }

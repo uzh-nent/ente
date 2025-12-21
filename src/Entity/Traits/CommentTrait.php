@@ -14,22 +14,18 @@ namespace App\Entity\Traits;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/*
- * automatically keeps track of creation time & last change time
- */
-
-trait ThingTrait
+trait CommentTrait
 {
-    #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $name = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $comment = null;
 
-    public function getName(): ?string
+    public function getComment(): ?string
     {
-        return $this->name;
+        return $this->comment;
     }
 
-    public function setName(?string $name): void
+    public function setComment(?string $comment): void
     {
-        $this->name = $name;
+        $this->comment = $comment;
     }
 }

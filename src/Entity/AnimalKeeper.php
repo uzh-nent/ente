@@ -16,8 +16,10 @@ use App\Entity\Traits\ThingTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\PersonTrait;
 use App\Entity\Traits\TimeTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
@@ -28,4 +30,21 @@ class AnimalKeeper
     use ThingTrait;
     use PersonTrait;
     use AddressTrait;
+
+    /**
+     * @var Collection<int, Probe>
+     */
+    #[Groups(['item:read'])]
+    #[ORM\OneToMany(targetEntity: Probe::class, mappedBy: 'animalKeeper')]
+    private Collection $probes;
+
+    public function __construct()
+    {
+        $this->probes = new ArrayCollection();
+    }
+
+    public function getProbes(): Collection
+    {
+        return $this->probes;
+    }
 }

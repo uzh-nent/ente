@@ -17,4 +17,34 @@ trait SpecimenCopy
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $specimenDisplayName = null;
+
+    public function getSpecimenSystem(): ?CodeSystem
+    {
+        return $this->specimenSystem;
+    }
+
+    public function setSpecimenSystem(?CodeSystem $specimenSystem): void
+    {
+        $this->specimenSystem = $specimenSystem;
+    }
+
+    public function getSpecimenCode(): ?string
+    {
+        return $this->specimenCode;
+    }
+
+    public function setSpecimenCode(?string $specimenCode): void
+    {
+        $this->specimenCode = $specimenCode;
+    }
+
+    public function getSpecimenDisplayName(): ?string
+    {
+        return $this->specimenDisplayName;
+    }
+
+    public function setSpecimenDisplayName(?string $specimenDisplayName): void
+    {
+        $this->specimenDisplayName = $specimenDisplayName;
+    }
 }

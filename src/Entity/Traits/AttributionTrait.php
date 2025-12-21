@@ -18,8 +18,28 @@ use Doctrine\ORM\Mapping as ORM;
 trait AttributionTrait
 {
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private ?Probe $createdBy = null;
+    private ?User $createdBy = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private ?Probe $lastChangedBy = null;
+    private ?User $lastChangedBy = null;
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(User $createdBy): void
+    {
+        $this->createdBy = $createdBy;
+    }
+
+    public function getLastChangedBy(): ?User
+    {
+        return $this->lastChangedBy;
+    }
+
+    public function setLastChangedBy(User $lastChangedBy): void
+    {
+        $this->lastChangedBy = $lastChangedBy;
+    }
 }

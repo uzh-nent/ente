@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait AddressTrait
 {
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $addressLines = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
@@ -27,4 +27,44 @@ trait AddressTrait
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $countryCode = null;
+
+    public function getAddressLines(): ?string
+    {
+        return $this->addressLines;
+    }
+
+    public function setAddressLines(?string $addressLines): void
+    {
+        $this->addressLines = $addressLines;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): void
+    {
+        $this->city = $city;
+    }
+
+    public function getPostalCode(): ?string
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(?string $postalCode): void
+    {
+        $this->postalCode = $postalCode;
+    }
+
+    public function getCountryCode(): ?string
+    {
+        return $this->countryCode;
+    }
+
+    public function setCountryCode(?string $countryCode): void
+    {
+        $this->countryCode = $countryCode;
+    }
 }
