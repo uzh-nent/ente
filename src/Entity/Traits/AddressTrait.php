@@ -13,19 +13,24 @@ namespace App\Entity\Traits;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 trait AddressTrait
 {
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['address:read', 'address:write'])]
     private ?string $addressLines = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['address:read', 'address:write'])]
     private ?string $city = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['address:read', 'address:write'])]
     private ?string $postalCode = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['address:read', 'address:write'])]
     private ?string $countryCode = null;
 
     public function getAddressLines(): ?string

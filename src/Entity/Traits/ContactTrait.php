@@ -15,23 +15,19 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/*
- * automatically keeps track of creation time & last change time
- */
-
-trait ThingTrait
+trait ContactTrait
 {
-    #[ORM\Column(type: Types::STRING, nullable: true)]
-    #[Groups(['thing:read', 'thing:write'])]
-    private ?string $name = null;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['contact:read', 'contact:write'])]
+    private ?string $contact = null;
 
-    public function getName(): ?string
+    public function getContact(): ?string
     {
-        return $this->name;
+        return $this->contact;
     }
 
-    public function setName(?string $name): void
+    public function setContact(?string $contact): void
     {
-        $this->name = $name;
+        $this->contact = $contact;
     }
 }
