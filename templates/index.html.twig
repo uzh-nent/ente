@@ -1,12 +1,12 @@
-{% extends '_base.html.twig' %}
+{% extends '_layout.html.twig' %}
 
 {% block title %}{{ 'index.title'|trans }}{% endblock %}
 {% block description %}{{ 'index.description'|trans }}{% endblock %}
 
 {% trans_default_domain "index" %}
 
-{% block body %}
-    <section class="container container-text py-5">
+{% block content %}
+    <section class="container container-text">
         <h1>{{ 'index.title'|trans }}</h1>
         <p class="lead">
             {{ 'index.description'|trans }}
@@ -16,10 +16,6 @@
             {{ 'index.welcome'|trans }}
         </p>
 
-        <p>
-            {{ 'index.created_by'|trans }} <a href="https://famoser.ch" target="_blank">famoser.ch</a>.<br/>
-            {{ 'index.open_source'|trans }} <a href="https://gitlab.uzh.ch/nent/ente" target="_blank">nent/ente</a>.
-        </p>
 
         <p>
             <a href="{{ path('login') }}">

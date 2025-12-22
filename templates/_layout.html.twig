@@ -1,0 +1,69 @@
+{% extends '_base.html.twig' %}
+
+{% block description %}{{ block("title") }}{% endblock %}
+
+{% trans_default_domain "index" %}
+
+{% macro nav_item(link, text) %}
+    <li class="nav-item">
+        <a class="nav-link {% if app.request.pathInfo == link %}active{% endif %}" href="{{ link }}">{{ text }}</a>
+    </li>
+{% endmacro %}
+{% import _self as own_macros %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="d-flex flex-row vh-100 py-2">
+            <div class="d-flex flex-column justify-content-between">
+                <div class="menu">
+                    <p>
+                        <b>{{ app.user.shortname }}</b>
+                        <a href="/logout">{{ "logout"|trans({}, 'security') }}</a>
+                    </p>
+
+                    <h4 class="mt-5">{{ "entity.plural"|trans({}, "entity_probe") }}</h4>
+                    <ul class="nav nav-pills flex-column">
+                        {{ own_macros.nav_item(path('probe_new'), "new.title"|trans({}, "probe")) }}
+                        {{ own_macros.nav_item(path('probe_active'), "active.title"|trans({}, "probe")) }}
+                        {{ own_macros.nav_item(path('probe_all'), "all.title"|trans({}, "probe")) }}
+                    </ul>
+                </div>
+
+                <p class="mb-0">
+                    {{ 'layout.open_source'|trans }}
+                    <a href="https://gitlab.uzh.ch/uzh-nent/ente" target="_blank">nent/ente</a>.
+                </p>
+            </div>
+            <div class="divider ms-2"></div>
+            <div class="content">
+                <div>
+                    {% if breadcrumbs is defined and breadcrumbs|length > 0 %}
+                        <nav aria-label="breadcrumb" class="mb-5">
+                            <ol class="breadcrumb mt-3">
+                                {% for breadcrumb in breadcrumbs %}
+                                    {% if not (breadcrumb.path and breadcrumb.path ends with app.request.pathinfo) %}
+                                        <li class="breadcrumb-item">
+                                            {% if breadcrumb.path %}
+                                                <a href="{{ breadcrumb.path }}">
+                                                    {{ breadcrumb.title }}
+                                                </a>
+                                            {% else %}
+                                                {{ breadcrumb.title }}
+                                            {% endif %}
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    {{ block("title") }}
+                                </li>
+                            </ol>
+                        </nav>
+                    {% endif %}
+                </div>
+                {% block content %}
+
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

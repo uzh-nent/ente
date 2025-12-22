@@ -1,7 +1,6 @@
-index:
+layout:
     title: "ENTE"
     description: "Probenadministration des UZH NENT Bereiches"
-    welcome: 'ENTE ist die Probenadministration des UZH NENT Bereiches.'
     created_by: "Erstellt von"
     open_source: "Open Source auf"
 
