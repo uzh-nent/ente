@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class ProbeControllerController extends AbstractController
+class ProbeController extends AbstractController
 {
     #[Route('/', name: 'probe_active')]
     public function active(): Response

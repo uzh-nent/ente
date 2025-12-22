@@ -1,0 +1,7 @@
+{% macro vue_entry_point(name) %}
+    <div id="{{ name }}">
+        <noscript>
+            {{ "vue_placeholder"|trans({}, 'messages') }}
+        </noscript>
+    </div>
+{% endmacro %}

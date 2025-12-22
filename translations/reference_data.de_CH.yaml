@@ -1,0 +1,11 @@
+new:
+    title: "Neue Probe"
+    description: "Neue Probe erfassen"
+
+active:
+    title: 'Aktive Proben'
+    description: 'Proben die derzeit untersucht werden'
+
+all:
+  title: 'Alle Proben'
+  description: 'Verzeichnis aller erfassten Proben'

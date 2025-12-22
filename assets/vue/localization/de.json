@@ -1,0 +1,29 @@
+{
+  "messages": {
+    "danger": {
+      "connection_error": "Ein Teil der Seite kann nicht geladen werden. Prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
+    }
+  },
+  "_form": {
+    "timeFilter": {
+      "from": "Von",
+      "until": "Bis"
+    }
+  },
+  "_action": {
+    "filter": {
+      "title": "Filter",
+      "apply": "Setzen",
+      "clear": "Zurücksetzen"
+    }
+  },
+  "_view": {
+    "filter_yields_no_entries": "Keine Einträge, die dem Filter entsprechen.",
+    "search_by_name": "Suche nach Name"
+  },
+  "organization": {
+    "_name": "Organisation",
+    "_plural": "Organisationen",
+    "name": "Name"
+  }
+}

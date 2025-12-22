@@ -58,6 +58,35 @@ Encore
         config.sassOptions.silenceDeprecations = ['legacy-js-api',  'import', 'slash-div', 'global-builtin'];
     })
 
+    .enablePostCssLoader((options) => {
+      options.postcssOptions = {
+        plugins: [
+          require('autoprefixer')
+        ]
+      }
+    })
+
+    .configureDevServerOptions(options => {
+      // options.firewall = false
+      options.devMiddleware = {
+        writeToDisk: true
+      }
+    })
+
+
+    // enable
+    .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
+
+    .configureDefinePlugin(options => {
+      options.__VUE_I18N_LEGACY_API__ = true
+      options.__VUE_I18N_FULL_INSTALL__ = true
+      options.__INTLIFY_PROD_DEVTOOLS__ = false
+      options.__VUE_I18N_PROD_DEVTOOLS__ = false
+
+      options.__VUE_OPTIONS_API__ = true
+      options.__VUE_PROD_DEVTOOLS__ = false
+    })
+
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
 

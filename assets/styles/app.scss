@@ -1,24 +1,8 @@
 @import '~bootstrap/scss/functions';
+$primary: rgb(0, 40, 165);
 @import '~bootstrap/scss/variables';
-$border-radius: 0;
-$border-radius-lg: 0;
-$border-radius-sm: 0;
 $modal-backdrop-opacity: 0.3;
-$primary: #203C34;
-$link-color: $primary;
-$theme-colors: (
-        'primary':    $primary,
-        'secondary':  $secondary,
-        'success':    $success,
-        'info':       $info,
-        'warning':    $warning,
-        'orange':    $orange,
-        'danger':     $danger,
-        'light':      $light,
-        'dark':       $dark
-);
 $custom-control-cursor: pointer;
-
 $font-family-sans-serif: 'Source Sans Pro', sans-serif;
 
 @import '~bootstrap/scss/bootstrap';

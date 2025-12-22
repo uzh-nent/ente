@@ -17,7 +17,7 @@
             <div class="d-flex flex-column justify-content-between">
                 <div class="menu">
                     <p>
-                        <b>{{ app.user.shortname }}</b>
+                        <b id="shortname">{{ app.user.shortname }}</b>
                         <a href="/logout">{{ "logout"|trans({}, 'security') }}</a>
                     </p>
 
@@ -26,6 +26,13 @@
                         {{ own_macros.nav_item(path('probe_new'), "new.title"|trans({}, "probe")) }}
                         {{ own_macros.nav_item(path('probe_active'), "active.title"|trans({}, "probe")) }}
                         {{ own_macros.nav_item(path('probe_all'), "all.title"|trans({}, "probe")) }}
+                    </ul>
+
+                    <h4 class="mt-5">{{ "index.title"|trans({}, "master_data") }}</h4>
+                    <ul class="nav nav-pills flex-column">
+                        {{ own_macros.nav_item(path('master_data_organizations'), "organizations.title"|trans({}, "master_data")) }}
+                        {{ own_macros.nav_item(path('master_data_patients'), "patients.title"|trans({}, "master_data")) }}
+                        {{ own_macros.nav_item(path('master_data_animal_keepers'), "animal_keepers.title"|trans({}, "master_data")) }}
                     </ul>
                 </div>
 

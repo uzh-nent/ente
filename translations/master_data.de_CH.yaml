@@ -1,0 +1,14 @@
+index:
+  title: "Stammdaten"
+
+organizations:
+  title: "Auftraggeber"
+  description: "Auftraggeber der Proben"
+
+patients:
+  title: "Patienten"
+  description: "Patienten von denen die Proben stammen"
+
+animal_keepers:
+  title: "Tierhalter"
+  description: "Halter der Tiere von denen die Proben stammen"
