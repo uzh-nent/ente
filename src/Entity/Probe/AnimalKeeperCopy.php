@@ -97,6 +97,4 @@ trait AnimalKeeperCopy
     {
         $this->animalKeeperCountryCode = $animalKeeperCountryCode;
     }
-
-
 }

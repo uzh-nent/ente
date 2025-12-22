@@ -14,9 +14,6 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Entity\Organism;
-use App\Entity\Probe;
-use App\Helper\DoctrineHelper;
-use App\Services\Interfaces\EmailServiceInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -29,17 +26,14 @@ class ImportTasks extends Command
     use LockableTrait;
 
     private ManagerRegistry $doctrine;
-
     private LoggerInterface $logger;
-    private ManagerRegistry $registry;
 
-    public function __construct(ManagerRegistry $doctrine, LoggerInterface $logger, ManagerRegistry $managerRegistry)
+    public function __construct(ManagerRegistry $doctrine, LoggerInterface $logger)
     {
         parent::__construct();
 
         $this->doctrine = $doctrine;
         $this->logger = $logger;
-        $this->registry = $managerRegistry;
     }
 
     protected function configure(): void

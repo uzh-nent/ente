@@ -22,7 +22,6 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\IdTrait;
-use App\Entity\Traits\PersonTrait;
 use App\Entity\Traits\ThingTrait;
 use App\Entity\Traits\TimeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -61,6 +60,9 @@ class AnimalKeeper
         $this->probes = new ArrayCollection();
     }
 
+    /**
+     * @return Collection<int, Probe>
+     */
     public function getProbes(): Collection
     {
         return $this->probes;

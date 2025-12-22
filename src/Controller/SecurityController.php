@@ -9,7 +9,6 @@ use App\Security\Exceptions\AccountDisabledException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,15 +16,10 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Notifier\NotifierInterface;
-use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
-use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
@@ -37,7 +31,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/login', name: 'login')]
-    public function login(Request $request, FormFactoryInterface $factory, AuthenticationUtils $authenticationUtils, TranslatorInterface $translator, ManagerRegistry $registry, UserPasswordHasherInterface $hasher): Response
+    public function login(FormFactoryInterface $factory, AuthenticationUtils $authenticationUtils, TranslatorInterface $translator, ManagerRegistry $registry, UserPasswordHasherInterface $hasher): Response
     {
         $lastUsername = $authenticationUtils->getLastUsername();
         $form = $factory->createBuilder(EmptyForm::class)
@@ -75,6 +69,7 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['form' => $form->createView()]);
     }
 
+    /** @phpstan-ignore-next-line  */
     private function setPasswordAction(Request $request, ManagerRegistry $registry, TranslatorInterface $translator, UserPasswordHasherInterface $hasher, Security $security, ?FormInterface &$form = null): ?Response
     {
         $token = $request->query->get('token', 'invalid');

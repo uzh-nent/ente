@@ -81,7 +81,7 @@ class Probe
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $specimenLocation = null;
 
-    #[ORM\Column(type: Types::STRING, enumType: SpecimenFoodType::class,nullable: true)]
+    #[ORM\Column(type: Types::STRING, enumType: SpecimenFoodType::class, nullable: true)]
     private ?SpecimenFoodType $specimenFoodType = null;
 
     #[ORM\Column(type: Types::STRING, enumType: SpecimenAnimalType::class, nullable: true)]

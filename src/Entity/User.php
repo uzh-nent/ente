@@ -14,10 +14,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    public const string SUPER_SHORNAME = 'flomos';
-
     use IdTrait;
     use TimeTrait;
+
+    public const string SUPER_SHORNAME = 'flomos';
 
     #[ORM\Column(type: Types::STRING, unique: true)]
     private ?string $shortname;

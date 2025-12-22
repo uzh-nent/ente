@@ -105,6 +105,9 @@ class Patient
         $this->ahvNumber = $ahvNumber;
     }
 
+    /**
+     * @return Collection<int, Probe>
+     */
     public function getProbes(): Collection
     {
         return $this->probes;

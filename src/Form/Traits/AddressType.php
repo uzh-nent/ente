@@ -2,8 +2,6 @@
 
 namespace App\Form\Traits;
 
-use App\Entity\Organization;
-use App\Entity\Probe;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
