@@ -1,0 +1,110 @@
+<template>
+  <div>
+    <div class="table-wrapper">
+      <table class="table table-striped table-hover border">
+        <thead>
+        <tr class="bg-light">
+          <th colspan="100">
+            <div class="d-flex flex-row reset-table-styles gap-2">
+              <input type="text" class="form-control mw-30"
+                     :placeholder="$t('_view.search_by_ahv_numer')"
+                     v-model="searchAhvNumber">
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <order-table-head :order="orderOfName" @ordered="setOrder($event, 'name')">
+            {{ $t('patient.identification') }}
+          </order-table-head>
+          <order-table-head :order="orderOfName" @ordered="setOrder($event, 'name')">
+            {{ $t('person.name') }}
+          </order-table-head>
+          <th>{{ $t('address.address_lines') }}</th>
+          <th>{{ $t('address.city') }}</th>
+          <th class="w-minimal"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <patient-table-row v-for="patient in items" :key="patient.id"
+                                :patient="patient"/>
+        <tr v-if="totalItems === 0">
+          <td colspan="200">{{ $t('_view.filter_yields_no_entries') }}</td>
+        </tr>
+        </tbody>
+      </table>
+      <loading-indicator-overlay v-if="isLoading" />
+    </div>
+    <pagination :items-per-page="itemsPerPage" :page="page" :total-items="totalItems"
+                @paginated="page = $event"/>
+  </div>
+</template>
+
+<script>
+import {order, paginatedQuery} from "../../mixins/table";
+import Pagination from "../Library/Behaviour/Pagination.vue";
+import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
+import PatientTableRow from "./PatientTableRow.vue";
+import {createQuery} from "../../services/query";
+import {localStoragePersisted} from "../../mixins/state";
+import {api} from "../../services/api";
+import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
+
+export default {
+  components: {
+    LoadingIndicatorOverlay,
+    PatientTableRow,
+    OrderTableHead,
+    Pagination,
+  },
+  mixins: [
+    order,
+    paginatedQuery(50, api.getPaginatedPatients),
+    localStoragePersisted('patient-table', ['filter', 'orders', 'searchBirthdate', 'searchAhvNumber'])
+  ],
+  data() {
+    return {
+      filter: {},
+      orders: [{property: 'name', order: 'asc'}],
+
+      searchBirthdate: "",
+      searchAhvNumber: "",
+    }
+  },
+  computed: {
+    query: function () {
+      const filter = {...this.filter, name: this.searchName, postalCode: this.searchPostalCode}
+      return createQuery(
+          {},
+          [],
+          ['name', 'postalCode'],
+          [],
+          filter,
+          this.orders
+      )
+    },
+    orderOfName: function () {
+      return this.getOrder('familyName')
+    },
+  }
+}
+
+</script>
+
+<style scoped>
+.table-wrapper {
+  position: relative;
+}
+
+.reset-table-styles {
+  text-align: left;
+  font-weight: normal;
+}
+
+.mw-30 {
+  max-width: 30em;
+}
+
+.mw-5 {
+  max-width: 5em;
+}
+</style>

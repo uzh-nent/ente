@@ -29,3 +29,11 @@ export  const formatAddressCity = function (value) {
   return city
 }
 
+export  const formatPersonName = function (value) {
+  if (!value) {
+    return '-'
+  }
+
+  return [this.patient.givenName, this.patient.familyName].filter().join(" ")
+}
+

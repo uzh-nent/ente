@@ -11,18 +11,40 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Common\Filter\SearchFilterInterface;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\PersonTrait;
 use App\Entity\Traits\TimeTrait;
+use App\Enum\AdministrativeGender;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
+#[ApiResource(
+    normalizationContext: ['groups' => ['person:read', 'address:read', 'patient:read']],
+    denormalizationContext: ['groups' => ['person:write', 'address:write', 'patient:read']]
+)]
+#[Get]
+#[Post]
+#[Patch]
+#[GetCollection]
+#[ApiFilter(SearchFilter::class, properties: [
+    'birthDate' => SearchFilterInterface::STRATEGY_EXACT, 'ahvNumber' => SearchFilterInterface::STRATEGY_START,
+])]
+#[ApiFilter(OrderFilter::class, properties: ['givenName', 'familyName'])]
 class Patient
 {
     use IdTrait;
@@ -30,16 +52,21 @@ class Patient
     use PersonTrait;
     use AddressTrait;
 
+    #[ORM\Column(type: Types::TEXT, enumType: AdministrativeGender::class, nullable: true)]
+    #[Groups(['patient:read', 'patient:write'])]
+    private ?AdministrativeGender $gender = null;
+
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[Groups(['patient:read', 'patient:write'])]
     private ?\DateTime $birthDate = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['patient:read', 'patient:write'])]
     private ?string $ahvNumber = null;
 
     /**
      * @var Collection<int, Probe>
      */
-    #[Groups(['item:read'])]
     #[ORM\OneToMany(targetEntity: Probe::class, mappedBy: 'patient')]
     private Collection $probes;
 

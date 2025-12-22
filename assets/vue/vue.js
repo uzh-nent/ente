@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // directives
 import { clickOutside, focus } from './services/directives'
+import Patients from "./Patients.vue";
 
 // configure moment
 moment.locale('de')
@@ -36,4 +37,8 @@ function createVue(app) {
 
 if (document.getElementById('vue-organizations') != null) {
   createVue(Organizations).mount('#vue-organizations')
+}
+
+if (document.getElementById('vue-patients') != null) {
+  createVue(Patients).mount('#vue-patients')
 }

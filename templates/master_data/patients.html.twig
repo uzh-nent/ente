@@ -1,0 +1,11 @@
+{% extends '_layout.html.twig' %}
+
+{% block title %}{{ 'patients.title'|trans }}{% endblock %}
+{% block description %}{{ 'patients.description'|trans }}{% endblock %}
+
+{% trans_default_domain "master_data" %}
+{% import "macros/components.html.twig" as components %}
+
+{% block content %}
+    {{ components.vue_entry_point('vue-patients') }}
+{% endblock %}

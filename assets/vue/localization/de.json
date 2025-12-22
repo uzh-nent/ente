@@ -16,13 +16,21 @@
       "apply": "Setzen",
       "clear": "Zurücksetzen"
     },
+    "add_organization": {
+      "added": "Organisation hinzugefügt.",
+      "title": "Organisation hinzufügen"
+    },
     "edit_organization": {
       "edited": "Organisation gespeichert.",
       "title": "Organisation bearbeiten"
     },
-    "add_organization": {
-      "added": "Organisation hinzugefügt.",
-      "title": "Organisation hinzufügen"
+    "add_patient": {
+      "added": "Patient hinzugefügt.",
+      "title": "Patient hinzufügen"
+    },
+    "edit_patient": {
+      "edited": "Patient gespeichert.",
+      "title": "Patient bearbeiten"
     },
     "add": "hinzufügen",
     "edit": "speichern",
@@ -34,18 +42,37 @@
   },
   "_view": {
     "filter_yields_no_entries": "Keine Einträge, die dem Filter entsprechen.",
-    "search_by_name": "Suche nach Name"
+    "search_by_name": "Suche nach Name",
+    "search_by_ahv_numer": "Suche nach AHV-Nummer"
   },
   "organization": {
     "_name": "Organisation",
     "_plural": "Organisationen",
     "name": "Name"
   },
+  "patient": {
+    "_name": "Organisation",
+    "_plural": "Organisationen",
+    "identification": "Identifikation",
+    "ahv_number": "AHV-Nummer",
+    "birthdate": "Geburtsdatum",
+    "_gender": {
+      "male": "Mann",
+      "female": "Frau",
+      "other": "Divers",
+      "unknown": "Unbekannt"
+    }
+  },
   "comment": {
     "comment": "Kommentar"
   },
   "contact": {
     "contact": "Kontaktinformationen"
+  },
+  "person": {
+    "name": "Name",
+    "given_name": "Vorname",
+    "family_name": "Nachname"
   },
   "address": {
     "address_lines": "Adresszeile(n)",

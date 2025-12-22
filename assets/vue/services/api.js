@@ -163,8 +163,20 @@ const api = {
   getPaginatedOrganisations: function (query) {
     return restClient.getPaginatedCollection('/api/organizations', query)
   },
+  getPaginatedPatients: function (query) {
+    return restClient.getPaginatedCollection('/api/patients', query)
+  },
+  getPaginatedAnimalKeepers: function (query) {
+    return restClient.getPaginatedCollection('/api/animal_keepers', query)
+  },
   postOrganization: function (payload) {
     return restClient.post('/api/organizations', payload)
+  },
+  postPatient: function (payload) {
+    return restClient.post('/api/patients', payload)
+  },
+  postAnimalKeeper: function (payload) {
+    return restClient.post('/api/animal_keepers', payload)
   }
 }
 

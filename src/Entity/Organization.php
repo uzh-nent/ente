@@ -38,8 +38,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    normalizationContext: ['groups' => ['contact:read', 'thing:read', 'address:read']],
-    denormalizationContext: ['groups' => ['contact:write', 'thing:write', 'address:write']]
+    normalizationContext: ['groups' => ['thing:read', 'address:read', 'contact:read']],
+    denormalizationContext: ['groups' => ['thing:write', 'address:write', 'contact:write']]
 )]
 #[Get]
 #[Post]
