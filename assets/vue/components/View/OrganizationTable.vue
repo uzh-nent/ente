@@ -6,9 +6,6 @@
         <tr class="bg-light">
           <th colspan="100">
             <div class="d-flex flex-row reset-table-styles">
-              <filter-organizations-button
-                  :template="filter" @update="filter = $event"/>
-
               <input type="text" class="form-control mw-5 ms-2"
                      :placeholder="$t('address.postal_code')"
                      v-model="searchPostalCode">
@@ -47,7 +44,6 @@
 import {order, paginatedQuery} from "../../mixins/table";
 import Pagination from "../Library/Behaviour/Pagination.vue";
 import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
-import FilterOrganizationsButton from "../Action/FilterOrganizationsButton.vue";
 import OrganizationTableRow from "./OrganizationTableRow.vue";
 import {createQuery} from "../../services/query";
 import {localStoragePersisted} from "../../mixins/state";
@@ -58,7 +54,6 @@ export default {
   components: {
     LoadingIndicatorOverlay,
     OrganizationTableRow,
-    FilterOrganizationsButton,
     OrderTableHead,
     Pagination,
   },
