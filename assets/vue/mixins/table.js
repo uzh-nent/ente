@@ -37,20 +37,23 @@ export const paginatedQuery = function (itemsPerPage, loadItems) {
     watch: {
       query: {
         handler: debounce(function (newQuery) {
-          this.reload(this.page, newQuery)
+          this.load(this.page, newQuery)
         }, 200, {'leading': true}),
         deep: true,
       },
       page: {
         handler: function (newVal) {
-          this.reload(newVal, this.query)
+          this.load(newVal, this.query)
         },
         deep: true,
         immediate: true
       }
     },
     methods: {
-      reload: function (page, query) {
+      reload: function () {
+        this.load(this.page, this.query)
+      },
+      load: function (page, query) {
         const paginatedQuery = Object.assign({page, itemsPerPage}, query)
 
         this.isLoading = true
