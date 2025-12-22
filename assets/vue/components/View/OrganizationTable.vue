@@ -5,11 +5,11 @@
         <thead>
         <tr class="bg-light">
           <th colspan="100">
-            <div class="d-flex flex-row reset-table-styles">
-              <input type="text" class="form-control mw-5 ms-2"
+            <div class="d-flex flex-row reset-table-styles gap-2">
+              <input type="text" class="form-control mw-5"
                      :placeholder="$t('address.postal_code')"
                      v-model="searchPostalCode">
-              <input type="text" class="form-control mw-30 ms-2"
+              <input type="text" class="form-control mw-30"
                      :placeholder="$t('_view.search_by_name')"
                      v-model="searchName">
             </div>

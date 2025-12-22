@@ -28,8 +28,8 @@ export const localStoragePersisted = function(componentIdentifier, properties) {
       if (state) {
         const payload = JSON.parse(state)
         properties.forEach(property => {
-          if (state.hasOwnProperty(property)) {
-            this[property] = state[property]
+          if (payload.hasOwnProperty(property)) {
+            this[property] = payload[property]
           }
         })
       }
