@@ -12,7 +12,7 @@ export const localStoragePersisted = function(componentIdentifier, properties) {
     },
     computed: {
       persistedStateKey: function () {
-        return $('#shortname').text() + componentIdentifier;
+        return document.getElementById('shortname').textContent + "_" + componentIdentifier;
       },
       persistedState: function () {
         const state = {}

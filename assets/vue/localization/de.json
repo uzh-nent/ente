@@ -25,5 +25,17 @@
     "_name": "Organisation",
     "_plural": "Organisationen",
     "name": "Name"
+  },
+  "comment": {
+    "comment": "Kommentar"
+  },
+  "contact": {
+    "contact": "Kontaktinformationen"
+  },
+  "address": {
+    "address_lines": "Adresszeile(n)",
+    "city": "Stadt",
+    "postal_code": "PLZ",
+    "country_code": "Ländercode"
   }
 }

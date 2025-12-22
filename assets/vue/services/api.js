@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const api = {
   _getUrl: function (url, query = null) {
-    const fullUrl = new URL(window.location.origin)
+    const fullUrl = new URL(url, window.location.origin)
 
     if (query) {
       Object.keys(query).forEach(key => {
@@ -19,7 +19,7 @@ const api = {
   _get: function (url) {
     return new Promise(
       (resolve) => {
-        axios.get(this._getApiUrl(url), {headers: {"Accept": "application/ld+json"}})
+        axios.get(url, {headers: {"Accept": "application/ld+json"}})
           .then(response => {
             resolve(response.data)
           })
@@ -42,8 +42,8 @@ const api = {
           this._get(url)
               .then(data => {
                 const payload = {
-                  items: data['hydra:member'],
-                  totalItems: data['hydra:totalItems']
+                  items: data['member'],
+                  totalItems: data['totalItems']
                 }
                 resolve(payload)
               })
@@ -53,7 +53,7 @@ const api = {
   _getCSV: function (url) {
     return new Promise(
         (resolve) => {
-          axios.get(this._getApiUrl(url), {headers: {"Accept": "text/csv"}})
+          axios.get(url, {headers: {"Accept": "text/csv"}})
               .then(response => {
                 resolve(response.data)
               })
@@ -95,7 +95,7 @@ const api = {
         }
     )
   },
-  getPaginatedOrganisations: function () {
+  getPaginatedOrganisations: function (query) {
     const fullUrl = this._getUrl('/api/organizations', query)
     return this._getPaginatedHydraCollection(fullUrl)
   },

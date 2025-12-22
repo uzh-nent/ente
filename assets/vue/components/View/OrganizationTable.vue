@@ -9,7 +9,7 @@
                 :template="filter" @update="filter = $event"/>
 
             <input type="text" class="form-control mw-5 ms-2"
-                   :placeholder="$t('_view.filter_by_postal_code')"
+                   :placeholder="$t('address.postal_code')"
                    v-model="filterPostalCode">
             <input type="text" class="form-control mw-30 ms-2"
                    :placeholder="$t('_view.search_by_name')"
@@ -21,15 +21,16 @@
         <order-table-head :order="orderOfName" @ordered="setOrder($event, 'name')">
           {{ $t('organization.name') }}
         </order-table-head>
-        <th>{{ $t('organization.address_lines') }}</th>
-        <th>{{ $t('organization.city') }}</th>
+        <th>{{ $t('address.address_lines') }}</th>
+        <th>{{ $t('address.city') }}</th>
+        <th>{{ $t('contact.contact') }}</th>
         <th class="w-minimal"></th>
       </tr>
       </thead>
       <tbody>
-      <organization-table-row v-for="organization in organizationsOnPage" :key="organization.id"
+      <organization-table-row v-for="organization in items" :key="organization.id"
                               :organization="organization"/>
-      <tr v-if="!queriedOrganizations.length">
+      <tr v-if="totalItems === 0">
         <td colspan="200">{{ $t('_view.filter_yields_no_entries') }}</td>
       </tr>
       </tbody>
@@ -37,7 +38,7 @@
 
     <loading-indicator-overlay v-if="isLoading"/>
   </div>
-  <pagination :items-per-page="itemsPerPage" :page="page" :total-items="queriedOrganizations.length"
+  <pagination :items-per-page="itemsPerPage" :page="page" :total-items="totalItems"
               @paginated="page = $event"/>
 </template>
 

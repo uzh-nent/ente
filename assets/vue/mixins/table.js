@@ -44,6 +44,7 @@ export const paginatedQueryOrganizations = function(itemsPerPage) {
         handler() {
           this.isLoading = true
           api.getPaginatedOrganisations(this.paginatedQuery).then(response => {
+            console.log(response)
             this.isLoading = false
             this.items = response.items
             this.totalItems = response.totalItems
