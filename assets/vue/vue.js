@@ -6,11 +6,13 @@ import Organizations from "./Organizations.vue";
 // languages
 import de from './localization/de.json'
 
-// settings
-const locale = document.documentElement.lang.slice(0, 2)
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+// directives
+import { clickOutside, focus } from './services/directives'
 
 // configure moment
-moment.locale(locale)
+moment.locale('de')
 
 // configure vue
 function createVue(app) {
@@ -18,12 +20,16 @@ function createVue(app) {
   vue.config.productionTip = false
 
   const i18n = createI18n({
-    locale,
+    locale: 'de',
     fallbackLocale: 'de',
     globalInjection: true,
     messages: {de}
   })
   vue.use(i18n)
+
+  vue.component('FontAwesomeIcon', FontAwesomeIcon)
+  vue.directive('click-outside', clickOutside)
+  vue.directive('focus', focus)
 
   return vue
 }

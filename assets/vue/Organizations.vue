@@ -1,6 +1,6 @@
 <template>
-  <add-organization-button/>
-  <organization-table/>
+  <add-organization-button @added="$refs.table.reload()" />
+  <organization-table class="mt-2" ref="table" />
 </template>
 
 <script>

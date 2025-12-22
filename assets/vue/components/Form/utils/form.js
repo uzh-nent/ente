@@ -89,7 +89,7 @@ export const countryCode = {
       return true
     }
 
-    return value.uppercase() !== value || value.length > 3
+    return value.toUpperCase() !== value || value.length > 3
   },
   errorMessage: '_validation.not_a_country_code'
 }
@@ -155,7 +155,6 @@ const updatePayload = function (fields, values, template = null) {
 
       validateField(fields[fieldName], values[fieldName])
       if (fields[fieldName].errors.length > 0) {
-        console.log('error in ' + fieldName)
         return null
       }
 

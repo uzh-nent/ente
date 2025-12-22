@@ -23,7 +23,14 @@
     "add_organization": {
       "edited": "Organisation hinzugefügt.",
       "title": "Organisation hinzufügen"
-    }
+    },
+    "add": "hinzufügen",
+    "edit": "speichern",
+    "remove": "entfernen"
+  },
+  "_validation": {
+    "required": "Feld wird benötigt",
+    "not_a_country_code": "Kein Längercode (zwei oder dreistellig, Grossbuchstaben)"
   },
   "_view": {
     "filter_yields_no_entries": "Keine Einträge, die dem Filter entsprechen.",
@@ -44,6 +51,7 @@
     "address_lines": "Adresszeile(n)",
     "city": "Stadt",
     "postal_code": "PLZ",
-    "country_code": "Ländercode"
+    "country_code": "Ländercode",
+    "country_code_short": "Land"
   }
 }

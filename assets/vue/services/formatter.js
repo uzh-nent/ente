@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-const formatDate = function (value) {
+export const formatDate = function (value) {
   if (!value) {
     return '-'
   }
@@ -8,7 +8,7 @@ const formatDate = function (value) {
   return moment(value).format('DD.MM.YYYY')
 }
 
-const formatDateTime = function (value) {
+export const formatDateTime = function (value) {
   if (!value) {
     return '-'
   }
@@ -16,4 +16,16 @@ const formatDateTime = function (value) {
   return moment(value).format('DD.MM.YYYY HH:mm')
 }
 
-export { formatDate, formatDateTime }
+export  const formatAddressCity = function (value) {
+  if (!value) {
+    return '-'
+  }
+
+  let city = value.postalCode + " " + value.city
+  if (value.countryCode !== 'CH') {
+    city += " (" + value.countryCode + ")"
+  }
+
+  return city
+}
+

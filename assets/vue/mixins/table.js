@@ -1,3 +1,5 @@
+import debounce from 'lodash.debounce'
+
 export const order = {
   data() {
     return {
@@ -32,24 +34,27 @@ export const paginatedQuery = function (itemsPerPage, loadItems) {
         itemsPerPage,
       }
     },
-    computed: {
-      paginatedQuery: function () {
-        return Object.assign({page: this.page, itemsPerPage: this.itemsPerPage}, this.query)
-      },
-    },
     watch: {
-      paginatedQuery: {
-        handler() {
-          this.reload()
+      query: {
+        handler: debounce(function (newQuery) {
+          this.reload(this.page, newQuery)
+        }, 200, {'leading': true}),
+        deep: true,
+      },
+      page: {
+        handler: function (newVal) {
+          this.reload(newVal, this.query)
         },
         deep: true,
         immediate: true
       }
     },
     methods: {
-      reload: function () {
+      reload: function (page, query) {
+        const paginatedQuery = Object.assign({page, itemsPerPage}, query)
+
         this.isLoading = true
-        loadItems(this.paginatedQuery).then(response => {
+        loadItems(paginatedQuery).then(response => {
           this.isLoading = false
           this.items = response.items
           this.totalItems = response.totalItems

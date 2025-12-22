@@ -2,21 +2,13 @@
   <button-confirm-modal
       modalSize="lg"
       :title="$t('_action.filter.title')"
-      :confirm-title="$t('_action.filter.apply')"
-      @confirm="confirm"
-      :abort-title="$t('_action.filter.clear')"
+      :confirm-label="$t('_action.filter.apply')"
+      :confirm="confirm"
+      :abort-label="$t('_action.filter.clear')"
       :can-abort="true"
       :active="isFilterSet"
-      @abort="reset">
-    <template v-slot:button-content>
-      <span class="text-nowrap">
-        <i class="fas fa-filter"></i>
-        {{ $t('_action.filter.title') }}
-      </span>
-    </template>
-
-    <organization-filter-form @update="filter = $event" :template="template" :organization-types="organizationTypes"/>
-
+      :abort="reset">
+    <organization-filter-form @update="filter = $event" :template="template"/>
   </button-confirm-modal>
 </template>
 

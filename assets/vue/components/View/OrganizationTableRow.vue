@@ -1,11 +1,14 @@
 <template>
   <tr>
     <td>{{ organization.name }}</td>
-    <td><pre>{{ organization.addressLines }}</pre></td>
+    <td class="whitespace-preserve-newlines">
+      {{ organization.addressLines }}
+    </td>
     <td>
-      {{ organization.postalCode }}
-      {{ organization.city }}
-      {{ organization.countryCode }}
+      {{ city }}
+    </td>
+    <td class="whitespace-preserve-newlines">
+      {{ organization.contact }}
     </td>
     <td class="w-minimal text-end">
       <div class="btn-group ms-1" role="group">
@@ -19,6 +22,8 @@
 </template>
 
 <script>
+import {formatAddressCity} from "../../services/formatter";
+
 export default {
   components: {},
   props: {
@@ -26,6 +31,11 @@ export default {
       type: Object,
       required: true
     },
+  },
+  computed: {
+    city: function () {
+      return formatAddressCity(this.organization)
+    }
   }
 }
 

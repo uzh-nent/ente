@@ -7,25 +7,25 @@
   <hr/>
   <div class="row">
     <div class="col-md-2">
-      <form-field for-id="countryCode" :label="$t('meeting.country_code')" :field="fields.countryCode">
+      <form-field for-id="countryCode" :label="$t('address.country_code_short')" :field="fields.countryCode">
         <text-input id="countryCode" type="text" :field="fields.countryCode" v-model="entity.countryCode"
                     @blur="blurField('countryCode')" @update:modelValue="validateField('countryCode')"/>
       </form-field>
     </div>
     <div class="col-md-3">
-      <form-field for-id="postalCode" :label="$t('meeting.postal_code')" :field="fields.postalCode">
-        <text-input id="postalCode" type="number" :field="fields.postalCode" v-model="entity.postalCode"
+      <form-field for-id="postalCode" :label="$t('address.postal_code')" :field="fields.postalCode">
+        <text-input id="postalCode" type="text" :field="fields.postalCode" v-model="entity.postalCode"
                     @blur="blurField('postalCode')" @update:modelValue="validateField('postalCode')"/>
       </form-field>
     </div>
     <div class="col-md-7">
-      <form-field for-id="city" :label="$t('meeting.city')" :field="fields.city">
+      <form-field for-id="city" :label="$t('address.city')" :field="fields.city">
         <text-input id="city" :field="fields.city" v-model="entity.city"
                     @blur="blurField('city')" @update:modelValue="validateField('city')"/>
       </form-field>
     </div>
     <div class="col-md-12">
-      <form-field for-id="addressLines" :label="$t('meeting.address_lines')" :field="fields.addressLines">
+      <form-field for-id="addressLines" :label="$t('address.address_lines')" :field="fields.addressLines">
         <text-area id="addressLines" :field="fields.addressLines" v-model="entity.addressLines"
                    @blur="blurField('addressLines')" @update:modelValue="validateField('addressLines')"/>
       </form-field>
@@ -33,7 +33,7 @@
   </div>
 
   <hr/>
-  <form-field for-id="contact" :label="$t('meeting.contact')" :field="fields.contact">
+  <form-field for-id="contact" :label="$t('contact.contact')" :field="fields.contact">
     <text-area id="contact" :field="fields.contact" v-model="entity.contact"
                @blur="blurField('contact')" @update:modelValue="validateField('contact')"/>
   </form-field>
@@ -83,15 +83,17 @@ export default {
     }
   },
   watch: {
-    postalCode: {
+    'entity.postalCode': {
       immediate: true,
       handler: function (postalCode) {
-        if (!postalCode || postalCode.length !== 4 || this.city) {
+        if (!postalCode || postalCode.length !== 4) {
           return
         }
 
         if (!this.fields.city.dirty) {
-          this.entity.city = postalCodes.find(entry => entry.pc === postalCode)?.city
+          const numberPostalCode = Number(postalCode)
+          console.log(numberPostalCode)
+          this.entity.city = postalCodes.find(entry => entry.pc === numberPostalCode)?.c
         }
       },
     }
