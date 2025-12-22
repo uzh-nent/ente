@@ -14,11 +14,11 @@
 {% block body %}
     <div class="container-fluid p-0">
         <div class="d-flex flex-row vh-100">
-            <div class="d-flex flex-column justify-content-between bg-light px-2 py-2">
+            <div class="d-flex flex-column justify-content-between bg-light px-2 py-3">
                 <div class="menu">
                     <p>
                         🦆 | <b id="shortname">{{ app.user.shortname }}</b>
-                        <a href="/logout">{{ "logout"|trans({}, 'security') }}</a>
+                        <a href="/logout">{{ "logout.title"|trans({}, 'security') }}</a>
                     </p>
 
                     <h4 class="mt-5">{{ "entity.plural"|trans({}, "entity_probe") }}</h4>
@@ -33,6 +33,11 @@
                         {{ own_macros.nav_item(path('master_data_organizations'), "organizations.title"|trans({}, "master_data")) }}
                         {{ own_macros.nav_item(path('master_data_patients'), "patients.title"|trans({}, "master_data")) }}
                         {{ own_macros.nav_item(path('master_data_animal_keepers'), "animal_keepers.title"|trans({}, "master_data")) }}
+                    </ul>
+
+                    <h4 class="mt-5">{{ "index.title"|trans({}, "administration") }}</h4>
+                    <ul class="nav nav-pills flex-column">
+                        {{ own_macros.nav_item(path('reference_data'), "index.title"|trans({}, "reference_data")) }}
                     </ul>
                 </div>
 

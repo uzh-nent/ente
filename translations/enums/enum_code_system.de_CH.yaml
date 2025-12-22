@@ -1,0 +1,6 @@
+enum:
+  title: "Code System"
+
+LOINC: "LOINC"
+SNOMED: "SNOMED"
+NENT: "NENT (Custom)"

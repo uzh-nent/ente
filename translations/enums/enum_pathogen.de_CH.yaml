@@ -1,0 +1,9 @@
+enum:
+  title: "Pathogenen"
+
+SALMONELLA: "Salmonella"
+SHIGELLA: "Shigella"
+YERSINIA_PESTIS: "Yersinia Pestis"
+LISTERIA_MONOCYTOGENES: "Listeria Monocytogenes"
+VIBRIO_CHOLERAE: "Vibrio Cholerae"
+ESCHERICHIA_COLI: "Escherichia Coli"

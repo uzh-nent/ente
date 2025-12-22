@@ -2,26 +2,27 @@
 
 namespace App\Form\Traits;
 
+use App\Entity\Specimen;
+use App\Enum\CodeSystem;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AddressType extends AbstractType
+class CodedIdentifierType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('addressLines', TextareaType::class, ['required' => false]);
-        $builder->add('postalCode', TextType::class, ['required' => false]);
-        $builder->add('city', TextType::class, ['required' => false]);
-        $builder->add('countryCode', TextType::class, ['required' => false]);
+        $builder->add('system', EnumType::class, ['class' => CodeSystem::class]);
+        $builder->add('code', TextType::class);
+        $builder->add('displayName', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_address',
+            'translation_domain' => 'trait_coded_identifier',
         ]);
         parent::configureOptions($resolver);
     }

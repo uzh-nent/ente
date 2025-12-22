@@ -1,0 +1,64 @@
+{% extends '_layout.html.twig' %}
+
+{% block title %}{{ 'index.title'|trans }}{% endblock %}
+{% block description %}{{ 'index.description'|trans }}{% endblock %}
+
+{% trans_default_domain "reference_data" %}
+{% import "macros/components.html.twig" as components %}
+
+{% macro render_code(entity) %}
+    {{ entity.system.value }} <b>{{ entity.code }}</b> <br/>
+    {{ entity.displayName }}
+{% endmacro %}
+
+{% import _self as own_macros %}
+
+{% block content %}
+    <h1>{{ "index.title"|trans({}, "reference_data") }}</h1>
+
+    <h2 class="mt-5">{{ "entity.title"|trans({}, "entity_leading_code") }}</h2>
+
+    <a class="btn btn-outline-primary"
+       href="{{ path("reference_data_leading_code_new") }}">
+        <i class="fas fa-plus"></i>
+        {{ "leading_code_new.title"|trans }}
+    </a>
+    <table class="table table-striped table-hover datatable">
+        <thead>
+        <tr>
+            <th>{{ "entity.title"|trans({}, "entity_leading_code") }}</th>
+            <th>{{ "enum.title"|trans({}, "enum_pathogen") }}</th>
+            <th data-orderable="false">{{ "Organism group"|trans({}, "entity_leading_code") }}</th>
+            <th data-orderable="false">
+                {{ "entity.title"|trans({}, "entity_specimen") }} /
+                {{ "Specimen group"|trans({}, "entity_leading_code") }}
+            </th>
+            <th data-orderable="false">{{ "Interpretation group"|trans({}, "entity_leading_code") }}</th>
+            <th class="w-minimal" data-orderable="false"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for leadingCode in leadingCodes %}
+            <tr>
+                <td>{{ own_macros.render_code(leadingCode) }}</td>
+                <td>{{ leadingCode.pathogen|trans_translatable }}</td>
+                <td>{{ leadingCode.organismGroup }}</td>
+                <td>
+                    {% if leadingCode.specimen %}
+                        {{ own_macros.render_code(leadingCode.specimen) }}
+                    {% else %}
+                        {{ leadingCode.specimenGroup }}
+                    {% endif %}
+                </td>
+                <td>{{ leadingCode.interpretationGroup }}</td>
+                <td class="w-minimal">
+                    <a class="btn btn-secondary"
+                       href="{{ path("reference_data_leading_code_edit", {"leadingCode" : leadingCode.id}) }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

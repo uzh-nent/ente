@@ -13,11 +13,20 @@ declare(strict_types=1);
 
 namespace App\Extension;
 
+use App\Enum\CodeSystem;
+use App\Enum\Pathogen;
+use Symfony\Component\Filesystem\Path;
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 class TwigExtension extends AbstractExtension
 {
+    public function __construct(private readonly TranslatorInterface $translator)
+    {
+    }
+
     /**
      * makes the filters available to twig.
      *
@@ -26,8 +35,9 @@ class TwigExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('format_date', [$this, 'formatDateFilter']),
-            new TwigFilter('format_date_time', [$this, 'formatDateTimeFilter']),
+            new TwigFilter('format_date', $this->formatDateFilter(...)),
+            new TwigFilter('format_date_time', $this->formatDateTimeFilter(...)),
+            new TwigFilter('trans_translatable', $this->transTranslatableFilter(...)),
         ];
     }
 
@@ -47,5 +57,14 @@ class TwigExtension extends AbstractExtension
         }
 
         return '-';
+    }
+
+    public function transTranslatableFilter(?TranslatableInterface $value): string
+    {
+        if ($value === null) {
+            return '-';
+        }
+
+        return $value->trans($this->translator);
     }
 }

@@ -7,5 +7,6 @@
 {% import "macros/components.html.twig" as components %}
 
 {% block content %}
+    <h1>{{ "patients.title"|trans({}, "master_data") }}</h1>
     {{ components.vue_entry_point('vue-patients') }}
 {% endblock %}

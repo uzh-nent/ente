@@ -1,0 +1,54 @@
+{% extends "_layout.html.twig" %}
+
+{% block content %}
+    <div class="container-text">
+        {{ form_start(form) }}
+
+        <h4 class="mt-5">{{ "groups.identification"|trans({}, "entity_leading_code") }}</h4>
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_row(form.codedIdentifier.displayName) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_row(form.codedIdentifier.system) }}
+            </div>
+            <div class="col-md-9">
+                {{ form_row(form.codedIdentifier.code) }}
+            </div>
+        </div>
+
+        <h4 class="mt-5">{{ "groups.references"|trans({}, "entity_leading_code") }}</h4>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.pathogen) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.organismGroup) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.specimenGroup) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.specimen) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.interpretationGroup) }}
+            </div>
+        </div>
+
+        <div class="mt-5">
+            {{ form_row(form.submit) }}
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
+{% form_theme form _self %}

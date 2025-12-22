@@ -1,11 +1,15 @@
-new:
-    title: "Neue Probe"
-    description: "Neue Probe erfassen"
+index:
+  title: "Referenzdaten"
+  description: "Struktur der Referenzdaten"
 
-active:
-    title: 'Aktive Proben'
-    description: 'Proben die derzeit untersucht werden'
+leading_code_new:
+  title: "Neuer Leading Code"
+  description: "Neuer Leading Code"
+  success:
+    created: "Leading Code erfolgreich erstellt."
 
-all:
-  title: 'Alle Proben'
-  description: 'Verzeichnis aller erfassten Proben'
+leading_code_edit:
+  title: "Leading Code bearbeiten"
+  description: "Leading Code bearbeiten"
+  success:
+    stored: 'Leading Code erfolgreich gespeichert.'

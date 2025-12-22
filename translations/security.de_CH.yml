@@ -13,6 +13,7 @@ login:
   forgot_password_help: 'Passwort vergessen? Es kann durch andere Nutzende im Admin-Bereich zurückgesetzt werden.'
   setup:
     add_initial_user: 'Initialer Nutzer erstellt'
+
 logout:
   title: Logout
 
@@ -25,3 +26,5 @@ set_password:
     password_mismatch: 'Die Passwörter stimmen nicht überein.'
   success:
     password_set: 'Das neue Passwort wurde gesetzt.'
+
+exit_impersonation: 'Exit impersonation'
