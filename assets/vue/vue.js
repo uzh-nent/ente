@@ -2,18 +2,21 @@ import {createApp} from 'vue'
 import {createI18n} from 'vue-i18n'
 import moment from 'moment'
 import Organizations from "./Organizations.vue";
+import Patients from "./Patients.vue";
 
 // languages
 import de from './localization/de.json'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Flatpickr from 'flatpickr'
+import { German } from 'flatpickr/dist/l10n/de'
 
 // directives
 import { clickOutside, focus } from './services/directives'
-import Patients from "./Patients.vue";
 
-// configure moment
+// configure locales
 moment.locale('de')
+Flatpickr.localize(German)
 
 // configure vue
 function createVue(app) {

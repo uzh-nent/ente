@@ -1,14 +1,12 @@
 <template>
   <tr>
-    <td>{{ name }}</td>
     <td>
-      {{ birthdate }}<br/>
+      {{ birthDate }}<br/>
       {{ patient.ahvNumber }}
     </td>
+    <td>{{ name }}</td>
     <td class="whitespace-preserve-newlines">
       {{ patient.addressLines }}
-    </td>
-    <td>
       {{ city }}
     </td>
     <td class="w-minimal text-end">
@@ -18,7 +16,7 @@
 </template>
 
 <script>
-import {formatAddressCity, formatDate, formatPersonName} from "../../services/formatter";
+import {formatAddressCity, formatDate, formatPatientName,} from "../../services/formatter";
 import EditPatientButton from "../Action/EditPatientButton.vue";
 
 export default {
@@ -33,11 +31,11 @@ export default {
     city: function () {
       return formatAddressCity(this.patient)
     },
-    birthdate: function () {
-      return formatDate(this.patient.birthdate)
+    birthDate: function () {
+      return formatDate(this.patient.birthDate)
     },
     name: function () {
-      return formatPersonName(this.patient)
+      return formatPatientName(this.patient, this.$t)
     }
   }
 }

@@ -32,7 +32,7 @@ export default {
     },
     template: function () {
       return {
-        gender: 'male',
+        gender: 'MALE',
         countryCode: 'CH',
       }
     }

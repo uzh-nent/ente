@@ -3,6 +3,7 @@
     <slot name="before" />
     <span ref="anchor" />
     <flat-pickr
+        :placeholder="placeholder"
       :id="id" class="form-control" :required="required"
       :model-value="modelValue"
       :config="datePickerConfig"
@@ -28,6 +29,10 @@ export default {
     id: {
       type: String,
       required: true
+    },
+    placeholder: {
+      type: String,
+      default: null
     },
     field: {
       type: Object,

@@ -6,6 +6,10 @@
         <tr class="bg-light">
           <th colspan="100">
             <div class="d-flex flex-row reset-table-styles gap-2">
+              <date-time-input
+                  class="mw-10" id="birthDateFilter" format="date"
+                  :placeholder="$t('_view.filter_by_birth_date')"
+                  v-model="filterBirthDate" />
               <input type="text" class="form-control mw-30"
                      :placeholder="$t('_view.search_by_ahv_numer')"
                      v-model="searchAhvNumber">
@@ -13,26 +17,25 @@
           </th>
         </tr>
         <tr>
-          <order-table-head :order="orderOfName" @ordered="setOrder($event, 'name')">
+          <order-table-head :order="orderOfIdentification" @ordered="setOrder($event, 'birthDate')">
             {{ $t('patient.identification') }}
           </order-table-head>
-          <order-table-head :order="orderOfName" @ordered="setOrder($event, 'name')">
+          <order-table-head :order="orderOfName" @ordered="setOrder($event, 'familyName')">
             {{ $t('person.name') }}
           </order-table-head>
-          <th>{{ $t('address.address_lines') }}</th>
-          <th>{{ $t('address.city') }}</th>
+          <th>{{ $t('address._name') }}</th>
           <th class="w-minimal"></th>
         </tr>
         </thead>
         <tbody>
-        <patient-table-row v-for="patient in items" :key="patient.id"
-                                :patient="patient"/>
+        <patient-table-row v-for="patient in items" :key="patient['@id']"
+                           :patient="patient"/>
         <tr v-if="totalItems === 0">
           <td colspan="200">{{ $t('_view.filter_yields_no_entries') }}</td>
         </tr>
         </tbody>
       </table>
-      <loading-indicator-overlay v-if="isLoading" />
+      <loading-indicator-overlay v-if="isLoading"/>
     </div>
     <pagination :items-per-page="itemsPerPage" :page="page" :total-items="totalItems"
                 @paginated="page = $event"/>
@@ -48,9 +51,12 @@ import {createQuery} from "../../services/query";
 import {localStoragePersisted} from "../../mixins/state";
 import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
+import FormField from "../Library/FormLayout/FormField.vue";
+import DateTimeInput from "../Library/FormInput/DateTimeInput.vue";
 
 export default {
   components: {
+    DateTimeInput, FormField,
     LoadingIndicatorOverlay,
     PatientTableRow,
     OrderTableHead,
@@ -59,24 +65,24 @@ export default {
   mixins: [
     order,
     paginatedQuery(50, api.getPaginatedPatients),
-    localStoragePersisted('patient-table', ['filter', 'orders', 'searchBirthdate', 'searchAhvNumber'])
+    localStoragePersisted('patient-table', ['filter', 'orders', 'filterBirthDate', 'searchAhvNumber'])
   ],
   data() {
     return {
       filter: {},
       orders: [{property: 'name', order: 'asc'}],
 
-      searchBirthdate: "",
+      filterBirthDate: "",
       searchAhvNumber: "",
     }
   },
   computed: {
     query: function () {
-      const filter = {...this.filter, name: this.searchName, postalCode: this.searchPostalCode}
+      const filter = {...this.filter, birthDate: this.filterBirthDate, ahvNumber: this.searchAhvNumber}
       return createQuery(
           {},
           [],
-          ['name', 'postalCode'],
+          ['birthDate', 'ahvNumber'],
           [],
           filter,
           this.orders
@@ -84,6 +90,9 @@ export default {
     },
     orderOfName: function () {
       return this.getOrder('familyName')
+    },
+    orderOfIdentification: function () {
+      return this.getOrder('birthDate')
     },
   }
 }
@@ -104,7 +113,7 @@ export default {
   max-width: 30em;
 }
 
-.mw-5 {
-  max-width: 5em;
+.mw-10 {
+  max-width: 10em;
 }
 </style>

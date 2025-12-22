@@ -35,7 +35,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     normalizationContext: ['groups' => ['person:read', 'address:read', 'patient:read']],
-    denormalizationContext: ['groups' => ['person:write', 'address:write', 'patient:read']]
+    denormalizationContext: ['groups' => ['person:write', 'address:write', 'patient:write']]
 )]
 #[Get]
 #[Post]
@@ -44,7 +44,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ApiFilter(SearchFilter::class, properties: [
     'birthDate' => SearchFilterInterface::STRATEGY_EXACT, 'ahvNumber' => SearchFilterInterface::STRATEGY_START,
 ])]
-#[ApiFilter(OrderFilter::class, properties: ['givenName', 'familyName'])]
+#[ApiFilter(OrderFilter::class, properties: ['givenName', 'familyName', 'birthDate'])]
 class Patient
 {
     use IdTrait;
@@ -58,7 +58,7 @@ class Patient
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     #[Groups(['patient:read', 'patient:write'])]
-    private ?\DateTime $birthDate = null;
+    private ?\DateTimeImmutable $birthDate = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['patient:read', 'patient:write'])]
@@ -75,12 +75,22 @@ class Patient
         $this->probes = new ArrayCollection();
     }
 
-    public function getBirthDate(): ?\DateTime
+    public function getGender(): ?AdministrativeGender
+    {
+        return $this->gender;
+    }
+
+    public function setGender(?AdministrativeGender $gender): void
+    {
+        $this->gender = $gender;
+    }
+
+    public function getBirthDate(): ?\DateTimeImmutable
     {
         return $this->birthDate;
     }
 
-    public function setBirthDate(?\DateTime $birthDate): void
+    public function setBirthDate(?\DateTimeImmutable $birthDate): void
     {
         $this->birthDate = $birthDate;
     }

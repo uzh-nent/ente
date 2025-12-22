@@ -2,9 +2,9 @@
 
   <div class="row">
     <div class="col-md-6">
-      <form-field for-id="birthdate" :label="$t('patient.birthdate')" :field="fields.birthdate">
-        <date-time-input id="birthdate" :field="fields.birthdate" v-model="entity.birthdate" format="date"
-                         @blur="blurField('birthdate')" @update:modelValue="validateField('birthdate')"/>
+      <form-field for-id="birthDate" :label="$t('patient.birth_date')" :field="fields.birthDate">
+        <date-time-input id="birthDate" :field="fields.birthDate" v-model="entity.birthDate" format="date"
+                         @blur="blurField('birthDate')" @update:modelValue="validateField('birthDate')"/>
       </form-field>
     </div>
     <div class="col-md-6">
@@ -77,10 +77,10 @@ import Radio from "../Library/FormInput/Radio.vue";
 
 const createGenderChoices = function (translator) {
   return [
-    {label: translator('patient._gender.male'), value: 'MALE'},
-    {label: translator('patient._gender.female'), value: 'FEMALE'},
-    {label: translator('patient._gender.other'), value: 'OTHER'},
-    {label: translator('patient._gender.unknown'), value: null},
+    {label: translator('patient._gender.MALE'), value: 'MALE'},
+    {label: translator('patient._gender.FEMALE'), value: 'FEMALE'},
+    {label: translator('patient._gender.OTHER'), value: 'OTHER'},
+    {label: translator('patient._gender.UNKNOWN'), value: null},
   ]
 }
 export default {
@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       fields: {
-        birthdate: createField(requiredRule),
+        birthDate: createField(requiredRule),
         ahvNumber: createField(),
 
         gender: createField(),
@@ -110,7 +110,7 @@ export default {
         city: createField(),
       },
       entity: {
-        birthdate: null,
+        birthDate: null,
         ahvNumber: null,
 
         gender: null,

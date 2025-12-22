@@ -43,7 +43,8 @@
   "_view": {
     "filter_yields_no_entries": "Keine Einträge, die dem Filter entsprechen.",
     "search_by_name": "Suche nach Name",
-    "search_by_ahv_numer": "Suche nach AHV-Nummer"
+    "search_by_ahv_numer": "Suche nach AHV-Nummer",
+    "filter_by_birth_date": "Geburtsdatum"
   },
   "organization": {
     "_name": "Organisation",
@@ -55,12 +56,18 @@
     "_plural": "Organisationen",
     "identification": "Identifikation",
     "ahv_number": "AHV-Nummer",
-    "birthdate": "Geburtsdatum",
+    "birth_date": "Geburtsdatum",
     "_gender": {
-      "male": "Mann",
-      "female": "Frau",
-      "other": "Divers",
-      "unknown": "Unbekannt"
+      "MALE": "Mann",
+      "FEMALE": "Frau",
+      "OTHER": "Divers",
+      "UNKNOWN": "Unbekannt"
+    },
+    "_gender_short": {
+      "MALE": "M",
+      "FEMALE": "F",
+      "OTHER": "D",
+      "UNKNOWN": "U"
     }
   },
   "comment": {
@@ -75,6 +82,8 @@
     "family_name": "Nachname"
   },
   "address": {
+    "_name": "Adresse",
+    "_plural": "Adressen",
     "address_lines": "Adresszeile(n)",
     "city": "Stadt",
     "postal_code": "PLZ",

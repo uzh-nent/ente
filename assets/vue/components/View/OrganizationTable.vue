@@ -26,7 +26,7 @@
         </tr>
         </thead>
         <tbody>
-        <organization-table-row v-for="organization in items" :key="organization.id"
+        <organization-table-row v-for="organization in items" :key="organization['@id']"
                                 :organization="organization"/>
         <tr v-if="totalItems === 0">
           <td colspan="200">{{ $t('_view.filter_yields_no_entries') }}</td>
