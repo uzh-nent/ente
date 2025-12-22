@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends '_base.html.twig' %}
 
 {% block title %}{{ 'index.title'|trans }}{% endblock %}
 {% block description %}{{ 'index.description'|trans }}{% endblock %}
@@ -21,18 +21,10 @@
             {{ 'index.open_source'|trans }} <a href="https://gitlab.uzh.ch/nent/ente" target="_blank">nent/ente</a>.
         </p>
 
-        {% if is_granted('ROLE_ADMIN') %}
-            <p>
-                <a href="{{ path('admin_index') }}">
-                    {{ "index.title"|trans({}, "admin") }}
-                </a>
-            </p>
-        {% else %}
-            <p>
-                <a href="{{ path('login') }}">
-                    {{ "login.title"|trans({}, "security") }}
-                </a>
-            </p>
-        {% endif %}
+        <p>
+            <a href="{{ path('login') }}">
+                {{ "login.title"|trans({}, "security") }}
+            </a>
+        </p>
     </section>
 {% endblock %}

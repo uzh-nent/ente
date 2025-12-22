@@ -1,0 +1,27 @@
+login:
+  title: 'Bitte einloggen.'
+  description: 'Benutzen Sie Ihr UZH Kürzel.'
+  submit: Einloggen
+  form:
+    shortname: "Kürzel"
+    password: "Passwort"
+    submit: "Login"
+  error:
+    account_disabled: 'Der Account ist deaktiviert.'
+    login_failed: 'Login fehlgeschlagen.'
+    bad_credentials: 'Das Passwort ist nicht korrekt.'
+  forgot_password_help: 'Passwort vergessen? Es kann durch andere Nutzende im Admin-Bereich zurückgesetzt werden.'
+  setup:
+    add_initial_user: 'Initialer Nutzer erstellt'
+logout:
+  title: Logout
+
+set_password:
+  form:
+    password: 'Passwort'
+    password_confirm: 'Passwort wiederholen'
+    submit: 'Passwort setzen'
+  error:
+    password_mismatch: 'Die Passwörter stimmen nicht überein.'
+  success:
+    password_set: 'Das neue Passwort wurde gesetzt.'

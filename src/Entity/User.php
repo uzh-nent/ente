@@ -14,6 +14,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    public const string SUPER_SHORNAME = 'flomos';
+
     use IdTrait;
     use TimeTrait;
 
@@ -26,6 +28,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $medicalValidation = false;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $isEnabled = true;
+
+    public function getShortname(): ?string
+    {
+        return $this->shortname;
+    }
+
+    public function setShortname(string $shortname): void
+    {
+        $this->shortname = $shortname;
+    }
+
     public function getUserIdentifier(): string
     {
         return $this->shortname;
@@ -34,6 +49,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPassword(): ?string
     {
         return $this->password;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function isMedicalValidation(): bool
+    {
+        return $this->medicalValidation;
+    }
+
+    public function setMedicalValidation(bool $medicalValidation): void
+    {
+        $this->medicalValidation = $medicalValidation;
     }
 
     public function eraseCredentials(): void
@@ -48,11 +78,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-        if ($this->shortname === 'flomos') {
+        if ($this->shortname === self::SUPER_SHORNAME) {
             $roles[] = 'ROLE_ADMIN';
             $roles[] = 'ROLE_ALLOWED_TO_SWITCH';
         }
 
         return array_unique($roles);
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->isEnabled;
+    }
+
+    public function setIsEnabled(bool $isEnabled): void
+    {
+        $this->isEnabled = $isEnabled;
     }
 }

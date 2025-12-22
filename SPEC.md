@@ -2,12 +2,10 @@
 
 ## Next steps
 
-entities:
-    Login-user with password (shortname)
-
 then:
     generate migrations
     implement login
+    implement stammdaten
 
 
 ## Offene Fragen
