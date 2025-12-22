@@ -4,14 +4,14 @@ agnes:
 build:
   path: .build
 
-gitlab:
+github:
   api_token: '%env(GITHUB_API_TOKEN)%'
   repository: uzh-nent/ente
 
 config:
   path: .agnes
-  repository:
-    url: git@gitlab.uzh.ch:nent/ente-config
+  # repository:
+  #  url: git@gitlab.uzh.ch:nent/ente-config
 
 data:
   files:
