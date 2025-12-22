@@ -17,7 +17,7 @@
         </tr>
         <tr>
           <order-table-head :order="orderOfName" @ordered="setOrder($event, 'name')">
-            {{ $t('organization.name') }}
+            {{ $t('organization._name') }}
           </order-table-head>
           <th>{{ $t('address.address_lines') }}</th>
           <th>{{ $t('address.city') }}</th>

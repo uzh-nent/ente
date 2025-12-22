@@ -32,23 +32,22 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    normalizationContext: ['groups' => ['thing:read', 'person:read', 'address:read']],
-    denormalizationContext: ['groups' => ['thing:write', 'person:write', 'address:write']]
+    normalizationContext: ['groups' => ['thing:read', 'address:read']],
+    denormalizationContext: ['groups' => ['thing:write', 'address:write']]
 )]
 #[Get]
 #[Post]
 #[Patch]
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: [
-    'postalCode' => SearchFilterInterface::STRATEGY_START, 'name' => SearchFilterInterface::STRATEGY_IPARTIAL, 'familyName' => SearchFilterInterface::STRATEGY_IPARTIAL,
+    'postalCode' => SearchFilterInterface::STRATEGY_START, 'name' => SearchFilterInterface::STRATEGY_IPARTIAL,
 ])]
-#[ApiFilter(OrderFilter::class, properties: ['name', 'givenName', 'familyName'])]
+#[ApiFilter(OrderFilter::class, properties: ['name'])]
 class AnimalKeeper
 {
     use IdTrait;
     use TimeTrait;
     use ThingTrait;
-    use PersonTrait;
     use AddressTrait;
 
     /**

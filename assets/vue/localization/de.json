@@ -32,6 +32,14 @@
       "edited": "Patient gespeichert.",
       "title": "Patient bearbeiten"
     },
+    "add_animal_keeper": {
+      "added": "Tierhalter hinzugefügt.",
+      "title": "Tierhalter hinzufügen"
+    },
+    "edit_animal_keeper": {
+      "edited": "Tierhalter gespeichert.",
+      "title": "Tierhalter bearbeiten"
+    },
     "add": "hinzufügen",
     "edit": "speichern",
     "remove": "entfernen"
@@ -47,13 +55,13 @@
     "filter_by_birth_date": "Geburtsdatum"
   },
   "organization": {
-    "_name": "Organisation",
-    "_plural": "Organisationen",
+    "_name": "Auftraggeber",
+    "_plural": "Auftraggeber",
     "name": "Name"
   },
   "patient": {
-    "_name": "Organisation",
-    "_plural": "Organisationen",
+    "_name": "Patient",
+    "_plural": "Patienten",
     "identification": "Identifikation",
     "ahv_number": "AHV-Nummer",
     "birth_date": "Geburtsdatum",
@@ -69,6 +77,11 @@
       "OTHER": "D",
       "UNKNOWN": "U"
     }
+  },
+  "animal_keeper": {
+    "_name": "Tierhalter",
+    "_plural": "Tierhalter",
+    "name": "Name"
   },
   "comment": {
     "comment": "Kommentar"

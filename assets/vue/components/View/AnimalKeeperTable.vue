@@ -6,36 +6,34 @@
         <tr class="bg-light">
           <th colspan="100">
             <div class="d-flex flex-row reset-table-styles gap-2">
-              <date-time-input
-                  class="mw-10" id="birthDateFilter" format="date"
-                  :placeholder="$t('_view.filter_by_birth_date')"
-                  v-model="filterBirthDate" />
+              <input type="text" class="form-control mw-5"
+                     :placeholder="$t('address.postal_code')"
+                     v-model="searchPostalCode">
               <input type="text" class="form-control mw-30"
-                     :placeholder="$t('_view.search_by_ahv_numer')"
-                     v-model="searchAhvNumber">
+                     :placeholder="$t('_view.search_by_name')"
+                     v-model="searchName">
             </div>
           </th>
         </tr>
         <tr>
-          <order-table-head :order="orderOfIdentification" @ordered="setOrder($event, 'birthDate')">
-            {{ $t('patient._name') }}
+          <order-table-head :order="orderOfName" @ordered="setOrder($event, 'name')">
+            {{ $t('animal_keeper._name') }}
           </order-table-head>
-          <order-table-head :order="orderOfName" @ordered="setOrder($event, 'familyName')">
-            {{ $t('person.name') }}
-          </order-table-head>
-          <th>{{ $t('address._name') }}</th>
+          <th>{{ $t('address.address_lines') }}</th>
+          <th>{{ $t('address.city') }}</th>
+          <th>{{ $t('contact.contact') }}</th>
           <th class="w-minimal"></th>
         </tr>
         </thead>
         <tbody>
-        <patient-table-row v-for="patient in items" :key="patient['@id']"
-                           :patient="patient"/>
+        <animal-keeper-table-row v-for="animalKeeper in items" :key="animalKeeper['@id']"
+                                :animalKeeper="animalKeeper"/>
         <tr v-if="totalItems === 0">
           <td colspan="200">{{ $t('_view.filter_yields_no_entries') }}</td>
         </tr>
         </tbody>
       </table>
-      <loading-indicator-overlay v-if="isLoading"/>
+      <loading-indicator-overlay v-if="isLoading" />
     </div>
     <pagination :items-per-page="itemsPerPage" :page="page" :total-items="totalItems"
                 @paginated="page = $event"/>
@@ -46,53 +44,47 @@
 import {order, paginatedQuery} from "../../mixins/table";
 import Pagination from "../Library/Behaviour/Pagination.vue";
 import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
-import PatientTableRow from "./PatientTableRow.vue";
+import AnimalKeeperTableRow from "./AnimalKeeperTableRow.vue";
 import {createQuery} from "../../services/query";
 import {localStoragePersisted} from "../../mixins/state";
 import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
-import FormField from "../Library/FormLayout/FormField.vue";
-import DateTimeInput from "../Library/FormInput/DateTimeInput.vue";
 
 export default {
   components: {
-    DateTimeInput, FormField,
     LoadingIndicatorOverlay,
-    PatientTableRow,
+    AnimalKeeperTableRow,
     OrderTableHead,
     Pagination,
   },
   mixins: [
     order,
-    paginatedQuery(50, api.getPaginatedPatients),
-    localStoragePersisted('patient-table', ['filter', 'orders', 'filterBirthDate', 'searchAhvNumber'])
+    paginatedQuery(50, api.getPaginatedAnimalKeepers),
+    localStoragePersisted('animal-keeper-table', ['filter', 'orders', 'searchName', 'searchPostalCode'])
   ],
   data() {
     return {
       filter: {},
       orders: [{property: 'name', order: 'asc'}],
 
-      filterBirthDate: "",
-      searchAhvNumber: "",
+      searchName: "",
+      searchPostalCode: "",
     }
   },
   computed: {
     query: function () {
-      const filter = {...this.filter, birthDate: this.filterBirthDate, ahvNumber: this.searchAhvNumber}
+      const filter = {...this.filter, name: this.searchName, postalCode: this.searchPostalCode}
       return createQuery(
           {},
           [],
-          ['birthDate', 'ahvNumber'],
+          ['name', 'postalCode'],
           [],
           filter,
           this.orders
       )
     },
     orderOfName: function () {
-      return this.getOrder('familyName')
-    },
-    orderOfIdentification: function () {
-      return this.getOrder('birthDate')
+      return this.getOrder('name')
     },
   }
 }
@@ -113,7 +105,7 @@ export default {
   max-width: 30em;
 }
 
-.mw-10 {
-  max-width: 10em;
+.mw-5 {
+  max-width: 5em;
 }
 </style>

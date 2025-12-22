@@ -3,6 +3,7 @@ import {createI18n} from 'vue-i18n'
 import moment from 'moment'
 import Organizations from "./Organizations.vue";
 import Patients from "./Patients.vue";
+import AnimalKeepers from "./AnimalKeepers.vue";
 
 // languages
 import de from './localization/de.json'
@@ -44,4 +45,8 @@ if (document.getElementById('vue-organizations') != null) {
 
 if (document.getElementById('vue-patients') != null) {
   createVue(Patients).mount('#vue-patients')
+}
+
+if (document.getElementById('vue-animal-keepers') != null) {
+  createVue(AnimalKeepers).mount('#vue-animal-keepers')
 }

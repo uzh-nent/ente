@@ -60,7 +60,7 @@ class Probe
     // unknown, other => use specimenSourceText, specimenText, specimenTypeText, specimenLocation
     // laboratory_strain, feed, environment => use specimenText, specimenTypeText, specimenLocation
     // food => use specimenText, specimenFoodType, specimenTypeText, specimenLocation
-    // animal => use specimenText, use specimenAnimalType, specimenTypeText, link animalKeeper
+    // animal => use specimenText, use specimenAnimalType, specimenTypeText, link animalKeeper, use animalName
     // human => link specimen, use specimenText, use specimenIsolate, link patient
     //
     // shared logic: there is often structured options that can be selected (e.g. specimenAnimalType),
@@ -89,6 +89,9 @@ class Probe
 
     #[ORM\ManyToOne(targetEntity: AnimalKeeper::class)]
     private ?AnimalKeeper $animalKeeper = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $animalName = null;
 
     #[ORM\ManyToOne(targetEntity: Patient::class)]
     private ?Patient $patient = null;
@@ -227,6 +230,16 @@ class Probe
     public function setAnimalKeeper(?AnimalKeeper $animalKeeper): void
     {
         $this->animalKeeper = $animalKeeper;
+    }
+
+    public function getAnimalName(): ?string
+    {
+        return $this->animalName;
+    }
+
+    public function setAnimalName(?string $animalName): void
+    {
+        $this->animalName = $animalName;
     }
 
     public function getPatient(): ?Patient
