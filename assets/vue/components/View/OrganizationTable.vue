@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="table-wrapper">
-      <table class="table table-striped table-hover">
+      <table class="table table-striped table-hover border">
         <thead>
         <tr class="bg-light">
           <th colspan="100">

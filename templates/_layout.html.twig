@@ -12,12 +12,12 @@
 {% import _self as own_macros %}
 
 {% block body %}
-    <div class="container-fluid">
-        <div class="d-flex flex-row vh-100 py-2">
-            <div class="d-flex flex-column justify-content-between">
+    <div class="container-fluid p-0">
+        <div class="d-flex flex-row vh-100">
+            <div class="d-flex flex-column justify-content-between bg-light px-2 py-2">
                 <div class="menu">
                     <p>
-                        <b id="shortname">{{ app.user.shortname }}</b>
+                        🦆 | <b id="shortname">{{ app.user.shortname }}</b>
                         <a href="/logout">{{ "logout"|trans({}, 'security') }}</a>
                     </p>
 
@@ -42,7 +42,7 @@
                 </p>
             </div>
             <div class="divider ms-2"></div>
-            <div class="content flex-grow-1">
+            <div class="content flex-grow-1 px-2 py-2">
                 <div>
                     {% if breadcrumbs is defined and breadcrumbs|length > 0 %}
                         <nav aria-label="breadcrumb" class="mb-5">

@@ -1,6 +1,6 @@
 <template>
   <button class="btn" :class="active ? 'btn-' + color : 'btn-outline-' + color" @click="tryShow">
-    <font-awesome-icon v-if="icon" :icon="icon" />
+    <i v-if="icon" :class="icon"></i>
     <span v-else>{{ title }}</span>
 
     <confirm-modal
@@ -25,7 +25,7 @@ export default {
       required: true
     },
     icon: {
-      type: Array,
+      type: String,
       default: null
     },
     active: {

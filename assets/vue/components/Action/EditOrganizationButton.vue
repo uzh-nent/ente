@@ -1,6 +1,6 @@
 <template>
   <button-confirm-modal
-    :title="$t('_action.edit_organization.title')" :icon="['fal', 'pencil']"
+    :title="$t('_action.edit_organization.title')" icon="fas fa-pencil"
     :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm">
     <div class="d-flex flex-column align-items-end">
       <div class="w-100">

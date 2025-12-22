@@ -92,7 +92,6 @@ export default {
 
         if (!this.fields.city.dirty) {
           const numberPostalCode = Number(postalCode)
-          console.log(numberPostalCode)
           this.entity.city = postalCodes.find(entry => entry.pc === numberPostalCode)?.c
         }
       },

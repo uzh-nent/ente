@@ -4,12 +4,12 @@
 </template>
 
 <script>
-import {api} from "./services/api";
 import OrganizationTable from "./components/View/OrganizationTable.vue";
 import AddOrganizationButton from "./components/Action/AddOrganizationButton.vue";
+import DuckWalking from "./components/Library/View/Base/DuckWalking.vue";
 
 export default {
-  components: {AddOrganizationButton, OrganizationTable},
+  components: {DuckWalking, AddOrganizationButton, OrganizationTable},
 }
 
 </script>

@@ -11,21 +11,17 @@
       {{ organization.contact }}
     </td>
     <td class="w-minimal text-end">
-      <div class="btn-group ms-1" role="group">
-        <a class="btn btn-xs btn-wide btn-secondary"
-           href="/">
-          <i class="fas fa-eye"></i>
-        </a>
-      </div>
+      <edit-organization-button :organization="organization" />
     </td>
   </tr>
 </template>
 
 <script>
 import {formatAddressCity} from "../../services/formatter";
+import EditOrganizationButton from "../Action/EditOrganizationButton.vue";
 
 export default {
-  components: {},
+  components: {EditOrganizationButton},
   props: {
     organization: {
       type: Object,

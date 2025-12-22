@@ -1,18 +1,17 @@
 <template>
   <div class="duck__wrapper">
     <div class="duck">
+      <div class="duck__foot duck__foot--1"></div>
+      <div class="duck__foot duck__foot--2"></div>
       <div class="duck duck__inner">
         <div class="duck__mouth"></div>
         <div class="duck__head">
           <div class="duck__eye"></div>
-          <div class="duck__eye--shadow"></div>
           <div class="duck__white"></div>
         </div>
         <div class="duck__body"></div>
         <div class="duck__wing"></div>
       </div>
-      <div class="duck__foot duck__foot--1"></div>
-      <div class="duck__foot duck__foot--2"></div>
     </div>
   </div>
 </template>
@@ -38,7 +37,7 @@ export default {}
 }
 
 .duck__wrapper {
-  font-size: 0.2em;
+  font-size: 0.4em;
 }
 
 .duck {
@@ -68,7 +67,6 @@ export default {}
   position: relative;
   -webkit-transform: translateY(1px);
   transform: translateY(1px);
-  z-index: 1;
 }
 
 .duck__head::after, .duck__head::before {
@@ -115,17 +113,6 @@ export default {}
   background-color: #000;
   -webkit-animation: eye-animation 1s infinite linear;
   animation: eye-animation 1s infinite linear;
-}
-
-.duck__eye--shadow {
-  position: absolute;
-  bottom: -0.5em;
-  right: 2em;
-  width: 0.8em;
-  height: 0.8em;
-  border-radius: 50%;
-  background-color: var(--color-light-orange-2);
-  z-index: 1;
 }
 
 .duck__mouth {
@@ -178,7 +165,6 @@ export default {}
   transform-origin: right;
   -webkit-animation: wing-animation var(--duck-speed) linear infinite;
   animation: wing-animation var(--duck-speed) linear infinite;
-  z-index: 1;
 }
 
 .duck__foot {
@@ -186,7 +172,6 @@ export default {}
   width: 0.6em;
   height: 2em;
   background-color: var(--color-orange);
-  z-index: -1;
 }
 
 .duck__foot::after {

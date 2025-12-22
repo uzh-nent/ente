@@ -6,9 +6,10 @@
 
 <script>
 import AtomSpinner from "./Base/AtomSpinner.vue";
+import DuckWalking from "./Base/DuckWalking.vue";
 
 export default {
-  components: {AtomSpinner}
+  components: {DuckWalking, AtomSpinner}
 }
 
 </script>
