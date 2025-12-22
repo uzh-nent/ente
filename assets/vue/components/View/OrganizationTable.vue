@@ -28,6 +28,7 @@
       </tr>
       </thead>
       <tbody>
+      <loading-indicator-table-body v-if="!items" />
       <organization-table-row v-for="organization in items" :key="organization.id"
                               :organization="organization"/>
       <tr v-if="totalItems === 0">
@@ -35,23 +36,21 @@
       </tr>
       </tbody>
     </table>
-
-    <loading-indicator-overlay v-if="isLoading"/>
   </div>
   <pagination :items-per-page="itemsPerPage" :page="page" :total-items="totalItems"
               @paginated="page = $event"/>
 </template>
 
 <script>
-import LoadingIndicator from '../Library/View/LoadingIndicator.vue'
-import {order, paginatedQueryOrganizations} from "../../mixins/table";
+import {order, paginatedQuery} from "../../mixins/table";
 import Pagination from "../Library/Behaviour/Pagination.vue";
 import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
-import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
 import FilterOrganizationsButton from "../Action/FilterOrganizationsButton.vue";
 import OrganizationTableRow from "./OrganizationTableRow.vue";
 import {createQuery} from "../../services/query";
 import {localStoragePersisted} from "../../mixins/state";
+import LoadingIndicatorTableBody from "../Library/View/LoadingIndicatorTableBody.vue";
+import {api} from "../../services/api";
 
 const queryConfiguration = {
   exactProps: ['type', 'structure', 'faculty', 'livecycleStatus'],
@@ -61,16 +60,15 @@ const queryConfiguration = {
 
 export default {
   components: {
+    LoadingIndicatorTableBody,
     OrganizationTableRow,
     FilterOrganizationsButton,
-    LoadingIndicatorOverlay,
     OrderTableHead,
     Pagination,
-    LoadingIndicator,
   },
   mixins: [
     order,
-    paginatedQueryOrganizations(50),
+    paginatedQuery(50, api.getPaginatedOrganisations),
     localStoragePersisted('organization-table', ['filter', 'orders', 'searchName', 'filterPostalCode'])
   ],
   data() {

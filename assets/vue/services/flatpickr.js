@@ -1,0 +1,39 @@
+import flatPickr from 'vue-flatpickr-component/src/component'
+
+export const dateConfig = {
+  altInput: true,
+  altFormat: 'd.m.Y', // what is displayed to the user; in effect because altInput === true
+  dateFormat: 'Y-m-d', // what the input value actually is (v-model value; what is sent to the server)
+  enableTime: false // no time selection possible
+}
+
+export const dateTimeConfig = {
+  altInput: true,
+  altFormat: 'd.m.Y H:i', // what is displayed to the user; in effect because altInput === true
+  dateFormat: 'Z', // what the input value actually is (v-model value; what is sent to the server)
+  enableTime: true // no time selection possible
+}
+
+export const toggleAnchorValidity = function (anchor, field) {
+  if (!anchor) {
+    return
+  }
+
+  const visibleInput = anchor.nextSibling.nextSibling
+
+  const showIsValid = field.dirty && !field.errors.length
+  if (showIsValid) {
+    visibleInput.classList.add('is-valid')
+  } else {
+    visibleInput.classList.remove('is-valid')
+  }
+
+  const showIsInvalid = field.dirty && field.errors.length
+  if (showIsInvalid) {
+    visibleInput.classList.add('is-invalid')
+  } else {
+    visibleInput.classList.remove('is-invalid')
+  }
+}
+
+export { flatPickr }

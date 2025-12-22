@@ -15,6 +15,14 @@
       "title": "Filter",
       "apply": "Setzen",
       "clear": "Zurücksetzen"
+    },
+    "edit_organization": {
+      "edited": "Organisation gespeichert.",
+      "title": "Organisation bearbeiten"
+    },
+    "add_organization": {
+      "edited": "Organisation hinzugefügt.",
+      "title": "Organisation hinzufügen"
     }
   },
   "_view": {

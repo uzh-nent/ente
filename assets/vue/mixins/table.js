@@ -1,5 +1,3 @@
-import {api} from "../services/api";
-
 export const order = {
   data() {
     return {
@@ -21,7 +19,7 @@ export const order = {
 }
 
 
-export const paginatedQueryOrganizations = function(itemsPerPage) {
+export const paginatedQuery = function (itemsPerPage, loadItems) {
   return {
     data() {
       return {
@@ -42,17 +40,21 @@ export const paginatedQueryOrganizations = function(itemsPerPage) {
     watch: {
       paginatedQuery: {
         handler() {
-          this.isLoading = true
-          api.getPaginatedOrganisations(this.paginatedQuery).then(response => {
-            console.log(response)
-            this.isLoading = false
-            this.items = response.items
-            this.totalItems = response.totalItems
-          })
+          this.reload()
         },
         deep: true,
         immediate: true
       }
     },
+    methods: {
+      reload: function () {
+        this.isLoading = true
+        loadItems(this.paginatedQuery).then(response => {
+          this.isLoading = false
+          this.items = response.items
+          this.totalItems = response.totalItems
+        })
+      }
+    }
   }
 }

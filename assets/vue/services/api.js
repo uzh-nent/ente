@@ -1,104 +1,171 @@
 import axios from 'axios'
+import {displayError} from "./notifiers";
 
-const api = {
-  _getUrl: function (url, query = null) {
-    const fullUrl = new URL(url, window.location.origin)
 
-    if (query) {
-      Object.keys(query).forEach(key => {
-        if (Array.isArray(query[key])) {
-          query[key].forEach(value => fullUrl.searchParams.append(key+"[]", value))
-        } else {
-          fullUrl.searchParams.append(key, query[key])
+const iriToId = function (iri) {
+  return iri.substr(iri.lastIndexOf('/') + 1)
+}
+
+const restClient = {
+  setupErrorNotifications: function () {
+    axios.interceptors.response.use(
+      response => {
+        return response
+      },
+      error => {
+        /* eslint-disable-next-line eqeqeq */
+        if (error == 'AxiosError: Request aborted') {
+          // hide aborted errors (happens when navigating rapidly in firefox)
+          return
         }
-      })
+
+        console.log(error)
+
+        let errorText = error
+        if (error.response) {
+          const response = error.response
+          if (response.data.title && response.data.description) {
+            errorText = response.data.title + ': ' + response.data.description
+          } else {
+            errorText = response.status
+            if (response.data && response.data.detail) {
+              errorText += ': ' + response.data.detail
+            } else if (response.statusText) {
+              errorText += ': ' + response.statusText
+            }
+          }
+        }
+
+        displayError('Failed: ' + errorText)
+
+        return Promise.reject(error)
+      }
+    )
+  },
+  _writeAllProperties: function (instance, patch, responseData) {
+    // null values are not delivered in response, hence take them from patch
+    for (const prop in patch) {
+      if (Object.prototype.hasOwnProperty.call(patch, prop) && patch[prop] === null) {
+        instance[prop] = null
+      }
     }
 
+    for (const prop in responseData) {
+      if (Object.prototype.hasOwnProperty.call(responseData, prop)) {
+        instance[prop] = responseData[prop]
+      }
+    }
+  },
+  _getFullUrl: function (url, query) {
+    const fullUrl = new URL(url, window.location.origin)
+    Object.keys(query).forEach(key => {
+      if (Array.isArray(query[key])) {
+        query[key].forEach(value => fullUrl.searchParams.append(key + '[]', value))
+      } else {
+        fullUrl.searchParams.append(key, query[key])
+      }
+    })
     return fullUrl.toString()
   },
-  _get: function (url) {
+  getCollection: function (url, query) {
     return new Promise(
       (resolve) => {
-        axios.get(url, {headers: {"Accept": "application/ld+json"}})
+        const fullUrl = this._getFullUrl(url, query)
+        axios.get(fullUrl)
+          .then(response => {
+            resolve(response.data.member)
+          })
+      }
+    )
+  },
+  getPaginatedCollection: function (url, query) {
+    return new Promise(
+      (resolve) => {
+        const fullUrl = this._getFullUrl(url, query)
+        axios.get(fullUrl)
+          .then(response => {
+            const payload = {
+              items: response.data.member,
+              totalItems: response.data.totalItems
+            }
+            resolve(payload)
+          })
+      }
+    )
+  },
+  get: function (url) {
+    return new Promise(
+      (resolve) => {
+        axios.get(url)
           .then(response => {
             resolve(response.data)
           })
       }
     )
   },
-  _getHydraCollection: function (url) {
+  post: function (collectionUrl, post) {
     return new Promise(
-        (resolve) => {
-          this._get(url)
-              .then(data => {
-                resolve(data['member'])
-              })
-        }
+      (resolve) => {
+        axios.post(collectionUrl, post, {headers: {'Content-Type': 'application/ld+json'}})
+          .then(response => {
+            resolve(response.data)
+          })
+      }
     )
   },
-  _getPaginatedHydraCollection: function (url) {
+  patch: function (instance, patch) {
     return new Promise(
-        (resolve) => {
-          this._get(url)
-              .then(data => {
-                const payload = {
-                  items: data['member'],
-                  totalItems: data['totalItems']
-                }
-                resolve(payload)
-              })
-        }
+      (resolve) => {
+        axios.patch(instance['@id'], patch, {headers: {'Content-Type': 'application/merge-patch+json'}})
+          .then(response => {
+            this._writeAllProperties(instance, patch, response.data)
+            resolve()
+          })
+      }
     )
   },
-  _getCSV: function (url) {
+  delete: function (instance) {
     return new Promise(
-        (resolve) => {
-          axios.get(url, {headers: {"Accept": "text/csv"}})
-              .then(response => {
-                resolve(response.data)
-              })
-        }
-    )
-  },
-  setupErrorNotifications: function (translator) {
-    axios.interceptors.response.use(
-        response => {
-          return response
-        },
-        error => {
-          console.log(error)
-          // hide aborted errors (happens when navigating rapidly in firefox)
-          /* eslint-disable-next-line eqeqeq */
-          if (error.code == 'ECONNABORTED') {
-            return Promise.reject(error)
-          }
-
-          let errorText = error
-          if (error.response) {
-            const response = error.response
-            if (response.data['hydra:title'] && response.data['hydra:description']) {
-              errorText = response.data['hydra:title'] + ': ' + response.data['hydra:description']
-            } else {
-              errorText = response.status
-              if (response.data && response.data.detail) {
-                errorText += ': ' + response.data.detail
-              } else if (response.statusText) {
-                errorText += ': ' + response.statusText
-              }
+      (resolve) => {
+        axios.delete(instance['@id'])
+          .then(response => {
+            // if 204, then soft delete
+            if (response.status === 204) {
+              instance.deletedAt = DateTime.now().toISO()
             }
-          }
 
-          const errorMessage = translator('_api.request_failed') + ' (' + errorText + ')'
-          alert(errorMessage)
-
-          return Promise.reject(error)
-        }
+            resolve()
+          })
+      }
     )
-  },
-  getPaginatedOrganisations: function (query) {
-    const fullUrl = this._getUrl('/api/organizations', query)
-    return this._getPaginatedHydraCollection(fullUrl)
-  },
+  }
 }
 
-export { api }
+restClient.setupErrorNotifications()
+
+
+const api = {
+  getUser: function () {
+    return window.user
+  },
+  getCurrentProbe: function () {
+    return {
+      probe: window.probe,
+      reports: window.reports,
+    }
+  },
+  get: function (id) {
+    return restClient.get(id)
+  },
+  patch: function (instance, patch) {
+    return restClient.patch(instance, patch)
+  },
+  getPaginatedOrganisations: function (query) {
+    return restClient.getPaginatedCollection('/api/organizations', query)
+  },
+  postOrganization: function (payload) {
+    return restClient.post('/api/organizations', payload)
+  }
+}
+
+export {api}

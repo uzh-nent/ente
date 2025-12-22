@@ -1,5 +1,5 @@
 <template>
-  <button-with-modal-confirm
+  <button-confirm-modal
       modalSize="lg"
       :title="$t('_action.filter.title')"
       :confirm-title="$t('_action.filter.apply')"
@@ -17,19 +17,19 @@
 
     <organization-filter-form @update="filter = $event" :template="template" :organization-types="organizationTypes"/>
 
-  </button-with-modal-confirm>
+  </button-confirm-modal>
 </template>
 
 <script>
 
-import ButtonWithModalConfirm from '../Library/Behaviour/ButtonWithModalConfirm'
 import OrganizationFilterForm from "../Form/OrganizationFilterForm.vue";
+import ButtonConfirmModal from "../Library/Behaviour/Modal/ButtonConfirmModal.vue";
 
 export default {
   emits: ['update'],
   components: {
+    ButtonConfirmModal,
     OrganizationFilterForm,
-    ButtonWithModalConfirm
   },
   data() {
     return {

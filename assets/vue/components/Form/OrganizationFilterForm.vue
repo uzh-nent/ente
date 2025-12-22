@@ -15,11 +15,10 @@
 </template>
 
 <script>
-import TimeFilter from "../Library/Form/TimeFilter";
 import DateRangeField from "./Fields/DateRangeField.vue";
 
 export default {
-  components: {DateRangeField, TimeFilter},
+  components: {DateRangeField},
   emits: ['update'],
   data() {
     return {

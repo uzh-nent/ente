@@ -1,0 +1,52 @@
+<template>
+  <button-confirm-modal
+    :title="$t('_action.edit_organization.title')" :icon="['fal', 'pencil']"
+    :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm">
+    <div class="d-flex flex-column align-items-end">
+      <div class="w-100">
+        <organization-form :template="organization" @update="patch = $event" />
+      </div>
+    </div>
+  </button-confirm-modal>
+</template>
+
+<script>
+
+import { api } from '../../services/api'
+import { displaySuccess } from '../../services/notifiers'
+import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
+import OrganizationForm from "../Form/OrganizationForm.vue";
+
+export default {
+  emits: ['added-user'],
+  components: {
+    OrganizationForm,
+    ButtonConfirmModal,
+  },
+  data () {
+    return {
+      patch: null,
+    }
+  },
+  props: {
+    organization: {
+      type: Object,
+      required: true
+    },
+  },
+  computed: {
+    canConfirm: function () {
+      return !!this.patch
+    },
+  },
+  methods: {
+    confirm: async function () {
+      const payload = { ...this.patch, organizers: this.organizers }
+      await api.patch(this.organization, payload)
+
+      const successMessage = this.$t('_action.edit_organization.edited')
+      displaySuccess(successMessage)
+    }
+  }
+}
+</script>

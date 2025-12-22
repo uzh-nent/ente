@@ -1,5 +1,5 @@
 <template>
-  <nav class="clearfix">
+  <nav class="clearfix" v-if="totalItems > itemsPerPage">
     <ul class="pagination">
       <li class="page-item" v-if="page > 2">
         <a class="page-link" href="#" aria-label="Previous" @click.prevent="paginate(1)">
@@ -36,11 +36,10 @@
 
 <script>
 
-
 const numberOfPagesShown = 4
 
 export default {
-  emits: ["paginated"],
+  emits: ['paginated'],
   props: {
     page: {
       type: Number,
@@ -52,7 +51,7 @@ export default {
     },
     totalItems: {
       type: Number,
-      required: true
+      default: 0
     }
   },
   watch: {
