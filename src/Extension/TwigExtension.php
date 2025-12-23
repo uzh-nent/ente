@@ -17,7 +17,8 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 class TwigExtension extends AbstractExtension
-{    /**
+{
+    /**
      * makes the filters available to twig.
      *
      * @return TwigFilter[]
