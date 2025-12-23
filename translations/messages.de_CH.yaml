@@ -1,6 +1,8 @@
 yes: 'Ja'
 no: 'Nein'
 
+vue_placeholder: "JavaScript aktivieren um den Inhalt dieser Seite zu sehen."
+
 time:
   format:
     date_time: 'd.m.Y H:i' # gives a date with the time of the form 28.12.2012 16:20
