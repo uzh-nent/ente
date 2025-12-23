@@ -43,7 +43,7 @@ class Probe
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $ordererIdentifier = null;
 
-    #[ORM\ManyToOne(targetEntity: Organization::class)]
+    #[ORM\ManyToOne(targetEntity: Organization::class, inversedBy: 'probes')]
     private ?Organization $orderer = null;
 
     // Service
@@ -87,16 +87,16 @@ class Probe
     #[ORM\Column(type: Types::STRING, enumType: SpecimenAnimalType::class, nullable: true)]
     private ?SpecimenAnimalType $specimenAnimalType = null;
 
-    #[ORM\ManyToOne(targetEntity: AnimalKeeper::class)]
+    #[ORM\ManyToOne(targetEntity: AnimalKeeper::class, inversedBy: 'probes')]
     private ?AnimalKeeper $animalKeeper = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $animalName = null;
 
-    #[ORM\ManyToOne(targetEntity: Patient::class)]
+    #[ORM\ManyToOne(targetEntity: Patient::class, inversedBy: 'probes')]
     private ?Patient $patient = null;
 
-    #[ORM\ManyToOne(targetEntity: Specimen::class)]
+    #[ORM\ManyToOne(targetEntity: Specimen::class, inversedBy: 'probes')]
     private ?Specimen $specimen = null;
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
