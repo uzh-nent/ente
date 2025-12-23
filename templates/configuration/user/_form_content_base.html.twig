@@ -1,0 +1,40 @@
+{% extends "_content.html.twig" %}
+
+{% block inner_content %}
+    <div class="container-text">
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-md-9">
+                {{ form_row(form.name) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_row(form.abbreviation) }}
+            </div>
+            <div class="col-md-12">
+                {{ form_row(form.medicalValidation) }}
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-6">
+                {{ form_row(form.shortname) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.plainPassword) }}
+            </div>
+            <div class="col-md-12">
+                {{ form_row(form.isEnabled) }}
+            </div>
+        </div>
+
+        <div class="mt-5">
+            {{ form_row(form.submit) }}
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
+{% form_theme form _self %}

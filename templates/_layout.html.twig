@@ -45,6 +45,11 @@
                             {{ own_macros.nav_item(path('reference_data_organisms'), "organisms.title"|trans({}, "reference_data")) }}
                             {{ own_macros.nav_item(path('reference_data_specimen'), "specimen.title"|trans({}, "reference_data")) }}
                         </ul>
+
+                        <h4 class="mt-5">{{ "index.title"|trans({}, "configuration") }}</h4>
+                        <ul class="nav nav-pills flex-column">
+                            {{ own_macros.nav_item(path('configuration_users'), "users.title"|trans({}, "configuration")) }}
+                        </ul>
                     </div>
                 </div>
 

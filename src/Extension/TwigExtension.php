@@ -13,11 +13,16 @@ declare(strict_types=1);
 
 namespace App\Extension;
 
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 class TwigExtension extends AbstractExtension
 {
+    public function __construct(private readonly TranslatorInterface $translator)
+    {
+    }
+
     /**
      * makes the filters available to twig.
      *
@@ -28,6 +33,7 @@ class TwigExtension extends AbstractExtension
         return [
             new TwigFilter('format_date', $this->formatDateFilter(...)),
             new TwigFilter('format_date_time', $this->formatDateTimeFilter(...)),
+            new TwigFilter('trans_boolean', $this->transBooleanFilter(...)),
         ];
     }
 
@@ -44,6 +50,15 @@ class TwigExtension extends AbstractExtension
     {
         if ($date instanceof \DateTimeInterface) {
             return $date->format('d.m.Y H:i');
+        }
+
+        return '-';
+    }
+
+    public function transBooleanFilter(?bool $value): string
+    {
+        if ($value !== null) {
+            return $this->translator->trans($value ? 'yes' : 'no');
         }
 
         return '-';

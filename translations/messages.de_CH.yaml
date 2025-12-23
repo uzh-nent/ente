@@ -1,24 +1,5 @@
-app: 'CustomerDB'
-app_purpose: 'Über die CustomerDB können die Kunden der ZI verwaltet werden.'
-app_questions_to: 'Fragen und Anregungen senden Sie bitte an '
-app_questions_to_email: 'tcl@zi.uzh.ch'
-
-http-error: Der Server kann Ihre Anfrage aufgrund eines unerwarteten Fehlers vorübergehend nicht bearbeiten. Bitte versuchen Sie es später noch einmal.
-http-error-403: Sie haben nicht die erforderliche Berechtigung, diese Seite aufzurufen.
-http-error-404: Die von Ihnen angeforderte Seite wurde nicht gefunden.
-http-error-410: Die von Ihnen angeforderte Seite ist nicht mehr verfügbar.
-
-login: Anmelden
-logout: Abmelden
-not-logged-in: Nicht angemeldet.
-other-lang: English version
-uzh: Universität Zürich
-zi: Zentrale Informatik
-home: Startseite
-customers: Kunden
-organizations: Organisationen
-responsibles: Verantwortliche
-logged-in-as: Angemeldet als {name}.
+yes: 'Ja'
+no: 'Nein'
 
 time:
   format:

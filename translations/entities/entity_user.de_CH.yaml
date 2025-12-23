@@ -1,0 +1,17 @@
+entity:
+    title: 'Benutzer:in'
+
+Shortname: "Kürzel"
+Is enabled: "Aktiviert"
+Name: 'Name'
+Abbreviation: 'Abkürzung'
+Medical validation: "Medizinische Validierung"
+Plain password: "Passwort"
+
+help:
+  name: "Voller Name inkl. Titel (erscheint auf Berichten)"
+  abbreviation: "NENT-Abkürzung"
+  shortname: "UZH-Kürzel für das Login."
+  is_enabled: "Ob sich diese:r Benutzer:in einloggen darf."
+  override_plain_password: "Passwort neu setzen."
+  medical_validation: "Ob diese:r Benutzer:in die medizinischen Berichte unterschreiben darf."

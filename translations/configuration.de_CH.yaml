@@ -1,0 +1,18 @@
+users:
+  title: "Benutzer:innen"
+  description: "Alle Benutzer:innen"
+
+user_new:
+  title: "Neue:r Benutzer:in"
+  description: "Neue:r Benutzer:in"
+  success:
+    created: "Benutzer:in erfolgreich hinzugefügt."
+
+user_edit:
+  title: "Benutzer:in bearbeiten"
+  description: "Benutzer:in bearbeiten"
+  success:
+    stored: 'Benutzer:in erfolgreich gespeichert.'
+
+index:
+  title: 'Konfiguration'

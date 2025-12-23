@@ -58,49 +58,11 @@ class SecurityController extends AbstractController
                 $message = $translator->trans('login.error.bad_credentials', [], 'security');
                 $this->addFlash('danger', $message);
             }
-        } elseif ($lastError instanceof AccountDisabledException) {
-            $message = $translator->trans('login.error.account_disabled', [], 'security');
-            $this->addFlash('danger', $message);
         } elseif ($lastError) {
             $message = $translator->trans('login.error.login_failed', [], 'security');
             $this->addFlash('danger', $message);
         }
 
         return $this->render('security/login.html.twig', ['form' => $form->createView()]);
-    }
-
-    /** @phpstan-ignore-next-line  */
-    private function setPasswordAction(Request $request, ManagerRegistry $registry, TranslatorInterface $translator, UserPasswordHasherInterface $hasher, Security $security, ?FormInterface &$form = null): ?Response
-    {
-        $token = $request->query->get('token', 'invalid');
-        $user = $registry->getRepository(User::class)->findOneBy(['authenticationToken' => $token]);
-        if (!$user) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $form = $this->createFormBuilder()
-            ->add('password', PasswordType::class, ['label' => 'set_password.form.password', 'translation_domain' => 'security'])
-            ->add('passwordConfirm', PasswordType::class, ['label' => 'set_password.form.password_confirm', 'translation_domain' => 'security'])
-            ->add('submit', SubmitType::class, ['label' => 'set_password.form.submit', 'translation_domain' => 'security'])
-            ->getForm();
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->getData()['password'] !== $form->getData()['passwordConfirm']) {
-                $message = $translator->trans('set_password.error.password_mismatch', [], 'security');
-                $this->addFlash('danger', $message);
-            } else {
-                $hashedPassword = $hasher->hashPassword($user, $form->getData()['password']);
-                $user->setPassword($hashedPassword);
-                DoctrineHelper::persistAndFlush($registry, $user);
-
-                $message = $translator->trans('set_password.success.password_set', [], 'security');
-                $this->addFlash('success', $message);
-
-                return $security->login($user);
-            }
-        }
-
-        return null;
     }
 }

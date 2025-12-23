@@ -7,7 +7,7 @@ use App\Security\Exceptions\AccountDisabledException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class UserEnabledChecked implements UserCheckerInterface
+class UserEnabledChecker implements UserCheckerInterface
 {
     public function checkPreAuth(UserInterface $user): void
     {

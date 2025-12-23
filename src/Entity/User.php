@@ -19,6 +19,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public const string SUPER_SHORNAME = 'flomos';
 
+    #[ORM\Column(type: Types::STRING)]
+    private ?string $name;
+
+    #[ORM\Column(type: Types::STRING)]
+    private ?string $abbreviation;
+
     #[ORM\Column(type: Types::STRING, unique: true)]
     private ?string $shortname;
 
@@ -30,6 +36,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $isEnabled = true;
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getAbbreviation(): ?string
+    {
+        return $this->abbreviation;
+    }
+
+    public function setAbbreviation(?string $abbreviation): void
+    {
+        $this->abbreviation = $abbreviation;
+    }
 
     public function getShortname(): ?string
     {
