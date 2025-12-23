@@ -42,7 +42,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiFilter(SearchFilter::class, properties: [
     'postalCode' => SearchFilterInterface::STRATEGY_START, 'name' => SearchFilterInterface::STRATEGY_IPARTIAL,
 ])]
-#[ApiFilter(OrderFilter::class, properties: ['name'])]
+#[ApiFilter(OrderFilter::class, properties: ['postalCode', 'name'])]
 class Organization
 {
     use IdTrait;

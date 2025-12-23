@@ -11,7 +11,8 @@
       </form-field>
     </template>
     <template v-if="entity.laboratoryFunction === 'REFERENCE'">
-      <form-field for-id="pathogen" :label="$t('service.identification_typing')" :field="fields.pathogen" :fake-required="true">
+      <form-field for-id="pathogen" :label="$t('service.identification_typing')" :field="fields.pathogen"
+                  :fake-required="true">
         <radio id="pathogen" :choices="referencePathogens"
                :field="fields.pathogen"
                v-model="entity.pathogen" @update:model-value="validateField('pathogen')"/>
@@ -26,15 +27,40 @@
       </template>
     </template>
 
-    <form-field for-id="receivedAt" :label="$t('probe.received_at')" :field="fields.receivedAt">
-      <date-time-input id="receivedAt" :field="fields.receivedAt" v-model="entity.receivedAt" format="date"
-                       @blur="blurField('receivedAt')" @update:modelValue="validateField('receivedAt')"/>
-    </form-field>
-    <form-field for-id="ordererIdentifier" :label="$t('probe.orderer_identifier')" :field="fields.ordererIdentifier">
-      <text-input id="ordererIdentifier" type="text" :field="fields.ordererIdentifier"
-                  v-model="entity.ordererIdentifier"
-                  @blur="blurField('ordererIdentifier')" @update:modelValue="validateField('ordererIdentifier')"/>
-    </form-field>
+    <div class="row">
+      <div class="col-md-6">
+        <form-field for-id="ordererIdentifier" :label="$t('probe.orderer_identifier')"
+                    :field="fields.ordererIdentifier">
+          <text-input id="ordererIdentifier" type="text" :field="fields.ordererIdentifier"
+                      v-model="entity.ordererIdentifier"
+                      @blur="blurField('ordererIdentifier')" @update:modelValue="validateField('ordererIdentifier')"/>
+        </form-field>
+      </div>
+    </div>
+
+    <div>
+      <form-field for-id="orderer" :label="$t('probe.orderer')" :field="fields.orderer">
+        <organization-view class="mb-2" v-if="entity.orderer" :organization="entity.orderer"/>
+
+        <div class="d-flex flex-row reset-table-styles gap-2 mb-2">
+          <input type="text" class="form-control mw-5"
+                 :placeholder="$t('address.postal_code')"
+                 v-model="searchPostalCode">
+          <input type="text" class="form-control mw-30"
+                 :placeholder="$t('_view.search_by_name')"
+                 v-model="searchName">
+        </div>
+
+        <div class="mb-2">
+          <radio id="orderer" :choices="orderers" :field="fields.orderer"
+                 v-model="entity.orderer" @update:model-value="validateField('orderer')"/>
+          <span class="form-text">{{ itemHits }}</span>
+        </div>
+
+        <add-organization-button @added="addedOrganization"
+                                 :template="{postalCode: searchPostalCode, name: searchName}"/>
+      </form-field>
+    </div>
   </div>
 </template>
 
@@ -44,61 +70,57 @@ import FormField from '../Library/FormLayout/FormField'
 import TextInput from '../Library/FormInput/TextInput.vue'
 import TextArea from '../Library/FormInput/TextArea.vue'
 import DateTimeInput from '../Library/FormInput/DateTimeInput.vue'
-import CustomSelect from '../Library/FormInput/CustomSelect.vue'
 import Radio from "../Library/FormInput/Radio.vue";
 import Checkboxes from "../Library/FormInput/Checkboxes.vue";
+import {paginatedQuery} from "../../mixins/table";
+import {api} from "../../services/api";
+import {createQuery} from "../../services/query";
+import {formatOrganizationShort} from "../../services/formatter";
+import AddOrganizationButton from "../Action/AddOrganizationButton.vue";
+import OrganizationView from "../View/OrganizationView.vue";
 
 const createLaboratoryFunctions = function (translator) {
-  return [
-    {label: translator('probe._laboratory_function.REFERENCE'), value: 'REFERENCE'},
-    {label: translator('probe._laboratory_function.PRIMARY'), value: 'PRIMARY'},
-  ]
+  const values = ['REFERENCE', 'PRIMARY']
+  return values.map(value => ({label: translator(`probe._laboratory_function.${value}`), value}))
 }
 
 const createReferencePathogens = function (translator) {
-  return [
-    {label: translator('probe._pathogen.SALMONELLA'), value: 'SALMONELLA'},
-    {label: translator('probe._pathogen.SHIGELLA'), value: 'SHIGELLA'},
-    {label: translator('probe._pathogen.YERSINIA'), value: 'YERSINIA'},
-    {label: translator('probe._pathogen.LISTERIA_MONOCYTOGENES'), value: 'LISTERIA_MONOCYTOGENES'},
-    {label: translator('probe._pathogen.VIBRIO_CHOLERAE'), value: 'VIBRIO_CHOLERAE'},
-    {label: translator('probe._pathogen.ESCHERICHIA_COLI'), value: 'ESCHERICHIA_COLI'},
-    {label: translator('probe._pathogen.CAMPYLOBACTER'), value: 'CAMPYLOBACTER'},
-    {label: translator('probe._pathogen.OTHER'), value: null},
-  ]
+  const values = ['SALMONELLA', 'SHIGELLA', 'YERSINIA', 'LISTERIA_MONOCYTOGENES', 'VIBRIO_CHOLERAE', 'ESCHERICHIA_COLI', 'CAMPYLOBACTER']
+  return values
+      .map(value => ({label: translator(`probe._pathogen.${value}`), value}))
+      .concat({label: translator('probe._pathogen.OTHER'), value: null})
 }
 
 const createPrimaryAnalysisTypes = function (translator) {
-  return [
-    {label: translator('observation._analysis_type.EC_STEC'), value: 'EC_STEC'},
-    {label: translator('observation._analysis_type.EC_EPEC'), value: 'EC_EPEC'},
-    {label: translator('observation._analysis_type.EC_ETEC'), value: 'EC_ETEC'},
-    {label: translator('observation._analysis_type.EC_EIEC'), value: 'EC_EIEC'},
-    {label: translator('observation._analysis_type.EC_EAEC'), value: 'EC_EAEC'},
-  ]
+  const values = ['EC_STEC', 'EC_EPEC', 'EC_ETEC', 'EC_EIEC', 'EC_EAEC']
+  return values.map(value => ({label: translator(`probe._analysis_type.${value}`), value}))
 }
 export default {
   emits: ['update'],
   components: {
+    OrganizationView,
+    AddOrganizationButton,
     Checkboxes,
     Radio,
-    CustomSelect,
     DateTimeInput,
     TextArea,
     TextInput,
     FormField
   },
-  mixins: [templatedForm],
+  mixins: [
+    templatedForm,
+    paginatedQuery(10, api.getPaginatedOrganisations),
+  ],
   data() {
     return {
       fields: {
         laboratoryFunction: createField(requiredRule),
         pathogen: createField(),
         pathogenText: createField(),
-        analysisTypes: createField(),
+        analysisTypes: createField(requiredRule),
 
         ordererIdentifier: createField(requiredRule),
-        receivedAt: createField(requiredRule),
+        orderer: createField(requiredRule),
       },
       entity: {
         laboratoryFunction: null,
@@ -107,8 +129,11 @@ export default {
         analysisTypes: null,
 
         ordererIdentifier: null,
-        receivedAt: null,
-      }
+        orderer: null,
+      },
+
+      searchName: "",
+      searchPostalCode: "",
     }
   },
   computed: {
@@ -120,6 +145,29 @@ export default {
     },
     primaryAnalysisTypes: function () {
       return createPrimaryAnalysisTypes(this.$t)
+    },
+    query: function () {
+      const filter = {name: this.searchName, postalCode: this.searchPostalCode}
+      const order = [{property: 'postalCode', order: 'asc'}, {property: 'name', order: 'asc'}]
+      return createQuery({}, [], ['name', 'postalCode'], [], filter, order)
+    },
+    orderers: function () {
+      return this.items.map(item => ({label: formatOrganizationShort(item), value: item}))
+    },
+    itemHits: function () {
+      let hits = this.items.length;
+      if (this.items.length < this.totalItems) {
+        hits = `${hits}+`
+      }
+
+      return this.$t('_action.hits', {hits: hits})
+    }
+  },
+  methods: {
+    addedOrganization: function (organization) {
+      this.searchPostalCode = organization.postalCode
+      this.searchName = organization.name
+      this.entity.orderer = organization
     }
   },
   watch: {

@@ -66,6 +66,10 @@ export const createField = function () {
 
 export const requiredRule = {
   isValid: function (value) {
+    if (Array.isArray(value)) {
+      return value.length > 0
+    }
+
     return !!value
   },
   errorMessage: '_validation.required'

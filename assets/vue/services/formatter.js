@@ -21,12 +21,35 @@ export const formatAddressCity = function (value) {
     return '-'
   }
 
-  let city = [value.postalCode, value.city].filter(e => e).join(" ")
-  if (value.countryCode !== 'CH') {
-    city += " (" + value.countryCode + ")"
+  const cityLineValues = [value.postalCode, value.city]
+  if (value.countryCode && value.countryCode !== 'CH') {
+    cityLineValues.unshift(value.countryCode)
+  }
+  const cityLine = cityLineValues.filter(e => e)
+  if (cityLine.length === 0) {
+    return '-'
   }
 
-  return city
+  return cityLine.join(" ")
+}
+
+export const formatAddress = function (value) {
+  if (!value) {
+    return '-'
+  }
+
+  const fullAddress = [value.addressLines]
+
+  const cityLineValues = [value.postalCode, value.city]
+  if (value.countryCode && value.countryCode !== 'CH') {
+    cityLineValues.unshift(value.countryCode)
+  }
+  const cityLine = cityLineValues.filter(e => e)
+  if (cityLine.length > 0) {
+    fullAddress.push(cityLine.join(" "))
+  }
+
+  return fullAddress.filter(e => e).join("\n")
 }
 
 export const formatPersonName = function (value) {
@@ -48,3 +71,11 @@ export const formatPatientName = function (value, translator) {
   return formatPersonName(value) + genderSuffix
 }
 
+
+export const formatOrganizationShort = function (value) {
+  if (!value) {
+    return '-'
+  }
+
+  return [value.postalCode, value.name].filter(e => e).join(" ")
+}

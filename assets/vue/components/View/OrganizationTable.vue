@@ -100,12 +100,4 @@ export default {
   text-align: left;
   font-weight: normal;
 }
-
-.mw-30 {
-  max-width: 30em;
-}
-
-.mw-5 {
-  max-width: 5em;
-}
 </style>

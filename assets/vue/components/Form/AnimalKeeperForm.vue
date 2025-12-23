@@ -49,13 +49,11 @@ import FormField from '../Library/FormLayout/FormField'
 import TextInput from '../Library/FormInput/TextInput.vue'
 import TextArea from '../Library/FormInput/TextArea.vue'
 import DateTimeInput from '../Library/FormInput/DateTimeInput.vue'
-import CustomSelect from '../Library/FormInput/CustomSelect.vue'
 import postalCodes from '../../../resources/postal-codes.json'
 
 export default {
   emits: ['update'],
   components: {
-    CustomSelect,
     DateTimeInput,
     TextArea,
     TextInput,

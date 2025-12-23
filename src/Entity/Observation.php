@@ -33,9 +33,6 @@ class Observation
     private ?AnalysisType $analysisType = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $analysisStartAt = null;
-
-    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $analysisStopAt = null;
 
     #[ORM\Column(type: Types::STRING, enumType: Interpretation::class, nullable: true)]
@@ -52,16 +49,6 @@ class Observation
     public function setAnalysisType(?AnalysisType $analysisType): void
     {
         $this->analysisType = $analysisType;
-    }
-
-    public function getAnalysisStartAt(): ?\DateTimeImmutable
-    {
-        return $this->analysisStartAt;
-    }
-
-    public function setAnalysisStartAt(?\DateTimeImmutable $analysisStartAt): void
-    {
-        $this->analysisStartAt = $analysisStartAt;
     }
 
     public function getAnalysisStopAt(): ?\DateTimeImmutable

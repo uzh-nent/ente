@@ -160,6 +160,9 @@ const api = {
   patch: function (instance, patch) {
     return restClient.patch(instance, patch)
   },
+  getSpecimens: function (query = {}) {
+    return restClient.getCollection('/api/specimens', query)
+  },
   getPaginatedOrganisations: function (query) {
     return restClient.getPaginatedCollection('/api/organizations', query)
   },

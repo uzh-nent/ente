@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="form-check form-check-inline" v-for="choice in choices" :key="choice.value">
+    <div class="form-check" v-for="choice in choices" :key="choice.value">
       <input class="form-check-input" type="radio" :required="required" :disabled="disabled"
              :name="id" :id="id + '_' + choice.value" :value="choice.value"
              :checked="choice.value === modelValue"

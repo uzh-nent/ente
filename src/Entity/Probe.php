@@ -24,6 +24,7 @@ use App\Entity\Probe\AnimalKeeperCopy;
 use App\Entity\Probe\OrdererCopy;
 use App\Entity\Probe\PatientCopy;
 use App\Entity\Probe\ServiceRequest;
+use App\Entity\Probe\ServiceTime;
 use App\Entity\Probe\SpecimenMeta;
 use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
@@ -63,9 +64,9 @@ class Probe
     use CommentTrait;
 
     use ServiceRequest;
+    use ServiceTime;
     use SpecimenMeta;
 
-    // Orderer
     #[ORM\Column(type: Types::STRING, unique: true)]
     #[Groups(['probe:read'])]
     private ?string $identifier = null;
@@ -92,5 +93,25 @@ class Probe
     public function setStatus(?ProbeStatus $status): void
     {
         $this->status = $status;
+    }
+
+    public function getReceivedAt(): ?\DateTimeImmutable
+    {
+        return $this->receivedAt;
+    }
+
+    public function setReceivedAt(?\DateTimeImmutable $receivedAt): void
+    {
+        $this->receivedAt = $receivedAt;
+    }
+
+    public function getAnalysisStartAt(): ?\DateTimeImmutable
+    {
+        return $this->analysisStartAt;
+    }
+
+    public function setAnalysisStartAt(?\DateTimeImmutable $analysisStartAt): void
+    {
+        $this->analysisStartAt = $analysisStartAt;
     }
 }

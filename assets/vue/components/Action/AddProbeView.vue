@@ -1,5 +1,15 @@
 <template>
-  <service-request-form :template="serviceRequestTemplate" @update="serviceRequest = $event" />
+  <div class="row">
+    <div class="col-md-4">
+      <h3>Auftrag</h3>
+      <service-request-form :template="serviceRequestTemplate" @update="serviceRequest = $event" />
+    </div>
+    <div class="col-md-4">
+      <h3>Probe</h3>
+      <probe-meta-form :specimens="specimens" :template="probeMetaTemplate" @update="probeMeta = $event" />
+    </div>
+  </div>
+
   {{serviceRequest}}
 </template>
 
@@ -12,10 +22,12 @@ import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vu
 import AnimalKeeperForm from "../Form/AnimalKeeperForm.vue";
 import ServiceRequestForm from "../Form/ServiceRequestForm.vue";
 import moment from "moment";
+import ProbeMetaForm from "../Form/ProbeMetaForm.vue";
 
 export default {
   emits: ['added'],
   components: {
+    ProbeMetaForm,
     ServiceRequestForm,
     AnimalKeeperForm,
     ButtonConfirmModal,
@@ -23,12 +35,18 @@ export default {
   },
   data () {
     return {
-      serviceRequest: null
+      specimens: undefined,
+
+      serviceRequest: null,
+      probeMeta: null,
     }
   },
   computed: {
     canConfirm: function () {
       return !!this.serviceRequest
+    },
+    ordererTemplate: function () {
+      return {}
     },
     serviceRequestTemplate: function () {
       return {
@@ -36,6 +54,11 @@ export default {
         pathogen: 'SALMONELLA',
         analysisTypes: ['IDENTIFICATION'],
         receivedAt: moment().format('YYYY-MM-DD'),
+      }
+    },
+    probeMetaTemplate: function () {
+      return {
+        specimenSource: 'HUMAN',
       }
     },
   },
@@ -58,6 +81,11 @@ export default {
       const successMessage = this.$t('_action.add_probe.added')
       displaySuccess(successMessage)
     }
+  },
+  mounted() {
+    api.getSpecimens().then(specimens => {
+      this.specimens = specimens;
+    })
   }
 }
 </script>

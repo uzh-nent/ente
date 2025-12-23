@@ -3,6 +3,7 @@
 namespace App\Entity\Probe;
 
 use App\Entity\Organization;
+use App\Enum\AnalysisType;
 use App\Enum\LaboratoryFunction;
 use App\Enum\Pathogen;
 use Doctrine\DBAL\Types\Types;
@@ -11,7 +12,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 trait ServiceRequest
 {
-    // Service
+    use OrdererCopy;
+
     #[ORM\Column(type: Types::STRING, enumType: LaboratoryFunction::class, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
     private ?LaboratoryFunction $laboratoryFunction = null;
@@ -24,9 +26,8 @@ trait ServiceRequest
     #[Groups(['probe:read', 'probe:write'])]
     private ?string $pathogenName = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    #[Groups(['probe:read', 'probe:write'])]
-    private ?\DateTimeImmutable $receivedAt = null;
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: AnalysisType::class)]
+    private array $analysisType = [];
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
@@ -66,16 +67,21 @@ trait ServiceRequest
         $this->pathogenName = $pathogenName;
     }
 
-    public function getReceivedAt(): ?\DateTimeImmutable
+    /**
+     * @return AnalysisType[]
+     */
+    public function getAnalysisType(): array
     {
-        return $this->receivedAt;
+        return $this->analysisType;
     }
 
-    public function setReceivedAt(?\DateTimeImmutable $receivedAt): void
+    /**
+     * @param AnalysisType[] $analysisType
+     */
+    public function setAnalysisType(array $analysisType): void
     {
-        $this->receivedAt = $receivedAt;
+        $this->analysisType = $analysisType;
     }
-
 
     public function getOrdererIdentifier(): ?string
     {

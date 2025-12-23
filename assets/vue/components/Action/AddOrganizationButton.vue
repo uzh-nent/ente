@@ -21,6 +21,12 @@ export default {
     ButtonConfirmModal,
     LoopingRhombusSpinner,
   },
+  props: {
+    template: {
+      type: Object,
+      default: {}
+    }
+  },
   data () {
     return {
       post: null
@@ -32,6 +38,7 @@ export default {
     },
     template: function () {
       return {
+        ...this.template,
         countryCode: 'CH',
       }
     }

@@ -42,7 +42,8 @@
     },
     "add": "hinzufügen",
     "edit": "speichern",
-    "remove": "entfernen"
+    "remove": "entfernen",
+    "hits": "{hits} Ergebnisse"
   },
   "_validation": {
     "required": "Feld wird benötigt",
@@ -86,7 +87,8 @@
     "pathogen": "Pathogen",
     "pathogen_text": "Pathogen",
     "received_at": "Empfangen am",
-    "orderer_identifier": "Identifizierung",
+    "orderer_identifier": "Labor-/Stammnummer",
+    "orderer": "Auftraggeber",
     "_pathogen": {
       "SALMONELLA": "Salmonella",
       "SHIGELLA": "Shigella",
@@ -101,6 +103,28 @@
     "_laboratory_function": {
       "PRIMARY": "Primärlabor",
       "REFERENCE": "Referenzlabor"
+    },
+    "_specimen_source": {
+      "HUMAN": "Mensch",
+      "ANIMAL": "Tier",
+      "FOOD": "Lebensmittel",
+      "FEED": "Futtermittel",
+      "ENVIRONMENT": "Umwelt",
+      "LABORATORY_STRAIN": "Laborstamm"
+    },
+    "_specimen_food_type": {
+      "POULTRY": "Geflügel",
+      "MEAT": "Fleisch",
+      "DAIRY": "Milchprodukte",
+      "EGG": "Eier",
+      "FISH": "Fisch"
+    },
+    "_specimen_animal_type": {
+      "CATTLE": "Rind",
+      "PIG": "Schwein",
+      "CHICKEN": "Huhn",
+      "BIRD": "Vogel",
+      "REPTILIAN": "Reptil"
     }
   },
   "observation": {

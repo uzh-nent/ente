@@ -14,16 +14,20 @@ namespace App\Entity\Traits;
 use App\Enum\CodeSystem;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 trait CodedIdentifierTrait
 {
     #[ORM\Column(type: Types::STRING, enumType: CodeSystem::class, nullable: true)]
+    #[Groups(['coded-identifier:read'])]
     private ?CodeSystem $system = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['coded-identifier:read'])]
     private ?string $code = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['coded-identifier:read'])]
     private ?string $displayName = null;
 
     public function getSystem(): ?CodeSystem

@@ -11,14 +11,32 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Common\Filter\SearchFilterInterface;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Entity\Traits\CodedIdentifierTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
+#[ApiResource(
+    denormalizationContext: ['groups' => ['coded-identifier:read', 'specimen:read']],
+    paginationEnabled: false
+)]
+#[Get]
+#[GetCollection]
+#[ApiFilter(SearchFilter::class, properties: [
+    'specimenGroup' => SearchFilterInterface::STRATEGY_EXACT
+])]
+#[ApiFilter(OrderFilter::class, properties: ['displayName'])]
 class Specimen
 {
     use IdTrait;
@@ -26,6 +44,7 @@ class Specimen
     use CodedIdentifierTrait;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['specimen:read'])]
     private ?string $specimenGroup = null;
 
     public function getSpecimenGroup(): ?string

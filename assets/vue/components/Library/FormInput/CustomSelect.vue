@@ -5,7 +5,9 @@
     v-model="internalModelValue"
     @blur="$emit('blur')">
     <option :value="null" v-if="!required && !multiple">&mdash;</option>
-    <slot />
+    <option v-for="choice in choices" :key="choice.value" :value="choice.value">
+      {{ choice.label }}
+    </option>
   </select>
   <span class="form-text" v-if="multiple">{{ $t('_library.ctrl_for_multi_select') }}</span>
   <invalid-feedback :field="field" />
@@ -37,10 +39,14 @@ export default {
       type: Object,
       default: null
     },
+    choices: {
+      type: Array,
+      required: true
+    },
     multiple: {
       type: Boolean,
       default: false
-    }
+    },
   },
   watch: {
     modelValue: {

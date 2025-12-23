@@ -14,7 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait SpecimenMeta
 {
-    use OrdererCopy;
     use AnimalKeeperCopy;
     use PatientCopy;
 
