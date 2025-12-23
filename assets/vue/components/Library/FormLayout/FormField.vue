@@ -30,11 +30,15 @@ export default {
     field: {
       type: Object,
       default: null
-    }
+    },
+    fakeRequired: {
+      type: Boolean,
+      default: false
+    },
   },
   computed: {
     required: function () {
-      return this.field?.rules.includes(requiredRule)
+      return this.fakeRequired || this.field?.rules.includes(requiredRule)
     }
   }
 }

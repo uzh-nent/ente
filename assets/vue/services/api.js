@@ -177,6 +177,12 @@ const api = {
   },
   postAnimalKeeper: function (payload) {
     return restClient.post('/api/animal_keepers', payload)
+  },
+  postProbe: function (payload) {
+    return restClient.post('/api/probes', payload)
+  },
+  postObservation: function (payload) {
+    return restClient.post('/api/observations', payload)
   }
 }
 

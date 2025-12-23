@@ -9,7 +9,13 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProbeController extends AbstractController
 {
-    #[Route('/', name: 'probe_active')]
+    #[Route('/probe/new', name: 'probe_new')]
+    public function new(): Response
+    {
+        return $this->render('probe/new.html.twig');
+    }
+
+    #[Route('/probe/active', name: 'probe_active')]
     public function active(): Response
     {
         return $this->render('index.html.twig');
@@ -17,12 +23,6 @@ class ProbeController extends AbstractController
 
     #[Route('/probe/all', name: 'probe_all')]
     public function all(): Response
-    {
-        return $this->render('index.html.twig');
-    }
-
-    #[Route('/probe/new', name: 'probe_new')]
-    public function new(): Response
     {
         return $this->render('index.html.twig');
     }

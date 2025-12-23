@@ -13,13 +13,16 @@ namespace App\Entity\Traits;
 
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 trait AttributionTrait
 {
     #[ORM\ManyToOne(targetEntity: User::class)]
+    #[Groups(['attribution:read'])]
     private ?User $createdBy = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
+    #[Groups(['attribution:read'])]
     private ?User $lastChangedBy = null;
 
     public function getCreatedBy(): ?User

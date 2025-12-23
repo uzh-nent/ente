@@ -78,6 +78,40 @@
       "UNKNOWN": "U"
     }
   },
+  "service": {
+    "ecoli_identification": "E. Coli Identifizierung",
+    "identification_typing": "Identifizierung/Typisierung"
+  },
+  "probe": {
+    "pathogen": "Pathogen",
+    "pathogen_text": "Pathogen",
+    "received_at": "Empfangen am",
+    "orderer_identifier": "Identifizierung",
+    "_pathogen": {
+      "SALMONELLA": "Salmonella",
+      "SHIGELLA": "Shigella",
+      "YERSINIA": "Yersinia",
+      "LISTERIA_MONOCYTOGENES": "Listeria monocytogenes",
+      "VIBRIO_CHOLERAE": "Vibrio cholerae",
+      "ESCHERICHIA_COLI": "Escherichia coli",
+      "CAMPYLOBACTER": "Campylobacter",
+      "OTHER": "Andere"
+    },
+    "laboratory_function": "Bereich",
+    "_laboratory_function": {
+      "PRIMARY": "Primärlabor",
+      "REFERENCE": "Referenzlabor"
+    }
+  },
+  "observation": {
+    "_analysis_type": {
+      "EC_STEC": "Shigatoxin bildend (STEC)",
+      "EC_EPEC": " Enteropathogene (EPEC)",
+      "EC_ETEC": "Enterotoxin bildend (ETEC)",
+      "EC_EIEC": "Enteroinvasive (EIEC) / Shigella",
+      "EC_EAEC": "Enteroaggregative (EAEC)"
+    }
+  },
   "animal_keeper": {
     "_name": "Tierhalter",
     "_plural": "Tierhalter",

@@ -4,6 +4,7 @@ import moment from 'moment'
 import Organizations from "./Organizations.vue";
 import Patients from "./Patients.vue";
 import AnimalKeepers from "./AnimalKeepers.vue";
+import NewProbe from "./NewProbe.vue";
 
 // languages
 import de from './localization/de.json'
@@ -51,5 +52,9 @@ $(document).ready(function () {
 
   if (document.getElementById('vue-animal-keepers') != null) {
     createVue(AnimalKeepers).mount('#vue-animal-keepers')
+  }
+
+  if (document.getElementById('vue-probe-new') != null) {
+    createVue(NewProbe).mount('#vue-probe-new')
   }
 })

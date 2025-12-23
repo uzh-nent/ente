@@ -4,22 +4,28 @@ namespace App\Entity\Probe;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 trait OrdererCopy
 {
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererName = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererAddressLines = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererCity = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $orderPostalCode = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererCountryCode = null;
 
     public function getOrdererName(): ?string

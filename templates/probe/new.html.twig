@@ -1,0 +1,15 @@
+{% extends '_layout.html.twig' %}
+
+{% block title %}{{ 'new.title'|trans }}{% endblock %}
+{% block description %}{{ 'new.description'|trans }}{% endblock %}
+
+{% trans_default_domain "probe" %}
+{% import "macros/components.html.twig" as components %}
+
+{% block content %}
+    <h1>{{ "new.title"|trans({}, "probe") }}</h1>
+
+    <div class="container-text">
+        {{ components.vue_entry_point('vue-probe-new') }}
+    </div>
+{% endblock %}

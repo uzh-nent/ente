@@ -4,31 +4,40 @@ namespace App\Entity\Probe;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 trait PatientCopy
 {
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[Groups(['patient:read', 'patient:write'])]
     private ?\DateTime $patientBirthDate = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['patient:read', 'patient:write'])]
     private ?string $patientAhvNumber = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['patient:read', 'patient:write'])]
     private ?string $patientGivenName = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['patient:read', 'patient:write'])]
     private ?string $patientFamilyName = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['patient:read', 'patient:write'])]
     private ?string $patientAddressLines = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['patient:read', 'patient:write'])]
     private ?string $patientCity = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['patient:read', 'patient:write'])]
     private ?string $patientPostalCode = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['patient:read', 'patient:write'])]
     private ?string $patientCountryCode = null;
 
     public function getPatientBirthDate(): ?\DateTime

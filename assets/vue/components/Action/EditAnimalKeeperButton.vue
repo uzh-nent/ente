@@ -5,7 +5,7 @@
     :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm">
     <div class="d-flex flex-column align-items-end">
       <div class="w-100">
-        <animalKeeper-form :template="animalKeeper" @update="patch = $event" />
+        <animal-keeper-form :template="animalKeeper" @update="patch = $event" />
       </div>
     </div>
   </button-confirm-modal>

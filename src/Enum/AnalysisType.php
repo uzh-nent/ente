@@ -4,7 +4,7 @@ namespace App\Enum;
 
 enum AnalysisType: string
 {
-    case TYPING = "TYPING";
+    case IDENTIFICATION = "IDENTIFICATION";
     case STEC = "EC_STEC";
     case EPEC = "EC_EPEC";
     case ETEC = "EC_ETEC";

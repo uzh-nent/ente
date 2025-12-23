@@ -4,28 +4,28 @@ namespace App\Entity\Probe;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 trait AnimalKeeperCopy
 {
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['animal-keeper:read', 'animal-keeper:write'])]
     private ?string $animalKeeperName = null;
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $animalKeeperGivenName = null;
-
-    #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $animalKeeperFamilyName = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['animal-keeper:read', 'animal-keeper:write'])]
     private ?string $animalKeeperAddressLines = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['animal-keeper:read', 'animal-keeper:write'])]
     private ?string $animalKeeperCity = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['animal-keeper:read', 'animal-keeper:write'])]
     private ?string $animalKeeperPostalCode = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['animal-keeper:read', 'animal-keeper:write'])]
     private ?string $animalKeeperCountryCode = null;
 
     public function getAnimalKeeperName(): ?string
@@ -36,26 +36,6 @@ trait AnimalKeeperCopy
     public function setAnimalKeeperName(?string $animalKeeperName): void
     {
         $this->animalKeeperName = $animalKeeperName;
-    }
-
-    public function getAnimalKeeperGivenName(): ?string
-    {
-        return $this->animalKeeperGivenName;
-    }
-
-    public function setAnimalKeeperGivenName(?string $animalKeeperGivenName): void
-    {
-        $this->animalKeeperGivenName = $animalKeeperGivenName;
-    }
-
-    public function getAnimalKeeperFamilyName(): ?string
-    {
-        return $this->animalKeeperFamilyName;
-    }
-
-    public function setAnimalKeeperFamilyName(?string $animalKeeperFamilyName): void
-    {
-        $this->animalKeeperFamilyName = $animalKeeperFamilyName;
     }
 
     public function getAnimalKeeperAddressLines(): ?string

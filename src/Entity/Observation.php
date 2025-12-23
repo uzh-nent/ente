@@ -32,7 +32,7 @@ class Observation
     #[ORM\Column(type: Types::STRING, enumType: AnalysisType::class)]
     private ?AnalysisType $analysisType = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $analysisStartAt = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
