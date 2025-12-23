@@ -1,7 +1,7 @@
 <template>
   <button class="btn" :class="active ? 'btn-' + color : 'btn-outline-' + color" @click="tryShow">
     <i v-if="icon" :class="icon"></i>
-    <span v-else>{{ title }}</span>
+    <template v-if="buttonSize !== 'sm' || !icon">&nbsp;{{ title }}</template>
 
     <confirm-modal
       :title="title" :size="modalSize" :show="show" @hide="tryHide" :color="color"
@@ -31,6 +31,11 @@ export default {
     active: {
       type: Boolean,
       default: false
+    },
+    buttonSize: {
+      type: String,
+      default: 'md',
+      validator: value => ['sm', 'md'].includes(value)
     },
     modalSize: {
       type: String,

@@ -1,6 +1,6 @@
 <template>
   <button-confirm-modal
-    :title="$t('_action.add_patient.title')"
+    :title="$t('_action.add_patient.title')" icon="fas fa-plus"
     :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm">
     <patient-form :template="template" @update="post = $event" />
   </button-confirm-modal>

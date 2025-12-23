@@ -1,6 +1,6 @@
 <template>
   <button-confirm-modal
-    :title="$t('_action.add_animal_keeper.title')"
+    :title="$t('_action.add_animal_keeper.title')" icon="fas fa-plus"
     :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm">
     <animalKeeper-form :template="template" @update="post = $event" />
   </button-confirm-modal>

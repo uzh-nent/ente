@@ -1,6 +1,6 @@
 <template>
   <button-confirm-modal
-    :title="$t('_action.add_organization.title')"
+    :title="$t('_action.add_organization.title')" icon="fas fa-plus"
     :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm">
     <organization-form :template="template" @update="post = $event" />
   </button-confirm-modal>

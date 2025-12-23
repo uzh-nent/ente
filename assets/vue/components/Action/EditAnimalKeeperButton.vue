@@ -1,6 +1,7 @@
 <template>
   <button-confirm-modal
-    :title="$t('_action.edit_animal_keeper.title')" icon="fas fa-pencil"
+    :title="$t('_action.edit_animal_keeper.title')" icon="fas fa-edit"
+    button-size="sm" color="secondary"
     :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm">
     <div class="d-flex flex-column align-items-end">
       <div class="w-100">
