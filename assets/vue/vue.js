@@ -8,12 +8,13 @@ import AnimalKeepers from "./AnimalKeepers.vue";
 // languages
 import de from './localization/de.json'
 
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import Flatpickr from 'flatpickr'
-import { German } from 'flatpickr/dist/l10n/de'
+import {German} from 'flatpickr/dist/l10n/de'
 
 // directives
-import { clickOutside, focus } from './services/directives'
+import {clickOutside, focus} from './services/directives'
+import $ from "jquery";
 
 // configure locales
 moment.locale('de')
@@ -39,14 +40,16 @@ function createVue(app) {
   return vue
 }
 
-if (document.getElementById('vue-organizations') != null) {
-  createVue(Organizations).mount('#vue-organizations')
-}
+$(document).ready(function () {
+  if (document.getElementById('vue-organizations') != null) {
+    createVue(Organizations).mount('#vue-organizations')
+  }
 
-if (document.getElementById('vue-patients') != null) {
-  createVue(Patients).mount('#vue-patients')
-}
+  if (document.getElementById('vue-patients') != null) {
+    createVue(Patients).mount('#vue-patients')
+  }
 
-if (document.getElementById('vue-animal-keepers') != null) {
-  createVue(AnimalKeepers).mount('#vue-animal-keepers')
-}
+  if (document.getElementById('vue-animal-keepers') != null) {
+    createVue(AnimalKeepers).mount('#vue-animal-keepers')
+  }
+})
