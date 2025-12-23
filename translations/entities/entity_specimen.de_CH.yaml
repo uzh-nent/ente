@@ -1,3 +1,9 @@
 entity:
-    title: 'Material'
+    title: 'Specimen'
+
+groups:
+  identification: "Identifizierung"
+
+Specimen group: "Specimen group"
+
 
