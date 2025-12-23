@@ -1,4 +1,4 @@
-{% extends '_layout.html.twig' %}
+{% extends '_content.html.twig' %}
 
 {% block title %}{{ 'leading_codes.title'|trans }}{% endblock %}
 {% block description %}{{ 'leading_codes.description'|trans }}{% endblock %}
@@ -13,9 +13,7 @@
 
 {% import _self as own_macros %}
 
-{% block content %}
-    <h1>{{ "leading_codes.title"|trans({}, "reference_data") }}</h1>
-
+{% block inner_content %}
     <a class="btn btn-outline-primary"
        href="{{ path("reference_data_leading_code_new") }}">
         <i class="fas fa-plus"></i>

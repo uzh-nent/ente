@@ -43,7 +43,7 @@ class ReferenceDataController extends AbstractController
             $message = $translator->trans('leading_code_new.success.created', [], 'reference_data');
             $this->addFlash('success', $message);
 
-            return $this->redirectToRoute('reference_data');
+            return $this->redirectToRoute('reference_data_leading_codes');
         }
 
         return $this->render('reference_data/leading_code/new.html.twig', ['form' => $form->createView()]);
@@ -63,7 +63,7 @@ class ReferenceDataController extends AbstractController
             $message = $translator->trans('leading_code_edit.success.stored', [], 'reference_data');
             $this->addFlash('success', $message);
 
-            return $this->redirectToRoute('reference_data');
+            return $this->redirectToRoute('reference_data_leading_codes');
         }
 
         return $this->render('reference_data/leading_code/edit.html.twig', ['form' => $form->createView()]);
