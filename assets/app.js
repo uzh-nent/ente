@@ -44,6 +44,13 @@ $(document).ready(function () {
     $(this).next('.custom-file-label').addClass('selected').html(fileName);
   });
 
+  $('#admin-toggle').on('click', function (e) {
+    e.preventDefault();
+    $('#admin-toggle').toggleClass('active');
+    $('#admin-nav').toggleClass('d-none');
+    $('#user-nav').toggleClass('d-none');
+  })
+
   usability();
 });
 

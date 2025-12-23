@@ -1,7 +1,7 @@
 {% extends '_layout.html.twig' %}
 
-{% block title %}{{ 'index.title'|trans }}{% endblock %}
-{% block description %}{{ 'index.description'|trans }}{% endblock %}
+{% block title %}{{ 'leading_codes.title'|trans }}{% endblock %}
+{% block description %}{{ 'leading_codes.description'|trans }}{% endblock %}
 
 {% trans_default_domain "reference_data" %}
 {% import "macros/components.html.twig" as components %}
@@ -14,9 +14,7 @@
 {% import _self as own_macros %}
 
 {% block content %}
-    <h1>{{ "index.title"|trans({}, "reference_data") }}</h1>
-
-    <h2 class="mt-5">{{ "entity.title"|trans({}, "entity_leading_code") }}</h2>
+    <h1>{{ "leading_codes.title"|trans({}, "reference_data") }}</h1>
 
     <a class="btn btn-outline-primary"
        href="{{ path("reference_data_leading_code_new") }}">

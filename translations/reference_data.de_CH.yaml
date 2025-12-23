@@ -1,6 +1,6 @@
-index:
-  title: "Referenzdaten"
-  description: "Struktur der Referenzdaten"
+leading_codes:
+  title: "Leading Codes"
+  description: "Alle Leading Codes"
 
 leading_code_new:
   title: "Neuer Leading Code"

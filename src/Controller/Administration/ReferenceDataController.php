@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Administration;
 
 use App\Entity\Interpretation;
 use App\Entity\LeadingCode;
@@ -16,18 +16,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route('/reference_data')]
+#[Route('/admin/reference_data')]
 class ReferenceDataController extends AbstractController
 {
-    #[Route('', name: 'reference_data')]
-    public function index(ManagerRegistry $registry): Response
+    #[Route('', name: 'reference_data_leading_codes')]
+    public function leadingCodes(ManagerRegistry $registry): Response
     {
         $leadingCodes = $registry->getRepository(LeadingCode::class)->findAll();
-        $organisms = $registry->getRepository(Organism::class)->findAll();
-        $specimens = $registry->getRepository(Specimen::class)->findAll();
-        $interpretation = $registry->getRepository(Interpretation::class)->findAll();
 
-        return $this->render('reference_data/index.html.twig', ['leadingCodes' => $leadingCodes, 'organisms' => $organisms, 'specimens' => $specimens, 'interpretation' => $interpretation]);
+        return $this->render('reference_data/index.html.twig', ['leadingCodes' => $leadingCodes]);
     }
 
     #[Route('/leading_code/new', name: 'reference_data_leading_code_new')]
