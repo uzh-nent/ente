@@ -37,7 +37,6 @@ class TwigExtension extends AbstractExtension
         return [
             new TwigFilter('format_date', $this->formatDateFilter(...)),
             new TwigFilter('format_date_time', $this->formatDateTimeFilter(...)),
-            new TwigFilter('trans_translatable', $this->transTranslatableFilter(...)),
         ];
     }
 
@@ -57,14 +56,5 @@ class TwigExtension extends AbstractExtension
         }
 
         return '-';
-    }
-
-    public function transTranslatableFilter(?TranslatableInterface $value): string
-    {
-        if ($value === null) {
-            return '-';
-        }
-
-        return $value->trans($this->translator);
     }
 }

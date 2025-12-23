@@ -14,6 +14,7 @@ namespace App\Entity;
 use App\Entity\Traits\CodedIdentifierTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
+use App\Enum\InterpretationGroup;
 use App\Enum\Pathogen;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -35,8 +36,8 @@ class LeadingCode
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $specimenGroup = null;
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $interpretationGroup = null;
+    #[ORM\Column(type: Types::STRING, enumType: InterpretationGroup::class, nullable: true)]
+    private ?InterpretationGroup $interpretationGroup = null;
 
     #[ORM\ManyToOne(targetEntity: Specimen::class)]
     private ?Specimen $specimen = null;
@@ -71,12 +72,12 @@ class LeadingCode
         $this->specimenGroup = $specimenGroup;
     }
 
-    public function getInterpretationGroup(): ?string
+    public function getInterpretationGroup(): ?InterpretationGroup
     {
         return $this->interpretationGroup;
     }
 
-    public function setInterpretationGroup(?string $interpretationGroup): void
+    public function setInterpretationGroup(?InterpretationGroup $interpretationGroup): void
     {
         $this->interpretationGroup = $interpretationGroup;
     }

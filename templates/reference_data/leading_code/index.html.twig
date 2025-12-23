@@ -32,7 +32,7 @@
         {% for leadingCode in leadingCodes %}
             <tr>
                 <td>{{ components.render_code(leadingCode) }}</td>
-                <td>{{ leadingCode.pathogen|trans_translatable }}</td>
+                <td>{{ leadingCode.pathogen|trans }}</td>
                 <td>{{ leadingCode.organismGroup }}</td>
                 <td>
                     {% if leadingCode.specimen %}
@@ -41,7 +41,7 @@
                         {{ leadingCode.specimenGroup }}
                     {% endif %}
                 </td>
-                <td>{{ leadingCode.interpretationGroup }}</td>
+                <td>{{ leadingCode.interpretationGroup|trans }}</td>
                 <td class="w-minimal">
                     <a class="btn btn-secondary"
                        href="{{ path("reference_data_leading_code_edit", {"leadingCode" : leadingCode.id}) }}">

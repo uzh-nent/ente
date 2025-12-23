@@ -16,6 +16,7 @@ use App\Entity\Traits\CommentTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
 use App\Enum\AnalysisType;
+use App\Enum\Interpretation;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,7 +38,7 @@ class Observation
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $analysisStopAt = null;
 
-    #[ORM\ManyToOne(targetEntity: Interpretation::class)]
+    #[ORM\Column(type: Types::STRING, enumType: Interpretation::class, nullable: true)]
     private ?Interpretation $interpretation = null;
 
     #[ORM\ManyToOne(targetEntity: Organism::class)]

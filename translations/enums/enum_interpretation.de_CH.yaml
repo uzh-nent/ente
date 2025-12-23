@@ -1,0 +1,5 @@
+enum:
+  title: "Interpretation"
+
+POS: "POS"
+NEG: "NEG"

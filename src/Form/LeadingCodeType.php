@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\LeadingCode;
 use App\Entity\Specimen;
+use App\Enum\InterpretationGroup;
 use App\Enum\Pathogen;
 use App\Form\Traits\CodedIdentifierType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -31,7 +32,7 @@ class LeadingCodeType extends AbstractType
                 return $specimen->getDisplayName() . " (" . $code . ")";
             }]);
         $builder->add('specimenGroup', TextType::class, ['required' => false]);
-        $builder->add('interpretationGroup', TextType::class, ['required' => false]);
+        $builder->add('interpretationGroup', EnumType::class, ['class' => InterpretationGroup::class]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
