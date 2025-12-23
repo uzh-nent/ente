@@ -14,12 +14,14 @@
 {% import _self as own_macros %}
 
 {% block inner_content %}
-    <a class="btn btn-outline-primary"
-       href="{{ path("reference_data_leading_code_new") }}">
-        <i class="fas fa-plus"></i>
-        {{ "leading_code_new.title"|trans }}
-    </a>
-    <table class="table table-striped table-hover datatable">
+    <p>
+        <a class="btn btn-outline-primary"
+           href="{{ path("reference_data_leading_code_new") }}">
+            <i class="fas fa-plus"></i>
+            {{ "leading_code_new.title"|trans }}
+        </a>
+    </p>
+    <table class="table table-striped table-hover datatable border">
         <thead>
         <tr>
             <th>{{ "entity.title"|trans({}, "entity_leading_code") }}</th>

@@ -28,8 +28,8 @@ $(document).ready(function () {
   const language = document.documentElement.lang.includes('de') ? dataTablesDe : dataTablesEn;
   new DataTable('.datatable', {
     language,
-    pageLength: 10,
-    order: []
+    pageLength: 50,
+    lengthChange: false,
   });
 
   // bootstrap
