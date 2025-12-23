@@ -13,3 +13,6 @@ leading_code_edit:
   description: "Leading Code bearbeiten"
   success:
     stored: 'Leading Code erfolgreich gespeichert.'
+
+index:
+  title: 'Referenzdaten'

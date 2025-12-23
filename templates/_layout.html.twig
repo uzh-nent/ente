@@ -1,7 +1,5 @@
 {% extends '_base.html.twig' %}
 
-{% block description %}{{ block("title") }}{% endblock %}
-
 {% trans_default_domain "index" %}
 
 {% macro nav_item(link, text) %}
@@ -41,7 +39,7 @@
                     </div>
 
                     <div id="admin-nav" {% if not is_admin %}class="d-none"{% endif %}>
-                        <h4 class="mt-5">{{ "index.title"|trans({}, "administration") }}</h4>
+                        <h4 class="mt-5">{{ "index.title"|trans({}, "reference_data") }}</h4>
                         <ul class="nav nav-pills flex-column">
                             {{ own_macros.nav_item(path('reference_data_leading_codes'), "leading_codes.title"|trans({}, "reference_data")) }}
                         </ul>
@@ -51,7 +49,8 @@
                 <div>
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">
-                            <a id="admin-toggle" class="nav-link {% if is_admin %}active{% endif %}" href="#">{{ "index.title"|trans({}, "administration") }}</a>
+                            <a id="admin-toggle" class="nav-link {% if is_admin %}active{% endif %}"
+                               href="#">{{ "index.title"|trans({}, "administration") }}</a>
                         </li>
                     </ul>
                     <p class="mb-0">
