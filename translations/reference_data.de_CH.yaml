@@ -14,5 +14,53 @@ leading_code_edit:
   success:
     stored: 'Leading Code erfolgreich gespeichert.'
 
+organisms:
+  title: "Organisms"
+  description: "Alle Organisms"
+
+organism_new:
+  title: "Neuer Organism"
+  description: "Neuer Organism"
+  success:
+    created: "Organism erfolgreich erstellt."
+
+organism_edit:
+  title: "Organism bearbeiten"
+  description: "Organism bearbeiten"
+  success:
+    stored: 'Organism erfolgreich gespeichert.'
+
+specimen:
+  title: "Specimen"
+  description: "Alle Specimen"
+
+specimen_new:
+  title: "Neuer Specimen"
+  description: "Neuer Specimen"
+  success:
+    created: "Specimen erfolgreich erstellt."
+
+specimen_edit:
+  title: "Specimen bearbeiten"
+  description: "Specimen bearbeiten"
+  success:
+    stored: 'Specimen erfolgreich gespeichert.'
+
+interpretations:
+  title: "Interpretations"
+  description: "Alle Interpretations"
+
+interpretation_new:
+  title: "Neuer Interpretation"
+  description: "Neuer Interpretation"
+  success:
+    created: "Interpretation erfolgreich erstellt."
+
+interpretation_edit:
+  title: "Interpretation bearbeiten"
+  description: "Interpretation bearbeiten"
+  success:
+    stored: 'Interpretation erfolgreich gespeichert.'
+
 index:
   title: 'Referenzdaten'

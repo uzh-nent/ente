@@ -5,3 +5,8 @@
         </noscript>
     </div>
 {% endmacro %}
+
+{% macro render_code(entity) %}
+    {{ entity.displayName }} <br/>
+    {{ entity.system|trans_translatable }} <b>{{ entity.code }}</b>
+{% endmacro %}

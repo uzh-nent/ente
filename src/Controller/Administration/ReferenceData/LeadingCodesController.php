@@ -16,12 +16,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/admin/reference_data')]
 class LeadingCodesController extends AbstractController
 {
-    #[Route('', name: 'reference_data_leading_codes')]
+    #[Route('/leading_codes', name: 'reference_data_leading_codes')]
     public function leadingCodes(ManagerRegistry $registry): Response
     {
         $leadingCodes = $registry->getRepository(LeadingCode::class)->findAll();
 
-        return $this->render('reference_data/index.html.twig', ['leadingCodes' => $leadingCodes]);
+        return $this->render('reference_data/leading_code/index.html.twig', ['leadingCodes' => $leadingCodes]);
     }
 
     #[Route('/leading_code/new', name: 'reference_data_leading_code_new')]

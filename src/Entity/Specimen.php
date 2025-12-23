@@ -26,15 +26,15 @@ class Specimen
     use CodedIdentifierTrait;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $group = null;
+    private ?string $specimenGroup = null;
 
-    public function getGroup(): ?string
+    public function getSpecimenGroup(): ?string
     {
-        return $this->group;
+        return $this->specimenGroup;
     }
 
-    public function setGroup(?string $group): void
+    public function setSpecimenGroup(?string $specimenGroup): void
     {
-        $this->group = $group;
+        $this->specimenGroup = $specimenGroup;
     }
 }

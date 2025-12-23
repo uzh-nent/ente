@@ -6,13 +6,6 @@
 {% trans_default_domain "reference_data" %}
 {% import "macros/components.html.twig" as components %}
 
-{% macro render_code(entity) %}
-    {{ entity.system.value }} <b>{{ entity.code }}</b> <br/>
-    {{ entity.displayName }}
-{% endmacro %}
-
-{% import _self as own_macros %}
-
 {% block inner_content %}
     <p>
         <a class="btn btn-outline-primary"
@@ -38,12 +31,12 @@
         <tbody>
         {% for leadingCode in leadingCodes %}
             <tr>
-                <td>{{ own_macros.render_code(leadingCode) }}</td>
+                <td>{{ components.render_code(leadingCode) }}</td>
                 <td>{{ leadingCode.pathogen|trans_translatable }}</td>
                 <td>{{ leadingCode.organismGroup }}</td>
                 <td>
                     {% if leadingCode.specimen %}
-                        {{ own_macros.render_code(leadingCode.specimen) }}
+                        {{ components.render_code(leadingCode.specimen) }}
                     {% else %}
                         {{ leadingCode.specimenGroup }}
                     {% endif %}

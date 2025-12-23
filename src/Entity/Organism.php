@@ -26,15 +26,15 @@ class Organism
     use CodedIdentifierTrait;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $group = null;
+    private ?string $organismGroup = null;
 
-    public function getGroup(): ?string
+    public function getOrganismGroup(): ?string
     {
-        return $this->group;
+        return $this->organismGroup;
     }
 
-    public function setGroup(?string $group): void
+    public function setOrganismGroup(?string $organismGroup): void
     {
-        $this->group = $group;
+        $this->organismGroup = $organismGroup;
     }
 }

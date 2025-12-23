@@ -26,15 +26,15 @@ class Interpretation
     use CodedIdentifierTrait;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $group = null;
+    private ?string $interpretationGroup = null;
 
-    public function getGroup(): ?string
+    public function getInterpretationGroup(): ?string
     {
-        return $this->group;
+        return $this->interpretationGroup;
     }
 
-    public function setGroup(?string $group): void
+    public function setInterpretationGroup(?string $interpretationGroup): void
     {
-        $this->group = $group;
+        $this->interpretationGroup = $interpretationGroup;
     }
 }
