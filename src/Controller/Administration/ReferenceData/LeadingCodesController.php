@@ -1,11 +1,8 @@
 <?php
 
-namespace App\Controller\Administration;
+namespace App\Controller\Administration\ReferenceData;
 
-use App\Entity\Interpretation;
 use App\Entity\LeadingCode;
-use App\Entity\Organism;
-use App\Entity\Specimen;
 use App\Form\LeadingCodeType;
 use App\Helper\DoctrineHelper;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/reference_data')]
-class ReferenceDataController extends AbstractController
+class LeadingCodesController extends AbstractController
 {
     #[Route('', name: 'reference_data_leading_codes')]
     public function leadingCodes(ManagerRegistry $registry): Response
