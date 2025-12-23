@@ -15,13 +15,13 @@ namespace App\Model;
 
 readonly class Breadcrumb
 {
-    public function __construct(private string $title, private ?string $path = null)
+    public function __construct(private string $name, private ?string $path = null)
     {
     }
 
-    public function getTitle(): string
+    public function getName(): string
     {
-        return $this->title;
+        return $this->name;
     }
 
     public function getPath(): ?string
