@@ -68,18 +68,14 @@
                                 {% for breadcrumb in breadcrumbs %}
                                     {% if not (breadcrumb.path ends with app.request.pathinfo) %}
                                         <li class="breadcrumb-item">
-                                            {% if breadcrumb.path %}
-                                                <a href="{{ breadcrumb.path }}">
-                                                    {{ breadcrumb.name }}
-                                                </a>
-                                            {% else %}
+                                            <a href="{{ breadcrumb.path }}">
                                                 {{ breadcrumb.name }}
-                                            {% endif %}
+                                            </a>
                                         </li>
                                     {% endif %}
                                 {% endfor %}
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    {{ block('title')|raw }}
+                                    {{ title }}
                                 </li>
                             </ol>
                         </nav>
