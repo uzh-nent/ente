@@ -13,21 +13,11 @@ declare(strict_types=1);
 
 namespace App\Extension;
 
-use App\Enum\CodeSystem;
-use App\Enum\Pathogen;
-use Symfony\Component\Filesystem\Path;
-use Symfony\Contracts\Translation\TranslatableInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 class TwigExtension extends AbstractExtension
-{
-    public function __construct(private readonly TranslatorInterface $translator)
-    {
-    }
-
-    /**
+{    /**
      * makes the filters available to twig.
      *
      * @return TwigFilter[]

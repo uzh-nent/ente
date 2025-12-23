@@ -2,7 +2,6 @@
 
 namespace App\Form\Traits;
 
-use App\Entity\Specimen;
 use App\Enum\CodeSystem;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;

@@ -2,18 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\LeadingCode;
 use App\Entity\Organism;
-use App\Entity\Specimen;
-use App\Enum\Pathogen;
 use App\Form\Traits\CodedIdentifierType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OrganismType extends AbstractType
 {
