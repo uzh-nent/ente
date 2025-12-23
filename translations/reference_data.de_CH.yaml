@@ -51,8 +51,8 @@ interpretations:
   description: "Alle Interpretations"
 
 interpretation_new:
-  title: "Neuer Interpretation"
-  description: "Neuer Interpretation"
+  title: "Neue Interpretation"
+  description: "Neue Interpretation"
   success:
     created: "Interpretation erfolgreich erstellt."
 

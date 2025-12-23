@@ -1,0 +1,35 @@
+{% extends "_content.html.twig" %}
+
+{% block inner_content %}
+    <div class="container-text">
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.interpretationGroup) }}
+            </div>
+        </div>
+
+        <h4 class="mt-5">{{ "groups.identification"|trans({}, "entity_interpretation") }}</h4>
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_row(form.codedIdentifier.displayName) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_row(form.codedIdentifier.system) }}
+            </div>
+            <div class="col-md-9">
+                {{ form_row(form.codedIdentifier.code) }}
+            </div>
+        </div>
+
+        <div class="mt-5">
+            {{ form_row(form.submit) }}
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
+{% form_theme form _self %}
