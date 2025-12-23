@@ -11,6 +11,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
 use App\Entity\Traits\IdTrait;
 use Doctrine\DBAL\Types\Types;
@@ -22,6 +23,7 @@ class Report
 {
     use IdTrait;
     use CommentTrait;
+    use AttributionTrait;
 
     #[ORM\ManyToOne(targetEntity: Organization::class)]
     private ?Probe $probe = null;

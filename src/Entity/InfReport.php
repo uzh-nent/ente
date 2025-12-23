@@ -11,6 +11,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\IdTrait;
 use App\Enum\Interpretation;
 use Doctrine\DBAL\Types\Types;
@@ -21,6 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
 class InfReport
 {
     use IdTrait;
+    use AttributionTrait;
 
     #[ORM\ManyToOne(targetEntity: Organization::class)]
     private ?Probe $probe = null;
@@ -36,9 +38,6 @@ class InfReport
 
     #[ORM\Column(type: Types::STRING, enumType: Interpretation::class, nullable: true)]
     private ?Interpretation $interpretation = null;
-
-    #[ORM\ManyToOne(targetEntity: User::class)]
-    private ?User $sentBy = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTime $sentAt = null;
@@ -107,16 +106,6 @@ class InfReport
     public function setInterpretation(?Interpretation $interpretation): void
     {
         $this->interpretation = $interpretation;
-    }
-
-    public function getSentBy(): ?User
-    {
-        return $this->sentBy;
-    }
-
-    public function setSentBy(?User $sentBy): void
-    {
-        $this->sentBy = $sentBy;
     }
 
     public function getSentAt(): ?\DateTime
