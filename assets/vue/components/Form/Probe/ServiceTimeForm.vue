@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import {templatedForm, createField, requiredRule} from './utils/form'
-import FormField from '../Library/FormLayout/FormField'
-import DateTimeInput from '../Library/FormInput/DateTimeInput.vue'
+import {templatedForm, createField, requiredRule} from '../utils/form'
+import FormField from '../../Library/FormLayout/FormField.vue'
+import DateTimeInput from '../../Library/FormInput/DateTimeInput.vue'
 
 export default {
   emits: ['update'],

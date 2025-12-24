@@ -8,7 +8,6 @@
       :model-value="modelValue"
       :config="datePickerConfig"
       @blur="$emit('blur')" />
-    <invalid-feedback :field="field" />
   </div>
 </template>
 

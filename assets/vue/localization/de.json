@@ -5,6 +5,7 @@
     }
   },
   "_form": {
+    "other_or_unknown": "Anderes/Unbekannt",
     "timeFilter": {
       "from": "Von",
       "until": "Bis"
@@ -83,7 +84,15 @@
     "ecoli_identification": "E. Coli Identifizierung",
     "identification_typing": "Identifizierung/Typisierung"
   },
+  "specimen": {
+    "_name": "Specimen (Material)"
+  },
   "probe": {
+    "specimen_date": "Entnahmedatum",
+    "specimen_source": "Herkunft",
+    "specimen_source_text": "Herkunft",
+    "specimen_isolate": "Isolat",
+    "specimen_text": "Material",
     "pathogen": "Pathogen",
     "pathogen_text": "Pathogen",
     "received_at": "Empfangen am",

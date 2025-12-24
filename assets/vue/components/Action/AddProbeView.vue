@@ -3,14 +3,18 @@
     <div class="col-md-4">
       <h3>Auftrag</h3>
       <service-request-form :template="serviceRequestTemplate" @update="serviceRequest = $event" />
+      <h3 class="mt-5">Auftraggeber</h3>
+      <orderer-form :template="ordererTemplate" @update="orderer = $event" />
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" v-if="specimens">
       <h3>Probe</h3>
-      <probe-meta-form :specimens="specimens" :template="probeMetaTemplate" @update="probeMeta = $event" />
+      <specimen-meta-form :specimens="specimens" :template="specimenMetaTemplate" @update="specimenMeta = $event" />
     </div>
   </div>
 
-  {{serviceRequest}}
+  {{ serviceRequest }}
+  {{ orderer }}
+  {{ specimenMeta }}
 </template>
 
 <script>
@@ -20,14 +24,16 @@ import { displaySuccess } from '../../services/notifiers'
 import LoopingRhombusSpinner from '../Library/View/Base/LoopingRhombusSpinner.vue'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import AnimalKeeperForm from "../Form/AnimalKeeperForm.vue";
-import ServiceRequestForm from "../Form/ServiceRequestForm.vue";
+import ServiceRequestForm from "../Form/Probe/ServiceRequestForm.vue";
 import moment from "moment";
-import ProbeMetaForm from "../Form/ProbeMetaForm.vue";
+import OrdererForm from "../Form/Probe/OrdererForm.vue";
+import SpecimenMetaForm from "../Form/Probe/SpecimenMetaForm.vue";
 
 export default {
   emits: ['added'],
   components: {
-    ProbeMetaForm,
+    SpecimenMetaForm,
+    OrdererForm,
     ServiceRequestForm,
     AnimalKeeperForm,
     ButtonConfirmModal,
@@ -37,8 +43,9 @@ export default {
     return {
       specimens: undefined,
 
+      orderer: null,
       serviceRequest: null,
-      probeMeta: null,
+      specimenMeta: null,
     }
   },
   computed: {
@@ -56,7 +63,7 @@ export default {
         receivedAt: moment().format('YYYY-MM-DD'),
       }
     },
-    probeMetaTemplate: function () {
+    specimenMetaTemplate: function () {
       return {
         specimenSource: 'HUMAN',
       }

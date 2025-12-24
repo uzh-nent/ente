@@ -6,7 +6,6 @@
     @input="$emit('update:modelValue', $event.target.value)"
     @blur="$emit('blur')"
    />
-  <invalid-feedback :field="field" />
 </template>
 
 <script>

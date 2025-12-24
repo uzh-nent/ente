@@ -1,32 +1,35 @@
 <template>
   <div>
-    <form-field for-id="specimenDate" :label="$t('probe.received_at')" :field="fields.specimenDate">
+    <form-field for-id="specimenDate" :label="$t('probe.specimen_date')" :field="fields.specimenDate">
       <date-time-input id="specimenDate" :field="fields.specimenDate" v-model="entity.specimenDate" format="date"
                        @blur="blurField('specimenDate')" @update:modelValue="validateField('specimenDate')"/>
     </form-field>
 
     <!-- select specimen source -->
-    <form-field for-id="specimenSource" :label="$t('probe.specimen_source')" :field="fields.specimenSource">
-      <custom-select id="specimenSource" :choices="specimenSources" :field="fields.specimenSource"
-                     v-model="entity.specimenSource" @update:model-value="validateField('specimenSource')"/>
-    </form-field>
-
-    <form-field v-if="!entity.specimenSource"
-                for-id="specimenSourceText" :label="$t('probe.specimen_source_text')"
-                :field="fields.specimenSourceText">
-      <text-input id="specimenSourceText" type="text" :field="fields.specimenSourceText"
-                  v-model="entity.specimenSourceText"
-                  @blur="blurField('specimenSourceText')" @update:modelValue="validateField('specimenSourceText')"/>
-    </form-field>
+    <div class="row">
+      <div class="col-md-12">
+        <form-field for-id="specimenSource" :label="$t('probe.specimen_source')" :field="fields.specimenSource">
+          <custom-select id="specimenSource" :choices="specimenSources" :field="fields.specimenSource"
+                         v-model="entity.specimenSource" @update:model-value="validateField('specimenSource')"/>
+          <text-input v-if="!entity.specimenSource" class="mt-1"
+                      id="specimenSourceText" type="text" :field="fields.specimenSourceText"
+                      v-model="entity.specimenSourceText"
+                      @blur="blurField('specimenSourceText')" @update:modelValue="validateField('specimenSourceText')"/>
+        </form-field>
+      </div>
+    </div>
 
     <!-- select specimen -->
     <template v-if="entity.specimenSource === 'HUMAN'">
       <div class="row">
         <div class="col-md-9">
-          <form-field
-              for-id="specimen" :label="$t('probe.specimen')" :field="fields.specimen">
+          <form-field for-id="specimen" :label="$t('specimen._name')" :field="fields.specimen">
             <custom-select id="specimen" :choices="specimenChoices" :field="fields.specimen"
-                           v-model="entity.specimen" @update:model-value="validateField('specimen')"/>
+                           v-model="entity.specimen" @update:model-value="validateField('specimen')">
+              <option :key="null" :value="null">
+                {{ $t('_form.other_or_unknown') }}
+              </option>
+            </custom-select>
           </form-field>
         </div>
         <div class="col-md-3">
@@ -36,51 +39,54 @@
                            v-model="entity.specimenIsolate" @update:model-value="validateField('specimenIsolate')"/>
           </form-field>
         </div>
+        <div class="col-md-9 shift-input-up" v-if="!entity.specimen">
+          <text-input id="specimenText" type="text" :field="fields.specimenText"
+                      v-model="entity.specimenText"
+                      @blur="blurField('specimenText')" @update:modelValue="validateField('specimenText')"/>
+        </div>
       </div>
     </template>
 
-    <form-field v-if="!entity.specimen"
-                for-id="specimenText" :label="$t('probe.specimen_source_text')" :field="fields.specimenText">
+    <form-field v-if="entity.specimenSource !== 'HUMAN'"
+                for-id="specimenText" :label="$t('probe.specimen_text')" :field="fields.specimenText">
       <text-input id="specimenText" type="text" :field="fields.specimenText"
                   v-model="entity.specimenText"
                   @blur="blurField('specimenText')" @update:modelValue="validateField('specimenText')"/>
     </form-field>
-
-
   </div>
 </template>
 
 <script>
-import {templatedForm, createField, requiredRule} from './utils/form'
-import FormField from '../Library/FormLayout/FormField'
-import TextInput from '../Library/FormInput/TextInput.vue'
-import TextArea from '../Library/FormInput/TextArea.vue'
-import DateTimeInput from '../Library/FormInput/DateTimeInput.vue'
-import Radio from "../Library/FormInput/Radio.vue";
-import Checkboxes from "../Library/FormInput/Checkboxes.vue";
-import {paginatedQuery} from "../../mixins/table";
-import {api} from "../../services/api";
-import AddOrganizationButton from "../Action/AddOrganizationButton.vue";
-import OrganizationView from "../View/OrganizationView.vue";
-import CustomSelect from "../Library/FormInput/CustomSelect.vue";
-import Checkbox from "../Library/FormInput/Checkbox.vue";
+import {templatedForm, createField, requiredRule} from '../utils/form'
+import FormField from '../../Library/FormLayout/FormField.vue'
+import TextInput from '../../Library/FormInput/TextInput.vue'
+import TextArea from '../../Library/FormInput/TextArea.vue'
+import DateTimeInput from '../../Library/FormInput/DateTimeInput.vue'
+import Radio from "../../Library/FormInput/Radio.vue";
+import Checkboxes from "../../Library/FormInput/Checkboxes.vue";
+import {paginatedQuery} from "../../../mixins/table";
+import {api} from "../../../services/api";
+import AddOrganizationButton from "../../Action/AddOrganizationButton.vue";
+import OrganizationView from "../../View/OrganizationView.vue";
+import CustomSelect from "../../Library/FormInput/CustomSelect.vue";
+import Checkbox from "../../Library/FormInput/Checkbox.vue";
 
 const createSpecimenSource = function (translator) {
-  const values = ['REFERENCE', 'HUMAN', 'ANIMAL', 'FOOD', 'FEED', 'ENVIRONMENT', 'LABORATORY_STRAIN']
+  const values = ['HUMAN', 'ANIMAL', 'FOOD', 'FEED', 'ENVIRONMENT', 'LABORATORY_STRAIN']
   return values.map(value => ({label: translator(`probe._specimen_source.${value}`), value}))
-      .concat({label: translator('probe._specimen_source.OTHER'), value: null})
+      .concat({label: translator('_form.other_or_unknown'), value: null})
 }
 
 const createSpecimenFoodTypes = function (translator) {
   const values = ['POULTRY', 'MEAT', 'DAIRY', 'EGG', 'FISH']
   return values.map(value => ({label: translator(`probe._specimen_food_type.${value}`), value}))
-      .concat({label: translator('probe._specimen_food_type.OTHER'), value: null})
+      .concat({label: translator('_form.other_or_unknown'), value: null})
 }
 
 const createSpecimenAnimalTypes = function (translator) {
   const values = ['CATTLE', 'PIG', 'CHICKEN', 'BIRD', 'REPTILIAN']
   return values.map(value => ({label: translator(`probe._specimen_animal_type.${value}`), value}))
-      .concat({label: translator('probe._specimen_animal_type.OTHER'), value: null})
+      .concat({label: translator('_form.other_or_unknown'), value: null})
 }
 
 export default {
@@ -104,7 +110,7 @@ export default {
   props: {
     specimens: {
       type: Array,
-      default: []
+      required: true
     }
   },
   data() {
@@ -202,7 +208,9 @@ export default {
           this.entity.patient = null
           this.entity.specimen = null
           this.entity.specimenIsolate = null
+          this.fields.specimen.rules = []
         } else {
+          this.fields.specimen.rules = [requiredRule]
           this.entity.specimenIsolate = true
           this.entity.specimen = this.specimens.find(specimen => specimen.displayName.includes("Stool"))
         }
@@ -211,3 +219,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.shift-input-up {
+  margin-top: -0.8rem;
+}
+</style>

@@ -10,7 +10,6 @@
       {{ label }}
       <span v-if="required" class="text-danger">*</span>
     </label>
-    <invalid-feedback :field="field" />
   </div>
 </template>
 

@@ -1,11 +1,10 @@
 <template>
   <input
-    :id="id" class="form-control" :type="type" :required="required"
+    :id="id" class="form-control" :type="type" :required="required" :autofocus="autofocus"
     :class="{'is-valid': field?.valid, 'is-invalid': field?.invalid }"
     :value="modelValue" :disabled="disabled" :placeholder="placeholder"
     @input="$emit('update:modelValue', parseValue($event.target.value))"
     @blur="$emit('blur')">
-  <invalid-feedback :field="field" />
 </template>
 
 <script>
@@ -38,6 +37,10 @@ export default {
       default: null
     },
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    autofocus: {
       type: Boolean,
       default: false
     }

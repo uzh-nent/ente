@@ -6,14 +6,17 @@
     </label>
     <slot />
     <div v-if="help" class="form-text">{{ help }}</div>
+    <invalid-feedback :field="field" />
   </div>
 </template>
 
 <script>
 
 import { requiredRule } from '../../Form/utils/form'
+import InvalidFeedback from "./InvalidFeedback.vue";
 
 export default {
+  components: {InvalidFeedback},
   props: {
     forId: {
       type: String,

@@ -6,7 +6,7 @@
         <tr class="bg-light">
           <th colspan="100">
             <div class="d-flex flex-row reset-table-styles gap-2">
-              <input type="text" class="form-control mw-5"
+              <input type="text" class="form-control mw-5"  autofocus
                      :placeholder="$t('address.postal_code')"
                      v-model="searchPostalCode">
               <input type="text" class="form-control mw-30"

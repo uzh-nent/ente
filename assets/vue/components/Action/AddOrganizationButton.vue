@@ -2,7 +2,7 @@
   <button-confirm-modal
     :title="$t('_action.add_organization.title')" icon="fas fa-plus"
     :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm">
-    <organization-form :template="template" @update="post = $event" />
+    <organization-form :template="extendedTemplate" @update="post = $event" />
   </button-confirm-modal>
 </template>
 
@@ -36,7 +36,7 @@ export default {
     canConfirm: function () {
       return !!this.post
     },
-    template: function () {
+    extendedTemplate: function () {
       return {
         ...this.template,
         countryCode: 'CH',

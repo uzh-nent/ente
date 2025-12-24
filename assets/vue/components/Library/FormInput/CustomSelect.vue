@@ -8,9 +8,8 @@
     <option v-for="choice in choices" :key="choice.value" :value="choice.value">
       {{ choice.label }}
     </option>
+    <slot />
   </select>
-  <span class="form-text" v-if="multiple">{{ $t('_library.ctrl_for_multi_select') }}</span>
-  <invalid-feedback :field="field" />
 </template>
 
 <script>
