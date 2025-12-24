@@ -17,9 +17,13 @@
         <input type="text" class="form-control mw-5"
                :placeholder="$t('address.postal_code')"
                v-model="searchPostalCode">
-        <input type="text" class="form-control mw-30"
+        <input type="text" class="form-control flex-grow-1"
                :placeholder="$t('_view.search_by_name')"
                v-model="searchName">
+        <add-organization-button
+            button-size="sm"
+            ref="addOrganizationButton"
+            :template="{postalCode: searchPostalCode, name: searchName}" @added="addedOrganization"/>
       </div>
 
       <div class="mb-2">
@@ -28,8 +32,6 @@
         <span class="form-text">{{ itemHits }}</span>
       </div>
 
-      <add-organization-button @added="addedOrganization"
-                               :template="{postalCode: searchPostalCode, name: searchName}"/>
     </form-field>
   </div>
 </template>
@@ -92,11 +94,20 @@ export default {
       return this.$t('_action.hits', {hits: hits})
     }
   },
+  watch: {
+    items: {
+      handler: function (items) {
+        if (items.length === 1) {
+          this.entity.orderer = items[0]
+        }
+      }
+    }
+  },
   methods: {
     addedOrganization: function (organization) {
       this.searchPostalCode = organization.postalCode
       this.searchName = organization.name
-      this.entity.orderer = organization
+      this.$refs.addOrganizationButton?.$el.focus()
     }
   }
 }

@@ -79,3 +79,11 @@ export const formatOrganizationShort = function (value) {
 
   return [value.postalCode, value.name].filter(e => e).join(" ")
 }
+
+export const formatAnimalKeeperShort = function (value) {
+  if (!value) {
+    return '-'
+  }
+
+  return [value.postalCode, value.name].filter(e => e).join(" ")
+}

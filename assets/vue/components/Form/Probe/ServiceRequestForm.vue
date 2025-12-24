@@ -18,12 +18,9 @@
                v-model="entity.pathogen" @update:model-value="validateField('pathogen')"/>
       </form-field>
       <template v-if="entity.pathogen === null">
-        <form-field for-id="pathogenText" :label="$t('probe.pathogen_text')"
-                    :field="fields.pathogenText">
-          <text-input id="pathogenText" type="text" :field="fields.pathogenText"
-                      v-model="entity.pathogenText"
-                      @blur="blurField('pathogenText')" @update:modelValue="validateField('pathogenText')"/>
-        </form-field>
+        <text-input id="pathogenText" type="text" class="shift-input-up" :field="fields.pathogenText"
+                    v-model="entity.pathogenText"
+                    @blur="blurField('pathogenText')" @update:modelValue="validateField('pathogenText')"/>
       </template>
     </template>
   </div>
@@ -115,3 +112,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.shift-input-up {
+  margin-top: -0.8rem;
+}
+</style>

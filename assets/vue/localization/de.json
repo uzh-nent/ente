@@ -88,6 +88,9 @@
     "_name": "Specimen (Material)"
   },
   "probe": {
+    "_name": "Probe",
+    "pathogen": "Pathogen",
+    "service_request": "Auftrag",
     "specimen_date": "Entnahmedatum",
     "specimen_source": "Herkunft",
     "specimen_source_text": "Herkunft",
@@ -95,8 +98,7 @@
     "specimen_text": "Material",
     "specimen_type": "Art",
     "specimen_location": "Ort",
-    "pathogen": "Pathogen",
-    "pathogen_text": "Pathogen",
+    "animal_name": "Tiername",
     "received_at": "Empfangen am",
     "orderer_identifier": "Labor-/Stammnummer",
     "orderer": "Auftraggeber",

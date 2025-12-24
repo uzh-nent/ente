@@ -152,7 +152,7 @@ export default {
       fields: {
         specimenDate: createField(),
         specimenSource: createField(requiredRule),
-        specimenSourceText: createField(requiredRule),
+        specimenSourceText: createField(),
         specimenText: createField(),
 
         specimenTypeText: createField(),
@@ -217,6 +217,9 @@ export default {
       handler: function (specimenSource) {
         if (specimenSource) {
           this.entity.specimenSourceText = null
+          this.fields.specimenSourceText.rules = []
+        } else {
+          this.fields.specimenSourceText.rules = [requiredRule]
         }
 
         if (specimenSource !== 'LABORATORY_STRAIN' && specimenSource !== 'FEED' && specimenSource !== 'ENVIRONMENT') {
