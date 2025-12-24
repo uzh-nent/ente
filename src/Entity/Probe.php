@@ -64,8 +64,8 @@ class Probe
     use CommentTrait;
 
     use ServiceRequest;
-    use ServiceTime;
     use SpecimenMeta;
+    use ServiceTime;
 
     #[ORM\Column(type: Types::STRING, unique: true)]
     #[Groups(['probe:read'])]

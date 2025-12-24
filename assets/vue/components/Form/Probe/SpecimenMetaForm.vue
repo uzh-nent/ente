@@ -46,12 +46,46 @@
         </div>
       </div>
     </template>
-
     <form-field v-if="entity.specimenSource !== 'HUMAN'"
                 for-id="specimenText" :label="$t('probe.specimen_text')" :field="fields.specimenText">
       <text-input id="specimenText" type="text" :field="fields.specimenText"
                   v-model="entity.specimenText"
                   @blur="blurField('specimenText')" @update:modelValue="validateField('specimenText')"/>
+    </form-field>
+
+    <!-- select specimen type -->
+    <form-field v-if="entity.specimenSource === 'FOOD'"
+                for-id="specimenTypeText" :label="$t('probe.specimen_food_type')" :field="fields.specimenFoodType">
+      <custom-select id="specimenFoodType" :choices="specimenFoodTypes" :field="fields.specimenFoodType"
+                     v-model="entity.specimenFoodType" @update:model-value="validateField('specimenFoodType')"/>
+      <text-input v-if="!entity.specimenFoodType" class="mt-1"
+                  id="specimenTypeText" type="text" :field="fields.specimenTypeText"
+                  v-model="entity.specimenTypeText"
+                  @blur="blurField('specimenTypeText')" @update:modelValue="validateField('specimenTypeText')"/>
+    </form-field>
+    <form-field v-else-if="entity.specimenSource === 'ANIMAL'"
+                for-id="specimenTypeText" :label="$t('probe.specimen_animal_type')" :field="fields.specimenAnimalType">
+      <custom-select id="specimenAnimalType" :choices="specimenAnimalTypes" :field="fields.specimenAnimalType"
+                     v-model="entity.specimenAnimalType" @update:model-value="validateField('specimenAnimalType')"/>
+      <text-input v-if="!entity.specimenAnimalType" class="mt-1"
+                  id="specimenTypeText" type="text" :field="fields.specimenTypeText"
+                  v-model="entity.specimenTypeText"
+                  @blur="blurField('specimenTypeText')" @update:modelValue="validateField('specimenTypeText')"/>
+    </form-field>
+    <form-field v-else-if="entity.specimenSource !== 'HUMAN'"
+                for-id="specimenTypeText" :label="$t('probe.specimen_type')" :field="fields.specimenTypeText">
+      <text-input class="mt-1"
+                  id="specimenTypeText" type="text" :field="fields.specimenTypeText"
+                  v-model="entity.specimenTypeText"
+                  @blur="blurField('specimenTypeText')" @update:modelValue="validateField('specimenTypeText')"/>
+    </form-field>
+
+    <!-- select specimen location -->
+    <form-field v-if="entity.specimenSource !== 'HUMAN' && entity.specimenSource !== 'ANIMAL'"
+                for-id="specimenLocation" :label="$t('probe.specimen_location')" :field="fields.specimenLocation">
+      <text-area id="specimenLocation" type="text" :field="fields.specimenLocation"
+                  v-model="entity.specimenLocation"
+                  @blur="blurField('specimenLocation')" @update:modelValue="validateField('specimenLocation')"/>
     </form-field>
   </div>
 </template>
@@ -192,16 +226,20 @@ export default {
 
         if (specimenSource !== 'FOOD') {
           this.entity.specimenFoodType = null
+          this.fields.specimenFoodType.rules = []
         } else {
           this.entity.specimenFoodType = this.specimenFoodTypes[0].value
+          this.fields.specimenFoodType.rules = [requiredRule]
         }
 
         if (specimenSource !== 'ANIMAL') {
           this.entity.specimenAnimalType = null
           this.entity.animalKeeper = null
           this.entity.animalName = null
+          this.fields.specimenAnimalType.rules = []
         } else {
           this.entity.specimenAnimalType = this.specimenAnimalTypes[0].value
+          this.fields.specimenAnimalType.rules = [requiredRule]
         }
 
         if (specimenSource !== 'HUMAN') {
@@ -210,9 +248,9 @@ export default {
           this.entity.specimenIsolate = null
           this.fields.specimen.rules = []
         } else {
-          this.fields.specimen.rules = [requiredRule]
           this.entity.specimenIsolate = true
           this.entity.specimen = this.specimens.find(specimen => specimen.displayName.includes("Stool"))
+          this.fields.specimen.rules = [requiredRule]
         }
       },
     }

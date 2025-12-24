@@ -93,6 +93,8 @@
     "specimen_source_text": "Herkunft",
     "specimen_isolate": "Isolat",
     "specimen_text": "Material",
+    "specimen_type": "Art",
+    "specimen_location": "Ort",
     "pathogen": "Pathogen",
     "pathogen_text": "Pathogen",
     "received_at": "Empfangen am",
@@ -121,6 +123,7 @@
       "ENVIRONMENT": "Umwelt",
       "LABORATORY_STRAIN": "Laborstamm"
     },
+    "specimen_food_type": "Lebensmittelart",
     "_specimen_food_type": {
       "POULTRY": "Geflügel",
       "MEAT": "Fleisch",
@@ -128,6 +131,7 @@
       "EGG": "Eier",
       "FISH": "Fisch"
     },
+    "specimen_animal_type": "Tierart",
     "_specimen_animal_type": {
       "CATTLE": "Rind",
       "PIG": "Schwein",
