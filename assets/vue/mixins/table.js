@@ -54,6 +54,10 @@ export const paginatedQuery = function (itemsPerPage, loadItems) {
         this.load(this.page, this.query)
       },
       load: function (page, query) {
+        if (this.query === null) {
+          return
+        }
+
         const paginatedQuery = Object.assign({page, itemsPerPage}, query)
 
         this.isLoading = true

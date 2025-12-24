@@ -13,6 +13,7 @@
 
       <template v-if="payload?.specimenSource === 'HUMAN'">
         <h3 class="mt-5">{{ $t('patient._name') }}</h3>
+        <find-patient-form @update="patient = $event"/>
       </template>
 
       <template v-if="payload.specimenSource === 'ANIMAL'">
@@ -21,10 +22,6 @@
       </template>
     </div>
   </div>
-
-  {{ serviceRequest }}
-  {{ orderer }}
-  {{ specimenMeta }}
 </template>
 
 <script>
@@ -38,11 +35,13 @@ import moment from "moment";
 import OrdererForm from "../Form/Probe/OrdererForm.vue";
 import SpecimenMetaForm from "../Form/Probe/SpecimenMetaForm.vue";
 import OwnerForm from "../Form/Probe/OwnerForm.vue";
+import FindPatientForm from "../Form/Probe/FindPatientForm.vue";
 
 export default {
   emits: ['added'],
   components: {
     OwnerForm,
+    FindPatientForm,
     SpecimenMetaForm,
     OrdererForm,
     ServiceRequestForm,
@@ -109,15 +108,15 @@ export default {
       }
 
       if (this.patient) {
-        base.patient = this.owner.patient['@id']
-        base.patientGivenName = this.owner.patient.givenName
-        base.patientFamilyName = this.owner.patient.familyName
-        base.patientBirthDate = this.owner.patient.birthDate
-        base.patientAhvNumber = this.owner.patient.ahvNumber
-        base.patientAddressLine = this.owner.patient.addressLine
-        base.patientCity = this.owner.patient.city
-        base.patientPostalCode = this.owner.patient.postalCode
-        base.patientCountryCode = this.owner.patient.countryCode
+        base.patient = this.patient.patient['@id']
+        base.patientGivenName = this.patient.patient.givenName
+        base.patientFamilyName = this.patient.patient.familyName
+        base.patientBirthDate = this.patient.patient.birthDate
+        base.patientAhvNumber = this.patient.patient.ahvNumber
+        base.patientAddressLine = this.patient.patient.addressLine
+        base.patientCity = this.patient.patient.city
+        base.patientPostalCode = this.patient.patient.postalCode
+        base.patientCountryCode = this.patient.patient.countryCode
       }
 
       return base;

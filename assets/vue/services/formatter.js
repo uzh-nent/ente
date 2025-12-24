@@ -87,3 +87,11 @@ export const formatAnimalKeeperShort = function (value) {
 
   return [value.postalCode, value.name].filter(e => e).join(" ")
 }
+
+export const formatPatientShort = function (value) {
+  if (!value) {
+    return '-'
+  }
+
+  return [value.ahvNumber, value.givenName, value.familyName, value.postalCode, value.city].filter(e => e).join(" ")
+}

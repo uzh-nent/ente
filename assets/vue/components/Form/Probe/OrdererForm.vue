@@ -78,7 +78,11 @@ export default {
   },
   computed: {
     query: function () {
-      const filter = {name: this.searchName, postalCode: this.searchPostalCode}
+      if (!this.searchPostalCode && !this.searchName) {
+        return null
+      }
+
+      const filter = {postalCode: this.searchPostalCode, name: this.searchName}
       const order = [{property: 'postalCode', order: 'asc'}, {property: 'name', order: 'asc'}]
       return createQuery({}, [], ['name', 'postalCode'], [], filter, order)
     },
