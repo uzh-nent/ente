@@ -79,20 +79,23 @@ export default {
       }
     },
     payload: function () {
-      const base = {
-        ...this.serviceRequestTemplate, ...this.serviceRequest,
-        ...this.specimenMetaTemplate, ...this.specimenMeta,
-        animalKeeper: this.owner?.animalKeeper['@id'],
+      let base = {}
+      if (this.serviceRequest) {
+        base = {...base, ...this.serviceRequestTemplate, ...this.serviceRequest}
+      }
+
+      if (this.specimenMeta) {
+        base = {...base, ...this.specimenMetaTemplate, ...this.specimenMeta}
       }
 
       if (this.orderer) {
         base.ordererIdentifier = this.orderer.ordererIdentifier
-        base.orderer = this.orderer['@id']
-        base.ordererName = this.owner.orderer.name
-        base.ordererAddressLine = this.owner.orderer.addressLine
-        base.ordererCity = this.owner.orderer.city
-        base.ordererPostalCode = this.owner.orderer.postalCode
-        base.ordererCountryCode = this.owner.orderer.countryCode
+        base.orderer = this.orderer.orderer['@id']
+        base.ordererName = this.orderer.orderer.name
+        base.ordererAddressLine = this.orderer.orderer.addressLine
+        base.ordererCity = this.orderer.orderer.city
+        base.ordererPostalCode = this.orderer.orderer.postalCode
+        base.ordererCountryCode = this.orderer.orderer.countryCode
       }
 
       if (this.owner) {

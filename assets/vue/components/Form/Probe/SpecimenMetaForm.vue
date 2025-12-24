@@ -55,7 +55,8 @@
 
     <!-- select specimen type -->
     <form-field v-if="entity.specimenSource === 'FOOD'"
-                for-id="specimenTypeText" :label="$t('probe.specimen_food_type')" :field="fields.specimenFoodType">
+                for-id="specimenTypeText" :fake-required="true"
+                :label="$t('probe.specimen_food_type')" :field="fields.specimenFoodType">
       <custom-select id="specimenFoodType" :choices="specimenFoodTypes" :field="fields.specimenFoodType"
                      v-model="entity.specimenFoodType" @update:model-value="validateField('specimenFoodType')"/>
       <text-input v-if="!entity.specimenFoodType" class="mt-1"
@@ -64,7 +65,8 @@
                   @blur="blurField('specimenTypeText')" @update:modelValue="validateField('specimenTypeText')"/>
     </form-field>
     <form-field v-else-if="entity.specimenSource === 'ANIMAL'"
-                for-id="specimenTypeText" :label="$t('probe.specimen_animal_type')" :field="fields.specimenAnimalType">
+                for-id="specimenTypeText" :fake-required="true"
+                :label="$t('probe.specimen_animal_type')" :field="fields.specimenAnimalType">
       <custom-select id="specimenAnimalType" :choices="specimenAnimalTypes" :field="fields.specimenAnimalType"
                      v-model="entity.specimenAnimalType" @update:model-value="validateField('specimenAnimalType')"/>
       <text-input v-if="!entity.specimenAnimalType" class="mt-1"
@@ -178,12 +180,8 @@ export default {
         specimenLocation: null,
 
         specimenFoodType: null,
-
         specimenAnimalType: null,
-        animalKeeper: null,
-        animalName: null,
 
-        patient: null,
         specimen: null,
         specimenIsolate: null,
       },
@@ -229,24 +227,17 @@ export default {
 
         if (specimenSource !== 'FOOD') {
           this.entity.specimenFoodType = null
-          this.fields.specimenFoodType.rules = []
         } else {
           this.entity.specimenFoodType = this.specimenFoodTypes[0].value
-          this.fields.specimenFoodType.rules = [requiredRule]
         }
 
         if (specimenSource !== 'ANIMAL') {
           this.entity.specimenAnimalType = null
-          this.entity.animalKeeper = null
-          this.entity.animalName = null
-          this.fields.specimenAnimalType.rules = []
         } else {
           this.entity.specimenAnimalType = this.specimenAnimalTypes[0].value
-          this.fields.specimenAnimalType.rules = [requiredRule]
         }
 
         if (specimenSource !== 'HUMAN') {
-          this.entity.patient = null
           this.entity.specimen = null
           this.entity.specimenIsolate = null
           this.fields.specimen.rules = []

@@ -2,7 +2,7 @@
   <button-confirm-modal
     :title="$t('_action.add_animal_keeper.title')" icon="fas fa-plus"
     :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm">
-    <animalKeeper-form :template="template" @update="post = $event" />
+    <animal-keeper-form :template="extendedTemplate" @update="post = $event" />
   </button-confirm-modal>
 </template>
 
@@ -21,6 +21,12 @@ export default {
     ButtonConfirmModal,
     LoopingRhombusSpinner,
   },
+  props: {
+    template: {
+      type: Object,
+      default: {}
+    },
+  },
   data () {
     return {
       post: null
@@ -30,8 +36,9 @@ export default {
     canConfirm: function () {
       return !!this.post
     },
-    template: function () {
+    extendedTemplate: function () {
       return {
+        ...this.template,
         countryCode: 'CH',
       }
     }

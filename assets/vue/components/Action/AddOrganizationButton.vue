@@ -1,6 +1,6 @@
 <template>
   <button-confirm-modal
-    :title="$t('_action.add_organization.title')" icon="fas fa-plus" :buttonSize="buttonSize"
+    :title="$t('_action.add_organization.title')" icon="fas fa-plus"
     :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm">
     <organization-form :template="extendedTemplate" @update="post = $event" />
   </button-confirm-modal>
@@ -25,11 +25,6 @@ export default {
     template: {
       type: Object,
       default: {}
-    },
-    buttonSize: {
-      type: String,
-      default: 'md',
-      validator: value => ['sm', 'md'].includes(value)
     },
   },
   data () {
