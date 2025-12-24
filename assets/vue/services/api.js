@@ -93,51 +93,24 @@ const restClient = {
       }
     )
   },
-  get: function (url) {
-    return new Promise(
-      (resolve) => {
-        axios.get(url)
-          .then(response => {
-            resolve(response.data)
-          })
-      }
-    )
+  get: async function (url) {
+    const response = await axios.get(url)
+    return response.data
   },
-  post: function (collectionUrl, post) {
-    return new Promise(
-      (resolve) => {
-        axios.post(collectionUrl, post, {headers: {'Content-Type': 'application/ld+json'}})
-          .then(response => {
-            resolve(response.data)
-          })
-      }
-    )
+  post: async function (collectionUrl, post) {
+    const response = await axios.post(collectionUrl, post, {headers: {'Content-Type': 'application/ld+json'}})
+    return response.data
   },
-  patch: function (instance, patch) {
-    return new Promise(
-      (resolve) => {
-        axios.patch(instance['@id'], patch, {headers: {'Content-Type': 'application/merge-patch+json'}})
-          .then(response => {
-            this._writeAllProperties(instance, patch, response.data)
-            resolve()
-          })
-      }
-    )
+  patch: async function (instance, patch) {
+    const response = await axios.patch(instance['@id'], patch, {headers: {'Content-Type': 'application/merge-patch+json'}})
+    this._writeAllProperties(instance, patch, response.data)
   },
-  delete: function (instance) {
-    return new Promise(
-      (resolve) => {
-        axios.delete(instance['@id'])
-          .then(response => {
-            // if 204, then soft delete
-            if (response.status === 204) {
-              instance.deletedAt = DateTime.now().toISO()
-            }
-
-            resolve()
-          })
-      }
-    )
+  delete: async function (instance) {
+    const response = await axios.delete(instance['@id'])
+    // if 204, then soft delete
+    if (response.status === 204) {
+      instance.deletedAt = DateTime.now().toISO()
+    }
   }
 }
 
@@ -198,4 +171,4 @@ const api = {
   }
 }
 
-export {api,router}
+export {api, router}
