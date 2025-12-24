@@ -17,6 +17,10 @@
       "apply": "Setzen",
       "clear": "Zurücksetzen"
     },
+    "add_probe": {
+      "added": "Probe hinzugefügt.",
+      "title": "Probe hinzufügen"
+    },
     "add_organization": {
       "added": "Organisation hinzugefügt.",
       "title": "Organisation hinzufügen"
@@ -98,9 +102,11 @@
     "specimen_text": "Material",
     "specimen_type": "Art",
     "specimen_location": "Ort",
+    "progress": "Verlauf",
     "animal_name": "Tiername",
     "received_at": "Empfangen am",
     "orderer_identifier": "Labor-/Stammnummer",
+    "analysis_start_at": "Analyse aufgesetzt am",
     "orderer": "Auftraggeber",
     "_pathogen": {
       "SALMONELLA": "Salmonella",

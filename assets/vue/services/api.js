@@ -144,6 +144,15 @@ const restClient = {
 restClient.setupErrorNotifications()
 
 
+const router = {
+  navigateTo: function (route) {
+    window.location.href = route
+  },
+  navigateToActiveProbe: function (probe) {
+    this.navigateTo('/probes/active/' + iriToId(probe['@id']))
+  }
+}
+
 const api = {
   getUser: function () {
     return window.user
@@ -189,4 +198,4 @@ const api = {
   }
 }
 
-export {api}
+export {api,router}

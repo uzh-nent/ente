@@ -7,26 +7,36 @@
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
       <orderer-form @update="orderer = $event"/>
     </div>
-    <div class="col-md-4" v-if="specimens">
-      <h3>{{ $t('probe._name') }}</h3>
-      <specimen-meta-form :specimens="specimens" :template="specimenMetaTemplate" @update="specimenMeta = $event"/>
+    <template v-if="specimens">
+      <div class="col-md-4">
+        <h3>{{ $t('probe._name') }}</h3>
+        <specimen-meta-form :specimens="specimens" :template="specimenMetaTemplate" @update="specimenMeta = $event"/>
 
-      <template v-if="payload?.specimenSource === 'HUMAN'">
-        <h3 class="mt-5">{{ $t('patient._name') }}</h3>
-        <find-patient-form @update="patient = $event"/>
-      </template>
+        <template v-if="payload?.specimenSource === 'HUMAN'">
+          <h3 class="mt-5">{{ $t('patient._name') }}</h3>
+          <find-patient-form @update="patient = $event"/>
+        </template>
 
-      <template v-if="payload.specimenSource === 'ANIMAL'">
-        <h3 class="mt-5">{{ $t('animal_keeper._name') }}</h3>
-        <owner-form @update="owner = $event"/>
-      </template>
-    </div>
+        <template v-if="payload.specimenSource === 'ANIMAL'">
+          <h3 class="mt-5">{{ $t('animal_keeper._name') }}</h3>
+          <owner-form @update="owner = $event"/>
+        </template>
+      </div>
+      <div class="col-md-4">
+        <h3>{{ $t('probe.progress') }}</h3>
+        <service-time-form :template="serviceTimeTemplate" @update="serviceTime = $event"/>
+
+        <button class="btn btn-primary mt-5" :disabled="!canConfirm || isConfirming" @click="confirm">
+          {{ $t('_action.add_probe.title') }}
+        </button>
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
 
-import {api} from '../../services/api'
+import {api, router} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import LoopingRhombusSpinner from '../Library/View/Base/LoopingRhombusSpinner.vue'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
@@ -36,10 +46,12 @@ import OrdererForm from "../Form/Probe/OrdererForm.vue";
 import SpecimenMetaForm from "../Form/Probe/SpecimenMetaForm.vue";
 import OwnerForm from "../Form/Probe/OwnerForm.vue";
 import FindPatientForm from "../Form/Probe/FindPatientForm.vue";
+import ServiceTimeForm from "../Form/Probe/ServiceTimeForm.vue";
 
 export default {
   emits: ['added'],
   components: {
+    ServiceTimeForm,
     OwnerForm,
     FindPatientForm,
     SpecimenMetaForm,
@@ -56,13 +68,19 @@ export default {
       orderer: null,
 
       specimenMeta: null,
-      owner: null,
       patient: null,
+      owner: null,
+
+      serviceTime: null,
+
+      isConfirming: false
     }
   },
   computed: {
     canConfirm: function () {
-      return !!this.serviceRequest
+      return this.serviceRequest && this.orderer && this.specimenMeta && this.serviceTime &&
+          (this.payload.specimenSource !== 'HUMAN' || this.patient) &&
+          (this.payload.specimenSource !== 'ANIMAL' || this.owner)
     },
     serviceRequestTemplate: function () {
       return {
@@ -77,6 +95,12 @@ export default {
         specimenSource: 'HUMAN',
       }
     },
+    serviceTimeTemplate: function () {
+      return {
+        receivedAt: moment().format('YYYY-MM-DD'),
+        analysisStartAt: moment().format('YYYY-MM-DD'),
+      }
+    },
     payload: function () {
       let base = {}
       if (this.serviceRequest) {
@@ -85,6 +109,10 @@ export default {
 
       if (this.specimenMeta) {
         base = {...base, ...this.specimenMetaTemplate, ...this.specimenMeta}
+      }
+
+      if (this.serviceTime) {
+        base = {...base, ...this.serviceTimeTemplate, ...this.serviceTime}
       }
 
       if (this.orderer) {
@@ -124,22 +152,30 @@ export default {
   },
   methods: {
     confirm: async function () {
+      this.isConfirming = true
+
       const probePayload = {}
       const analysisTypes = probePayload.analysisTypes
       delete probePayload.analysisTypes
-      const probe = await api.postProbe(probePayload)
-      const analysisPromises = analysisTypes.map(analysisType => {
-        const observation = {
-          probe: probe['@id'],
-          analysisType: analysisType,
-        }
-        return api.postObservation(observation)
-      })
-      await Promise.all(analysisPromises)
-      this.$emit('added', probe)
+      try {
+        const probe = await api.postProbe(probePayload)
+        const analysisPromises = analysisTypes.map(analysisType => {
+          const observation = {
+            probe: probe['@id'],
+            analysisType: analysisType,
+          }
+          return api.postObservation(observation)
+        })
+        await Promise.all(analysisPromises)
+        this.$emit('added', probe)
 
-      const successMessage = this.$t('_action.add_probe.added')
-      displaySuccess(successMessage)
+        const successMessage = this.$t('_action.add_probe.added')
+        displaySuccess(successMessage)
+
+        router.navigateToActiveProbe(probe)
+      } finally {
+        this.isConfirming = false
+      }
     }
   },
   mounted() {
