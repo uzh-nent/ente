@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="form-check" v-for="choice in choices" :key="choice.value">
+    <div class="form-check" :class="{'form-check-inline': inline}" v-for="choice in choices" :key="choice.value">
       <input class="form-check-input" type="radio" :required="required" :disabled="disabled"
              :name="id" :id="id + '_' + valueString(choice.value)" :value="choice.value"
              :checked="choice.value === modelValue"
@@ -34,6 +34,10 @@ export default {
     choices: {
       type: Array,
       required: true
+    },
+    inline: {
+      type: Boolean,
+      default: false
     },
     disabled: {
       type: Boolean,

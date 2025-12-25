@@ -4,7 +4,7 @@
       <div class="col-md-6">
         <form-field for-id="ordererIdentifier" :label="$t('probe.orderer_identifier')"
                     :field="fields.ordererIdentifier">
-          <text-input id="ordererIdentifier" type="text" :field="fields.ordererIdentifier" autofocus
+          <text-input id="ordererIdentifier" type="text" :field="fields.ordererIdentifier"
                       v-model="entity.ordererIdentifier"
                       @blur="blurField('ordererIdentifier')" @update:modelValue="validateField('ordererIdentifier')"/>
         </form-field>

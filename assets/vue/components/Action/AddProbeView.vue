@@ -176,6 +176,8 @@ export default {
     api.getSpecimens().then(specimens => {
       this.specimens = specimens;
     })
+
+    document.getElementById('ordererIdentifier')?.focus()
   }
 }
 </script>

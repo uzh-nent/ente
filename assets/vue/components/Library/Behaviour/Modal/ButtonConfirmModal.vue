@@ -84,14 +84,14 @@ export default {
     tryShow: function () {
       if (!this.show) {
         this.show = true
-        this.$emit('showing')
+        window.setTimeout(() => this.$emit('showing'), 100)
       }
     },
     tryHide: function () {
       if (this.show) {
         this.show = false
         this.hiding = true
-        this.$emit('hiding')
+        window.setTimeout(() => this.$emit('hiding'), 100)
       }
     }
   }

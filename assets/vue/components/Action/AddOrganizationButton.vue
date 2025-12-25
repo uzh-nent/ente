@@ -1,7 +1,8 @@
 <template>
   <button-confirm-modal
     :title="$t('_action.add_organization.title')" icon="fas fa-plus"
-    :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm">
+    :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm"
+    @showing="focusOrganization">
     <organization-form :template="extendedTemplate" @update="post = $event" />
   </button-confirm-modal>
 </template>
@@ -51,7 +52,10 @@ export default {
 
       const successMessage = this.$t('_action.add_organization.added')
       displaySuccess(successMessage)
+    },
+    focusOrganization: function () {
+      document.getElementById('name')?.focus()
     }
-  }
+  },
 }
 </script>

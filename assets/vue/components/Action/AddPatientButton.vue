@@ -1,7 +1,8 @@
 <template>
   <button-confirm-modal
     :title="$t('_action.add_patient.title')" icon="fas fa-plus"
-    :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm">
+    :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm"
+    @showing="focusPatient">
     <patient-form :template="extendedTemplate" @update="post = $event" />
   </button-confirm-modal>
 </template>
@@ -52,6 +53,9 @@ export default {
 
       const successMessage = this.$t('_action.add_patient.added')
       displaySuccess(successMessage)
+    },
+    focusPatient: function () {
+      document.getElementById('givenName')?.focus()
     }
   }
 }

@@ -18,10 +18,6 @@
   <hr/>
 
   <div class="row">
-    <div class="col-md-12">
-      <radio class="mt-2 mb-2" id="gender" :choices="genderChoices" :field="fields.gender"
-             v-model="entity.gender" @update:model-value="validateField('gender')"/>
-    </div>
     <div class="col-md-6">
       <form-field for-id="givenName" :label="$t('person.given_name')" :field="fields.givenName">
         <text-input id="givenName" type="text" :field="fields.givenName" v-model="entity.givenName"
@@ -33,6 +29,10 @@
         <text-input id="familyName" type="text" :field="fields.familyName" v-model="entity.familyName"
                     @blur="blurField('familyName')" @update:modelValue="validateField('familyName')"/>
       </form-field>
+    </div>
+    <div class="col-md-12">
+      <radio inline id="gender" :choices="genderChoices" :field="fields.gender"
+             v-model="entity.gender" @update:model-value="validateField('gender')"/>
     </div>
   </div>
 
