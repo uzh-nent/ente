@@ -67,31 +67,18 @@ const restClient = {
     })
     return fullUrl.toString()
   },
-  getCollection: function (url, query) {
-    return new Promise(
-      (resolve) => {
-        const fullUrl = this._getFullUrl(url, query)
-        axios.get(fullUrl)
-          .then(response => {
-            resolve(response.data.member)
-          })
-      }
-    )
+  getCollection: async function (url, query) {
+    const fullUrl = this._getFullUrl(url, query)
+    const response = await axios.get(fullUrl)
+    return response.data.member
   },
-  getPaginatedCollection: function (url, query) {
-    return new Promise(
-      (resolve) => {
-        const fullUrl = this._getFullUrl(url, query)
-        axios.get(fullUrl)
-          .then(response => {
-            const payload = {
-              items: response.data.member,
-              totalItems: response.data.totalItems
-            }
-            resolve(payload)
-          })
-      }
-    )
+  getPaginatedCollection: async function (url, query) {
+    const fullUrl = this._getFullUrl(url, query)
+    const response = await axios.get(fullUrl)
+    return {
+      items: response.data.member,
+      totalItems: response.data.totalItems
+    }
   },
   get: async function (url) {
     const response = await axios.get(url)
@@ -104,13 +91,6 @@ const restClient = {
   patch: async function (instance, patch) {
     const response = await axios.patch(instance['@id'], patch, {headers: {'Content-Type': 'application/merge-patch+json'}})
     this._writeAllProperties(instance, patch, response.data)
-  },
-  delete: async function (instance) {
-    const response = await axios.delete(instance['@id'])
-    // if 204, then soft delete
-    if (response.status === 204) {
-      instance.deletedAt = DateTime.now().toISO()
-    }
   }
 }
 
@@ -127,9 +107,6 @@ const router = {
 }
 
 const api = {
-  getUser: function () {
-    return window.user
-  },
   getCurrentProbe: function () {
     return {
       probe: window.probe,
