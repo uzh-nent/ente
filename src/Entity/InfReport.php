@@ -40,7 +40,7 @@ class InfReport
     private ?Interpretation $interpretation = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?\DateTime $sentAt = null;
+    private ?\DateTimeImmutable $sentAt = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $documentId = null;
@@ -108,12 +108,12 @@ class InfReport
         $this->interpretation = $interpretation;
     }
 
-    public function getSentAt(): ?\DateTime
+    public function getSentAt(): ?\DateTimeImmutable
     {
         return $this->sentAt;
     }
 
-    public function setSentAt(?\DateTime $sentAt): void
+    public function setSentAt(?\DateTimeImmutable $sentAt): void
     {
         $this->sentAt = $sentAt;
     }

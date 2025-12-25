@@ -10,7 +10,7 @@ trait PatientCopy
 {
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     #[Groups(['patient:read', 'patient:write'])]
-    private ?\DateTime $patientBirthDate = null;
+    private ?\DateTimeImmutable $patientBirthDate = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['patient:read', 'patient:write'])]
@@ -40,12 +40,12 @@ trait PatientCopy
     #[Groups(['patient:read', 'patient:write'])]
     private ?string $patientCountryCode = null;
 
-    public function getPatientBirthDate(): ?\DateTime
+    public function getPatientBirthDate(): ?\DateTimeImmutable
     {
         return $this->patientBirthDate;
     }
 
-    public function setPatientBirthDate(?\DateTime $patientBirthDate): void
+    public function setPatientBirthDate(?\DateTimeImmutable $patientBirthDate): void
     {
         $this->patientBirthDate = $patientBirthDate;
     }

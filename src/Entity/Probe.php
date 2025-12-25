@@ -20,6 +20,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Api\Processor\ProbeProcessor;
 use App\Entity\Probe\AnimalKeeperCopy;
 use App\Entity\Probe\OrdererCopy;
 use App\Entity\Probe\PatientCopy;
@@ -30,12 +31,7 @@ use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
-use App\Enum\LaboratoryFunction;
-use App\Enum\Pathogen;
 use App\Enum\ProbeStatus;
-use App\Enum\SpecimenAnimalType;
-use App\Enum\SpecimenFoodType;
-use App\Enum\SpecimenSource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -43,6 +39,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
+    processor: ProbeProcessor::class,
     normalizationContext: ['groups' => ['orderer:write', 'animal-keeper:write', 'patient:write', 'comment:write', 'probe:write']],
     denormalizationContext: ['groups' => ['attribution:read', 'orderer:read', 'animal-keeper:read', 'patient:read', 'comment:read', 'probe:read']]
 )]

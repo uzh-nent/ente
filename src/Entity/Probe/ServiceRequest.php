@@ -6,6 +6,7 @@ use App\Entity\Organization;
 use App\Enum\AnalysisType;
 use App\Enum\LaboratoryFunction;
 use App\Enum\Pathogen;
+use App\Extension\SerializerExtension;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -26,8 +27,9 @@ trait ServiceRequest
     #[Groups(['probe:read', 'probe:write'])]
     private ?string $pathogenName = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: AnalysisType::class)]
-    private array $analysisType = [];
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: AnalysisType::class, nullable: true)]
+    #[Groups(['probe:read', 'probe:write'])]
+    private array $analysisTypes = [];
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
@@ -70,17 +72,17 @@ trait ServiceRequest
     /**
      * @return AnalysisType[]
      */
-    public function getAnalysisType(): array
+    public function getAnalysisTypes(): array
     {
-        return $this->analysisType;
+        return $this->analysisTypes;
     }
 
     /**
-     * @param AnalysisType[] $analysisType
+     * @param AnalysisType[] $analysisTypes
      */
-    public function setAnalysisType(array $analysisType): void
+    public function setAnalysisTypes(array $analysisTypes): void
     {
-        $this->analysisType = $analysisType;
+        $this->analysisTypes = SerializerExtension::unserializeEnumArray(AnalysisType::class, $analysisTypes);;
     }
 
     public function getOrdererIdentifier(): ?string

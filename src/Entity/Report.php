@@ -38,7 +38,7 @@ class Report
     private ?User $signedBy = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?\DateTime $date = null;
+    private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private ?string $payload = null;
@@ -86,12 +86,12 @@ class Report
         $this->signedBy = $signedBy;
     }
 
-    public function getDate(): ?\DateTime
+    public function getDate(): ?\DateTimeImmutable
     {
         return $this->date;
     }
 
-    public function setDate(?\DateTime $date): void
+    public function setDate(?\DateTimeImmutable $date): void
     {
         $this->date = $date;
     }

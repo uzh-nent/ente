@@ -30,7 +30,7 @@ trait SpecimenMeta
     // shared logic: there is often structured options that can be selected (e.g. specimenAnimalType),
     // but there always needs to be a fallback freetext field (i.e. specimenText)
     // if the structured option is not set, and neither the fallback text, then this means "unknown"
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: Types::STRING, enumType: SpecimenSource::class, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
     private ?SpecimenSource $specimenSource = null;
 

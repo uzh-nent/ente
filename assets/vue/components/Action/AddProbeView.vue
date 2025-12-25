@@ -109,6 +109,9 @@ export default {
 
       if (this.specimenMeta) {
         base = {...base, ...this.specimenMetaTemplate, ...this.specimenMeta}
+        if (base.specimen) {
+          base.specimen = base.specimen['@id']
+        }
       }
 
       if (this.serviceTime) {
@@ -154,25 +157,16 @@ export default {
     confirm: async function () {
       this.isConfirming = true
 
-      const probePayload = {}
-      const analysisTypes = probePayload.analysisTypes
-      delete probePayload.analysisTypes
       try {
-        const probe = await api.postProbe(probePayload)
-        const analysisPromises = analysisTypes.map(analysisType => {
-          const observation = {
-            probe: probe['@id'],
-            analysisType: analysisType,
-          }
-          return api.postObservation(observation)
-        })
-        await Promise.all(analysisPromises)
+        const probe = await api.postProbe(this.payload)
         this.$emit('added', probe)
 
         const successMessage = this.$t('_action.add_probe.added')
         displaySuccess(successMessage)
 
         router.navigateToActiveProbe(probe)
+      } catch (e) {
+        console.log(e)
       } finally {
         this.isConfirming = false
       }
