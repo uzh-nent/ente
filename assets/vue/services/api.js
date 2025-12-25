@@ -106,13 +106,15 @@ const router = {
   }
 }
 
-const api = {
-  getCurrentProbe: function () {
+const preloadApi = {
+  getNewProbe: function () {
     return {
-      probe: window.probe,
-      reports: window.reports,
+      specimens: window.specimens.member,
     }
   },
+}
+
+const api = {
   get: function (id) {
     return restClient.get(id)
   },
@@ -148,4 +150,4 @@ const api = {
   }
 }
 
-export {api, router}
+export {preloadApi, api, router}

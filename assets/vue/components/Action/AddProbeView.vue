@@ -36,7 +36,7 @@
 
 <script>
 
-import {api, router} from '../../services/api'
+import {api, preloadApi, router} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import LoopingRhombusSpinner from '../Library/View/Base/LoopingRhombusSpinner.vue'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
@@ -173,9 +173,8 @@ export default {
     }
   },
   mounted() {
-    api.getSpecimens().then(specimens => {
-      this.specimens = specimens;
-    })
+    const {specimens} = preloadApi.getNewProbe()
+    this.specimens = specimens
 
     document.getElementById('ordererIdentifier')?.focus()
   }

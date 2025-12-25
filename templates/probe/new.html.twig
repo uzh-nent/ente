@@ -9,5 +9,6 @@
 {% block content %}
     <h1>{{ "new.title"|trans({}, "probe") }}</h1>
 
+    <script src="{{ url('probe_new_js') }}"></script>
     {{ components.vue_entry_point('vue-probe-new') }}
 {% endblock %}

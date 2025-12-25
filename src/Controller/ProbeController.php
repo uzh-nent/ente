@@ -15,6 +15,15 @@ class ProbeController extends AbstractController
         return $this->render('probe/new.html.twig');
     }
 
+    #[Route('/probe/new.js', name: 'probe_new_js')]
+    public function newJs(): Response
+    {
+        $response =  $this->render('probe/new.js.twig');
+        $response->headers->set('Content-Type', 'text/javascript');
+
+        return $response;
+    }
+
     #[Route('/probe/active', name: 'probe_active')]
     public function active(): Response
     {
