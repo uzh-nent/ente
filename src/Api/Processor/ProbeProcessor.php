@@ -2,34 +2,32 @@
 
 namespace App\Api\Processor;
 
-use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\State\ProcessorInterface;
-use App\Api\Helper\AccessTrait;
-use App\Entity\Meeting;
-use App\Entity\Member;
 use App\Entity\Probe;
 use App\Entity\User;
 use App\Enum\LaboratoryFunction;
-use App\Security\Voters\Attribute;
-use App\Service\Interfaces\StorageServiceInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+/**
+ * @implements ProcessorInterface<Probe, Probe>
+ */
 readonly class ProbeProcessor implements ProcessorInterface
 {
+    /**
+     * @param ProcessorInterface<Probe, Probe> $persistProcessor
+     */
     public function __construct(
         #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
-        private ProcessorInterface            $persistProcessor,
-        private ManagerRegistry               $registry,
-        private TokenStorageInterface         $tokenStorage,
-    )
-    {
+        private ProcessorInterface $persistProcessor,
+        private ManagerRegistry $registry,
+        private TokenStorageInterface $tokenStorage,
+    ) {
     }
 
     /**
@@ -39,7 +37,7 @@ readonly class ProbeProcessor implements ProcessorInterface
     {
         if ($operation instanceof Post) {
             $identifierPrefix = $data->getLaboratoryFunction() === LaboratoryFunction::PRIMARY ? 'P' : 'R';
-            $identifierPrefix .= new \DateTime()->format("YY");
+            $identifierPrefix .= (new \DateTime())->format("YY");
 
             $lastProbe = $this->registry->getRepository(Probe::class)->createQueryBuilder('p')
                 ->where('p.identifier LIKE :prefix')
@@ -55,7 +53,7 @@ readonly class ProbeProcessor implements ProcessorInterface
             } else {
                 $nextId = 1;
             }
-            $nextIdentifier = $identifierPrefix . str_pad($nextId, 6, '0', STR_PAD_LEFT);
+            $nextIdentifier = $identifierPrefix . str_pad((string) $nextId, 6, '0', STR_PAD_LEFT);
             $data->setIdentifier($nextIdentifier);
         }
 

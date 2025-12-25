@@ -45,7 +45,7 @@ trait AttributionTrait
         $this->lastChangedBy = $lastChangedBy;
     }
 
-    public function attribute(User $user):void
+    public function attribute(User $user): void
     {
         if ($this->createdBy === null) {
             $this->createdBy = $user;

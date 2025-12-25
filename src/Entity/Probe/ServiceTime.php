@@ -52,6 +52,4 @@ trait ServiceTime
     {
         $this->finishedAt = $finishedAt;
     }
-
-
 }

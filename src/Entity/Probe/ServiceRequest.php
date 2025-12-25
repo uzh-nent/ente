@@ -27,6 +27,9 @@ trait ServiceRequest
     #[Groups(['probe:read', 'probe:write'])]
     private ?string $pathogenName = null;
 
+    /**
+     * @var AnalysisType[]
+     */
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: AnalysisType::class, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
     private array $analysisTypes = [];
@@ -82,7 +85,8 @@ trait ServiceRequest
      */
     public function setAnalysisTypes(array $analysisTypes): void
     {
-        $this->analysisTypes = SerializerExtension::unserializeEnumArray(AnalysisType::class, $analysisTypes);;
+        $this->analysisTypes = SerializerExtension::unserializeEnumArray(AnalysisType::class, $analysisTypes);
+        ;
     }
 
     public function getOrdererIdentifier(): ?string
