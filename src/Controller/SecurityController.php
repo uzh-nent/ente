@@ -49,6 +49,8 @@ class SecurityController extends AbstractController
             ) {
                 $user = new User();
                 $user->setShortname($lastUsername);
+                $user->setName($lastUsername);
+                $user->setAbbreviation(mb_strtoupper(mb_substr($lastUsername, 0, 3)));
                 $user->setPassword($hasher->hashPassword($user, $lastUsername));
                 DoctrineHelper::persistAndFlush($registry, $user);
 
