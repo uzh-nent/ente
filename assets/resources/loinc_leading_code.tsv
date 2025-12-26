@@ -1,0 +1,34 @@
+code	display_name	pathogen	organism_group	specimen_group	interpretation_group	specimen_snomed_code
+70242-3	Shigella species+EIEC invasion plasmid antigen H ipaH gene [Presence] in Stool by NAA with probe detection	Shigella			POS	119339001
+46454-5	Shigella sp [Presence] in Specimen by Organism specific culture	Shigella	shi_org		POS
+82300-5	Shigella sp [Presence] in Stool by Culture	Shigella	shi_org		POS	119339001
+6578-9	Vibrio sp identified in Blood by Organism specific culture	Vibrio cholerae	chol_org		POS	119297000
+6581-3	Vibrio sp identified in Specimen by Organism specific culture	Vibrio cholerae	chol_org		POS
+6579-7	Vibrio sp identified in Stool by Organism specific culture	Vibrio cholerae	chol_org		POS	119339001
+61371-1	Vibrio cholerae DNA [Presence] in Specimen by NAA with probe detection	Vibrio cholerae			POS
+97314-9	Vibrio cholerae DNA [Presence] in Stool by NAA with probe detection	Vibrio cholerae			POS	119339001
+53941-1	Vibrio cholerae toxin Ag [Presence] in Isolate	Vibrio cholerae			POS	119303007
+53942-9	Vibrio cholerae toxin ctx gene [Presence] in Specimen by NAA with probe detection	Vibrio cholerae			POS-NEG
+80680-2	Vibrio cholerae toxin ctxA gene [Presence] in Stool by NAA with probe detection	Vibrio cholerae			POS-NEG	119339001
+6609-2	Listeria sp identified in Specimen by Organism specific culture	Listeria monocytogenes	lis_org	sterile_spec	POS
+89596-1	Listeria monocytogenes DNA [Presence] in Blood by NAA with probe detection	Listeria monocytogenes			POS	119297000
+82184-3	Listeria monocytogenes DNA [Presence] in Cerebral spinal fluid by NAA with non-probe detection	Listeria monocytogenes			POS	258450006
+61369-5	Listeria monocytogenes DNA [Presence] in Specimen by NAA with probe detection	Listeria monocytogenes		sterile_spec	POS
+33687-5	Yersinia pestis Ag [Presence] in Specimen by Immunofluorescence	Yersinia Pestis			POS-NEG
+33685-9	Yersinia pestis [Presence] in Specimen by Organism specific culture	Yersinia Pestis			POS-NEG
+33691-7	Yersinia pestis DNA [Presence] in Specimen by NAA with probe detection	Yersinia Pestis			POS-NEG
+56475-7	Salmonella sp antigenic formula [Identifier] in Isolate by Agglutination	Salmonella			TEXT	119303007
+82301-3	Salmonella sp [Presence] in Stool by Culture	Salmonella	sal_org		POS	119339001
+17563-8	Salmonella sp identified in Specimen by Organism specific culture	Salmonella	sal_org		POS
+93385-3	Salmonella sp DNA [Presence] by NAA with probe detection in Positive blood culture	Salmonella	sal_org		POS	119297000
+49612-5	Salmonella sp DNA [Presence] in Specimen by NAA with probe detection	Salmonella	sal_org		POS
+97313-1	Salmonella sp DNA [Presence] in Stool by NAA with probe detection	Salmonella	sal_org		POS	119339001
+65756-9	Salmonella sp serovar [Type] in Isolate	Salmonella	sal_org_omplete		POS	119303007
+105065-7	Shigella species+EIEC invasion plasmid antigen H ipaH gene [Presence] in Specimen	Shigella			POS
+21262-1	Escherichia coli shiga-like toxin [Presence] in Stool by Immunoassay	Enterohaemorrhagic Escherichia coli			POS	119339001
+51940-5	Escherichia coli shiga-like toxin 1 [Presence] in Stool by Immunoassay	Enterohaemorrhagic Escherichia coli			POS	119339001
+51939-7	Escherichia coli shiga-like toxin 2 [Presence] in Stool by Immunoassay	Enterohaemorrhagic Escherichia coli			POS	119339001
+53946-0	Escherichia coli shiga-like toxin identified in Specimen	Enterohaemorrhagic Escherichia coli			POS
+79386-9	Escherichia coli Stx1 toxin stx1 gene [Presence] in Stool by NAA with probe detection	Enterohaemorrhagic Escherichia coli			POS	119339001
+79387-7	Escherichia coli Stx2 toxin stx2 gene [Presence] in Stool by NAA with probe detection	Enterohaemorrhagic Escherichia coli			POS	119339001
+106554-9	Escherichia coli shiga-like toxin DNA [Presence] in Stool by NAA with probe detection	Enterohaemorrhagic Escherichia coli			POS	119339001

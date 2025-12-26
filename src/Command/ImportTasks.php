@@ -13,8 +13,11 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Entity\LeadingCode;
 use App\Entity\Organism;
+use App\Entity\Specimen;
 use App\Enum\CodeSystem;
+use App\Enum\InterpretationGroup;
 use App\Enum\Pathogen;
 use App\Helper\DoctrineHelper;
 use Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension;
@@ -48,6 +51,100 @@ class ImportTasks extends Command
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $this->importSpecimen($output);
+        $this->importOrganism($output);
+        $this->importLeadingCode($output);
+
+        return Command::SUCCESS;
+    }
+
+    /**
+     * @param OutputInterface $output
+     */
+    public function importLeadingCode(OutputInterface $output): void
+    {
+        /** @var LeadingCode[] $leadingCodes */
+        $leadingCodes = $this->doctrine->getRepository(LeadingCode::class)->findAll();
+
+        $updateCount = 0;
+        $createCount = 0;
+        $loincLeadingCodes = $this->readTsvFile('loinc_leading_code.tsv');
+        foreach ($loincLeadingCodes as $leadingCode) {
+            $entity = new LeadingCode();
+            $entity->setCode($leadingCode['code']);
+            $entity->setDisplayName($leadingCode['display_name']);
+            $entity->setSystem(CodeSystem::LOINC);
+
+            $entity->setOrganismGroup($leadingCode['organism_group']);
+            $entity->setSpecimenGroup($leadingCode['specimen_group']);
+            $entity->setInterpretationGroup(self::parseInterpretationGroup($leadingCode['interpretation_group']));
+
+            if (isset($leadingCode['specimen_snomed_code'])) {
+                $specimen = $this->doctrine->getRepository(Specimen::class)->findOneBy(['code' => $leadingCode['specimen_snomed_code'], 'system' => CodeSystem::SNOMED]);
+                if (!$specimen) {
+                    $output->writeln("Specimen with code {$leadingCode['specimen_snomed_code']} not found.");
+                } else {
+                    $entity->setSpecimen($specimen);
+                }
+            }
+
+            $existingLeadingCode = array_find($leadingCodes, fn(LeadingCode $s) => $s->isDuplicateOf($entity));
+            if ($existingLeadingCode) {
+                $existingLeadingCode->setDisplayName($entity->getDisplayName());
+                $existingLeadingCode->setOrganismGroup($entity->getOrganismGroup());
+                $existingLeadingCode->setSpecimenGroup($entity->getSpecimenGroup());
+                $existingLeadingCode->setInterpretationGroup($entity->getInterpretationGroup());
+                $existingLeadingCode->setSpecimen($entity->getSpecimen());
+                $updateCount++;
+                DoctrineHelper::persistAndFlush($this->doctrine, $existingLeadingCode);
+            } else {
+                $createCount++;
+                DoctrineHelper::persistAndFlush($this->doctrine, $entity);
+            }
+        }
+
+        $output->writeln("Updated $updateCount leading loinc, created $createCount new ones.");
+    }
+
+    /**
+     * @param OutputInterface $output
+     */
+    public function importSpecimen(OutputInterface $output): void
+    {
+        /** @var Specimen[] $specimens */
+        $specimens = $this->doctrine->getRepository(Specimen::class)->findAll();
+
+        $updateCount = 0;
+        $createCount = 0;
+        $snomedSpecimen = $this->readTsvFile('snomed_specimen.tsv');
+        foreach ($snomedSpecimen as $specimen) {
+            $entity = new Specimen();
+            $entity->setCode($specimen['code']);
+            $entity->setDisplayName($specimen['display_name']);
+            $entity->setSpecimenGroup($specimen['specimen_group']);
+            $entity->setSystem(CodeSystem::SNOMED);
+
+            $existingSpecimen = array_find($specimens, fn(Specimen $s) => $s->isDuplicateOf($entity));
+            if ($existingSpecimen) {
+                if ($existingSpecimen->getDisplayName() !== $entity->getDisplayName()) {
+                    $existingSpecimen->setDisplayName($entity->getDisplayName());
+                    $updateCount++;
+                    DoctrineHelper::persistAndFlush($this->doctrine, $existingSpecimen);
+                }
+            } else {
+                $createCount++;
+                DoctrineHelper::persistAndFlush($this->doctrine, $entity);
+            }
+        }
+
+        $output->writeln("Updated $updateCount specimen, created $createCount new ones.");
+    }
+
+    /**
+     * @param OutputInterface $output
+     */
+    public function importOrganism(OutputInterface $output): void
     {
         /** @var Organism[] $organisms */
         $organisms = $this->doctrine->getRepository(Organism::class)->findAll();
@@ -94,24 +191,9 @@ class ImportTasks extends Command
         }
 
         $output->writeln("Updated $updateCount organisms, created $createCount new ones.");
-
-        return Command::SUCCESS;
     }
 
-    protected function readTsvFile(string $filename): array
-    {
-        $fileContent = file_get_contents(self::RESOURCES_DIR ."/".$filename);
-
-        $csvEncoder = new CsvEncoder();
-        $entries = $csvEncoder->decode($fileContent, 'csv', [CsvEncoder::DELIMITER_KEY => "\t"]);
-        foreach ($entries as $entry) {
-            $entry['display_name'] = preg_replace('~\x{00a0}~u','',$entry['display_name']);
-        }
-
-        return $entries;
-    }
-
-    private function parsePathogen(string $pathogen) : Pathogen
+    private function parsePathogen(string $pathogen): Pathogen
     {
         return match ($pathogen) {
             'Salmonella', 'Salmonella Typhi/Paratyphi' => Pathogen::SALMONELLA,
@@ -119,6 +201,28 @@ class ImportTasks extends Command
             'Vibrio cholerae' => Pathogen::VIBRIO_CHOLERAE,
             'Listeria monocytogenes' => Pathogen::LISTERIA_MONOCYTOGENES,
             'Yersinia pestis' => Pathogen::YERSINIA,
+            'Enterohaemorrhagic Escherichia coli' => Pathogen::ESCHERICHIA_COLI,
         };
+    }
+
+    private function parseInterpretationGroup(string $pathogen): InterpretationGroup
+    {
+        return match ($pathogen) {
+            'POS-NEG', 'TEXT' => InterpretationGroup::POS_NEG, // mapping TEXT to POS_NEG as probably a typo in the source data
+            'POS' => InterpretationGroup::POS,
+        };
+    }
+
+    protected function readTsvFile(string $filename): array
+    {
+        $fileContent = file_get_contents(self::RESOURCES_DIR . "/" . $filename);
+
+        $csvEncoder = new CsvEncoder();
+        $entries = $csvEncoder->decode($fileContent, 'csv', [CsvEncoder::DELIMITER_KEY => "\t"]);
+        foreach ($entries as $entry) {
+            $entry['display_name'] = preg_replace('~\x{00a0}~u', '', $entry['display_name']);
+        }
+
+        return $entries;
     }
 }

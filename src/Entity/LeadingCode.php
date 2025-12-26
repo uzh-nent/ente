@@ -114,4 +114,9 @@ class LeadingCode
     {
         $this->specimen = $specimen;
     }
+
+    public function isDuplicateOf(LeadingCode $other): bool
+    {
+        return $this->getSystem() === $other->getSystem() && $this->getCode() === $other->getCode();
+    }
 }
