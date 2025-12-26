@@ -69,6 +69,10 @@ class Observation
     #[Groups(['observation:read', 'observation:write'])]
     private ?string $interpretationText = null;
 
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['observation:read', 'observation:write'])]
+    private ?string $cgMLST = null; // https://www.cgmlst.org/
+
     #[ORM\ManyToOne(targetEntity: Organism::class)]
     #[ApiProperty(readableLink: false, writableLink: false)]
     #[Groups(['observation:read', 'observation:write'])]
@@ -107,6 +111,26 @@ class Observation
     public function setInterpretation(?Interpretation $interpretation): void
     {
         $this->interpretation = $interpretation;
+    }
+
+    public function getInterpretationText(): ?string
+    {
+        return $this->interpretationText;
+    }
+
+    public function setInterpretationText(?string $interpretationText): void
+    {
+        $this->interpretationText = $interpretationText;
+    }
+
+    public function getCgMLST(): ?string
+    {
+        return $this->cgMLST;
+    }
+
+    public function setCgMLST(?string $cgMLST): void
+    {
+        $this->cgMLST = $cgMLST;
     }
 
     public function getOrganism(): ?Organism

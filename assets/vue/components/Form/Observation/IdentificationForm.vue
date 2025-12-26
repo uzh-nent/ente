@@ -19,21 +19,31 @@
                 :field="fields.identificationSuccessful" v-model="entity.identificationSuccessful"
                 @update:model-value="validateField('identificationSuccessful')"/>
     </div>
-    <div class="col-md-12" v-if="entity.identificationSuccessful">
-      <form-field for-id="searchOrganism" :label="$t('organism._name')" :field="fields.organism">
-        <text-input v-if="searchEnabled" class="mb-2" id="searchOrganism" type="text" v-model="searchOrganism"/>
-        <radio id="organism" :choices="organismChoices" :field="fields.organism"
-               :value-string="value => value['@id']"
-               v-model="entity.organism" @update:model-value="validateField('organism')"/>
-        <span v-if="!searchEnabled && organismChoices.length === 0" class="form-text">{{$t('_form.observation.identification.no_organism_defined')}}</span>
-        <span v-if="searchEnabled" class="form-text">{{ itemHits }}</span>
-      </form-field>
-    </div>
+    <template v-if="entity.identificationSuccessful">
+      <div class="col-md-12">
+        <form-field for-id="searchOrganism" :label="$t('organism._name')" :field="fields.organism">
+          <text-input v-if="searchEnabled" class="mb-2" id="searchOrganism" type="text" v-model="searchOrganism"/>
+          <radio id="organism" :choices="organismChoices" :field="fields.organism"
+                 :value-string="value => value['@id']"
+                 v-model="entity.organism" @update:model-value="validateField('organism')"/>
+          <span v-if="!searchEnabled && organismChoices.length === 0"
+                class="form-text">{{ $t('_form.observation.identification.no_organism_defined') }}</span>
+          <span v-if="searchEnabled" class="form-text">{{ itemHits }}</span>
+        </form-field>
+      </div>
+      <div class="col-md-12">
+        <form-field for-id="cgMLST" :label="$t('observation.cgMLST')"
+                    :field="fields.cgMLST">
+          <text-area id="cgMLST" :field="fields.cgMLST" v-model="entity.cgMLST"
+                     @blur="blurField('cgMLST')" @update:modelValue="validateField('cgMLST')"/>
+        </form-field>
+      </div>
+    </template>
     <div class="col-md-12">
       <form-field for-id="interpretationText" :label="$t('observation.interpretation_text')"
                   :field="fields.interpretationText">
         <text-area id="interpretationText" :field="fields.interpretationText" v-model="entity.interpretationText"
-                    @blur="blurField('interpretationText')" @update:modelValue="validateField('interpretationText')"/>
+                   @blur="blurField('interpretationText')" @update:modelValue="validateField('interpretationText')"/>
       </form-field>
     </div>
   </div>

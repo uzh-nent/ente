@@ -1,6 +1,8 @@
 <template>
-  <labeled-value class="mb-3" :label="$t('probe.orderer_identifier')">{{ probe.ordererIdentifier }}</labeled-value>
-  <organization-view :organization="orderer" />
+  <div>
+    <labeled-value class="mb-3" :label="$t('probe.orderer_identifier')">{{ probe.ordererIdentifier }}</labeled-value>
+    <organization-view :organization="orderer"/>
+  </div>
 </template>
 
 <script>

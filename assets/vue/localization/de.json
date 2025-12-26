@@ -2,7 +2,9 @@
   "messages": {
     "danger": {
       "connection_error": "Ein Teil der Seite kann nicht geladen werden. Prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
-    }
+    },
+    "successful": "erfolgreich",
+    "failed": "fehlgeschlagen"
   },
   "_form": {
     "other_or_unknown": "Anderes/Unbekannt",
@@ -157,6 +159,7 @@
       "REFERENCE": "Referenzlabor"
     },
     "_analysis_type": {
+      "IDENTIFICATION": "Identif-/Typisierung",
       "EC_STEC": "Shigatoxin bildend (STEC)",
       "EC_EPEC": " Enteropathogene (EPEC)",
       "EC_ETEC": "Enterotoxin bildend (ETEC)",
@@ -208,7 +211,8 @@
     "_name": "Resultat",
     "analysis_stop_at": "Resultat erfasst am",
     "identification_successful": "Identifizierung erfolgreich",
-    "interpretation_text": "Kommentar"
+    "interpretation_text": "Kommentar",
+    "cgMLST": "cgMLST"
   },
   "organism": {
     "_name": "Organismus"

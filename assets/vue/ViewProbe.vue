@@ -58,6 +58,15 @@
       <add-identification-observation-button
           v-if="missingIdentificationObservation" @added="observations.push($event)"
           :probe="probe" :organisms="organisms" />
+      <div class="d-flex flex-column gap-2">
+        <actionable-view v-for="observation in identificationObservations" :key="observation['@id']">
+          <identification-view
+              :organisms="organisms" :observation="observation" />
+          <template v-slot:actions v-if="!probe.finishedAt">
+            <edit-probe-service-time-button :probe="probe"/>
+          </template>
+        </actionable-view>
+      </div>
     </div>
   </div>
 </template>
@@ -80,10 +89,12 @@ import ServiceTimeForm from "./components/Form/Probe/ServiceTimeForm.vue";
 import ServiceTimeView from "./components/View/Probe/ServiceTimeView.vue";
 import EditProbeServiceTimeButton from "./components/Action/EditProbeServiceTimeButton.vue";
 import AddIdentificationObservationButton from "./components/Action/AddIdentificationObservationButton.vue";
+import IdentificationView from "./components/View/Observation/IdentificationView.vue";
 
 export default {
   emits: ['added'],
   components: {
+    IdentificationView,
     AddIdentificationObservationButton,
     EditProbeServiceTimeButton,
     ServiceTimeView,
@@ -115,6 +126,9 @@ export default {
     missingIdentificationObservation: function () {
       return this.probe.analysisTypes.some(at => at === 'IDENTIFICATION') &&
           !this.observations.some(o => o.analysisType === 'IDENTIFICATION')
+    },
+    identificationObservations: function () {
+      return this.observations.filter(o => o.analysisType === 'IDENTIFICATION')
     },
     missingPrimaryObservations: function () {
       return this.probe.analysisTypes.filter(at => at !== 'IDENTIFICATION' &&
