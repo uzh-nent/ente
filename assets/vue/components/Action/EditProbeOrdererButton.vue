@@ -13,7 +13,6 @@
 import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
-import PatientForm from "../Form/PatientForm.vue";
 import ServiceRequestForm from "../Form/Probe/ServiceRequestForm.vue";
 import OrdererForm from "../Form/Probe/OrdererForm.vue";
 import {probeConverter} from "../../services/domain";
@@ -23,7 +22,6 @@ export default {
   components: {
     OrdererForm,
     ServiceRequestForm,
-    PatientForm,
     ButtonConfirmModal,
   },
   data() {
@@ -39,7 +37,7 @@ export default {
   },
   computed: {
     canConfirm: function () {
-      return !!this.patch
+      return !!this.payload
     },
     template: function () {
       return {
@@ -48,11 +46,19 @@ export default {
       }
     },
     payload: function () {
+      if (!this.patch) {
+        return null;
+      }
+
       let payload = {...this.patch}
       if (this.patch.orderer && this.patch.orderer['@id']) {
         payload = {...payload, ...probeConverter.writeOrderer(this.patch.orderer)}
       } else{
         delete payload.orderer
+      }
+
+      if (Object.keys(payload).length === 0) {
+        return null
       }
 
       return payload
