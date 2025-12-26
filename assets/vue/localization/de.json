@@ -53,6 +53,10 @@
       "edited": "Auftrag gespeichert.",
       "title": "Auftrag bearbeiten"
     },
+    "edit_probe_service_time": {
+      "edited": "Verlauf gespeichert.",
+      "title": "Verlauf bearbeiten"
+    },
     "edit_probe_specimen_meta": {
       "edited": "Probe gespeichert.",
       "title": "Probe bearbeiten"
@@ -126,7 +130,7 @@
     "animal_name": "Tiername",
     "received_at": "Empfangen am",
     "orderer_identifier": "Probe-Referenz",
-    "analysis_start_at": "Analyse aufgesetzt am",
+    "analysis_start_at": "Ansatzdatum",
     "orderer": "Auftraggeber",
     "_pathogen": {
       "SALMONELLA": "Salmonella",

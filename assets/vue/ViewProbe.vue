@@ -47,7 +47,12 @@
     </div>
     <div class="col-lg-4 col-md-6">
       <h3>{{ $t('probe.progress') }}</h3>
-
+      <actionable-view>
+        <service-time-view :probe="probe"/>
+        <template v-slot:actions>
+          <edit-probe-service-time-button :probe="probe"/>
+        </template>
+      </actionable-view>
     </div>
   </div>
 </template>
@@ -66,10 +71,16 @@ import EditProbePatientButton from "./components/Action/EditProbePatientButton.v
 import EditProbeOwnerButton from "./components/Action/EditProbeOwnerButton.vue";
 import SpecimenMetaView from "./components/View/Probe/SpecimenMetaView.vue";
 import EditProbeSpecimenMetaButton from "./components/Action/EditProbeSpecimenMetaButton.vue";
+import ServiceTimeForm from "./components/Form/Probe/ServiceTimeForm.vue";
+import ServiceTimeView from "./components/View/Probe/ServiceTimeView.vue";
+import EditProbeServiceTimeButton from "./components/Action/EditProbeServiceTimeButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    EditProbeServiceTimeButton,
+    ServiceTimeView,
+    ServiceTimeForm,
     EditProbeSpecimenMetaButton,
     SpecimenMetaView,
     EditProbeOwnerButton,

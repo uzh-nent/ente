@@ -17,6 +17,7 @@ trait ServiceTime
     private ?\DateTimeImmutable $receivedAt = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[Groups(['probe:read', 'probe:write'])]
     private ?\DateTimeImmutable $analysisStartAt = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
