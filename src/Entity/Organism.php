@@ -21,6 +21,7 @@ use ApiPlatform\Metadata\GetCollection;
 use App\Entity\Traits\CodedIdentifierTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
+use App\Enum\Pathogen;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -45,6 +46,10 @@ class Organism
     #[Groups(['organism:read'])]
     private ?string $organismGroup = null;
 
+    #[ORM\Column(type: Types::STRING, enumType: Pathogen::class, nullable: true)]
+    #[Groups(['organism:read'])]
+    private ?Pathogen $pathogen = null;
+
     public function getOrganismGroup(): ?string
     {
         return $this->organismGroup;
@@ -55,8 +60,21 @@ class Organism
         $this->organismGroup = $organismGroup;
     }
 
-    public function isEqualTo(Organism $other): bool
+    public function getPathogen(): ?Pathogen
     {
+        return $this->pathogen;
+    }
+
+    public function setPathogen(?Pathogen $pathogen): void
+    {
+        $this->pathogen = $pathogen;
+    }
+
+    public function isDuplicateOf(Organism $other): bool
+    {
+        // check properties that would exclude duplicates
+        // for example, possible that same code is in different organism groups, hence checked
+        // but same code for different pathogens makes no sense, hence not checked
         return $this->getSystem() === $other->getSystem() && $this->getCode() === $other->getCode() &&
             $this->getOrganismGroup() === $other->getOrganismGroup();
     }

@@ -15,6 +15,7 @@ namespace App\Command;
 
 use App\Entity\Organism;
 use App\Enum\CodeSystem;
+use App\Enum\Pathogen;
 use App\Helper\DoctrineHelper;
 use Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension;
 use Doctrine\Persistence\ManagerRegistry;
@@ -48,15 +49,17 @@ class ImportTasks extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var Organism[] $organisms */
         $organisms = $this->doctrine->getRepository(Organism::class)->findAll();
 
         $updateCount = 0;
         $createCount = 0;
         $createOrUpdate = function (Organism $importedEntity) use (&$updateCount, &$createCount, $organisms) {
-            $existingOrganism = array_find($organisms, fn(Organism $o) => $o->isEqualTo($importedEntity));
+            $existingOrganism = array_find($organisms, fn(Organism $o) => $o->isDuplicateOf($importedEntity));
             if ($existingOrganism) {
-                if ($existingOrganism->getDisplayName() !== $importedEntity->getDisplayName()) {
+                if ($existingOrganism->getDisplayName() !== $importedEntity->getDisplayName() || $existingOrganism->getPathogen() !== $importedEntity->getPathogen()) {
                     $existingOrganism->setDisplayName($importedEntity->getDisplayName());
+                    $existingOrganism->setPathogen($importedEntity->getPathogen());
                     $updateCount++;
                     DoctrineHelper::persistAndFlush($this->doctrine, $existingOrganism);
                 }
@@ -73,6 +76,7 @@ class ImportTasks extends Command
             $entity->setDisplayName($organism['display_name']);
             $entity->setOrganismGroup($organism['organism_group']);
             $entity->setSystem(CodeSystem::SNOMED);
+            $entity->setPathogen(self::parsePathogen($organism['pathogen']));
 
             $createOrUpdate($entity);
         }
@@ -84,6 +88,7 @@ class ImportTasks extends Command
             $entity->setDisplayName($organism['display_name']);
             $entity->setOrganismGroup('sal_org_complete');
             $entity->setSystem(CodeSystem::SNOMED);
+            $entity->setPathogen(Pathogen::SALMONELLA);
 
             $createOrUpdate($entity);
         }
@@ -104,5 +109,16 @@ class ImportTasks extends Command
         }
 
         return $entries;
+    }
+
+    private function parsePathogen(string $pathogen) : Pathogen
+    {
+        return match ($pathogen) {
+            'Salmonella', 'Salmonella Typhi/Paratyphi' => Pathogen::SALMONELLA,
+            'Shigella' => Pathogen::SHIGELLA,
+            'Vibrio cholerae' => Pathogen::VIBRIO_CHOLERAE,
+            'Listeria monocytogenes' => Pathogen::LISTERIA_MONOCYTOGENES,
+            'Yersinia pestis' => Pathogen::YERSINIA,
+        };
     }
 }

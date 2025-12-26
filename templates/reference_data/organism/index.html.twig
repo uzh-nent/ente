@@ -17,6 +17,7 @@
     <table class="table table-striped table-hover datatable border">
         <thead>
         <tr>
+            <th>{{ "enum.title"|trans({}, "enum_pathogen") }}</th>
             <th>{{ "Organism group"|trans({}, "entity_organism") }}</th>
             <th>{{ "entity.title"|trans({}, "entity_organism") }}</th>
             <th class="w-minimal" data-orderable="false"></th>
@@ -25,6 +26,7 @@
         <tbody>
         {% for organism in organisms %}
             <tr>
+                <td>{{ organism.pathogen|trans }}</td>
                 <td>{{ organism.organismGroup }}</td>
                 <td>{{ components.render_code(organism) }}</td>
                 <td class="w-minimal">
