@@ -56,8 +56,8 @@
 
       <h3 class="mt-5">{{ $t('observation._name') }}</h3>
       <add-identification-observation-button
-          v-if="missingIdentificationObservation"
-          :organisms="organisms" :pathogen="probe.pathogen"/>
+          v-if="missingIdentificationObservation" @added="observations.push($event)"
+          :probe="probe" :organisms="organisms" />
     </div>
   </div>
 </template>

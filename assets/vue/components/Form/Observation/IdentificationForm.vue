@@ -25,6 +25,7 @@
         <radio id="organism" :choices="organismChoices" :field="fields.organism"
                :value-string="value => value['@id']"
                v-model="entity.organism" @update:model-value="validateField('organism')"/>
+        <span v-if="!searchEnabled && organismChoices.length === 0" class="form-text">{{$t('_form.observation.identification.no_organism_defined')}}</span>
         <span v-if="searchEnabled" class="form-text">{{ itemHits }}</span>
       </form-field>
     </div>

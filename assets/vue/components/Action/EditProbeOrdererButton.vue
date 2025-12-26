@@ -41,7 +41,7 @@ export default {
     },
     template: function () {
       return {
-        ordererIdentifier: this.probe.ordererIdentifier,
+        ...this.probe,
         orderer: probeConverter.reconstructOrdererOrganization(this.probe)
       }
     },

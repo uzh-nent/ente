@@ -12,6 +12,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Doctrine\Common\Filter\SearchFilterInterface;
+use ApiPlatform\Doctrine\Orm\Filter\ExistsFilter;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
@@ -52,6 +53,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     'pathogen' => SearchFilterInterface::STRATEGY_EXACT,
     'orderer' => SearchFilterInterface::STRATEGY_EXACT, 'patient' => SearchFilterInterface::STRATEGY_EXACT, 'animalKeeper' => SearchFilterInterface::STRATEGY_EXACT,
 ])]
+#[ApiFilter(ExistsFilter::class, properties: ['finishedAt'])]
 #[ApiFilter(OrderFilter::class, properties: ['identifier'])]
 class Probe
 {

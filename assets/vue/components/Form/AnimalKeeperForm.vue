@@ -86,6 +86,7 @@ export default {
   },
   watch: {
     'entity.postalCode': {
+      immediate: true,
       handler: function (postalCode) {
         if (!postalCode || postalCode.length !== 4) {
           return

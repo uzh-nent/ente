@@ -9,6 +9,11 @@
     "timeFilter": {
       "from": "Von",
       "until": "Bis"
+    },
+    "observation": {
+      "identification": {
+        "no_organism_defined": "Kein Organismus definiert für dieses Pathogen."
+      }
     }
   },
   "_action": {
@@ -46,7 +51,7 @@
       "title": "Tierhalter bearbeiten"
     },
     "add_identification_observation": {
-      "edited": "Resultat gespeichert.",
+      "added": "Resultat gespeichert.",
       "title": "Resultat erfassen"
     },
     "edit_probe_orderer": {

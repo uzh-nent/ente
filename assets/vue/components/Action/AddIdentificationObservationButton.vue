@@ -3,7 +3,7 @@
       :title="$t('_action.add_identification_observation.title')" icon="fas fa-plus"
       :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm"
       @showing="focusIdentification">
-    <identification-form :pathogen="pathogen" :organisms="organisms" :template="template" @update="post = $event"/>
+    <identification-form :pathogen="probe.pathogen" :organisms="organisms" :template="template" @update="post = $event"/>
   </button-confirm-modal>
 </template>
 
@@ -31,8 +31,8 @@ export default {
     }
   },
   props: {
-    pathogen: {
-      type: String,
+    probe: {
+      type: Object,
       required: true
     },
     organisms: {
@@ -50,14 +50,22 @@ export default {
         identificationSuccessful: true,
       }
     },
-  },
-  methods: {
-    confirm: async function () {
-      const payload = {...this.template, ...this.post}
+    payload: function () {
+      const payload = {...this.template, ...this.post, analysisType: 'IDENTIFICATION', probe: this.probe['@id']}
+
       payload.interpretation = payload.interpretationSuccessful ? 'POS' : 'NEG'
       delete payload.interpretationSuccessful
 
-      const observation = await api.postObservation(payload)
+      if (payload.organism) {
+        payload.organism = payload.organism['@id']
+      }
+
+      return payload
+    }
+  },
+  methods: {
+    confirm: async function () {
+      const observation = await api.postObservation(this.payload)
       this.$emit('added', observation)
 
       const successMessage = this.$t('_action.add_identification_observation.added')

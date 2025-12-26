@@ -41,12 +41,13 @@ export default {
     },
     template: function () {
       return {
+        ...this.probe,
         patient: probeConverter.reconstructPatient(this.probe)
       }
     },
     payload: function () {
       if (this.patch?.patient && this.patch.patient['@id']) {
-        return  probeConverter.writePatient(this.patch.patient)
+        return probeConverter.writePatient(this.patch.patient)
       } else{
         return null
       }

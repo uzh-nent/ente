@@ -4,7 +4,7 @@
       button-size="sm" color="secondary"
       :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
       @showing="focusSpecimenMeta">
-    <specimen-meta-form edit-mode :template="probe" @update="patch = $event" :specimens="specimens"/>
+    <specimen-meta-form edit-mode :template="template" @update="patch = $event" :specimens="specimens"/>
   </button-confirm-modal>
 </template>
 
@@ -15,6 +15,7 @@ import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import PatientForm from "../Form/PatientForm.vue";
 import SpecimenMetaForm from "../Form/Probe/SpecimenMetaForm.vue";
+import {probeConverter} from "../../services/domain/converters";
 
 export default {
   emits: ['edited'],
@@ -41,6 +42,12 @@ export default {
   computed: {
     canConfirm: function () {
       return !!this.patch
+    },
+    template: function () {
+      return {
+        ...this.probe,
+        specimen: this.specimens.find(s => s['@id'] === this.probe.specimen)
+      }
     },
     payload: function () {
       const payload = {...this.patch}

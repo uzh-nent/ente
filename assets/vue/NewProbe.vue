@@ -94,6 +94,8 @@ export default {
     specimenMetaTemplate: function () {
       return {
         specimenSource: 'HUMAN',
+        specimenIsolate: true,
+        specimen: this.specimens.find(specimen => specimen.displayName.includes("Stool"))
       }
     },
     serviceTimeTemplate: function () {

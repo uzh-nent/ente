@@ -41,7 +41,7 @@ export default {
     },
     template: function () {
       return {
-        animalName: this.probe.animalName,
+        ...this.probe,
         animalKeeper: probeConverter.reconstructAnimalKeeper(this.probe)
       }
     },
