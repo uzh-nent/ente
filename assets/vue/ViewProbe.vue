@@ -4,7 +4,7 @@
       <h3>{{ $t('probe.service_request') }}</h3>
       <actionable-view>
         <service-request-view :probe="probe"/>
-        <template v-slot:actions>
+        <template v-slot:actions v-if="observations.length === 0 && !probe.finishedAt">
           <edit-probe-service-request-button :probe="probe"/>
         </template>
       </actionable-view>
@@ -12,7 +12,7 @@
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
       <actionable-view>
         <orderer-view :probe="probe"/>
-        <template v-slot:actions>
+        <template v-slot:actions v-if="!probe.finishedAt">
           <edit-probe-orderer-button :probe="probe"/>
         </template>
       </actionable-view>
@@ -20,7 +20,7 @@
       <h3 class="mt-5">{{ $t('probe._name') }}</h3>
       <actionable-view>
         <specimen-meta-view :probe="probe" :specimens="specimens"/>
-        <template v-slot:actions>
+        <template v-slot:actions v-if="!probe.finishedAt">
           <edit-probe-specimen-meta-button :specimens="specimens" :probe="probe"/>
         </template>
       </actionable-view>
@@ -29,7 +29,7 @@
         <h3 class="mt-5">{{ $t('patient._name') }}</h3>
         <actionable-view>
           <patient-view :probe="probe"/>
-          <template v-slot:actions>
+          <template v-slot:actions v-if="!probe.finishedAt">
             <edit-probe-patient-button :probe="probe"/>
           </template>
         </actionable-view>
@@ -39,7 +39,7 @@
         <h3 class="mt-5">{{ $t('animal_keeper._name') }}</h3>
         <actionable-view>
           <owner-view :probe="probe"/>
-          <template v-slot:actions>
+          <template v-slot:actions v-if="!probe.finishedAt">
             <edit-probe-owner-button :probe="probe"/>
           </template>
         </actionable-view>
@@ -49,10 +49,13 @@
       <h3>{{ $t('probe.progress') }}</h3>
       <actionable-view>
         <service-time-view :probe="probe"/>
-        <template v-slot:actions>
+        <template v-slot:actions v-if="!probe.finishedAt">
           <edit-probe-service-time-button :probe="probe"/>
         </template>
       </actionable-view>
+
+      <h3>{{ $t('probe.result') }}</h3>
+  
     </div>
   </div>
 </template>

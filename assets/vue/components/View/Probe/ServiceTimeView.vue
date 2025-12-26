@@ -6,6 +6,10 @@
   <labeled-value :label="$t('probe.analysis_start_at')">
     {{ formatDate(probe.analysisStartAt) }}
   </labeled-value>
+
+  <labeled-value :label="$t('probe.finished_at')" v-if="probe.finishedAt">
+    {{ formatDate(probe.finishedAt) }}
+  </labeled-value>
 </template>
 
 <script>
