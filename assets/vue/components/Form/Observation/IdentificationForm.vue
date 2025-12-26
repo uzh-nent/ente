@@ -83,6 +83,7 @@ export default {
         identificationSuccessful: createField(),
 
         organism: createField(),
+        cgMLST: createField(),
         interpretationText: createField(),
       },
       entity: {
@@ -90,6 +91,7 @@ export default {
         identificationSuccessful: null,
 
         organism: null,
+        cgMLST: null,
         interpretationText: null,
       },
 

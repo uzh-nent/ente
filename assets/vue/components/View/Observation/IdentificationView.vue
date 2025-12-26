@@ -19,9 +19,9 @@
       {{ observation.cgMLST }}
     </labeled-value>
 
-    <labeled-value :label="$t(`observation.interpretation_text`)">
+    <div v-if="observation.interpretationText" class="mt-3 whitespace-preserve-newlines p-2 bg-light">
       {{ observation.interpretationText }}
-    </labeled-value>
+    </div>
   </div>
 </template>
 
