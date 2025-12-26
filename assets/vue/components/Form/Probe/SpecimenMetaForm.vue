@@ -15,6 +15,29 @@
                       id="specimenSourceText" type="text" :field="fields.specimenSourceText"
                       v-model="entity.specimenSourceText"
                       @blur="blurField('specimenSourceText')" @update:modelValue="validateField('specimenSourceText')"/>
+
+          <template v-else-if="entity.specimenSource === 'FOOD'">
+            <custom-select id="specimenFoodType" class="mt-1" :choices="specimenFoodTypes" :field="fields.specimenFoodType"
+                           v-model="entity.specimenFoodType" @update:model-value="validateField('specimenFoodType')"/>
+            <text-input v-if="!entity.specimenFoodType" class="mt-1"
+                        id="specimenTypeText" type="text" :field="fields.specimenTypeText"
+                        v-model="entity.specimenTypeText"
+                        @blur="blurField('specimenTypeText')" @update:modelValue="validateField('specimenTypeText')"/>
+          </template>
+          <template v-else-if="entity.specimenSource === 'ANIMAL'">
+            <custom-select id="specimenAnimalType" class="mt-1" :choices="specimenAnimalTypes" :field="fields.specimenAnimalType"
+                           v-model="entity.specimenAnimalType" @update:model-value="validateField('specimenAnimalType')"/>
+            <text-input v-if="!entity.specimenAnimalType" class="mt-1"
+                        id="specimenTypeText" type="text" :field="fields.specimenTypeText"
+                        v-model="entity.specimenTypeText"
+                        @blur="blurField('specimenTypeText')" @update:modelValue="validateField('specimenTypeText')"/>
+          </template>
+          <template v-else-if="entity.specimenSource !== 'HUMAN'">
+            <text-input class="mt-1"
+                        id="specimenTypeText" type="text" :field="fields.specimenTypeText"
+                        v-model="entity.specimenTypeText"
+                        @blur="blurField('specimenTypeText')" @update:modelValue="validateField('specimenTypeText')"/>
+          </template>
         </form-field>
       </div>
     </div>
@@ -51,35 +74,6 @@
       <text-input id="specimenText" type="text" :field="fields.specimenText"
                   v-model="entity.specimenText"
                   @blur="blurField('specimenText')" @update:modelValue="validateField('specimenText')"/>
-    </form-field>
-
-    <!-- select specimen type -->
-    <form-field v-if="entity.specimenSource === 'FOOD'"
-                for-id="specimenTypeText" :fake-required="true"
-                :label="$t('probe.specimen_food_type')" :field="fields.specimenFoodType">
-      <custom-select id="specimenFoodType" :choices="specimenFoodTypes" :field="fields.specimenFoodType"
-                     v-model="entity.specimenFoodType" @update:model-value="validateField('specimenFoodType')"/>
-      <text-input v-if="!entity.specimenFoodType" class="mt-1"
-                  id="specimenTypeText" type="text" :field="fields.specimenTypeText"
-                  v-model="entity.specimenTypeText"
-                  @blur="blurField('specimenTypeText')" @update:modelValue="validateField('specimenTypeText')"/>
-    </form-field>
-    <form-field v-else-if="entity.specimenSource === 'ANIMAL'"
-                for-id="specimenTypeText" :fake-required="true"
-                :label="$t('probe.specimen_animal_type')" :field="fields.specimenAnimalType">
-      <custom-select id="specimenAnimalType" :choices="specimenAnimalTypes" :field="fields.specimenAnimalType"
-                     v-model="entity.specimenAnimalType" @update:model-value="validateField('specimenAnimalType')"/>
-      <text-input v-if="!entity.specimenAnimalType" class="mt-1"
-                  id="specimenTypeText" type="text" :field="fields.specimenTypeText"
-                  v-model="entity.specimenTypeText"
-                  @blur="blurField('specimenTypeText')" @update:modelValue="validateField('specimenTypeText')"/>
-    </form-field>
-    <form-field v-else-if="entity.specimenSource !== 'HUMAN'"
-                for-id="specimenTypeText" :label="$t('probe.specimen_type')" :field="fields.specimenTypeText">
-      <text-input class="mt-1"
-                  id="specimenTypeText" type="text" :field="fields.specimenTypeText"
-                  v-model="entity.specimenTypeText"
-                  @blur="blurField('specimenTypeText')" @update:modelValue="validateField('specimenTypeText')"/>
     </form-field>
 
     <!-- select specimen location -->
