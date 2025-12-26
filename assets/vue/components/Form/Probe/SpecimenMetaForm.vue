@@ -201,7 +201,6 @@ export default {
   },
   watch: {
     'entity.specimen': {
-      immediate: true,
       handler: function (specimen) {
         if (specimen) {
           this.entity.specimenText = null
@@ -209,7 +208,6 @@ export default {
       }
     },
     'entity.specimenSource': {
-      immediate: true,
       handler: function (specimenSource) {
         if (specimenSource) {
           this.entity.specimenSourceText = null

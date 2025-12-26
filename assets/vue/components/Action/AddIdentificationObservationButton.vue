@@ -1,9 +1,9 @@
 <template>
   <button-confirm-modal
-      :title="$t('_action.add_observation.title')" icon="fas fa-plus"
+      :title="$t('_action.add_identification_observation.title')" icon="fas fa-plus"
       :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm"
-      @showing="focusAnimalKeeper">
-    <animal-keeper-form :template="extendedTemplate" @update="post = $event"/>
+      @showing="focusIdentification">
+    <identification-form :pathogen="pathogen" :organisms="organisms" :template="template" @update="post = $event"/>
   </button-confirm-modal>
 </template>
 
@@ -14,47 +14,57 @@ import {displaySuccess} from '../../services/notifiers'
 import LoopingRhombusSpinner from '../Library/View/Base/LoopingRhombusSpinner.vue'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import AnimalKeeperForm from "../Form/AnimalKeeperForm.vue";
+import IdentificationForm from "../Form/Observation/IdentificationForm.vue";
+import moment from "moment/moment";
 
 export default {
   emits: ['added'],
   components: {
+    IdentificationForm,
     AnimalKeeperForm,
     ButtonConfirmModal,
     LoopingRhombusSpinner,
-  },
-  props: {
-    template: {
-      type: Object,
-      default: {}
-    },
   },
   data() {
     return {
       post: null
     }
   },
+  props: {
+    pathogen: {
+      type: String,
+      required: true
+    },
+    organisms: {
+      type: Array,
+      required: true
+    },
+  },
   computed: {
     canConfirm: function () {
       return !!this.post
     },
-    extendedTemplate: function () {
+    template: function () {
       return {
-        ...this.template,
-        countryCode: 'CH',
+        analysisStopAt: moment().format('YYYY-MM-DD'),
+        identificationSuccessful: true,
       }
     },
   },
   methods: {
     confirm: async function () {
       const payload = {...this.template, ...this.post}
-      const animalKeeper = await api.postAnimalKeeper(payload)
-      this.$emit('added', animalKeeper)
+      payload.interpretation = payload.interpretationSuccessful ? 'POS' : 'NEG'
+      delete payload.interpretationSuccessful
 
-      const successMessage = this.$t('_action.add_animal_keeper.added')
+      const observation = await api.postObservation(payload)
+      this.$emit('added', observation)
+
+      const successMessage = this.$t('_action.add_identification_observation.added')
       displaySuccess(successMessage)
     },
-    focusAnimalKeeper: function () {
-      document.getElementById('name')?.focus()
+    focusIdentification: function () {
+      document.getElementById('searchOrganism')?.focus()
     }
   }
 }

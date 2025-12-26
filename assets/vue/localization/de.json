@@ -45,6 +45,10 @@
       "edited": "Tierhalter gespeichert.",
       "title": "Tierhalter bearbeiten"
     },
+    "add_identification_observation": {
+      "edited": "Resultat gespeichert.",
+      "title": "Resultat erfassen"
+    },
     "edit_probe_orderer": {
       "edited": "Auftraggeber gespeichert.",
       "title": "Auftraggeber bearbeiten"
@@ -194,6 +198,15 @@
     "name": "Name",
     "given_name": "Vorname",
     "family_name": "Nachname"
+  },
+  "observation": {
+    "_name": "Resultat",
+    "analysis_stop_at": "Resultat erfasst am",
+    "identification_successful": "Identifizierung erfolgreich",
+    "interpretation_text": "Kommentar"
+  },
+  "organism": {
+    "_name": "Organismus"
   },
   "address": {
     "_name": "Adresse",

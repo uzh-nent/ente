@@ -54,8 +54,10 @@
         </template>
       </actionable-view>
 
-      <h3>{{ $t('probe.result') }}</h3>
-  
+      <h3 class="mt-5">{{ $t('observation._name') }}</h3>
+      <add-identification-observation-button
+          v-if="missingIdentificationObservation"
+          :organisms="organisms" :pathogen="probe.pathogen"/>
     </div>
   </div>
 </template>
@@ -77,10 +79,12 @@ import EditProbeSpecimenMetaButton from "./components/Action/EditProbeSpecimenMe
 import ServiceTimeForm from "./components/Form/Probe/ServiceTimeForm.vue";
 import ServiceTimeView from "./components/View/Probe/ServiceTimeView.vue";
 import EditProbeServiceTimeButton from "./components/Action/EditProbeServiceTimeButton.vue";
+import AddIdentificationObservationButton from "./components/Action/AddIdentificationObservationButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    AddIdentificationObservationButton,
     EditProbeServiceTimeButton,
     ServiceTimeView,
     ServiceTimeForm,
@@ -105,6 +109,16 @@ export default {
       organisms: undefined,
 
       observations: undefined,
+    }
+  },
+  computed: {
+    missingIdentificationObservation: function () {
+      return this.probe.analysisTypes.some(at => at === 'IDENTIFICATION') &&
+          !this.observations.some(o => o.analysisType === 'IDENTIFICATION')
+    },
+    missingPrimaryObservations: function () {
+      return this.probe.analysisTypes.filter(at => at !== 'IDENTIFICATION' &&
+          !this.observations.some(o => o.analysisType === at))
     }
   },
   mounted() {

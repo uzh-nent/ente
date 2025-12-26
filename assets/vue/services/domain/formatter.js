@@ -80,6 +80,20 @@ export const formatOrganizationShort = function (value) {
   return [value.postalCode, value.name].filter(e => e).join(" ")
 }
 
+
+export const formatOrganism = function (organism) {
+  if (!organism) {
+    return '-'
+  }
+
+  let displayName = organism.displayName
+  if (displayName.endsWith(" (organism)")) {
+    displayName = displayName.substring(0, displayName.length - 11)
+  }
+
+  return displayName
+}
+
 export const formatAnimalKeeperShort = function (value) {
   if (!value) {
     return '-'

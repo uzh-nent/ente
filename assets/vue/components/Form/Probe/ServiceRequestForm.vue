@@ -100,7 +100,6 @@ export default {
   },
   watch: {
     'entity.laboratoryFunction': {
-      immediate: true,
       handler: function (laboratoryFunction) {
         if (laboratoryFunction === 'REFERENCE') {
           this.entity.pathogen = 'SALMONELLA'

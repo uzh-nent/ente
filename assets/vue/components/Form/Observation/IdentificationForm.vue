@@ -13,31 +13,25 @@
   <hr/>
 
   <div class="row">
-    <div class="col-md-6">
-      <form-field for-id="identificationSuccessful" :label="$t('observation.identification_successful')"
-                  :field="fields.identificationSuccessful">
-        <checkbox id="identificationSuccessful" :field="fields.identificationSuccessful"
-                  v-model="entity.identificationSuccessful"
-                  @update:model-value="validateField('identificationSuccessful')"/>
-      </form-field>
+    <div class="col-md-12">
+      <checkbox id="identificationSuccessful" :label="$t('observation.identification_successful')"
+                class="mb-3"
+                :field="fields.identificationSuccessful" v-model="entity.identificationSuccessful"
+                @update:model-value="validateField('identificationSuccessful')"/>
     </div>
     <div class="col-md-12" v-if="entity.identificationSuccessful">
-      <form-field for-id="searchOrganism" :label="$t('observation.organism')" :field="fields.identification">
-        <text-input id="searchOrganism" type="text" v-model="entity.searchOrganism"/>
-
-        <radio id="animalKeeper" :choices="maxedFilteredOrganisms" :field="fields.organism"
+      <form-field for-id="searchOrganism" :label="$t('organism._name')" :field="fields.organism">
+        <text-input v-if="searchEnabled" class="mb-2" id="searchOrganism" type="text" v-model="searchOrganism"/>
+        <radio id="organism" :choices="organismChoices" :field="fields.organism"
                :value-string="value => value['@id']"
                v-model="entity.organism" @update:model-value="validateField('organism')"/>
-
-        <custom-select class="mt-1" id="organism" :choices="filteredOrganisms" :field="fields.organism"
-                       v-model="entity.organism" @update:model-value="validateField('organism')"/>
-        <span class="form-text">{{ itemHits }}</span>
+        <span v-if="searchEnabled" class="form-text">{{ itemHits }}</span>
       </form-field>
     </div>
     <div class="col-md-12">
-      <form-field for-id="interpretationText" :label="$t('address.interpretation_text')"
+      <form-field for-id="interpretationText" :label="$t('observation.interpretation_text')"
                   :field="fields.interpretationText">
-        <text-input id="interpretationText" :field="fields.interpretationText" v-model="entity.interpretationText"
+        <text-area id="interpretationText" :field="fields.interpretationText" v-model="entity.interpretationText"
                     @blur="blurField('interpretationText')" @update:modelValue="validateField('interpretationText')"/>
       </form-field>
     </div>
@@ -55,6 +49,9 @@ import CustomSelect from "../../Library/FormInput/CustomSelect.vue";
 import Checkbox from "../../Library/FormInput/Checkbox.vue";
 import debounce from "lodash.debounce";
 import {sortOrganisms} from "../../../services/domain/sorters";
+import {formatOrganism} from "../../../services/domain/formatter";
+
+const SEARCH_CUTOFF = 10
 
 export default {
   emits: ['update'],
@@ -85,9 +82,9 @@ export default {
         interpretationText: null,
       },
 
-      searchOrganism: '',
+      searchOrganism: null,
       filteredOrganisms: null,
-      filteredOrganismsTerm: ''
+      filteredOrganismsTerm: null
     }
   },
   props: {
@@ -107,12 +104,17 @@ export default {
 
       return organisms
     },
-    maxedFilteredOrganisms: function () {
-      return this.filteredOrganisms?.slice(0, 10) ?? []
+    searchEnabled: function () {
+      return this.potentialOrganisms.length > SEARCH_CUTOFF
+    },
+    organismChoices: function () {
+      const source = this.searchEnabled ? this.filteredOrganisms : this.potentialOrganisms
+      const maxedCollection = source?.slice(0, SEARCH_CUTOFF) ?? [];
+      return maxedCollection.map(o => ({label: formatOrganism(o), value: o}))
     },
     itemHits: function () {
-      let hits = this.maxedFilteredOrganisms.length;
-      if (this.maxedFilteredOrganisms.length < this.filteredOrganisms?.length) {
+      let hits = this.organismChoices.length;
+      if (this.organismChoices.length < this.filteredOrganisms?.length) {
         hits = `${hits}+`
       }
 
@@ -121,25 +123,29 @@ export default {
   },
   methods: {
     filterOrganisms: function (searchOrganism) {
-      let extendsPreviousSearch = this.filteredOrganismsTerm && this.filteredOrganisms && searchOrganism.includes(this.filteredOrganismsTerm);
+      if (!searchOrganism) {
+        this.filteredOrganisms = null
+        this.filteredOrganismsTerm = null
+        return
+      }
+
+      const extendsPreviousSearch = this.filteredOrganismsTerm && this.filteredOrganisms && searchOrganism.includes(this.filteredOrganismsTerm);
       const base = [...(extendsPreviousSearch ? this.filteredOrganisms : this.potentialOrganisms)]
       const keywords = searchOrganism.split(" ").map(kw => kw.toLowerCase())
       this.filteredOrganisms = base.filter(o => {
         const match = o.displayName.toLowerCase()
-        return keywords.all(kw => match.includes(kw))
+        return keywords.every(kw => match.includes(kw))
       })
       this.filteredOrganismsTerm = searchOrganism
     }
   },
   watch: {
     searchOrganism: {
-      immediate: true,
       handler: debounce(function (searchOrganism) {
         this.filterOrganisms(searchOrganism)
       }, 200, {'leading': true}),
     },
     'entity.identificationSuccessful': {
-      immediate: true,
       handler: function (identificationSuccessful) {
         if (identificationSuccessful) {
           this.fields.organism.rules = [requiredRule]
