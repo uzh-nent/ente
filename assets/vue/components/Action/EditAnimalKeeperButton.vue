@@ -2,7 +2,8 @@
   <button-confirm-modal
     :title="$t('_action.edit_animal_keeper.title')" icon="fas fa-edit"
     button-size="sm" color="secondary"
-    :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm">
+    :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
+    @showing="focusAnimalKeeper">
     <div class="d-flex flex-column align-items-end">
       <div class="w-100">
         <animal-keeper-form :template="animalKeeper" @update="patch = $event" />
@@ -19,6 +20,7 @@ import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vu
 import AnimalKeeperForm from "../Form/AnimalKeeperForm.vue";
 
 export default {
+  emits: ['edited'],
   components: {
     AnimalKeeperForm,
     ButtonConfirmModal,
@@ -46,6 +48,11 @@ export default {
 
       const successMessage = this.$t('_action.edit_animal_keeper.edited')
       displaySuccess(successMessage)
+
+      this.$emit('edited')
+    },
+    focusAnimalKeeper: function () {
+      document.getElementById('name')?.focus()
     }
   }
 }

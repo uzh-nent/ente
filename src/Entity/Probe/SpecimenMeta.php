@@ -70,7 +70,7 @@ trait SpecimenMeta
     #[Groups(['probe:read', 'probe:write'])]
     private ?Patient $patient = null;
 
-    #[ORM\ManyToOne(targetEntity: Specimen::class, inversedBy: 'probes')]
+    #[ORM\ManyToOne(targetEntity: Specimen::class)]
     #[Groups(['probe:read', 'probe:write'])]
     private ?Specimen $specimen = null;
 

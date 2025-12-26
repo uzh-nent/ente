@@ -11,7 +11,12 @@
       </div>
     </div>
     <form-field for-id="animalKeeper" :label="$t('animal_keeper._name')" :field="fields.animalKeeper">
-      <animalKeeper-view class="mb-2" v-if="entity.animalKeeper" :animalKeeper="entity.animalKeeper"/>
+      <actionable-preview class="mb-2" v-if="entity.animalKeeper">
+        <animal-keeper-view :animal-keeper="entity.animalKeeper"/>
+        <template #actions>
+          <edit-animal-keeper-button ref="editAnimalKeeperButton" :animal-keeper="entity.animalKeeper" @edited="editedAnimalKeeper"/>
+        </template>
+      </actionable-preview>
 
       <div class="d-flex flex-row reset-table-styles gap-2 mb-2">
         <input type="text" class="form-control mw-5"
@@ -46,10 +51,18 @@ import {formatAnimalKeeperShort} from "../../../services/formatter";
 import AddAnimalKeeperButton from "../../Action/AddAnimalKeeperButton.vue";
 import AnimalKeeperView from "../../View/AnimalKeeperView.vue";
 import TextInput from "../../Library/FormInput/TextInput.vue";
+import EditOrganizationButton from "../../Action/EditOrganizationButton.vue";
+import ActionablePreview from "../../Library/View/ActionablePreview.vue";
+import OrganizationView from "../../View/OrganizationView.vue";
+import EditAnimalKeeperButton from "../../Action/EditAnimalKeeperButton.vue";
+import EditPatientButton from "../../Action/EditPatientButton.vue";
 
 export default {
   emits: ['update'],
   components: {
+    EditPatientButton,
+    EditAnimalKeeperButton,
+    OrganizationView, ActionablePreview, EditOrganizationButton,
     TextInput,
     Radio,
     AnimalKeeperView,
@@ -108,9 +121,13 @@ export default {
   },
   methods: {
     addedAnimalKeeper: function (animalKeeper) {
+      this.searchPostalCode = this.searchName = null // first empty to ensure afterwards reload
       this.searchPostalCode = animalKeeper.postalCode
       this.searchName = animalKeeper.name
       this.$refs.addAnimalKeeperButton?.$el.focus()
+    },
+    editedAnimalKeeper: function () {
+      this.$refs.editAnimalKeeperButton?.$el.focus()
     }
   }
 }

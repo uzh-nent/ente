@@ -1,5 +1,5 @@
 <template>
-  <div class="text-bg-light p-2 d-flex gap-2 flex-column position-relative">
+  <div class="d-flex gap-2 flex-column">
     <span class="d-block">
       <b>{{ formatDate(patient.birthDate) }}</b>
       {{ patient.ahvNumber }}
@@ -8,17 +8,14 @@
       <b v-if="personName">{{ personName }}<br/></b>
       {{ address }}
     </span>
-    <edit-patient-button class="topright" :patient="patient"/>
   </div>
 </template>
 
 <script>
 import {formatAddress, formatDate, formatPersonName} from "../../services/formatter";
-import EditPatientButton from "../Action/EditPatientButton.vue";
 
 export default {
   methods: {formatDate},
-  components: {EditPatientButton},
   props: {
     patient: {
       type: Object,

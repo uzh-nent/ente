@@ -11,7 +11,12 @@
       </div>
     </div>
     <form-field for-id="orderer" :label="$t('probe.orderer')" :field="fields.orderer">
-      <organization-view class="mb-2" v-if="entity.orderer" :organization="entity.orderer"/>
+      <actionable-preview class="mb-2" v-if="entity.orderer">
+        <organization-view :organization="entity.orderer"/>
+        <template #actions>
+          <edit-organization-button ref="editOrganizationButton" :organization="entity.orderer"  @edited="editedOrganization"/>
+        </template>
+      </actionable-preview>
 
       <div class="d-flex flex-row reset-table-styles gap-2 mb-2">
         <input type="text" class="form-control mw-5"
@@ -47,10 +52,16 @@ import {formatOrganizationShort} from "../../../services/formatter";
 import AddOrganizationButton from "../../Action/AddOrganizationButton.vue";
 import OrganizationView from "../../View/OrganizationView.vue";
 import TextInput from "../../Library/FormInput/TextInput.vue";
+import EditPatientButton from "../../Action/EditPatientButton.vue";
+import ActionablePreview from "../../Library/View/ActionablePreview.vue";
+import PatientView from "../../View/PatientView.vue";
+import EditOrganizationButton from "../../Action/EditOrganizationButton.vue";
 
 export default {
   emits: ['update'],
   components: {
+    EditOrganizationButton,
+    PatientView, ActionablePreview, EditPatientButton,
     TextInput,
     Radio,
     OrganizationView,
@@ -109,9 +120,13 @@ export default {
   },
   methods: {
     addedOrganization: function (organization) {
+      this.searchPostalCode = this.searchName = null // first empty to ensure afterwards reload
       this.searchPostalCode = organization.postalCode
       this.searchName = organization.name
       this.$refs.addOrganizationButton?.$el.focus()
+    },
+    editedOrganization: function () {
+      this.$refs.editOrganizationButton?.$el.focus()
     }
   }
 }

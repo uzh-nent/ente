@@ -105,7 +105,7 @@
     "progress": "Verlauf",
     "animal_name": "Tiername",
     "received_at": "Empfangen am",
-    "orderer_identifier": "Labor-/Stammnummer",
+    "orderer_identifier": "Probe-Referenz",
     "analysis_start_at": "Analyse aufgesetzt am",
     "orderer": "Auftraggeber",
     "_pathogen": {

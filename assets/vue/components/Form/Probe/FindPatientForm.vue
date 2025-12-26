@@ -1,13 +1,18 @@
 <template>
   <div>
     <form-field for-id="patient" :label="$t('patient._name')" :field="fields.patient">
-      <patient-view class="mb-2" v-if="entity.patient" :patient="entity.patient"/>
+      <actionable-preview class="mb-2" v-if="entity.patient">
+        <patient-view :patient="entity.patient"/>
+        <template #actions>
+          <edit-patient-button ref="editPatientButton" :patient="entity.patient" @edited="editedPatient"/>
+        </template>
+      </actionable-preview>
 
       <div class="d-flex flex-row reset-table-styles gap-2 mb-2">
         <date-time-input
             class="mw-10" id="birthDateFilter" format="date"
             :placeholder="$t('_view.filter_by_birth_date')"
-            v-model="filterBirthDate" />
+            v-model="filterBirthDate"/>
         <input type="text" class="form-control flex-grow-1"
                :placeholder="$t('_view.search_by_ahv_numer')"
                v-model="searchAhvNumber">
@@ -38,10 +43,14 @@ import AddPatientButton from "../../Action/AddPatientButton.vue";
 import PatientView from "../../View/PatientView.vue";
 import TextInput from "../../Library/FormInput/TextInput.vue";
 import DateTimeInput from "../../Library/FormInput/DateTimeInput.vue";
+import ActionablePreview from "../../Library/View/ActionablePreview.vue";
+import EditPatientButton from "../../Action/EditPatientButton.vue";
 
 export default {
   emits: ['update'],
   components: {
+    EditPatientButton,
+    ActionablePreview,
     DateTimeInput,
     TextInput,
     Radio,
@@ -99,9 +108,13 @@ export default {
   },
   methods: {
     addedPatient: function (patient) {
+      this.filterBirthDate = this.searchAhvNumber = null // first empty to ensure afterwards reload
       this.filterBirthDate = patient.birthDate
       this.searchAhvNumber = patient.ahvNumber
       this.$refs.addPatientButton?.$el.focus()
+    },
+    editedPatient: function () {
+      this.$refs.editPatientButton?.$el.focus()
     }
   }
 }

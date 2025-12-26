@@ -1,5 +1,5 @@
 <template>
-  <div class="text-bg-light p-2 d-flex gap-2 flex-column position-relative">
+  <div class="d-flex gap-2 flex-column">
     <span v-if="organization.name" class="d-block">
       <b>{{ organization.name }}</b>
     </span>
@@ -9,16 +9,13 @@
     <span v-if="organization.contact" class="whitespace-preserve-newlines">
       {{ organization.contact }}
     </span>
-    <edit-organization-button class="topright" :organization="organization"/>
   </div>
 </template>
 
 <script>
-import {formatAddress, formatAddressCity} from "../../services/formatter";
-import EditOrganizationButton from "../Action/EditOrganizationButton.vue";
+import {formatAddress} from "../../services/formatter";
 
 export default {
-  components: {EditOrganizationButton},
   props: {
     organization: {
       type: Object,

@@ -2,7 +2,8 @@
   <button-confirm-modal
     :title="$t('_action.edit_patient.title')" icon="fas fa-edit"
     button-size="sm" color="secondary"
-    :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm">
+    :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
+    @showing="focusPatient">
     <div class="d-flex flex-column align-items-end">
       <div class="w-100">
         <patient-form :template="patient" @update="patch = $event" />
@@ -19,6 +20,7 @@ import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vu
 import PatientForm from "../Form/PatientForm.vue";
 
 export default {
+  emits: ['edited'],
   components: {
     PatientForm,
     ButtonConfirmModal,
@@ -46,6 +48,11 @@ export default {
 
       const successMessage = this.$t('_action.edit_patient.edited')
       displaySuccess(successMessage)
+
+      this.$emit('edited')
+    },
+    focusPatient: function () {
+      document.getElementById('givenName')?.focus()
     }
   }
 }

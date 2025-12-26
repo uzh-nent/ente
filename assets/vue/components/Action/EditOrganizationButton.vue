@@ -2,7 +2,8 @@
   <button-confirm-modal
     :title="$t('_action.edit_organization.title')" icon="fas fa-edit"
     button-size="sm" color="secondary"
-    :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm">
+    :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
+    @showing="focusOrganization">
     <div class="d-flex flex-column align-items-end">
       <div class="w-100">
         <organization-form :template="organization" @update="patch = $event" />
@@ -19,6 +20,7 @@ import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vu
 import OrganizationForm from "../Form/OrganizationForm.vue";
 
 export default {
+  emits: ['edited'],
   components: {
     OrganizationForm,
     ButtonConfirmModal,
@@ -46,6 +48,11 @@ export default {
 
       const successMessage = this.$t('_action.edit_organization.edited')
       displaySuccess(successMessage)
+
+      this.$emit('edited')
+    },
+    focusOrganization: function () {
+      document.getElementById('name')?.focus()
     }
   }
 }
