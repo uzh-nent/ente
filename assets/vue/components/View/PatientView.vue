@@ -33,13 +33,3 @@ export default {
 }
 
 </script>
-
-
-<style scoped>
-.topright {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-}
-
-</style>

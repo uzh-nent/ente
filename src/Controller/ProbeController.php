@@ -36,7 +36,7 @@ class ProbeController extends AbstractController
         return $this->render('probe/active_view.html.twig', ['probe' => $probe]);
     }
 
-    #[Route('/probes/active/{probe}/view', name: 'probe_active_view_js')]
+    #[Route('/probes/active/{probe}.js', name: 'probe_active_js')]
     public function activeJsView(Probe $probe): Response
     {
         $response = $this->render('probe/active_view.js.twig', ['probe' => $probe]);

@@ -1,21 +1,25 @@
+// i18n
 import {createApp} from 'vue'
 import {createI18n} from 'vue-i18n'
-import moment from 'moment'
-import Organizations from "./Organizations.vue";
-import Patients from "./Patients.vue";
-import AnimalKeepers from "./AnimalKeepers.vue";
-import NewProbe from "./NewProbe.vue";
-
-// languages
 import de from './localization/de.json'
 
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+// flatpickr
 import Flatpickr from 'flatpickr'
 import {German} from 'flatpickr/dist/l10n/de'
 
-// directives
-import {clickOutside, focus} from './services/directives'
+// libraries & directives
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import moment from 'moment'
 import $ from "jquery";
+import {clickOutside, focus} from './services/directives'
+
+// components
+import Organizations from "./Organizations.vue";
+import Patients from "./Patients.vue";
+import AnimalKeepers from "./AnimalKeepers.vue";
+import ViewProbe from "./ViewProbe.vue";
+import NewProbe from "./NewProbe.vue";
+
 
 // configure locales
 moment.locale('de')
@@ -56,5 +60,9 @@ $(document).ready(function () {
 
   if (document.getElementById('vue-probe-new') != null) {
     createVue(NewProbe).mount('#vue-probe-new')
+  }
+
+  if (document.getElementById('vue-probe-view') != null) {
+    createVue(ViewProbe).mount('#vue-probe-view')
   }
 })

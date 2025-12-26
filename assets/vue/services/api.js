@@ -112,6 +112,17 @@ const preloadApi = {
       specimens: window.specimens.member,
     }
   },
+  getViewActiveProbe: function () {
+    return {
+      probe: window.probe,
+
+      specimens: window.specimens.member,
+      leadingCodes: window.specimens.member,
+      organisms: window.specimens.member,
+
+      observations: window.observations.member,
+    }
+  },
 }
 
 const api = {

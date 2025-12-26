@@ -9,6 +9,6 @@
 {% block content %}
     <h1>{{ probe.identifier }}</h1>
 
-    <script src="{{ url('probe_new_js') }}"></script>
-    {{ components.vue_entry_point('vue-probe-new') }}
+    <script src="{{ url('probe_active_js', {'probe': probe.id}) }}"></script>
+    {{ components.vue_entry_point('vue-probe-view') }}
 {% endblock %}
