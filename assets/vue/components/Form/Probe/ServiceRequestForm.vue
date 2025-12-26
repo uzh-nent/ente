@@ -18,9 +18,9 @@
                v-model="entity.pathogen" @update:model-value="validateField('pathogen')"/>
       </form-field>
       <template v-if="entity.pathogen === null">
-        <text-input id="pathogenText" type="text" class="shift-input-up" :field="fields.pathogenText"
-                    v-model="entity.pathogenText"
-                    @blur="blurField('pathogenText')" @update:modelValue="validateField('pathogenText')"/>
+        <text-input id="pathogenName" type="text" class="shift-input-up" :field="fields.pathogenName"
+                    v-model="entity.pathogenName"
+                    @blur="blurField('pathogenName')" @update:modelValue="validateField('pathogenName')"/>
       </template>
     </template>
   </div>
@@ -67,13 +67,13 @@ export default {
       fields: {
         laboratoryFunction: createField(requiredRule),
         pathogen: createField(),
-        pathogenText: createField(),
+        pathogenName: createField(),
         analysisTypes: createField(requiredRule),
       },
       entity: {
         laboratoryFunction: null,
         pathogen: null,
-        pathogenText: null,
+        pathogenName: null,
         analysisTypes: null,
       },
 
@@ -103,13 +103,13 @@ export default {
       handler: function (laboratoryFunction) {
         if (laboratoryFunction === 'REFERENCE') {
           this.entity.pathogen = 'SALMONELLA'
-          this.entity.pathogenText = null
+          this.entity.pathogenName = null
           this.entity.analysisTypes = ['IDENTIFICATION']
         }
 
         if (laboratoryFunction === 'PRIMARY') {
           this.entity.pathogen = 'ESCHERICHIA_COLI'
-          this.entity.pathogenText = null
+          this.entity.pathogenName = null
           this.entity.analysisTypes = []
         }
       },

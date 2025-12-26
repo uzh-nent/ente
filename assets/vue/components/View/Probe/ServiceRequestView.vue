@@ -13,7 +13,7 @@
         {{ $t(`probe._pathogen.${probe.pathogen}`) }}
       </template>
       <template v-else>
-        {{ probe.pathogenText }}
+        {{ probe.pathogenName }}
       </template>
     </labeled-value>
   </div>

@@ -103,7 +103,7 @@ export default {
   props: {
     pathogen: {
       type: String,
-      required: true
+      required: false
     },
     organisms: {
       type: Array,
@@ -112,7 +112,7 @@ export default {
   },
   computed: {
     potentialOrganisms: function () {
-      const organisms = this.organisms.filter(o => o.pathogen === this.pathogen)
+      const organisms = this.pathogen ? this.organisms.filter(o => o.pathogen === this.pathogen) : []
       sortOrganisms(organisms)
 
       return organisms
