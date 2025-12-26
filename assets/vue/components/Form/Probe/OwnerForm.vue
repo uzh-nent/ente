@@ -14,7 +14,7 @@
       <actionable-preview class="mb-2" v-if="entity.animalKeeper">
         <animal-keeper-view :animal-keeper="entity.animalKeeper"/>
         <template #actions>
-          <edit-animal-keeper-button ref="editAnimalKeeperButton" :animal-keeper="entity.animalKeeper" @edited="editedAnimalKeeper"/>
+          <edit-animal-keeper-button :animal-keeper="entity.animalKeeper" />
         </template>
       </actionable-preview>
 
@@ -26,7 +26,7 @@
                :placeholder="$t('_view.search_by_name')"
                v-model="searchName">
         <add-animal-keeper-button
-            button-size="sm" ref="addAnimalKeeperButton"
+            button-size="sm"
             @added="addedAnimalKeeper" :template="{postalCode: searchPostalCode, name: searchName}"/>
       </div>
 
@@ -124,11 +124,7 @@ export default {
       this.searchPostalCode = this.searchName = null // first empty to ensure afterwards reload
       this.searchPostalCode = animalKeeper.postalCode
       this.searchName = animalKeeper.name
-      this.$refs.addAnimalKeeperButton?.$el.focus()
     },
-    editedAnimalKeeper: function () {
-      this.$refs.editAnimalKeeperButton?.$el.focus()
-    }
   }
 }
 </script>

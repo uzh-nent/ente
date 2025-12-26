@@ -4,7 +4,7 @@
       <actionable-preview class="mb-2" v-if="entity.patient">
         <patient-view :patient="entity.patient"/>
         <template #actions>
-          <edit-patient-button ref="editPatientButton" :patient="entity.patient" @edited="editedPatient"/>
+          <edit-patient-button :patient="entity.patient"/>
         </template>
       </actionable-preview>
 
@@ -17,7 +17,7 @@
                :placeholder="$t('_view.search_by_ahv_numer')"
                v-model="searchAhvNumber">
         <add-patient-button
-            button-size="sm" ref="addPatientButton"
+            button-size="sm"
             @added="addedPatient" :template="{birthDate: filterBirthDate, ahvNumber: searchAhvNumber}"/>
       </div>
 
@@ -111,10 +111,6 @@ export default {
       this.filterBirthDate = this.searchAhvNumber = null // first empty to ensure afterwards reload
       this.filterBirthDate = patient.birthDate
       this.searchAhvNumber = patient.ahvNumber
-      this.$refs.addPatientButton?.$el.focus()
-    },
-    editedPatient: function () {
-      this.$refs.editPatientButton?.$el.focus()
     }
   }
 }

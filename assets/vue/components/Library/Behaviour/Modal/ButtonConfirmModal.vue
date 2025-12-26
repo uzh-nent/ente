@@ -1,5 +1,5 @@
 <template>
-  <button class="btn" :class="active ? 'btn-' + color : 'btn-outline-' + color" @click="tryShow">
+  <button class="btn" :class="active ? 'btn-' + color : 'btn-outline-' + color" @click="tryShow" ref="button">
     <i v-if="icon" :class="icon"></i>
     <template v-if="buttonSize !== 'sm' || !icon">&nbsp;{{ title }}</template>
 
@@ -91,6 +91,7 @@ export default {
       if (this.show) {
         this.show = false
         this.hiding = true
+        this.$refs.button?.focus()
         window.setTimeout(() => this.$emit('hiding'), 100)
       }
     }

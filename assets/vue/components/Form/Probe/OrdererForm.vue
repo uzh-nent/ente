@@ -14,7 +14,7 @@
       <actionable-preview class="mb-2" v-if="entity.orderer">
         <organization-view :organization="entity.orderer"/>
         <template #actions>
-          <edit-organization-button ref="editOrganizationButton" :organization="entity.orderer"  @edited="editedOrganization"/>
+          <edit-organization-button :organization="entity.orderer"/>
         </template>
       </actionable-preview>
 
@@ -27,7 +27,6 @@
                v-model="searchName">
         <add-organization-button
             button-size="sm"
-            ref="addOrganizationButton"
             :template="{postalCode: searchPostalCode, name: searchName}" @added="addedOrganization"/>
       </div>
 
@@ -123,11 +122,7 @@ export default {
       this.searchPostalCode = this.searchName = null // first empty to ensure afterwards reload
       this.searchPostalCode = organization.postalCode
       this.searchName = organization.name
-      this.$refs.addOrganizationButton?.$el.focus()
     },
-    editedOrganization: function () {
-      this.$refs.editOrganizationButton?.$el.focus()
-    }
   }
 }
 </script>
