@@ -1,10 +1,10 @@
 <template>
   <button-confirm-modal
-      :title="$t('_action.edit_probe_service_request.title')" icon="fas fa-edit"
+      :title="$t('_action.edit_probe_specimen_meta.title')" icon="fas fa-edit"
       button-size="sm" color="secondary"
       :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
-      @showing="focusServiceRequest">
-    <service-request-form edit-mode :template="probe" @update="patch = $event"/>
+      @showing="focusSpecimenMeta">
+    <specimen-meta-form edit-mode :template="probe" @update="patch = $event" :specimens="specimens"/>
   </button-confirm-modal>
 </template>
 
@@ -14,12 +14,12 @@ import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import PatientForm from "../Form/PatientForm.vue";
-import ServiceRequestForm from "../Form/Probe/ServiceRequestForm.vue";
+import SpecimenMetaForm from "../Form/Probe/SpecimenMetaForm.vue";
 
 export default {
   emits: ['edited'],
   components: {
-    ServiceRequestForm,
+    SpecimenMetaForm,
     PatientForm,
     ButtonConfirmModal,
   },
@@ -33,23 +33,34 @@ export default {
       type: Object,
       required: true
     },
+    specimens: {
+      type: Array,
+      required: true
+    },
   },
   computed: {
     canConfirm: function () {
       return !!this.patch
     },
+    payload: function () {
+      const payload = {...this.patch}
+      if (payload.specimen) {
+        payload.specimen = payload.specimen['@id']
+      }
+
+      return payload
+    }
   },
   methods: {
     confirm: async function () {
-      const payload = {...this.patch}
-      await api.patch(this.probe, payload)
+      await api.patch(this.probe, this.payload)
 
-      const successMessage = this.$t('_action.edit_probe_service_request.edited')
+      const successMessage = this.$t('_action.edit_probe_specimen_meta.edited')
       displaySuccess(successMessage)
 
       this.$emit('edited')
     },
-    focusServiceRequest: function () {
+    focusSpecimenMeta: function () {
       document.getElementById('pathogen')?.focus()
     }
   }

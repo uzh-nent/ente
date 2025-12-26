@@ -18,6 +18,12 @@
       </actionable-view>
 
       <h3 class="mt-5">{{ $t('probe._name') }}</h3>
+      <actionable-view>
+        <specimen-meta-view :probe="probe" :specimens="specimens"/>
+        <template v-slot:actions>
+          <edit-probe-specimen-meta-button :specimens="specimens" :probe="probe"/>
+        </template>
+      </actionable-view>
 
       <template v-if="probe.specimenSource === 'HUMAN'">
         <h3 class="mt-5">{{ $t('patient._name') }}</h3>
@@ -58,10 +64,14 @@ import EditProbeServiceRequestButton from "./components/Action/EditProbeServiceR
 import EditProbeOrdererButton from "./components/Action/EditProbeOrdererButton.vue";
 import EditProbePatientButton from "./components/Action/EditProbePatientButton.vue";
 import EditProbeOwnerButton from "./components/Action/EditProbeOwnerButton.vue";
+import SpecimenMetaView from "./components/View/Probe/SpecimenMetaView.vue";
+import EditProbeSpecimenMetaButton from "./components/Action/EditProbeSpecimenMetaButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    EditProbeSpecimenMetaButton,
+    SpecimenMetaView,
     EditProbeOwnerButton,
     EditProbePatientButton,
     EditProbeOrdererButton,

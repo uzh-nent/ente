@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-md-12">
         <form-field for-id="specimenSource" :label="$t('probe.specimen_source')" :field="fields.specimenSource">
-          <custom-select id="specimenSource" :choices="specimenSources" :field="fields.specimenSource"
+          <custom-select id="specimenSource" :choices="specimenSources" :field="fields.specimenSource" :disabled="editMode"
                          v-model="entity.specimenSource" @update:model-value="validateField('specimenSource')"/>
           <text-input v-if="!entity.specimenSource" class="mt-1"
                       id="specimenSourceText" type="text" :field="fields.specimenSourceText"
@@ -141,6 +141,10 @@ export default {
     specimens: {
       type: Array,
       required: true
+    },
+    editMode: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

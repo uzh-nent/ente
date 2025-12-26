@@ -1,6 +1,6 @@
 <template>
   <select
-    :id="id" class="form-control" :required="required" :multiple="multiple"
+    :id="id" class="form-control" :required="required" :multiple="multiple" :disabled="disabled"
     :class="{'is-valid': field?.valid, 'is-invalid': field?.invalid }"
     v-model="internalModelValue"
     @blur="$emit('blur')">
@@ -43,6 +43,10 @@ export default {
       required: true
     },
     multiple: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
       type: Boolean,
       default: false
     },

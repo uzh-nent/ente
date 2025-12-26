@@ -1,5 +1,5 @@
 <template>
-  <labeled-value :label="$t('probe.animal_name')">{{ probe.animalName }}</labeled-value>
+  <labeled-value class="mb-3" :label="$t('probe.animal_name')">{{ probe.animalName }}</labeled-value>
   <animal-keeper-view :animal-keeper="owner" />
 </template>
 

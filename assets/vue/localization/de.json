@@ -72,7 +72,7 @@
   },
   "_validation": {
     "required": "Feld wird benötigt",
-    "not_a_country_code": "Kein Längercode (zwei oder dreistellig, Grossbuchstaben)"
+    "not_a_country_code": "Kein Längercode (eins bis dreistellig, Grossbuchstaben)"
   },
   "_view": {
     "filter_yields_no_entries": "Keine Einträge, die dem Filter entsprechen.",
@@ -106,7 +106,7 @@
   },
   "service": {
     "ecoli_identification": "E. Coli Identifizierung",
-    "identification_typing": "Identifizierung/Typisierung"
+    "identification_typing": "Identif-/Typisierung"
   },
   "specimen": {
     "_name": "Specimen (Material)"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <form-field for-id="laboratoryFunction" :label="$t('probe.laboratory_function')" :field="fields.ordererIdentifier">
-      <radio id="laboratoryFunction" :choices="laboratoryFunctions" :field="fields.laboratoryFunction"
+      <radio id="laboratoryFunction" :choices="laboratoryFunctions" :field="fields.laboratoryFunction" :disabled="editMode"
              v-model="entity.laboratoryFunction" @update:model-value="validateField('laboratoryFunction')"/>
     </form-field>
     <template v-if="entity.laboratoryFunction === 'PRIMARY'">
@@ -80,6 +80,12 @@ export default {
       searchName: "",
       searchPostalCode: "",
     }
+  },
+  props: {
+    editMode: {
+      type: Boolean,
+      default: false
+    },
   },
   computed: {
     laboratoryFunctions: function () {

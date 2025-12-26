@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex mb-3">
-    <div>
-      {{ label }}:&nbsp;
+  <div class="d-flex">
+    <div class="w-50">
+      <u>{{ label }}</u>:&nbsp;
     </div>
     <div class="flex-grow-1">
       <slot/>

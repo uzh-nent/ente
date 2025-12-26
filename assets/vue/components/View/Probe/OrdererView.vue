@@ -1,5 +1,5 @@
 <template>
-  <labeled-value :label="$t('probe.orderer_identifier')">{{ probe.ordererIdentifier }}</labeled-value>
+  <labeled-value class="mb-3" :label="$t('probe.orderer_identifier')">{{ probe.ordererIdentifier }}</labeled-value>
   <organization-view :organization="orderer" />
 </template>
 

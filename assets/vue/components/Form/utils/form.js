@@ -93,7 +93,7 @@ export const countryCode = {
       return true
     }
 
-    return value.toUpperCase() !== value || value.length > 3
+    return value.toUpperCase() === value && value.length >= 1 && value.length <= 3
   },
   errorMessage: '_validation.not_a_country_code'
 }
