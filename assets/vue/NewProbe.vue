@@ -47,7 +47,7 @@ import SpecimenMetaForm from "./components/Form/Probe/SpecimenMetaForm.vue";
 import OwnerForm from "./components/Form/Probe/OwnerForm.vue";
 import FindPatientForm from "./components/Form/Probe/FindPatientForm.vue";
 import ServiceTimeForm from "./components/Form/Probe/ServiceTimeForm.vue";
-import {probeConverter} from "./services/domain";
+import {probeConverter} from "./services/domain/converters";
 
 export default {
   emits: ['added'],
@@ -130,7 +130,7 @@ export default {
       }
 
       if (this.patient) {
-        base = {...base, ...probeConverter.writePatient(this.patient)}
+        base = {...base, ...probeConverter.writePatient(this.patient.patient)}
       }
 
       return base;
@@ -148,8 +148,6 @@ export default {
         displaySuccess(successMessage)
 
         router.navigateToActiveProbe(probe)
-      } catch (e) {
-        console.log(e)
       } finally {
         this.isConfirming = false
       }

@@ -47,7 +47,7 @@ import Radio from "../../Library/FormInput/Radio.vue";
 import {paginatedQuery} from "../../View/utils/table";
 import {api} from "../../../services/api";
 import {createQuery} from "../../../services/query";
-import {formatOrganizationShort} from "../../../services/formatter";
+import {formatOrganizationShort} from "../../../services/domain/formatter";
 import AddOrganizationButton from "../../Action/AddOrganizationButton.vue";
 import OrganizationView from "../../View/OrganizationView.vue";
 import TextInput from "../../Library/FormInput/TextInput.vue";

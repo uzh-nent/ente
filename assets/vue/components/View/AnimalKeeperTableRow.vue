@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import {formatAddressCity} from "../../services/formatter";
+import {formatAddressCity} from "../../services/domain/formatter";
 import EditAnimalKeeperButton from "../Action/EditAnimalKeeperButton.vue";
 
 export default {

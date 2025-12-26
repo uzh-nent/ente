@@ -57,8 +57,8 @@
         </div>
         <div class="col-md-3">
           <form-field
-              for-id="specimen_isolate" :label="$t('probe.specimen_isolate')" :field="fields.specimenIsolate">
-            <checkbox id="specimen_isolate" :field="fields.specimenIsolate"
+              for-id="specimenIsolate" :label="$t('probe.specimen_isolate')" :field="fields.specimenIsolate">
+            <checkbox id="specimenIsolate" :field="fields.specimenIsolate"
                            v-model="entity.specimenIsolate" @update:model-value="validateField('specimenIsolate')"/>
           </form-field>
         </div>

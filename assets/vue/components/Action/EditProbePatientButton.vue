@@ -14,7 +14,7 @@ import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import ServiceRequestForm from "../Form/Probe/ServiceRequestForm.vue";
-import {probeConverter} from "../../services/domain";
+import {probeConverter} from "../../services/domain/converters";
 import FindPatientForm from "../Form/Probe/FindPatientForm.vue";
 
 export default {

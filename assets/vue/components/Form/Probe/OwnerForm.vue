@@ -47,7 +47,7 @@ import Radio from "../../Library/FormInput/Radio.vue";
 import {paginatedQuery} from "../../View/utils/table";
 import {api} from "../../../services/api";
 import {createQuery} from "../../../services/query";
-import {formatAnimalKeeperShort} from "../../../services/formatter";
+import {formatAnimalKeeperShort} from "../../../services/domain/formatter";
 import AddAnimalKeeperButton from "../../Action/AddAnimalKeeperButton.vue";
 import AnimalKeeperView from "../../View/AnimalKeeperView.vue";
 import TextInput from "../../Library/FormInput/TextInput.vue";

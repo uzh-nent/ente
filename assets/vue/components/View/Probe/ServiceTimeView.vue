@@ -10,7 +10,7 @@
 
 <script>
 import LabeledValue from "../../Library/View/LabeledValue.vue";
-import {formatDate} from "../../../services/formatter";
+import {formatDate} from "../../../services/domain/formatter";
 
 export default {
   methods: {formatDate},

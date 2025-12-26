@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import {formatAddress} from "../../services/formatter";
+import {formatAddress} from "../../services/domain/formatter";
 
 export default {
   props: {

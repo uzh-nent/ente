@@ -38,7 +38,7 @@ import Radio from "../../Library/FormInput/Radio.vue";
 import {paginatedQuery} from "../../View/utils/table";
 import {api} from "../../../services/api";
 import {createQuery} from "../../../services/query";
-import {formatPatientShort} from "../../../services/formatter";
+import {formatPatientShort} from "../../../services/domain/formatter";
 import AddPatientButton from "../../Action/AddPatientButton.vue";
 import PatientView from "../../View/PatientView.vue";
 import TextInput from "../../Library/FormInput/TextInput.vue";

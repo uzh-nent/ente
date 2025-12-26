@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import {formatAddressCity} from "../../services/formatter";
+import {formatAddressCity} from "../../services/domain/formatter";
 import EditOrganizationButton from "../Action/EditOrganizationButton.vue";
 
 export default {

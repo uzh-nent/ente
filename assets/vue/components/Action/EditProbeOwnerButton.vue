@@ -15,7 +15,7 @@ import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import ServiceRequestForm from "../Form/Probe/ServiceRequestForm.vue";
 import OwnerForm from "../Form/Probe/OwnerForm.vue";
-import {probeConverter} from "../../services/domain";
+import {probeConverter} from "../../services/domain/converters";
 
 export default {
   emits: ['edited'],

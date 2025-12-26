@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import {formatAddressCity, formatDate, formatPatientName,} from "../../services/formatter";
+import {formatAddressCity, formatDate, formatPatientName,} from "../../services/domain/formatter";
 import EditPatientButton from "../Action/EditPatientButton.vue";
 
 export default {

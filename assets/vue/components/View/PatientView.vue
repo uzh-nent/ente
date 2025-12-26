@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {formatAddress, formatDate, formatPersonName} from "../../services/formatter";
+import {formatAddress, formatDate, formatPersonName} from "../../services/domain/formatter";
 
 export default {
   methods: {formatDate},
