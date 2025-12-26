@@ -21,6 +21,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Api\Processor\ObservationProcessor;
 use App\Api\Processor\ProbeProcessor;
 use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
@@ -35,7 +36,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    processor: ProbeProcessor::class,
+    processor: ObservationProcessor::class,
     normalizationContext: ['groups' => ['comment:write', 'observation:write']],
     denormalizationContext: ['groups' => ['time:read', 'attribution:read', 'comment:read', 'observation:read']]
 )]
