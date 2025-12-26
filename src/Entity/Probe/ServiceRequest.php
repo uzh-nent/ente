@@ -86,7 +86,6 @@ trait ServiceRequest
     public function setAnalysisTypes(array $analysisTypes): void
     {
         $this->analysisTypes = SerializerExtension::unserializeEnumArray(AnalysisType::class, $analysisTypes);
-        ;
     }
 
     public function getOrdererIdentifier(): ?string

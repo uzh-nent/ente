@@ -123,6 +123,13 @@
       "PRIMARY": "Primärlabor",
       "REFERENCE": "Referenzlabor"
     },
+    "_analysis_type": {
+      "EC_STEC": "Shigatoxin bildend (STEC)",
+      "EC_EPEC": " Enteropathogene (EPEC)",
+      "EC_ETEC": "Enterotoxin bildend (ETEC)",
+      "EC_EIEC": "Enteroinvasive (EIEC) / Shigella",
+      "EC_EAEC": "Enteroaggregative (EAEC)"
+    },
     "_specimen_source": {
       "HUMAN": "Mensch",
       "ANIMAL": "Tier",
@@ -146,15 +153,6 @@
       "CHICKEN": "Huhn",
       "BIRD": "Vogel",
       "REPTILIAN": "Reptil"
-    }
-  },
-  "observation": {
-    "_analysis_type": {
-      "EC_STEC": "Shigatoxin bildend (STEC)",
-      "EC_EPEC": " Enteropathogene (EPEC)",
-      "EC_ETEC": "Enterotoxin bildend (ETEC)",
-      "EC_EIEC": "Enteroinvasive (EIEC) / Shigella",
-      "EC_EAEC": "Enteroaggregative (EAEC)"
     }
   },
   "animal_keeper": {

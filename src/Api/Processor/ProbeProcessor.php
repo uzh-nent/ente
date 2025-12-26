@@ -36,7 +36,7 @@ readonly class ProbeProcessor implements ProcessorInterface
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
         if ($operation instanceof Post) {
-            $identifierPrefix = $data->getLaboratoryFunction() === LaboratoryFunction::PRIMARY ? 'P' : 'R';
+            $identifierPrefix = $data->getLaboratoryFunction() === LaboratoryFunction::PRIMARY ? 'P' : 'N';
             $identifierPrefix .= (new \DateTime())->format("YY");
 
             $lastProbe = $this->registry->getRepository(Probe::class)->createQueryBuilder('p')
