@@ -1,7 +1,7 @@
 <template>
   <div>
     <form-field for-id="patient" :label="$t('patient._name')" :field="fields.patient">
-      <actionable-preview class="mb-2" v-if="entity.patient">
+      <actionable-preview class="mb-2" v-if="entity.patient && entity.patient['@id']">
         <patient-view :patient="entity.patient"/>
         <template #actions>
           <edit-patient-button :patient="entity.patient"/>

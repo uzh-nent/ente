@@ -1,10 +1,10 @@
 <template>
   <button-confirm-modal
-      :title="$t('_action.edit_probe_orderer.title')" icon="fas fa-edit"
+      :title="$t('_action.edit_probe_patient.title')" icon="fas fa-edit"
       button-size="sm" color="secondary"
       :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
-      @showing="focusOrderer">
-    <orderer-form :template="template" @update="patch = $event"/>
+      @showing="focusPatient">
+    <find-patient-form :template="template" @update="patch = $event"/>
   </button-confirm-modal>
 </template>
 
@@ -14,13 +14,13 @@ import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import ServiceRequestForm from "../Form/Probe/ServiceRequestForm.vue";
-import OrdererForm from "../Form/Probe/OrdererForm.vue";
 import {probeConverter} from "../../services/domain";
+import FindPatientForm from "../Form/Probe/FindPatientForm.vue";
 
 export default {
   emits: ['edited'],
   components: {
-    OrdererForm,
+    FindPatientForm,
     ServiceRequestForm,
     ButtonConfirmModal,
   },
@@ -41,40 +41,28 @@ export default {
     },
     template: function () {
       return {
-        ordererIdentifier: this.probe.ordererIdentifier,
-        orderer: probeConverter.reconstructOrdererOrganization(this.probe)
+        patient: probeConverter.reconstructPatient(this.probe)
       }
     },
     payload: function () {
-      if (!this.patch) {
-        return null;
-      }
-
-      let payload = {...this.patch}
-      if (this.patch.orderer && this.patch.orderer['@id']) {
-        payload = {...payload, ...probeConverter.writeOrderer(this.patch.orderer)}
+      if (this.patch?.patient && this.patch.patient['@id']) {
+        return  probeConverter.writePatient(this.patch.patient)
       } else{
-        delete payload.orderer
-      }
-
-      if (Object.keys(payload).length === 0) {
         return null
       }
-
-      return payload
     }
   },
   methods: {
     confirm: async function () {
       await api.patch(this.probe, this.payload)
 
-      const successMessage = this.$t('_action.edit_probe_orderer.edited')
+      const successMessage = this.$t('_action.edit_probe_patient.edited')
       displaySuccess(successMessage)
 
       this.$emit('edited')
     },
-    focusOrderer: function () {
-      document.getElementById('ordererIdentifier')?.focus()
+    focusPatient: function () {
+      document.getElementById('birthDateFilter')?.focus()
     }
   }
 }

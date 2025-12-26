@@ -11,7 +11,7 @@
       </div>
     </div>
     <form-field for-id="animalKeeper" :label="$t('animal_keeper._name')" :field="fields.animalKeeper">
-      <actionable-preview class="mb-2" v-if="entity.animalKeeper">
+      <actionable-preview class="mb-2" v-if="entity.animalKeeper && entity.animalKeeper['@id']">
         <animal-keeper-view :animal-keeper="entity.animalKeeper"/>
         <template #actions>
           <edit-animal-keeper-button :animal-keeper="entity.animalKeeper" />

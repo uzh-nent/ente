@@ -24,14 +24,19 @@
         <actionable-view>
           <patient-view :probe="probe"/>
           <template v-slot:actions>
-            <edit-probe-orderer-button :probe="probe"/>
+            <edit-probe-patient-button :probe="probe"/>
           </template>
         </actionable-view>
       </template>
 
       <template v-if="probe.specimenSource === 'ANIMAL'">
         <h3 class="mt-5">{{ $t('animal_keeper._name') }}</h3>
-        <owner-view :probe="probe"/>
+        <actionable-view>
+          <owner-view :probe="probe"/>
+          <template v-slot:actions>
+            <edit-probe-owner-button :probe="probe"/>
+          </template>
+        </actionable-view>
       </template>
     </div>
     <div class="col-lg-4 col-md-6">
@@ -51,10 +56,14 @@ import OwnerView from "./components/View/Probe/OwnerView.vue";
 import ActionableView from "./components/Library/View/ActionableView.vue";
 import EditProbeServiceRequestButton from "./components/Action/EditProbeServiceRequestButton.vue";
 import EditProbeOrdererButton from "./components/Action/EditProbeOrdererButton.vue";
+import EditProbePatientButton from "./components/Action/EditProbePatientButton.vue";
+import EditProbeOwnerButton from "./components/Action/EditProbeOwnerButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    EditProbeOwnerButton,
+    EditProbePatientButton,
     EditProbeOrdererButton,
     EditProbeServiceRequestButton,
     ActionableView,
