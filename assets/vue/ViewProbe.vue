@@ -21,7 +21,12 @@
 
       <template v-if="probe.specimenSource === 'HUMAN'">
         <h3 class="mt-5">{{ $t('patient._name') }}</h3>
-        <patient-view :probe="probe"/>
+        <actionable-view>
+          <patient-view :probe="probe"/>
+          <template v-slot:actions>
+            <edit-probe-orderer-button :probe="probe"/>
+          </template>
+        </actionable-view>
       </template>
 
       <template v-if="probe.specimenSource === 'ANIMAL'">

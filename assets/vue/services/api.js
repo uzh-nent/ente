@@ -42,6 +42,16 @@ const restClient = {
       }
     )
   },
+  _normalizePayload: function (payload) {
+    // null values are not delivered in response, hence take them from patch
+    const instance = { ...payload}
+    for (const prop in payload) {
+      if (Object.prototype.hasOwnProperty.call(payload, prop) && payload[prop] === undefined) {
+        instance[prop] = null
+      }
+    }
+    return instance
+  },
   _writeAllProperties: function (instance, patch, responseData) {
     // null values are not delivered in response, hence take them from patch
     for (const prop in patch) {
@@ -85,12 +95,14 @@ const restClient = {
     return response.data
   },
   post: async function (collectionUrl, post) {
-    const response = await axios.post(collectionUrl, post, {headers: {'Content-Type': 'application/ld+json'}})
+    const normalizedPost = this._normalizePayload(post)
+    const response = await axios.post(collectionUrl, normalizedPost, {headers: {'Content-Type': 'application/ld+json'}})
     return response.data
   },
   patch: async function (instance, patch) {
-    const response = await axios.patch(instance['@id'], patch, {headers: {'Content-Type': 'application/merge-patch+json'}})
-    this._writeAllProperties(instance, patch, response.data)
+    const normalizedPatch = this._normalizePayload(patch)
+    const response = await axios.patch(instance['@id'], normalizedPatch, {headers: {'Content-Type': 'application/merge-patch+json'}})
+    this._writeAllProperties(instance, normalizedPatch, response.data)
   }
 }
 

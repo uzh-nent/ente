@@ -45,6 +45,26 @@
       "edited": "Tierhalter gespeichert.",
       "title": "Tierhalter bearbeiten"
     },
+    "edit_probe_orderer": {
+      "edited": "Auftraggeber gespeichert.",
+      "title": "Auftraggeber bearbeiten"
+    },
+    "edit_probe_service_request": {
+      "edited": "Auftrag gespeichert.",
+      "title": "Auftrag bearbeiten"
+    },
+    "edit_probe_specimen_meta": {
+      "edited": "Probe gespeichert.",
+      "title": "Probe bearbeiten"
+    },
+    "edit_probe_animal_keeper": {
+      "edited": "Halter gespeichert.",
+      "title": "Halter bearbeiten"
+    },
+    "edit_probe_patient": {
+      "edited": "Patient gespeichert.",
+      "title": "Patient bearbeiten"
+    },
     "add": "hinzufügen",
     "edit": "speichern",
     "remove": "entfernen",

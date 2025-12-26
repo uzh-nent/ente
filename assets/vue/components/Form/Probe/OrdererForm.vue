@@ -11,7 +11,7 @@
       </div>
     </div>
     <form-field for-id="orderer" :label="$t('probe.orderer')" :field="fields.orderer">
-      <actionable-preview class="mb-2" v-if="entity.orderer">
+      <actionable-preview class="mb-2" v-if="entity.orderer && entity.orderer['@id']">
         <organization-view :organization="entity.orderer"/>
         <template #actions>
           <edit-organization-button :organization="entity.orderer"/>

@@ -49,8 +49,10 @@ export default {
     },
     payload: function () {
       let payload = {...this.patch}
-      if (this.patch.orderer) {
+      if (this.patch.orderer && this.patch.orderer['@id']) {
         payload = {...payload, ...probeConverter.writeOrderer(this.patch.orderer)}
+      } else{
+        delete payload.orderer
       }
 
       return payload
