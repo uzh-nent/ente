@@ -1,10 +1,10 @@
 <template>
   <div class="d-flex mb-3">
     <div>
-      {{ label }}:
+      {{ label }}:&nbsp;
     </div>
     <div class="flex-grow-1">
-      <slot />
+      <slot/>
     </div>
   </div>
 </template>

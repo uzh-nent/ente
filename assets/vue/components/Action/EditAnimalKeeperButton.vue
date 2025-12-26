@@ -1,21 +1,17 @@
 <template>
   <button-confirm-modal
-    :title="$t('_action.edit_animal_keeper.title')" icon="fas fa-edit"
-    button-size="sm" color="secondary"
-    :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
-    @showing="focusAnimalKeeper">
-    <div class="d-flex flex-column align-items-end">
-      <div class="w-100">
-        <animal-keeper-form :template="animalKeeper" @update="patch = $event" />
-      </div>
-    </div>
+      :title="$t('_action.edit_animal_keeper.title')" icon="fas fa-edit"
+      button-size="sm" color="secondary"
+      :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
+      @showing="focusAnimalKeeper">
+    <animal-keeper-form :template="animalKeeper" @update="patch = $event"/>
   </button-confirm-modal>
 </template>
 
 <script>
 
-import { api } from '../../services/api'
-import { displaySuccess } from '../../services/notifiers'
+import {api} from '../../services/api'
+import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import AnimalKeeperForm from "../Form/AnimalKeeperForm.vue";
 
@@ -25,7 +21,7 @@ export default {
     AnimalKeeperForm,
     ButtonConfirmModal,
   },
-  data () {
+  data() {
     return {
       patch: null,
     }
@@ -43,7 +39,7 @@ export default {
   },
   methods: {
     confirm: async function () {
-      const payload = { ...this.patch, organizers: this.organizers }
+      const payload = {...this.patch}
       await api.patch(this.animalKeeper, payload)
 
       const successMessage = this.$t('_action.edit_animal_keeper.edited')

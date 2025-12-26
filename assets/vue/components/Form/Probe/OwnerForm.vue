@@ -44,7 +44,7 @@
 import {templatedForm, createField, requiredRule} from '../utils/form'
 import FormField from '../../Library/FormLayout/FormField.vue'
 import Radio from "../../Library/FormInput/Radio.vue";
-import {paginatedQuery} from "../../../mixins/table";
+import {paginatedQuery} from "../../View/utils/table";
 import {api} from "../../../services/api";
 import {createQuery} from "../../../services/query";
 import {formatAnimalKeeperShort} from "../../../services/formatter";

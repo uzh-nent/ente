@@ -47,6 +47,7 @@ import SpecimenMetaForm from "./components/Form/Probe/SpecimenMetaForm.vue";
 import OwnerForm from "./components/Form/Probe/OwnerForm.vue";
 import FindPatientForm from "./components/Form/Probe/FindPatientForm.vue";
 import ServiceTimeForm from "./components/Form/Probe/ServiceTimeForm.vue";
+import {probeConverter} from "./services/domain";
 
 export default {
   emits: ['added'],
@@ -120,34 +121,16 @@ export default {
 
       if (this.orderer) {
         base.ordererIdentifier = this.orderer.ordererIdentifier
-        base.orderer = this.orderer.orderer['@id']
-        base.ordererName = this.orderer.orderer.name
-        base.ordererAddressLine = this.orderer.orderer.addressLine
-        base.ordererCity = this.orderer.orderer.city
-        base.ordererPostalCode = this.orderer.orderer.postalCode
-        base.ordererCountryCode = this.orderer.orderer.countryCode
+        base = {...base, ...probeConverter.writeOrderer(this.orderer.orderer)}
       }
 
       if (this.owner) {
         base.animalName = this.owner.animalName
-        base.animalKeeper = this.owner.animalKeeper['@id']
-        base.animalKeeperName = this.owner.animalKeeper.name
-        base.animalKeeperAddressLine = this.owner.animalKeeper.addressLine
-        base.animalKeeperCity = this.owner.animalKeeper.city
-        base.animalKeeperPostalCode = this.owner.animalKeeper.postalCode
-        base.animalKeeperCountryCode = this.owner.animalKeeper.countryCode
+        base = {...base, ...probeConverter.writeAnimalKeeper(this.owner.animalKeeper)}
       }
 
       if (this.patient) {
-        base.patient = this.patient.patient['@id']
-        base.patientGivenName = this.patient.patient.givenName
-        base.patientFamilyName = this.patient.patient.familyName
-        base.patientBirthDate = this.patient.patient.birthDate
-        base.patientAhvNumber = this.patient.patient.ahvNumber
-        base.patientAddressLine = this.patient.patient.addressLine
-        base.patientCity = this.patient.patient.city
-        base.patientPostalCode = this.patient.patient.postalCode
-        base.patientCountryCode = this.patient.patient.countryCode
+        base = {...base, ...probeConverter.writePatient(this.patient)}
       }
 
       return base;

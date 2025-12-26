@@ -42,7 +42,7 @@ export default {
         ...this.template,
         countryCode: 'CH',
       }
-    }
+    },
   },
   methods: {
     confirm: async function () {

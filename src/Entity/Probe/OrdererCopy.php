@@ -22,11 +22,15 @@ trait OrdererCopy
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
-    private ?string $orderPostalCode = null;
+    private ?string $ordererPostalCode = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererCountryCode = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $ordererContact = null;
 
     public function getOrdererName(): ?string
     {
@@ -58,14 +62,14 @@ trait OrdererCopy
         $this->ordererCity = $ordererCity;
     }
 
-    public function getOrderPostalCode(): ?string
+    public function getOrdererPostalCode(): ?string
     {
-        return $this->orderPostalCode;
+        return $this->ordererPostalCode;
     }
 
-    public function setOrderPostalCode(?string $orderPostalCode): void
+    public function setOrdererPostalCode(?string $orderPostalCode): void
     {
-        $this->orderPostalCode = $orderPostalCode;
+        $this->ordererPostalCode = $orderPostalCode;
     }
 
     public function getOrdererCountryCode(): ?string
@@ -76,5 +80,15 @@ trait OrdererCopy
     public function setOrdererCountryCode(?string $ordererCountryCode): void
     {
         $this->ordererCountryCode = $ordererCountryCode;
+    }
+
+    public function getOrdererContact(): ?string
+    {
+        return $this->ordererContact;
+    }
+
+    public function setOrdererContact(?string $ordererContact): void
+    {
+        $this->ordererContact = $ordererContact;
     }
 }

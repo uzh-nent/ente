@@ -1,10 +1,10 @@
 <template>
   <button-confirm-modal
-      :title="$t('_action.edit_patient.title')" icon="fas fa-edit"
+      :title="$t('_action.edit_probe_service_request.title')" icon="fas fa-edit"
       button-size="sm" color="secondary"
       :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
-      @showing="focusPatient">
-    <patient-form :template="patient" @update="patch = $event"/>
+      @showing="focusServiceRequest">
+    <service-request-form :template="probe" @update="patch = $event"/>
   </button-confirm-modal>
 </template>
 
@@ -14,10 +14,12 @@ import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import PatientForm from "../Form/PatientForm.vue";
+import ServiceRequestForm from "../Form/Probe/ServiceRequestForm.vue";
 
 export default {
   emits: ['edited'],
   components: {
+    ServiceRequestForm,
     PatientForm,
     ButtonConfirmModal,
   },
@@ -27,7 +29,7 @@ export default {
     }
   },
   props: {
-    patient: {
+    probe: {
       type: Object,
       required: true
     },
@@ -40,15 +42,15 @@ export default {
   methods: {
     confirm: async function () {
       const payload = {...this.patch}
-      await api.patch(this.patient, payload)
+      await api.patch(this.probe, payload)
 
-      const successMessage = this.$t('_action.edit_patient.edited')
+      const successMessage = this.$t('_action.edit_probe_service_request.edited')
       displaySuccess(successMessage)
 
       this.$emit('edited')
     },
-    focusPatient: function () {
-      document.getElementById('givenName')?.focus()
+    focusServiceRequest: function () {
+      document.getElementById('pathogen')?.focus()
     }
   }
 }

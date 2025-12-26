@@ -41,12 +41,12 @@
 </template>
 
 <script>
-import {order, paginatedQuery} from "../../mixins/table";
+import {order, paginatedQuery} from "./utils/table";
 import Pagination from "../Library/Behaviour/Pagination.vue";
 import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
 import AnimalKeeperTableRow from "./AnimalKeeperTableRow.vue";
 import {createQuery} from "../../services/query";
-import {localStoragePersisted} from "../../mixins/state";
+import {localStoragePersisted} from "./utils/state";
 import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
 

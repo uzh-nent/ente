@@ -1,15 +1,16 @@
 <template>
-  <labeled-value :label="$t('probe.animal_name')">{{ probe.animalName }}</labeled-value>
-  <animal-keeper-view :animal-keeper="owner" />
+  <patient-view :patient="patient" />
 </template>
 
 <script>
 import AnimalKeeperView from "../AnimalKeeperView.vue";
 import LabeledValue from "../../Library/View/LabeledValue.vue";
+import {preloadApi} from "../../../services/api";
+import PatientView from "../PatientView.vue";
 import {probeConverter} from "../../../services/domain";
 
 export default {
-  components: {LabeledValue, AnimalKeeperView},
+  components: {PatientView, LabeledValue, AnimalKeeperView},
   props: {
     probe: {
       type: Object,
@@ -17,8 +18,8 @@ export default {
     },
   },
   computed: {
-    owner: function () {
-      return probeConverter.reconstructAnimalKeeper(this.probe)
+    patient: function () {
+      return probeConverter.reconstructPatient(this.probe)
     },
   },
 }

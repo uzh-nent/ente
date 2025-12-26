@@ -94,7 +94,7 @@ import TextArea from '../../Library/FormInput/TextArea.vue'
 import DateTimeInput from '../../Library/FormInput/DateTimeInput.vue'
 import Radio from "../../Library/FormInput/Radio.vue";
 import Checkboxes from "../../Library/FormInput/Checkboxes.vue";
-import {paginatedQuery} from "../../../mixins/table";
+import {paginatedQuery} from "../../View/utils/table";
 import {api} from "../../../services/api";
 import AddOrganizationButton from "../../Action/AddOrganizationButton.vue";
 import OrganizationView from "../../View/OrganizationView.vue";
