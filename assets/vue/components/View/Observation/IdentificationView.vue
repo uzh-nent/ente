@@ -49,7 +49,7 @@ export default {
         return null
       }
 
-      return formatOrganism(this.organisms.find(o => o['@id'] === this.observation))
+      return formatOrganism(this.organisms.find(o => o['@id'] === this.observation.organism))
     }
   }
 }

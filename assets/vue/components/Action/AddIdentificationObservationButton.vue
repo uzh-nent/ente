@@ -53,8 +53,8 @@ export default {
     payload: function () {
       const payload = {...this.template, ...this.post, analysisType: 'IDENTIFICATION', probe: this.probe['@id']}
 
-      payload.interpretation = payload.interpretationSuccessful ? 'POS' : 'NEG'
-      delete payload.interpretationSuccessful
+      payload.interpretation = payload.identificationSuccessful ? 'POS' : 'NEG'
+      delete payload.identificationSuccessful
 
       if (payload.organism) {
         payload.organism = payload.organism['@id']

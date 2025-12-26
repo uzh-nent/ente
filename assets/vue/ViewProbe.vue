@@ -63,7 +63,7 @@
           <identification-view
               :organisms="organisms" :observation="observation" />
           <template v-slot:actions v-if="!probe.finishedAt">
-            <edit-probe-service-time-button :probe="probe"/>
+            <edit-identification-observation-button :probe="probe" :organisms="organisms" :observation="observation" />
           </template>
         </actionable-view>
       </div>
@@ -90,10 +90,12 @@ import ServiceTimeView from "./components/View/Probe/ServiceTimeView.vue";
 import EditProbeServiceTimeButton from "./components/Action/EditProbeServiceTimeButton.vue";
 import AddIdentificationObservationButton from "./components/Action/AddIdentificationObservationButton.vue";
 import IdentificationView from "./components/View/Observation/IdentificationView.vue";
+import EditIdentificationObservationButton from "./components/Action/EditIdentificationObservationButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    EditIdentificationObservationButton,
     IdentificationView,
     AddIdentificationObservationButton,
     EditProbeServiceTimeButton,

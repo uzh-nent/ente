@@ -56,6 +56,10 @@
       "added": "Resultat gespeichert.",
       "title": "Resultat erfassen"
     },
+    "edit_identification_observation": {
+      "added": "Resultat gespeichert.",
+      "title": "Resultat bearbeiten"
+    },
     "edit_probe_orderer": {
       "edited": "Auftraggeber gespeichert.",
       "title": "Auftraggeber bearbeiten"

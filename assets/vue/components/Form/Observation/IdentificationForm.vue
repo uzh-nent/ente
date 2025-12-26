@@ -34,7 +34,7 @@
       <div class="col-md-12">
         <form-field for-id="cgMLST" :label="$t('observation.cgMLST')"
                     :field="fields.cgMLST">
-          <text-area id="cgMLST" :field="fields.cgMLST" v-model="entity.cgMLST"
+          <text-input id="cgMLST" :field="fields.cgMLST" v-model="entity.cgMLST"
                      @blur="blurField('cgMLST')" @update:modelValue="validateField('cgMLST')"/>
         </form-field>
       </div>
@@ -119,7 +119,8 @@ export default {
       return this.potentialOrganisms.length > SEARCH_CUTOFF
     },
     organismChoices: function () {
-      const source = this.searchEnabled ? this.filteredOrganisms : this.potentialOrganisms
+      let source = this.searchEnabled ? this.filteredOrganisms : this.potentialOrganisms
+      source = !source && this.template.organism ? [this.template.organism] : source
       const maxedCollection = source?.slice(0, SEARCH_CUTOFF) ?? [];
       return maxedCollection.map(o => ({label: formatOrganism(o), value: o}))
     },
