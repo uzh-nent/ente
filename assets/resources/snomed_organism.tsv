@@ -1,0 +1,46 @@
+organism_group	code	display_name	pathogen
+shi_org	77352002	Genus Shigella (organism)	Shigella
+shi_org	55462008	Shigella boydii (organism)	Shigella
+shi_org	43612004	Shigella dysenteriae (organism)	Shigella
+shi_org	85729005	Shigella flexneri (organism)	Shigella
+shi_org	125020009	Shigella flexneri, serovar X (organism)	Shigella
+shi_org	125021008	Shigella flexneri, serovar Y (organism)	Shigella
+shi_org	4298009	Shigella sonnei (organism)	Shigella
+chol_org	75953000	Vibrio cholerae (organism)	Vibrio cholerae
+chol_org	62987004	Vibrio cholerae, O1 (organism) 	Vibrio cholerae
+chol_org	125048009	Vibrio cholerae serogroup O139 (organism) 	Vibrio cholerae
+chol_org	415819003	Vibrio cholerae, non-O1/non-O139 (organism) 	Vibrio cholerae
+chol_org	76436009	Vibrio cholerae, classical biotype (organism)	Vibrio cholerae
+chol_org	302575006	Vibrio cholerae O1 classical Inaba (organism) 	Vibrio cholerae
+chol_org	302576007	Vibrio cholerae O1 classical Ogawa (organism) 	Vibrio cholerae
+chol_org	302577003	Vibrio cholerae O1 classical Hikojima (organism) 	Vibrio cholerae
+chol_org	58735003	Vibrio cholerae, El Tor biotype (organism)	Vibrio cholerae
+chol_org	302572009	Vibrio cholerae O1 El Tor Inaba (organism) 	Vibrio cholerae
+chol_org	302573004	Vibrio cholerae O1 El Tor Ogawa (organism) 	Vibrio cholerae
+chol_org	302574005	Vibrio cholerae O1 El Tor Hikojima (organism) 	Vibrio cholerae
+lis_org	36094007	Listeria monocytogenes (organism)	Listeria monocytogenes
+lis_org	258366009	Group 1 (qualifier value)	Listeria monocytogenes
+lis_org	258370001	Group 2 (qualifier value)	Listeria monocytogenes
+lis_org	258374005	Group 3 (qualifier value)	Listeria monocytogenes
+lis_org	258381003	Group 4 (qualifier value)	Listeria monocytogenes
+lis_org	450536000	Listeria monocytogenes serotype 1/2a (organism)	Listeria monocytogenes
+lis_org	450537009	Listeria monocytogenes serotype 1/2b (organism)	Listeria monocytogenes
+lis_org	450538004	Listeria monocytogenes serotype 1/2c (organism)	Listeria monocytogenes
+lis_org	450540009	Listeria monocytogenes serotype 3a (organism)	Listeria monocytogenes
+lis_org	450541008	Listeria monocytogenes serotype 3b (organism)	Listeria monocytogenes
+lis_org	450542001	Listeria monocytogenes serotype 3c (organism)	Listeria monocytogenes
+lis_org	450539007	Listeria monocytogenes serotype 4b (organism)	Listeria monocytogenes
+lis_org	450546003	Listeria monocytogenes serotype 4d (organism)	Listeria monocytogenes
+lis_org	450547007	Listeria monocytogenes serotype 4e (organism)	Listeria monocytogenes
+lis_org	450548002	Listeria monocytogenes serotype 7 (organism)	Listeria monocytogenes
+sal_org	27268008	Genus Salmonella (organism)	Salmonella
+sal_org	73525009	Salmonella Enteritidis (organism)	Salmonella
+sal_org	50136005	Salmonella Typhimurium	Salmonella
+sal_org	398467008	Salmonella group O:4 (organism)	Salmonella
+sal_org	1179072002	Salmonella group C (organism)	Salmonella
+sal_org	1179032006	Salmonella group D (organism)	Salmonella
+sal_org	5595000	Salmonella enterica subspecies enterica serovar Typhi (organism)	Salmonella Typhi/Paratyphi
+sal_org	79128009	Salmonella Paratyphi A (organism) 	Salmonella Typhi/Paratyphi
+sal_org	85908006	Salmonella Paratyphi B (organism) 	Salmonella Typhi/Paratyphi
+sal_org	32488009	Salmonella Paratyphi C (organism) 	Salmonella Typhi/Paratyphi
+maldi-tof_org	54365000	 Yersinia pestis (organism)	Yersinia pestis

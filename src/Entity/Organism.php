@@ -54,4 +54,10 @@ class Organism
     {
         $this->organismGroup = $organismGroup;
     }
+
+    public function isEqualTo(Organism $other): bool
+    {
+        return $this->getSystem() === $other->getSystem() && $this->getCode() === $other->getCode() &&
+            $this->getOrganismGroup() === $other->getOrganismGroup();
+    }
 }

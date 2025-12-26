@@ -14,26 +14,27 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Entity\Organism;
+use App\Enum\CodeSystem;
+use App\Helper\DoctrineHelper;
+use Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ImportTasks extends Command
 {
     use LockableTrait;
 
-    private ManagerRegistry $doctrine;
-    private LoggerInterface $logger;
+    private const string RESOURCES_DIR = __DIR__ . '/../../assets/resources';
 
-    public function __construct(ManagerRegistry $doctrine, LoggerInterface $logger)
+    public function __construct(private readonly ManagerRegistry $doctrine, private readonly LoggerInterface $logger, private readonly SerializerInterface $serializer)
     {
         parent::__construct();
-
-        $this->doctrine = $doctrine;
-        $this->logger = $logger;
     }
 
     protected function configure(): void
@@ -47,14 +48,61 @@ class ImportTasks extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $eras = $this->doctrine->getRepository(Organism::class)->findAll();
-        if (count($eras) > 0) {
-            $this->logger->info("Already imported; aborting");
-            return Command::FAILURE;
+        $organisms = $this->doctrine->getRepository(Organism::class)->findAll();
+
+        $updateCount = 0;
+        $createCount = 0;
+        $createOrUpdate = function (Organism $importedEntity) use (&$updateCount, &$createCount, $organisms) {
+            $existingOrganism = array_find($organisms, fn(Organism $o) => $o->isEqualTo($importedEntity));
+            if ($existingOrganism) {
+                if ($existingOrganism->getDisplayName() !== $importedEntity->getDisplayName()) {
+                    $existingOrganism->setDisplayName($importedEntity->getDisplayName());
+                    $updateCount++;
+                    DoctrineHelper::persistAndFlush($this->doctrine, $existingOrganism);
+                }
+            } else {
+                $createCount++;
+                DoctrineHelper::persistAndFlush($this->doctrine, $importedEntity);
+            }
+        };
+
+        $snomedOrganisms = $this->readTsvFile('snomed_organism.tsv');
+        foreach ($snomedOrganisms as $organism) {
+            $entity = new Organism();
+            $entity->setCode($organism['code']);
+            $entity->setDisplayName($organism['display_name']);
+            $entity->setOrganismGroup($organism['organism_group']);
+            $entity->setSystem(CodeSystem::SNOMED);
+
+            $createOrUpdate($entity);
         }
 
-        // TODO
+        $snomedSalOrganisms = $this->readTsvFile('snomed_organism_sal_org_complete.tsv');
+        foreach ($snomedSalOrganisms as $organism) {
+            $entity = new Organism();
+            $entity->setCode($organism['code']);
+            $entity->setDisplayName($organism['display_name']);
+            $entity->setOrganismGroup('sal_org_complete');
+            $entity->setSystem(CodeSystem::SNOMED);
+
+            $createOrUpdate($entity);
+        }
+
+        $output->writeln("Updated $updateCount organisms, created $createCount new ones.");
 
         return Command::SUCCESS;
+    }
+
+    protected function readTsvFile(string $filename): array
+    {
+        $fileContent = file_get_contents(self::RESOURCES_DIR ."/".$filename);
+
+        $csvEncoder = new CsvEncoder();
+        $entries = $csvEncoder->decode($fileContent, 'csv', [CsvEncoder::DELIMITER_KEY => "\t"]);
+        foreach ($entries as $entry) {
+            $entry['display_name'] = preg_replace('~\x{00a0}~u','',$entry['display_name']);
+        }
+
+        return $entries;
     }
 }
