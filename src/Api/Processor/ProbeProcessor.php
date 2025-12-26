@@ -37,7 +37,7 @@ readonly class ProbeProcessor implements ProcessorInterface
     {
         if ($operation instanceof Post) {
             $identifierPrefix = $data->getLaboratoryFunction() === LaboratoryFunction::PRIMARY ? 'P' : 'N';
-            $identifierPrefix .= (new \DateTime())->format("YY");
+            $identifierPrefix .= (new \DateTime())->format("y") . "-"; // small y is two digit representation of the year
 
             $lastProbe = $this->registry->getRepository(Probe::class)->createQueryBuilder('p')
                 ->where('p.identifier LIKE :prefix')
@@ -53,7 +53,7 @@ readonly class ProbeProcessor implements ProcessorInterface
             } else {
                 $nextId = 1;
             }
-            $nextIdentifier = $identifierPrefix . str_pad((string) $nextId, 6, '0', STR_PAD_LEFT);
+            $nextIdentifier = $identifierPrefix . str_pad((string) $nextId, 4, '0', STR_PAD_LEFT);
             $data->setIdentifier($nextIdentifier);
         }
 

@@ -6,6 +6,7 @@ use App\Entity\Probe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use function PHPUnit\Framework\returnArgument;
 
 class ProbeController extends AbstractController
 {
@@ -18,27 +19,40 @@ class ProbeController extends AbstractController
     #[Route('/probe/new.js', name: 'probe_new_js')]
     public function newJs(): Response
     {
-        $response =  $this->render('probe/new.js.twig');
-        $response->headers->set('Content-Type', 'text/javascript');
+        $response = $this->render('probe/new.js.twig');
 
-        return $response;
+        return $this->sendJavascript($response);
     }
 
-    #[Route('/probe/active', name: 'probe_active')]
+    #[Route('/probes/active', name: 'probe_active')]
     public function active(): Response
     {
-        return $this->render('index.html.twig');
+        return $this->render('probe/active_view.html.twig');
     }
 
-    #[Route('/probe/all', name: 'probe_all')]
+    #[Route('/probes/active/{probe}/view', name: 'probe_active_view')]
+    public function activeView(Probe $probe): Response
+    {
+        return $this->render('probe/active_view.html.twig', ['probe' => $probe]);
+    }
+
+    #[Route('/probes/active/{probe}/view', name: 'probe_active_view_js')]
+    public function activeJsView(Probe $probe): Response
+    {
+        $response = $this->render('probe/active_view.js.twig', ['probe' => $probe]);
+
+        return $this->sendJavascript($response);
+    }
+
+    #[Route('/probes/all', name: 'probe_all')]
     public function all(): Response
     {
         return $this->render('index.html.twig');
     }
 
-    #[Route('/probe/{collection}/view', name: 'probe_view')]
-    public function view(Probe $probe): Response
+    private function sendJavascript(Response $response): Response
     {
-        return $this->render('index.html.twig');
+        $response->headers->set('Content-Type', 'text/javascript');
+        return $response;
     }
 }

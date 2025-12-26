@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends '_base.html.twig' %}
 
 {% block title %}{{ 'error.title'|trans }}{% endblock %}
 {% block description %}{{ 'error.description'|trans }}{% endblock %}
@@ -7,7 +7,7 @@
 
 {% block body %}
     <section class="container container-text py-5">
-        <h1>{{ 'error.title'|trans }}</h1>
+        <h1>{{ status_code }} {{ status_text }}</h1>
         <p class="lead">
             {{ 'error.description'|trans }}
         </p>

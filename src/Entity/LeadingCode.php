@@ -11,6 +11,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Common\Filter\SearchFilterInterface;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Entity\Traits\CodedIdentifierTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
@@ -18,9 +26,18 @@ use App\Enum\InterpretationGroup;
 use App\Enum\Pathogen;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
+#[ApiResource(
+    denormalizationContext: ['groups' => ['coded-identifier:read', 'leading-code:read']],
+    paginationEnabled: false
+)]
+#[Get]
+#[GetCollection]
+#[ApiFilter(SearchFilter::class, properties: ['pathogen' => SearchFilterInterface::STRATEGY_EXACT])]
+#[ApiFilter(OrderFilter::class, properties: ['displayName'])]
 class LeadingCode
 {
     use IdTrait;
@@ -28,18 +45,24 @@ class LeadingCode
     use CodedIdentifierTrait;
 
     #[ORM\Column(type: Types::STRING, enumType: Pathogen::class, nullable: true)]
+    #[Groups(['leading-code:read'])]
     private ?Pathogen $pathogen = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['leading-code:read'])]
     private ?string $organismGroup = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['leading-code:read'])]
     private ?string $specimenGroup = null;
 
     #[ORM\Column(type: Types::STRING, enumType: InterpretationGroup::class, nullable: true)]
+    #[Groups(['leading-code:read'])]
     private ?InterpretationGroup $interpretationGroup = null;
 
     #[ORM\ManyToOne(targetEntity: Specimen::class)]
+    #[Groups(['leading-code:read'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?Specimen $specimen = null;
 
     public function getPathogen(): ?Pathogen

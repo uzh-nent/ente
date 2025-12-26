@@ -13,6 +13,7 @@ namespace App\Entity\Traits;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 /*
  * automatically keeps track of creation time & last change time
@@ -21,9 +22,11 @@ use Doctrine\ORM\Mapping as ORM;
 trait TimeTrait
 {
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[Groups(['time:read'])]
     private ?\DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[Groups(['time:read'])]
     private ?\DateTimeImmutable $lastChangedAt;
 
     /**

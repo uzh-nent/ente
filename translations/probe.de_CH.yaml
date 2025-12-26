@@ -3,8 +3,12 @@ new:
     description: "Neue Probe erfassen"
 
 active:
-    title: 'Aktive Proben'
-    description: 'Proben die derzeit untersucht werden'
+  title: 'Aktive Proben'
+  description: 'Proben die derzeit untersucht werden'
+
+active_view:
+  title: 'Aktive Probe'
+  description: 'Probe die derzeit untersucht wird'
 
 all:
   title: 'Alle Proben'

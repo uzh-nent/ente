@@ -102,7 +102,7 @@ const router = {
     window.location.href = route
   },
   navigateToActiveProbe: function (probe) {
-    this.navigateTo('/probes/active/' + iriToId(probe['@id']))
+    this.navigateTo('/probes/active/' + iriToId(probe['@id']) + '/view')
   }
 }
 
