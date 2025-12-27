@@ -1,13 +1,13 @@
 <template>
   <div>
-    <form-field for-id="receivedAt" :label="$t('probe.received_at')" :field="fields.receivedAt">
-      <date-time-input id="receivedAt" :field="fields.receivedAt" v-model="entity.receivedAt" format="date"
-                       @blur="blurField('receivedAt')" @update:modelValue="validateField('receivedAt')"/>
+    <form-field for-id="receivedDate" :label="$t('probe.received_date')" :field="fields.receivedDate">
+      <date-time-input id="receivedDate" :field="fields.receivedDate" v-model="entity.receivedDate" format="date"
+                       @blur="blurField('receivedDate')" @update:modelValue="validateField('receivedDate')"/>
     </form-field>
 
-    <form-field for-id="analysisStartAt" :label="$t('probe.analysis_start_at')" :field="fields.analysisStartAt">
-      <date-time-input id="analysisStartAt" :field="fields.analysisStartAt" v-model="entity.analysisStartAt" format="date"
-                       @blur="blurField('analysisStartAt')" @update:modelValue="validateField('analysisStartAt')"/>
+    <form-field for-id="analysisStartDate" :label="$t('probe.analysis_start_date')" :field="fields.analysisStartDate">
+      <date-time-input id="analysisStartDate" :field="fields.analysisStartDate" v-model="entity.analysisStartDate" format="date"
+                       @blur="blurField('analysisStartDate')" @update:modelValue="validateField('analysisStartDate')"/>
     </form-field>
   </div>
 </template>
@@ -29,12 +29,12 @@ export default {
   data() {
     return {
       fields: {
-        receivedAt: createField(requiredRule),
-        analysisStartAt: createField(requiredRule),
+        receivedDate: createField(requiredRule),
+        analysisStartDate: createField(requiredRule),
       },
       entity: {
-        receivedAt: null,
-        analysisStartAt: null,
+        receivedDate: null,
+        analysisStartDate: null,
       },
     }
   }

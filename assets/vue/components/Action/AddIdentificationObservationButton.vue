@@ -46,7 +46,7 @@ export default {
     },
     template: function () {
       return {
-        analysisStopAt: moment().format('YYYY-MM-DD'),
+        effectiveDate: moment().format('YYYY-MM-DD'),
         identificationSuccessful: true,
       }
     },

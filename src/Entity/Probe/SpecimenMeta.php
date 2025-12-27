@@ -19,7 +19,7 @@ trait SpecimenMeta
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
-    private ?\DateTimeImmutable $specimenDate = null;
+    private ?\DateTimeImmutable $specimenCollectionDate = null;
 
     // unknown, other => use specimenSourceText, specimenText, specimenTypeText, specimenLocation
     // laboratory_strain, feed, environment => use specimenText, specimenTypeText, specimenLocation
@@ -78,14 +78,14 @@ trait SpecimenMeta
     #[Groups(['probe:read', 'probe:write'])]
     private ?bool $specimenIsolate = null;
 
-    public function getSpecimenDate(): ?\DateTimeImmutable
+    public function getSpecimenCollectionDate(): ?\DateTimeImmutable
     {
-        return $this->specimenDate;
+        return $this->specimenCollectionDate;
     }
 
-    public function setSpecimenDate(?\DateTimeImmutable $specimenDate): void
+    public function setSpecimenCollectionDate(?\DateTimeImmutable $specimenCollectionDate): void
     {
-        $this->specimenDate = $specimenDate;
+        $this->specimenCollectionDate = $specimenCollectionDate;
     }
 
     public function getSpecimenSource(): ?SpecimenSource

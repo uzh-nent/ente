@@ -1,7 +1,7 @@
 <template>
   <div>
-    <labeled-value :label="$t('observation.analysis_stop_at')">
-      {{ formatDate(observation.analysisStopAt) }}
+    <labeled-value :label="$t('observation.effective_date')">
+      {{ formatDate(observation.effectiveDate) }}
     </labeled-value>
 
     <labeled-value :label="$t(`probe._analysis_type.IDENTIFICATION`)">

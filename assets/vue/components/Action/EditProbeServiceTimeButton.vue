@@ -50,7 +50,7 @@ export default {
       this.$emit('edited')
     },
     focusServiceTime: function () {
-      document.getElementById('receivedAt')?.focus()
+      document.getElementById('receivedDate')?.focus()
     }
   }
 }

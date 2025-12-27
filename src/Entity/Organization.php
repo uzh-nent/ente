@@ -22,6 +22,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\ContactTrait;
+use App\Entity\Traits\GLNIdentifiedTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\ThingTrait;
 use App\Entity\Traits\TimeTrait;
@@ -32,8 +33,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    normalizationContext: ['groups' => ['thing:read', 'address:read', 'contact:read']],
-    denormalizationContext: ['groups' => ['thing:write', 'address:write', 'contact:write']]
+    normalizationContext: ['groups' => ['thing:read', 'gln-identified:read', 'address:read', 'contact:read']],
+    denormalizationContext: ['groups' => ['thing:write', 'gln-identified:write', 'address:write', 'contact:write']]
 )]
 #[Get]
 #[Post]
@@ -48,6 +49,7 @@ class Organization
     use IdTrait;
     use TimeTrait;
     use ThingTrait;
+    use GLNIdentifiedTrait;
     use AddressTrait;
     use ContactTrait;
 

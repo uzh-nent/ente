@@ -15,9 +15,9 @@ trait ServiceRequest
 {
     use OrdererCopy;
 
-    #[ORM\Column(type: Types::STRING, enumType: LaboratoryFunction::class, nullable: true)]
+    #[ORM\Column(type: Types::STRING, enumType: LaboratoryFunction::class)]
     #[Groups(['probe:read', 'probe:write'])]
-    private ?LaboratoryFunction $laboratoryFunction = null;
+    private LaboratoryFunction $laboratoryFunction = LaboratoryFunction::REFERENCE;
 
     #[ORM\Column(type: Types::STRING, enumType: Pathogen::class, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
@@ -42,12 +42,12 @@ trait ServiceRequest
     #[Groups(['probe:read', 'probe:write'])]
     private ?Organization $orderer = null;
 
-    public function getLaboratoryFunction(): ?LaboratoryFunction
+    public function getLaboratoryFunction(): LaboratoryFunction
     {
         return $this->laboratoryFunction;
     }
 
-    public function setLaboratoryFunction(?LaboratoryFunction $laboratoryFunction): void
+    public function setLaboratoryFunction(LaboratoryFunction $laboratoryFunction): void
     {
         $this->laboratoryFunction = $laboratoryFunction;
     }

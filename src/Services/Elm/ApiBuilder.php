@@ -60,7 +60,7 @@ readonly class ApiBuilder
                 "id" => $reference->id(),
                 "subject" => $this->formatter->reference($patientResource["resource"]),
                 "collection" => [
-                    "collectedDateTime" => $this->formatter->date($probe->getSpecimenDate())
+                    "collectedDateTime" => $this->formatter->date($probe->getSpecimenCollectionDate())
                 ]
             ]
         ];

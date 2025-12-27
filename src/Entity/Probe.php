@@ -68,49 +68,35 @@ class Probe
 
     #[ORM\Column(type: Types::STRING, unique: true)]
     #[Groups(['probe:read'])]
-    private ?string $identifier = null;
+    private string $identifier = '';
 
-    #[ORM\Column(type: Types::STRING, enumType: ProbeStatus::class, nullable: true)]
-    #[Groups(['probe:read', 'probe:write'])]
-    private ?ProbeStatus $status = null;
-
-    public function getIdentifier(): ?string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
-    public function setIdentifier(?string $identifier): void
+    public function setIdentifier(string $identifier): void
     {
         $this->identifier = $identifier;
     }
 
-    public function getStatus(): ?ProbeStatus
+    public function getReceivedDate(): ?\DateTimeImmutable
     {
-        return $this->status;
+        return $this->receivedDate;
     }
 
-    public function setStatus(?ProbeStatus $status): void
+    public function setReceivedDate(?\DateTimeImmutable $receivedDate): void
     {
-        $this->status = $status;
+        $this->receivedDate = $receivedDate;
     }
 
-    public function getReceivedAt(): ?\DateTimeImmutable
+    public function getAnalysisStartDate(): ?\DateTimeImmutable
     {
-        return $this->receivedAt;
+        return $this->analysisStartDate;
     }
 
-    public function setReceivedAt(?\DateTimeImmutable $receivedAt): void
+    public function setAnalysisStartDate(?\DateTimeImmutable $analysisStartDate): void
     {
-        $this->receivedAt = $receivedAt;
-    }
-
-    public function getAnalysisStartAt(): ?\DateTimeImmutable
-    {
-        return $this->analysisStartAt;
-    }
-
-    public function setAnalysisStartAt(?\DateTimeImmutable $analysisStartAt): void
-    {
-        $this->analysisStartAt = $analysisStartAt;
+        $this->analysisStartDate = $analysisStartDate;
     }
 }

@@ -14,34 +14,34 @@ trait ServiceTime
 {
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Groups(['probe:read', 'probe:write'])]
-    private ?\DateTimeImmutable $receivedAt = null;
+    private ?\DateTimeImmutable $receivedDate = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
-    private ?\DateTimeImmutable $analysisStartAt = null;
+    private ?\DateTimeImmutable $analysisStartDate = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
     private ?\DateTimeImmutable $finishedAt = null;
 
-    public function getReceivedAt(): ?\DateTimeImmutable
+    public function getReceivedDate(): \DateTimeImmutable
     {
-        return $this->receivedAt;
+        return $this->receivedDate;
     }
 
-    public function setReceivedAt(?\DateTimeImmutable $receivedAt): void
+    public function setReceivedDate(\DateTimeImmutable $receivedDate): void
     {
-        $this->receivedAt = $receivedAt;
+        $this->receivedDate = $receivedDate;
     }
 
-    public function getAnalysisStartAt(): ?\DateTimeImmutable
+    public function getAnalysisStartDate(): ?\DateTimeImmutable
     {
-        return $this->analysisStartAt;
+        return $this->analysisStartDate;
     }
 
-    public function setAnalysisStartAt(?\DateTimeImmutable $analysisStartAt): void
+    public function setAnalysisStartDate(?\DateTimeImmutable $analysisStartDate): void
     {
-        $this->analysisStartAt = $analysisStartAt;
+        $this->analysisStartDate = $analysisStartDate;
     }
 
     public function getFinishedAt(): ?\DateTimeImmutable

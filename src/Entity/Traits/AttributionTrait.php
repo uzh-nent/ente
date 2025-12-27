@@ -25,7 +25,7 @@ trait AttributionTrait
     #[Groups(['attribution:read'])]
     private ?User $lastChangedBy = null;
 
-    public function getCreatedBy(): ?User
+    public function getCreatedBy(): User
     {
         return $this->createdBy;
     }
@@ -35,7 +35,7 @@ trait AttributionTrait
         $this->createdBy = $createdBy;
     }
 
-    public function getLastChangedBy(): ?User
+    public function getLastChangedBy(): User
     {
         return $this->lastChangedBy;
     }

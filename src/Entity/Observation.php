@@ -55,11 +55,11 @@ class Observation
 
     #[ORM\Column(type: Types::STRING, enumType: AnalysisType::class)]
     #[Groups(['observation:read', 'observation:write'])]
-    private ?AnalysisType $analysisType = null;
+    private AnalysisType $analysisType = AnalysisType::IDENTIFICATION;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[Groups(['observation:read', 'observation:write'])]
-    private ?\DateTimeImmutable $analysisStopAt = null;
+    private ?\DateTimeImmutable $effectiveDate = null;
 
     #[ORM\Column(type: Types::STRING, enumType: Interpretation::class, nullable: true)]
     #[Groups(['observation:read', 'observation:write'])]
@@ -83,24 +83,24 @@ class Observation
     #[Groups(['observation:read', 'observation:write'])]
     private ?Probe $probe = null;
 
-    public function getAnalysisType(): ?AnalysisType
+    public function getAnalysisType(): AnalysisType
     {
         return $this->analysisType;
     }
 
-    public function setAnalysisType(?AnalysisType $analysisType): void
+    public function setAnalysisType(AnalysisType $analysisType): void
     {
         $this->analysisType = $analysisType;
     }
 
-    public function getAnalysisStopAt(): ?\DateTimeImmutable
+    public function getEffectiveDate(): ?\DateTimeImmutable
     {
-        return $this->analysisStopAt;
+        return $this->effectiveDate;
     }
 
-    public function setAnalysisStopAt(?\DateTimeImmutable $analysisStopAt): void
+    public function setEffectiveDate(?\DateTimeImmutable $effectiveDate): void
     {
-        $this->analysisStopAt = $analysisStopAt;
+        $this->effectiveDate = $effectiveDate;
     }
 
     public function getInterpretation(): ?Interpretation

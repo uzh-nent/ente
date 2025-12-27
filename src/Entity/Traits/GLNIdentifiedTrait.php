@@ -19,19 +19,19 @@ use Symfony\Component\Serializer\Attribute\Groups;
  * automatically keeps track of creation time & last change time
  */
 
-trait ThingTrait
+trait GLNIdentifiedTrait
 {
-    #[ORM\Column(type: Types::STRING)]
-    #[Groups(['thing:read', 'thing:write'])]
-    private string $name = '';
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['gln-identified:read', 'gln-identified:write'])]
+    private ?string $glnIdentifier;
 
-    public function getName(): string
+    public function getGlnIdentifier(): ?string
     {
-        return $this->name;
+        return $this->glnIdentifier;
     }
 
-    public function setName(string $name): void
+    public function setGlnIdentifier(?string $glnIdentifier): void
     {
-        $this->name = $name;
+        $this->glnIdentifier = $glnIdentifier;
     }
 }

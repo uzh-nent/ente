@@ -18,44 +18,44 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 trait CodedIdentifierTrait
 {
-    #[ORM\Column(type: Types::STRING, enumType: CodeSystem::class, nullable: true)]
+    #[ORM\Column(type: Types::STRING, enumType: CodeSystem::class)]
     #[Groups(['coded-identifier:read'])]
-    private ?CodeSystem $system = null;
+    private CodeSystem $system = CodeSystem::LOINC;
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: Types::STRING)]
     #[Groups(['coded-identifier:read'])]
-    private ?string $code = null;
+    private string $code = '';
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: Types::STRING)]
     #[Groups(['coded-identifier:read'])]
-    private ?string $displayName = null;
+    private string $displayName = '';
 
-    public function getSystem(): ?CodeSystem
+    public function getSystem(): CodeSystem
     {
         return $this->system;
     }
 
-    public function setSystem(?CodeSystem $system): void
+    public function setSystem(CodeSystem $system): void
     {
         $this->system = $system;
     }
 
-    public function getCode(): ?string
+    public function getCode(): string
     {
         return $this->code;
     }
 
-    public function setCode(?string $code): void
+    public function setCode(string $code): void
     {
         $this->code = $code;
     }
 
-    public function getDisplayName(): ?string
+    public function getDisplayName(): string
     {
         return $this->displayName;
     }
 
-    public function setDisplayName(?string $displayName): void
+    public function setDisplayName(string $displayName): void
     {
         $this->displayName = $displayName;
     }

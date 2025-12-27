@@ -2,9 +2,6 @@
 
 namespace App\Entity\Probe;
 
-use App\Entity\Patient;
-use App\Entity\Traits\AddressTrait;
-use App\Entity\Traits\PersonTrait;
 use App\Enum\AdministrativeGender;
 use App\Services\Elm\ApiBuilder\Dto\AddressDto;
 use App\Services\Elm\ApiBuilder\Dto\PersonDto;

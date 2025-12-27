@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td>{{ $t(`probe._analysis_type.${observation.analysisType}`) }}</td>
-    <td>{{ formatDate(observation.analysisStopAt) }}</td>
+    <td>{{ formatDate(observation.effectiveDate) }}</td>
     <td>
         <span class="badge bg-success" v-if="observation.interpretation ==='POS'">
           {{ $t(`message.successful`) }}

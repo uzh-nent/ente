@@ -88,7 +88,7 @@ export default {
         laboratoryFunction: 'REFERENCE',
         pathogen: 'SALMONELLA',
         analysisTypes: ['IDENTIFICATION'],
-        receivedAt: moment().format('YYYY-MM-DD'),
+        receivedDate: moment().format('YYYY-MM-DD'),
       }
     },
     specimenMetaTemplate: function () {
@@ -100,8 +100,8 @@ export default {
     },
     serviceTimeTemplate: function () {
       return {
-        receivedAt: moment().format('YYYY-MM-DD'),
-        analysisStartAt: moment().format('YYYY-MM-DD'),
+        receivedDate: moment().format('YYYY-MM-DD'),
+        analysisStartDate: moment().format('YYYY-MM-DD'),
       }
     },
     payload: function () {

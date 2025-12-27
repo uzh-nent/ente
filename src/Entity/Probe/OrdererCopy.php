@@ -10,9 +10,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 trait OrdererCopy
 {
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: Types::STRING)]
     #[Groups(['orderer:read', 'orderer:write'])]
-    private ?string $ordererName = null;
+    private string $ordererName = '';
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
@@ -34,12 +34,12 @@ trait OrdererCopy
     #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererContact = null;
 
-    public function getOrdererName(): ?string
+    public function getOrdererName(): string
     {
         return $this->ordererName;
     }
 
-    public function setOrdererName(?string $ordererName): void
+    public function setOrdererName(string $ordererName): void
     {
         $this->ordererName = $ordererName;
     }

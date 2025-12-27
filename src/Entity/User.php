@@ -17,7 +17,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     use IdTrait;
     use TimeTrait;
 
-    public const string SUPER_SHORNAME = 'flomos';
+    public const string SUPER_SHORTNAME = 'flomos';
 
     #[ORM\Column(type: Types::STRING)]
     private ?string $name;
@@ -104,7 +104,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-        if ($this->shortname === self::SUPER_SHORNAME) {
+        if ($this->shortname === self::SUPER_SHORTNAME) {
             $roles[] = 'ROLE_ADMIN';
             $roles[] = 'ROLE_ALLOWED_TO_SWITCH';
         }

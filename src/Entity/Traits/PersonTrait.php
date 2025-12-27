@@ -21,13 +21,13 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 trait PersonTrait
 {
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: Types::STRING)]
     #[Groups(['person:read', 'person:write'])]
-    private ?string $givenName = null;
+    private ?string $givenName = '';
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: Types::STRING)]
     #[Groups(['person:read', 'person:write'])]
-    private ?string $familyName = null;
+    private ?string $familyName = '';
 
     public function getGivenName(): ?string
     {

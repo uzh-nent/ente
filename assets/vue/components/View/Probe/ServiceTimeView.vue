@@ -1,11 +1,11 @@
 <template>
   <div>
-    <labeled-value :label="$t('probe.received_at')">
-      {{ formatDate(probe.receivedAt) }}
+    <labeled-value :label="$t('probe.received_date')">
+      {{ formatDate(probe.receivedDate) }}
     </labeled-value>
 
-    <labeled-value :label="$t('probe.analysis_start_at')">
-      {{ formatDate(probe.analysisStartAt) }}
+    <labeled-value :label="$t('probe.analysis_start_date')">
+      {{ formatDate(probe.analysisStartDate) }}
     </labeled-value>
 
     <labeled-value :label="$t('probe.finished_at')" v-if="probe.finishedAt">

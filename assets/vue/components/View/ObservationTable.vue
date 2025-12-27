@@ -13,7 +13,7 @@
         <tbody>
         <tr v-for="observation in observations" :key="observation['@id']">
           <td>{{$t(`probe._analysis_type.${observation.analysisType}`)}}</td>
-          <td>{{ formatDate(observation.analysisStopAt)}}</td>
+          <td>{{ formatDate(observation.effectiveDate)}}</td>
           <td>
             <template v-if="observation.analysisType === 'IDENTIFICATION'">
               <span class="badge bg-success" v-if="observation.interpretation ==='POS'">

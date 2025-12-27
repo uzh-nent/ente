@@ -134,7 +134,7 @@
     "_name": "Probe",
     "pathogen": "Pathogen",
     "service_request": "Auftrag",
-    "specimen_date": "Entnahmedatum",
+    "speciment_collection_date": "Entnahmedatum",
     "specimen_source": "Herkunft",
     "specimen_source_text": "Herkunft",
     "specimen_isolate": "Isolat",
@@ -143,9 +143,9 @@
     "specimen_location": "Ort",
     "progress": "Verlauf",
     "animal_name": "Tiername",
-    "received_at": "Empfangen am",
+    "received_date": "Empfangen am",
     "orderer_identifier": "Probe-Referenz",
-    "analysis_start_at": "Ansatzdatum",
+    "analysis_start_date": "Ansatzdatum",
     "orderer": "Auftraggeber",
     "_pathogen": {
       "SALMONELLA": "Salmonella",
@@ -213,7 +213,7 @@
   },
   "observation": {
     "_name": "Resultat",
-    "analysis_stop_at": "Resultat erfasst am",
+    "effective_date": "Resultat erfasst am",
     "identification_successful": "Identifizierung erfolgreich",
     "interpretation_text": "Kommentar",
     "cgMLST": "cgMLST"

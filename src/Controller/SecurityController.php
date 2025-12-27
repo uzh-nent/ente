@@ -44,7 +44,7 @@ class SecurityController extends AbstractController
         if ($lastError instanceof BadCredentialsException) {
             // if super shortname, allow to register
             if (
-                $lastUsername === User::SUPER_SHORNAME &&
+                $lastUsername === User::SUPER_SHORTNAME &&
                 !$registry->getRepository(User::class)->findOneBy(['shortname' => $lastUsername])
             ) {
                 $user = new User();
