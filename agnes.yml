@@ -17,6 +17,10 @@ data:
   files:
     - path: .env.local
       required: true
+    - path: .cert/elm-sslcertificate.fullchain.pem
+      required: false
+    - path: .cert/elm-sslkey.key
+      required: false
 
 scripts:
   build:

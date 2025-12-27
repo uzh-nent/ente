@@ -2,6 +2,8 @@
 
 namespace App\Entity\Probe;
 
+use App\Entity\Traits\AddressTrait;
+use App\Services\Elm\ApiBuilder\Dto\AddressDto;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -90,5 +92,13 @@ trait OrdererCopy
     public function setOrdererContact(?string $ordererContact): void
     {
         $this->ordererContact = $ordererContact;
+    }
+
+    public function writeOrdererAddressTo(AddressDto $target): void
+    {
+        $target->setAddressLines($this->ordererAddressLines);
+        $target->setCity($this->ordererCity);
+        $target->setPostalCode($this->ordererPostalCode);
+        $target->setCountryCode($this->ordererCountryCode);
     }
 }

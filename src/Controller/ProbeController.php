@@ -6,6 +6,7 @@ use App\Entity\Probe;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
 use function PHPUnit\Framework\returnArgument;
 
 class ProbeController extends AbstractController

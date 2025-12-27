@@ -25,6 +25,7 @@ export const probeConverter = {
       patient: patient['@id'],
       patientBirthDate: patient.birthDate,
       patientAhvNumber: patient.ahvNumber,
+      patientGender: patient.gender,
       patientGivenName: patient.givenName,
       patientFamilyName: patient.familyName,
       patientAddressLines: patient.addressLines,
@@ -54,10 +55,11 @@ export const probeConverter = {
   },
   reconstructPatient: function (probe) {
     return {
-      givenName: probe.patientGivenName,
-      familyName: probe.patientFamilyName,
       birthDate: probe.patientBirthDate,
       ahvNumber: probe.patientAhvNumber,
+      gender: probe.patientGender,
+      givenName: probe.patientGivenName,
+      familyName: probe.patientFamilyName,
       addressLines: probe.patientAddressLines,
       city: probe.patientCity,
       postalCode: probe.patientPostalCode,

@@ -36,7 +36,7 @@ class ImportTasks extends Command
 
     private const string RESOURCES_DIR = __DIR__ . '/../../assets/resources';
 
-    public function __construct(private readonly ManagerRegistry $doctrine, private readonly LoggerInterface $logger, private readonly SerializerInterface $serializer)
+    public function __construct(private readonly ManagerRegistry $doctrine)
     {
         parent::__construct();
     }
@@ -202,17 +202,22 @@ class ImportTasks extends Command
             'Listeria monocytogenes' => Pathogen::LISTERIA_MONOCYTOGENES,
             'Yersinia pestis' => Pathogen::YERSINIA,
             'Enterohaemorrhagic Escherichia coli' => Pathogen::ESCHERICHIA_COLI,
+            default => throw new \Exception("Unknown pathogen $pathogen"),
         };
     }
 
-    private function parseInterpretationGroup(string $pathogen): InterpretationGroup
+    private function parseInterpretationGroup(string $interpretation): InterpretationGroup
     {
-        return match ($pathogen) {
+        return match ($interpretation) {
             'POS-NEG', 'TEXT' => InterpretationGroup::POS_NEG, // mapping TEXT to POS_NEG as probably a typo in the source data
             'POS' => InterpretationGroup::POS,
+            default => throw new \Exception("Unknown interpretation $interpretation"),
         };
     }
 
+    /**
+     * @return array<string[]>
+     */
     protected function readTsvFile(string $filename): array
     {
         $fileContent = file_get_contents(self::RESOURCES_DIR . "/" . $filename);
