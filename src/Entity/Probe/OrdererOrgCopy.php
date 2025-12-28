@@ -2,6 +2,7 @@
 
 namespace App\Entity\Probe;
 
+use App\Entity\Organization;
 use App\Services\Elm\ApiBuilder\Dto\AddressDto;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -91,6 +92,16 @@ trait OrdererOrgCopy
     public function setOrdererOrgContact(?string $ordererOrgContact): void
     {
         $this->ordererOrgContact = $ordererOrgContact;
+    }
+
+    public function copyOrdererOrgFrom(Organization $organization): void
+    {
+        $this->ordererOrgName = $organization->getName();
+        $this->ordererOrgAddressLines = $organization->getAddressLines();
+        $this->ordererOrgCountryCode = $organization->getCountryCode();
+        $this->ordererOrgCity = $organization->getCity();
+        $this->ordererOrgPostalCode = $organization->getPostalCode();
+        $this->ordererOrgContact = $organization->getContact();
     }
 
     public function writeOrdererOrgAddressTo(AddressDto $target): void

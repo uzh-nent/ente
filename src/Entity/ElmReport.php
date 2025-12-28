@@ -14,6 +14,8 @@ namespace App\Entity;
 use App\Entity\ElmReport\ElmPayload;
 use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\IdTrait;
+use App\Enum\CodeSystem;
+use App\Enum\ElmApiStatus;
 use App\Enum\Interpretation;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,7 +28,7 @@ class ElmReport
     use AttributionTrait;
     use ElmPayload;
 
-    #[ORM\ManyToOne(targetEntity: Organization::class)]
+    #[ORM\ManyToOne(targetEntity: Probe::class)]
     private ?Probe $probe = null;
 
     #[ORM\ManyToOne(targetEntity: Observation::class)]
@@ -42,14 +44,17 @@ class ElmReport
     private ?string $requestJson = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    private ?string $responseJson = null;
+    private ?string $validationResponseJson = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?string $sendResponseJson = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $apiId = null;
+    private ?string $sendResponseDocumentReferenceId = null;
 
     // per default in-progress, then need to poll API until done
-    #[ORM\Column(type: Types::STRING)]
-    private string $apiStatus = '';
+    #[ORM\Column(type: Types::STRING, enumType: ElmApiStatus::class)]
+    private ElmApiStatus $apiStatus = ElmApiStatus::CREATING;
 
     public function getProbe(): Probe
     {
@@ -101,32 +106,42 @@ class ElmReport
         $this->requestJson = $requestJson;
     }
 
-    public function getResponseJson(): ?string
+    public function getValidationResponseJson(): ?string
     {
-        return $this->responseJson;
+        return $this->validationResponseJson;
     }
 
-    public function setResponseJson(?string $responseJson): void
+    public function setValidationResponseJson(?string $validationResponseJson): void
     {
-        $this->responseJson = $responseJson;
+        $this->validationResponseJson = $validationResponseJson;
     }
 
-    public function getApiId(): ?string
+    public function getSendResponseJson(): ?string
     {
-        return $this->apiId;
+        return $this->sendResponseJson;
     }
 
-    public function setApiId(?string $apiId): void
+    public function setSendResponseJson(?string $sendResponseJson): void
     {
-        $this->apiId = $apiId;
+        $this->sendResponseJson = $sendResponseJson;
     }
 
-    public function getApiStatus(): ?string
+    public function getSendResponseDocumentReferenceId(): ?string
+    {
+        return $this->sendResponseDocumentReferenceId;
+    }
+
+    public function setSendResponseDocumentReferenceId(?string $sendResponseDocumentReferenceId): void
+    {
+        $this->sendResponseDocumentReferenceId = $sendResponseDocumentReferenceId;
+    }
+
+    public function getApiStatus(): ElmApiStatus
     {
         return $this->apiStatus;
     }
 
-    public function setApiStatus(?string $apiStatus): void
+    public function setApiStatus(ElmApiStatus $apiStatus): void
     {
         $this->apiStatus = $apiStatus;
     }

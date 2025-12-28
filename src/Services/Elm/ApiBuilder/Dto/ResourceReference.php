@@ -23,6 +23,6 @@ readonly class ResourceReference
 
     public function fullUrl(): string
     {
-        return self::IUB . "/" . $this->type . "/" . $this->id;
+        return self::IUB . "/" . $this->type . "/" . $this->id();
     }
 }

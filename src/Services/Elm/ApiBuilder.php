@@ -69,7 +69,7 @@ readonly class ApiBuilder
 
         if ($elmReport->getSpecimen()) {
             $specimenResource['resource']["type"] = [
-                "coding" => [[$this->formatter->codedIdentifier($elmReport->getSpecimen())]]
+                "coding" => [$this->formatter->codedIdentifier($elmReport->getSpecimen())]
             ];
         }
 
@@ -190,9 +190,9 @@ readonly class ApiBuilder
         ];
 
         if ($elmReport->getInterpretation()) {
-            $observationResource['resource']['interpretation'] = [
+            $observationResource['resource']['interpretation'] = [[
                 "coding" => [$this->formatter->codedInterpretation($elmReport->getInterpretation())]
-            ];
+            ]];
         }
 
         if ($elmReport->getOrganism()) {
@@ -226,23 +226,23 @@ readonly class ApiBuilder
                         "url" => "http://hl7.org/fhir/5.0/StructureDefinition/extension-DiagnosticReport.composition",
                         "valueReference" => $this->formatter->reference($rawCompositionResource["resource"])
                     ]
-                ]
-            ],
-            "identifier" => [
-                [
-                    "system" => "urn:ietf:rfc:3986",
-                    "value" => "urn:uuid:" . $elmReport->getDiagnosticReportId()
-                ]
-            ],
-            "basedOn" => [$this->formatter->reference($serviceRequestResource["resource"])],
-            "status" => "final", // predefined value
-            "code" => [
-                "coding" => [PredefinedCodes::loincLaboratoryReport()]
-            ],
-            "subject" => $this->formatter->reference($patientResource["resource"]),
-            "performer" => $this->formatter->reference($organizationResource["resource"]),
-            "specimen" => [$this->formatter->reference($specimenResource["resource"])],
-            "result" => [$this->formatter->reference($observationResource["resource"])],
+                ],
+                "identifier" => [
+                    [
+                        "system" => "urn:ietf:rfc:3986",
+                        "value" => "urn:uuid:" . $elmReport->getDiagnosticReportId()
+                    ]
+                ],
+                "basedOn" => [$this->formatter->reference($serviceRequestResource["resource"])],
+                "status" => "final", // predefined value
+                "code" => [
+                    "coding" => [PredefinedCodes::loincLaboratoryReport()]
+                ],
+                "subject" => $this->formatter->reference($patientResource["resource"]),
+                "performer" => [$this->formatter->reference($organizationResource["resource"])],
+                "specimen" => [$this->formatter->reference($specimenResource["resource"])],
+                "result" => [$this->formatter->reference($observationResource["resource"])],
+            ]
         ];
     }
 

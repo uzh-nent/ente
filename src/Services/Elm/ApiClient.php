@@ -6,16 +6,25 @@ use Psr\Log\LoggerInterface;
 
 readonly class ApiClient
 {
-    public function __construct(private LoggerInterface $logger, private string $baseUrl, private string $elmBaseUrl, private string $elmSSLCertPath, private string $elmSSLKeyPath)
+    public function __construct(private string $baseUrl, private string $elmBaseUrl, private string $elmSSLCertPath, private string $elmSSLKeyPath)
     {
     }
 
-    public function sendDocumentReference(string $json, bool $onlyValidate = false): ?string
+    public function validateDocumentReference(string $json, ?string &$error = null): ?string
+    {
+        return $this->performApiCall($json, "/DocumentReference/\$Validate", $error);
+    }
+
+    public function sendDocumentReference(string $json, ?string &$error = null): ?string
+    {
+        return $this->performApiCall($json, "/DocumentReference/", $error);
+    }
+
+    private function performApiCall(string $json, string $endpoint, ?string &$error = null): ?string
     {
         $ch = curl_init();
 
-        $urlSuffix = $onlyValidate ? "\$Validate" : "";
-        curl_setopt($ch, CURLOPT_URL, $this->elmBaseUrl . "/DocumentReference/" . $urlSuffix);
+        curl_setopt($ch, CURLOPT_URL, $this->elmBaseUrl . $endpoint);
         curl_setopt($ch, CURLOPT_SSLCERT, $this->elmSSLCertPath);
         curl_setopt($ch, CURLOPT_SSLKEY, $this->elmSSLKeyPath);
 
@@ -28,10 +37,8 @@ readonly class ApiClient
 
         $responseJson = curl_exec($ch);
         if (curl_errno($ch)) {
-            $this->logger->error('Sending document failed: ' . curl_error($ch));
-            return null;
+            $error = 'Sending document failed: ' . curl_error($ch);
         }
-        curl_close($ch);
 
         return $responseJson;
     }

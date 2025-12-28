@@ -2,6 +2,8 @@
 
 namespace App\Entity\Probe;
 
+use App\Entity\Organization;
+use App\Entity\Practitioner;
 use App\Services\Elm\ApiBuilder\Dto\AddressDto;
 use App\Services\Elm\ApiBuilder\Dto\PersonDto;
 use Doctrine\DBAL\Types\Types;
@@ -106,6 +108,17 @@ trait OrdererPracCopy
     public function setOrdererPracContact(?string $ordererPracContact): void
     {
         $this->ordererPracContact = $ordererPracContact;
+    }
+
+    public function copyOrdererPracFrom(Practitioner $practitioner): void
+    {
+        $this->ordererPracGivenName = $practitioner->getGivenName();
+        $this->ordererPracFamilyName = $practitioner->getFamilyName();
+        $this->ordererPracAddressLines = $practitioner->getAddressLines();
+        $this->ordererPracCountryCode = $practitioner->getCountryCode();
+        $this->ordererPracCity = $practitioner->getCity();
+        $this->ordererPracPostalCode = $practitioner->getPostalCode();
+        $this->ordererPracContact = $practitioner->getContact();
     }
 
     public function writeOrdererPracAddressTo(AddressDto $target): void

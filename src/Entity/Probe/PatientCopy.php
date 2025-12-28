@@ -2,6 +2,8 @@
 
 namespace App\Entity\Probe;
 
+use App\Entity\Patient;
+use App\Entity\Practitioner;
 use App\Enum\AdministrativeGender;
 use App\Services\Elm\ApiBuilder\Dto\AddressDto;
 use App\Services\Elm\ApiBuilder\Dto\PersonDto;
@@ -135,6 +137,19 @@ trait PatientCopy
     public function setPatientCountryCode(?string $patientCountryCode): void
     {
         $this->patientCountryCode = $patientCountryCode;
+    }
+
+    public function copyPatientFrom(Patient $patient): void
+    {
+        $this->patientBirthDate = $patient->getBirthDate();
+        $this->patientAhvNumber = $patient->getAhvNumber();
+        $this->patientGender = $patient->getGender();
+        $this->patientGivenName = $patient->getGivenName();
+        $this->patientFamilyName = $patient->getFamilyName();
+        $this->patientAddressLines = $patient->getAddressLines();
+        $this->patientCountryCode = $patient->getCountryCode();
+        $this->patientCity = $patient->getCity();
+        $this->patientPostalCode = $patient->getPostalCode();
     }
 
     public function writePatientAddressTo(AddressDto $target): void

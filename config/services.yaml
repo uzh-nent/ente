@@ -16,7 +16,7 @@ services:
             $organizationId: '%env(ORGANIZATION_ID)%'
             $organizationName: '%env(ORGANIZATION_NAME)%'
             $organizationGLN: '%env(ORGANIZATION_GLN)%'
-            $elmBaseUrl: '%env(ENTE_ELM_BASE_URL)%'
+            $elmBaseUrl: '%env(ELM_BASE_URL)%'
             $elmSSLCertPath: '%kernel.project_dir%/%env(ELM_SSLCERT_RELATIVE_PATH)%'
             $elmSSLKeyPath: '%kernel.project_dir%/%env(ELM_SSLKEY_RELATIVE_PATH)%'
 
