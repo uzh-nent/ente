@@ -1,39 +1,42 @@
 <template>
   <tr>
-    <td>{{ organization.name }}</td>
+    <td>
+      {{practitioner.title}}
+      {{ practitioner.givenName }}
+      <b>{{ practitioner.familyName }}</b>
+    </td>
     <td class="whitespace-preserve-newlines">
-      {{ organization.addressLines }}
+      {{ practitioner.addressLines }}
     </td>
     <td>
       {{ city }}
     </td>
     <td class="whitespace-preserve-newlines">
-      {{ organization.contact }}
+      {{ practitioner.contact }}
     </td>
     <td class="w-minimal text-end">
-      <edit-organization-button :organization="organization" />
+      <edit-practitioner-button :practitioner="practitioner" />
     </td>
   </tr>
 </template>
 
 <script>
 import {formatAddressCity} from "../../services/domain/formatter";
-import EditOrganizationButton from "../Action/EditOrganizationButton.vue";
+import EditPractitionerButton from "../Action/EditPractitionerButton.vue";
 
 export default {
-  components: {EditOrganizationButton},
+  components: {EditPractitionerButton},
   props: {
-    organization: {
+    practitioner: {
       type: Object,
       required: true
     },
   },
   computed: {
     city: function () {
-      return formatAddressCity(this.organization)
+      return formatAddressCity(this.practitioner)
     }
   }
 }
 
 </script>
-

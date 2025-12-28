@@ -37,23 +37,3 @@ export default {
 
 </script>
 
-
-<style scoped>
-.btn-wide {
-  width: 3em;
-}
-
-.btn-xs {
-  font-size: 0.6em;
-  padding: 0.5em;
-}
-
-.lh-0 {
-  line-height: 0;
-}
-
-.whitespace-nowrap {
-  white-space: nowrap;
-}
-
-</style>

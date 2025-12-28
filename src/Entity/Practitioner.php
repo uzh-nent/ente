@@ -35,8 +35,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    normalizationContext: ['groups' => ['person:read', 'address:read', 'contact:read']],
-    denormalizationContext: ['groups' => ['person:write', 'address:write', 'contact:write']]
+    normalizationContext: ['groups' => ['person:read', 'address:read', 'contact:read', 'practitioner:read']],
+    denormalizationContext: ['groups' => ['person:write', 'address:write', 'contact:write', 'practitioner:write']]
 )]
 #[Get]
 #[Post]
@@ -54,6 +54,10 @@ class Practitioner
     use AddressTrait;
     use ContactTrait;
 
+    #[ORM\Column(type: Types::STRING)]
+    #[Groups(['practitioner:read', 'practitioner:write'])]
+    private ?string $title = '';
+
     /**
      * @var Collection<int, Probe>
      */
@@ -63,6 +67,16 @@ class Practitioner
     public function __construct()
     {
         $this->probes = new ArrayCollection();
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): void
+    {
+        $this->title = $title;
     }
 
     /**

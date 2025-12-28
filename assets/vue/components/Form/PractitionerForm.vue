@@ -1,38 +1,22 @@
 <template>
-
   <div class="row">
-    <div class="col-md-6">
-      <form-field for-id="birthDate" :label="$t('patient.birth_date')" :field="fields.birthDate">
-        <date-time-input id="birthDate" :field="fields.birthDate" v-model="entity.birthDate" format="date"
-                         @blur="blurField('birthDate')" @update:modelValue="validateField('birthDate')"/>
+    <div class="col-md-2">
+      <form-field for-id="title" :label="$t('practitioner.title')" :field="fields.title">
+        <text-input id="title" type="text" :field="fields.title" v-model="entity.title"
+                    @blur="blurField('title')" @update:modelValue="validateField('title')"/>
       </form-field>
     </div>
-    <div class="col-md-6">
-      <form-field for-id="ahvNumber" :label="$t('patient.ahv_number')" :field="fields.ahvNumber">
-        <text-input id="ahvNumber" type="text" :field="fields.ahvNumber" v-model="entity.ahvNumber"
-                    @blur="blurField('ahvNumber')" @update:modelValue="validateField('ahvNumber')"/>
-      </form-field>
-    </div>
-  </div>
-
-  <hr/>
-
-  <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
       <form-field for-id="givenName" :label="$t('person.given_name')" :field="fields.givenName">
         <text-input id="givenName" type="text" :field="fields.givenName" v-model="entity.givenName"
                     @blur="blurField('givenName')" @update:modelValue="validateField('givenName')"/>
       </form-field>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
       <form-field for-id="familyName" :label="$t('person.family_name')" :field="fields.familyName">
         <text-input id="familyName" type="text" :field="fields.familyName" v-model="entity.familyName"
                     @blur="blurField('familyName')" @update:modelValue="validateField('familyName')"/>
       </form-field>
-    </div>
-    <div class="col-md-12">
-      <radio inline id="gender" :choices="genderChoices" :field="fields.gender"
-             v-model="entity.gender" @update:model-value="validateField('gender')"/>
     </div>
   </div>
 
@@ -63,6 +47,12 @@
       </form-field>
     </div>
   </div>
+
+  <hr/>
+  <form-field for-id="contact" :label="$t('contact.contact')" :field="fields.contact">
+    <text-area id="contact" :field="fields.contact" v-model="entity.contact"
+               @blur="blurField('contact')" @update:modelValue="validateField('contact')"/>
+  </form-field>
 </template>
 
 <script>
@@ -73,13 +63,6 @@ import TextArea from '../Library/FormInput/TextArea.vue'
 import DateTimeInput from '../Library/FormInput/DateTimeInput.vue'
 import postalCodes from '../../../resources/postal-codes.json'
 import Radio from "../Library/FormInput/Radio.vue";
-
-const createGenderChoices = function (translator) {
-  const values =['MALE', 'FEMALE', 'OTHER']
-  return values
-      .map(value => ({label: translator(`patient._gender.${value}`), value}))
-      .concat({label: translator('patient._gender.UNKNOWN'), value: null})
-}
 
 export default {
   emits: ['update'],
@@ -94,23 +77,19 @@ export default {
   data() {
     return {
       fields: {
-        birthDate: createField(requiredRule),
-        ahvNumber: createField(),
-
-        gender: createField(),
-        givenName: createField(),
-        familyName: createField(),
+        title: createField(),
+        givenName: createField(requiredRule),
+        familyName: createField(requiredRule),
 
         addressLines: createField(),
         countryCode: createField(countryCode),
         postalCode: createField(),
         city: createField(),
+
+        contact: createField()
       },
       entity: {
-        birthDate: null,
-        ahvNumber: null,
-
-        gender: null,
+        title: null,
         givenName: null,
         familyName: null,
 
@@ -118,12 +97,9 @@ export default {
         countryCode: null,
         postalCode: null,
         city: null,
+
+        contact: null,
       }
-    }
-  },
-  computed: {
-    genderChoices: function () {
-      return createGenderChoices(this.$t)
     }
   },
   watch: {

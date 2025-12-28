@@ -144,11 +144,11 @@ const api = {
   patch: function (instance, patch) {
     return restClient.patch(instance, patch)
   },
-  getSpecimens: function (query = {}) {
-    return restClient.getCollection('/api/specimens', query)
-  },
   getPaginatedOrganisations: function (query) {
     return restClient.getPaginatedCollection('/api/organizations', query)
+  },
+  getPaginatedPractitioners: function (query) {
+    return restClient.getPaginatedCollection('/api/practitioners', query)
   },
   getPaginatedPatients: function (query) {
     return restClient.getPaginatedCollection('/api/patients', query)
@@ -158,6 +158,9 @@ const api = {
   },
   postOrganization: function (payload) {
     return restClient.post('/api/organizations', payload)
+  },
+  postPractitioner: function (payload) {
+    return restClient.post('/api/practitioners', payload)
   },
   postPatient: function (payload) {
     return restClient.post('/api/patients', payload)

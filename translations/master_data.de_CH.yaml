@@ -3,7 +3,11 @@ index:
 
 organizations:
   title: "Organisationen"
-  description: "Auftraggeber der Proben"
+  description: "Auftraggeber der Proben des Referenzlabors"
+
+practitioners:
+  title: "Mediziner"
+  description: "Auftraggeber der Proben des Primärlabors"
 
 patients:
   title: "Patienten"

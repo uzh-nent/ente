@@ -4,15 +4,18 @@
       <b>{{ formatDate(patient.birthDate) }}</b>
       {{ patient.ahvNumber }}
     </span>
+    <span class="d-block">
+      {{ patient.givenName }} {{ patient.familyName }}
+      <span v-if="patient.gender">{{ $t('patient._gender_short.' + patient.gender)}}</span>
+    </span>
     <span v-if="address" class="whitespace-preserve-newlines">
-      <b v-if="personName">{{ personName }}<br/></b>
       {{ address }}
     </span>
   </div>
 </template>
 
 <script>
-import {formatAddress, formatDate, formatPersonName} from "../../services/domain/formatter";
+import {formatAddress, formatDate} from "../../services/domain/formatter";
 
 export default {
   methods: {formatDate},
@@ -26,9 +29,6 @@ export default {
     address: function () {
       return formatAddress(this.patient)
     },
-    personName: function () {
-      return formatPersonName(this.patient)
-    }
   }
 }
 

@@ -1,0 +1,103 @@
+<template>
+  <div>
+    <div class="table-wrapper">
+      <table class="table table-striped table-hover border">
+        <thead>
+        <tr class="bg-light">
+          <th colspan="100">
+            <div class="d-flex flex-row reset-table-styles gap-2">
+              <input type="text" class="form-control mw-5" autofocus
+                     :placeholder="$t('address.postal_code')"
+                     v-model="searchPostalCode">
+              <input type="text" class="form-control mw-30"
+                     :placeholder="$t('_view.search_by_family_name')"
+                     v-model="searchFamilyName">
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <order-table-head :order="orderOfFamilyName" @ordered="setOrder($event, 'familyName')">
+            {{ $t('practitioner._name') }}
+          </order-table-head>
+          <th>{{ $t('address.address_lines') }}</th>
+          <th>{{ $t('address.city') }}</th>
+          <th>{{ $t('contact.contact') }}</th>
+          <th class="w-minimal"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <practitioner-table-row v-for="practitioner in items" :key="practitioner['@id']"
+                                :practitioner="practitioner"/>
+        <tr v-if="totalItems === 0">
+          <td colspan="200">{{ $t('_view.filter_yields_no_entries') }}</td>
+        </tr>
+        </tbody>
+      </table>
+      <loading-indicator-overlay v-if="isLoading" />
+    </div>
+    <pagination :items-per-page="itemsPerPage" :page="page" :total-items="totalItems"
+                @paginated="page = $event"/>
+  </div>
+</template>
+
+<script>
+import {order, paginatedQuery} from "./utils/table";
+import Pagination from "../Library/Behaviour/Pagination.vue";
+import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
+import PractitionerTableRow from "./PractitionerTableRow.vue";
+import {createQuery} from "../../services/query";
+import {localStoragePersisted} from "./utils/state";
+import {api} from "../../services/api";
+import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
+
+export default {
+  components: {
+    LoadingIndicatorOverlay,
+    PractitionerTableRow,
+    OrderTableHead,
+    Pagination,
+  },
+  mixins: [
+    order,
+    paginatedQuery(50, api.getPaginatedPractitioners),
+    localStoragePersisted('practitioner-table', ['filter', 'orders', 'searchFamilyName', 'searchPostalCode'])
+  ],
+  data() {
+    return {
+      filter: {},
+      orders: [{property: 'familyName', order: 'asc'}],
+
+      searchFamilyName: "",
+      searchPostalCode: "",
+    }
+  },
+  computed: {
+    query: function () {
+      const filter = {...this.filter, familyName: this.searchFamilyName, postalCode: this.searchPostalCode}
+      return createQuery(
+          {},
+          [],
+          ['familyName', 'postalCode'],
+          [],
+          filter,
+          this.orders
+      )
+    },
+    orderOfFamilyName: function () {
+      return this.getOrder('familyName')
+    },
+  }
+}
+
+</script>
+
+<style scoped>
+.table-wrapper {
+  position: relative;
+}
+
+.reset-table-styles {
+  text-align: left;
+  font-weight: normal;
+}
+</style>

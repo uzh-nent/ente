@@ -1,0 +1,12 @@
+{% extends '_layout.html.twig' %}
+
+{% block title %}{{ 'practitioners.title'|trans }}{% endblock %}
+{% block description %}{{ 'practitioners.description'|trans }}{% endblock %}
+
+{% trans_default_domain "master_data" %}
+{% import "macros/components.html.twig" as components %}
+
+{% block content %}
+    <h1>{{ "practitioners.title"|trans({}, "master_data") }}</h1>
+    {{ components.vue_entry_point('vue-practitioners') }}
+{% endblock %}

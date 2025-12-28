@@ -36,6 +36,14 @@
       "edited": "Organisation gespeichert.",
       "title": "Organisation bearbeiten"
     },
+    "add_practitioner": {
+      "added": "Mediziner:in hinzugefügt.",
+      "title": "Mediziner:in hinzufügen"
+    },
+    "edit_practitioner": {
+      "edited": "Mediziner:in gespeichert.",
+      "title": "Mediziner:in bearbeiten"
+    },
     "add_patient": {
       "added": "Patient hinzugefügt.",
       "title": "Patient hinzufügen"
@@ -96,12 +104,19 @@
   "_view": {
     "filter_yields_no_entries": "Keine Einträge, die dem Filter entsprechen.",
     "search_by_name": "Suche nach Name",
+    "search_by_family_name": "Suche nach Nachname",
     "search_by_ahv_numer": "Suche nach AHV-Nummer",
     "filter_by_birth_date": "Geburtsdatum"
   },
   "organization": {
-    "_name": "Auftraggeber",
-    "_plural": "Auftraggeber",
+    "_name": "Organisation",
+    "_plural": "Organisationen",
+    "name": "Name"
+  },
+  "practitioner": {
+    "_name": "Mediziner:in",
+    "_plural": "Mediziner",
+    "title": "Titel",
     "name": "Name"
   },
   "patient": {

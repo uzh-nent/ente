@@ -4,7 +4,10 @@
       {{ birthDate }}<br/>
       {{ patient.ahvNumber }}
     </td>
-    <td>{{ name }}</td>
+    <td>
+      {{ patient.givenName }} {{ patient.familyName }}
+      <span v-if="patient.gender">{{ $t('patient._gender_short.' + patient.gender)}}</span>
+    </td>
     <td class="whitespace-preserve-newlines">
       {{ patient.addressLines }}
       {{ city }}
@@ -34,9 +37,6 @@ export default {
     birthDate: function () {
       return formatDate(this.patient.birthDate)
     },
-    name: function () {
-      return formatPatientName(this.patient, this.$t)
-    }
   }
 }
 

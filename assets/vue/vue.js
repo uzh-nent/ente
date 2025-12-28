@@ -14,11 +14,12 @@ import $ from "jquery";
 import {clickOutside, focus} from './services/directives'
 
 // components
+import NewProbe from "./NewProbe.vue";
+import ViewProbe from "./ViewProbe.vue";
 import Organizations from "./Organizations.vue";
+import Practitioners from "./Practitioners.vue";
 import Patients from "./Patients.vue";
 import AnimalKeepers from "./AnimalKeepers.vue";
-import ViewProbe from "./ViewProbe.vue";
-import NewProbe from "./NewProbe.vue";
 
 
 // configure locales
@@ -48,6 +49,10 @@ function createVue(app) {
 $(document).ready(function () {
   if (document.getElementById('vue-organizations') != null) {
     createVue(Organizations).mount('#vue-organizations')
+  }
+
+  if (document.getElementById('vue-practitioners') != null) {
+    createVue(Practitioners).mount('#vue-practitioners')
   }
 
   if (document.getElementById('vue-patients') != null) {

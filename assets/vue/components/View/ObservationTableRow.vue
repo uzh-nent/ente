@@ -44,14 +44,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-.table-wrapper {
-  position: relative;
-}
-
-.reset-table-styles {
-  text-align: left;
-  font-weight: normal;
-}
-</style>
