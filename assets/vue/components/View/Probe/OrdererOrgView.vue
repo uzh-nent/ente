@@ -1,7 +1,7 @@
 <template>
   <div>
     <labeled-value class="mb-3" :label="$t('probe.requisition_identifier')">{{ probe.requisitionIdentifier }}</labeled-value>
-    <organization-view :organization="orderer"/>
+    <organization-view :organization="organization"/>
   </div>
 </template>
 
@@ -19,8 +19,8 @@ export default {
     },
   },
   computed: {
-    orderer: function () {
-      return probeConverter.reconstructOrdererOrganization(this.probe)
+    organization: function () {
+      return probeConverter.reconstructOrdererOrgOrganization(this.probe)
     },
   },
 }

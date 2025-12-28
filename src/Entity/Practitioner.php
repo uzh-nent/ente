@@ -61,7 +61,7 @@ class Practitioner
     /**
      * @var Collection<int, Probe>
      */
-    #[ORM\OneToMany(targetEntity: Probe::class, mappedBy: 'orderer')]
+    #[ORM\OneToMany(targetEntity: Probe::class, mappedBy: 'ordererPrac')]
     private Collection $probes;
 
     public function __construct()

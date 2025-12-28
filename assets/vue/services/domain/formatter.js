@@ -81,6 +81,15 @@ export const formatOrganizationShort = function (value) {
 }
 
 
+export const formatPractitionerShort = function (value) {
+  if (!value) {
+    return '-'
+  }
+
+  return [value.postalCode, value.title, value.givenName, value.familyName].filter(e => e).join(" ")
+}
+
+
 export const formatOrganism = function (organism) {
   if (!organism) {
     return '-'

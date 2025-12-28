@@ -1,10 +1,10 @@
 <template>
   <button-confirm-modal
-      :title="$t('_action.edit_probe_orderer.title')" icon="fas fa-edit"
+      :title="$t('_action.edit_probe_orderer_prac.title')" icon="fas fa-edit"
       button-size="sm" color="secondary"
       :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
-      @showing="focusOrderer">
-    <orderer-form :template="template" @update="patch = $event"/>
+      @showing="focusOrdererPrac">
+    <orderer-prac-form :template="template" @update="patch = $event"/>
   </button-confirm-modal>
 </template>
 
@@ -14,13 +14,13 @@ import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import ServiceRequestForm from "../Form/Probe/ServiceRequestForm.vue";
-import OrdererForm from "../Form/Probe/OrdererForm.vue";
 import {probeConverter} from "../../services/domain/converters";
+import OrdererPracForm from "../Form/Probe/OrdererPracForm.vue";
 
 export default {
   emits: ['edited'],
   components: {
-    OrdererForm,
+    OrdererPracForm,
     ServiceRequestForm,
     ButtonConfirmModal,
   },
@@ -42,7 +42,7 @@ export default {
     template: function () {
       return {
         ...this.probe,
-        orderer: probeConverter.reconstructOrdererOrganization(this.probe)
+        ordererPrac: probeConverter.reconstructOrdererPracPractitioner(this.probe)
       }
     },
     payload: function () {
@@ -51,10 +51,10 @@ export default {
       }
 
       let payload = {...this.patch}
-      if (this.patch.orderer && this.patch.orderer['@id']) {
-        payload = {...payload, ...probeConverter.writeOrderer(this.patch.orderer)}
+      if (this.patch.ordererPrac && this.patch.ordererPrac['@id']) {
+        payload = {...payload, ...probeConverter.writeOrdererPrac(this.patch.ordererPrac)}
       } else{
-        delete payload.orderer
+        delete payload.ordererPrac
       }
 
       if (Object.keys(payload).length === 0) {
@@ -68,12 +68,12 @@ export default {
     confirm: async function () {
       await api.patch(this.probe, this.payload)
 
-      const successMessage = this.$t('_action.edit_probe_orderer.edited')
+      const successMessage = this.$t('_action.edit_probe_orderer_prac.edited')
       displaySuccess(successMessage)
 
       this.$emit('edited')
     },
-    focusOrderer: function () {
+    focusOrdererPrac: function () {
       document.getElementById('requisitionIdentifier')?.focus()
     }
   }

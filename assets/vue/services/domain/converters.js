@@ -1,13 +1,25 @@
 export const probeConverter = {
-  writeOrderer: function (organization) {
+  writeOrdererOrg: function (organization) {
     return {
-      orderer: organization['@id'],
-      ordererName: organization.name,
-      ordererAddressLines: organization.addressLines,
-      ordererCity: organization.city,
-      ordererPostalCode: organization.postalCode,
-      ordererCountryCode: organization.countryCode,
-      ordererContact: organization.contact,
+      ordererOrg: organization['@id'],
+      ordererOrgName: organization.name,
+      ordererOrgAddressLines: organization.addressLines,
+      ordererOrgCity: organization.city,
+      ordererOrgPostalCode: organization.postalCode,
+      ordererOrgCountryCode: organization.countryCode,
+      ordererOrgContact: organization.contact,
+    }
+  },
+  writeOrdererPrac: function (pracitioner) {
+    return {
+      ordererPrac: pracitioner['@id'],
+      ordererPracGivenName: pracitioner.givenName,
+      ordererPracFamilyName: pracitioner.familyName,
+      ordererPracAddressLines: pracitioner.addressLines,
+      ordererPracCity: pracitioner.city,
+      ordererPracPostalCode: pracitioner.postalCode,
+      ordererPracCountryCode: pracitioner.countryCode,
+      ordererPracContact: pracitioner.contact,
     }
   },
   writeAnimalKeeper: function (animalKeeper) {
@@ -34,14 +46,25 @@ export const probeConverter = {
       patientCountryCode: patient.countryCode,
     }
   },
-  reconstructOrdererOrganization: function (probe) {
+  reconstructOrdererOrgOrganization: function (probe) {
     return {
-      name: probe.ordererName,
-      addressLines: probe.ordererAddressLines,
-      city: probe.ordererCity,
-      postalCode: probe.ordererPostalCode,
-      countryCode: probe.ordererCountryCode,
-      contact: probe.ordererContact,
+      name: probe.ordererOrgName,
+      addressLines: probe.ordererOrgAddressLines,
+      city: probe.ordererOrgCity,
+      postalCode: probe.ordererOrgPostalCode,
+      countryCode: probe.ordererOrgCountryCode,
+      contact: probe.ordererOrgContact,
+    }
+  },
+  reconstructOrdererPracPractitioner: function (probe) {
+    return {
+      givenName: probe.ordererPracGivenName,
+      familyName: probe.ordererPracFamilyName,
+      addressLines: probe.ordererPracAddressLines,
+      city: probe.ordererPracCity,
+      postalCode: probe.ordererPracPostalCode,
+      countryCode: probe.ordererPracCountryCode,
+      contact: probe.ordererPracContact,
     }
   },
   reconstructAnimalKeeper: function (probe) {

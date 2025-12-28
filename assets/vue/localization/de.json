@@ -68,9 +68,13 @@
       "added": "Resultat gespeichert.",
       "title": "Resultat bearbeiten"
     },
-    "edit_probe_orderer": {
-      "edited": "Auftraggeber gespeichert.",
-      "title": "Auftraggeber bearbeiten"
+    "edit_probe_orderer_org": {
+      "edited": "Organisation gespeichert.",
+      "title": "Organisation bearbeiten"
+    },
+    "edit_probe_orderer_prac": {
+      "edited": "Mediziner:in gespeichert.",
+      "title": "Mediziner:in bearbeiten"
     },
     "edit_probe_service_request": {
       "edited": "Auftrag gespeichert.",
@@ -184,6 +188,14 @@
       "EC_ETEC": "Enterotoxin bildend (ETEC)",
       "EC_EIEC": "Enteroinvasive (EIEC) / Shigella",
       "EC_EAEC": "Enteroaggregative (EAEC)"
+    },
+    "_analysis_type_short": {
+      "IDENTIFICATION": "Ident.",
+      "EC_STEC": "STEC",
+      "EC_EPEC": "EPEC",
+      "EC_ETEC": "ETEC",
+      "EC_EIEC": "EIEC/Shig.",
+      "EC_EAEC": "EAEC"
     },
     "_specimen_source": {
       "HUMAN": "Mensch",

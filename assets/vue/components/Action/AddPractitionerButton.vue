@@ -54,7 +54,7 @@ export default {
       displaySuccess(successMessage)
     },
     focusPractitioner: function () {
-      document.getElementById('name')?.focus()
+      document.getElementById('title')?.focus()
     }
   },
 }

@@ -10,12 +10,22 @@
       </actionable-view>
 
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
-      <actionable-view>
-        <orderer-view :probe="probe"/>
-        <template v-slot:actions v-if="!probe.finishedAt">
-          <edit-probe-orderer-button :probe="probe"/>
-        </template>
-      </actionable-view>
+      <template v-if="probe.laboratoryFunction === 'REFERENCE'">
+        <actionable-view>
+          <orderer-org-view :probe="probe"/>
+          <template v-slot:actions v-if="!probe.finishedAt">
+            <edit-probe-orderer-org-button :probe="probe"/>
+          </template>
+        </actionable-view>
+      </template>
+      <template v-else-if="probe.laboratoryFunction === 'PRIMARY'">
+        <actionable-view>
+          <orderer-prac-view :probe="probe"/>
+          <template v-slot:actions v-if="!probe.finishedAt">
+            <edit-probe-orderer-prac-button :probe="probe"/>
+          </template>
+        </actionable-view>
+      </template>
 
       <h3 class="mt-5">{{ $t('probe._name') }}</h3>
       <actionable-view>
@@ -76,11 +86,9 @@
 import {preloadApi} from './services/api'
 import ServiceRequestView from "./components/View/Probe/ServiceRequestView.vue";
 import PatientView from "./components/View/Probe/PatientView.vue";
-import OrdererView from "./components/View/Probe/OrdererView.vue";
 import OwnerView from "./components/View/Probe/OwnerView.vue";
 import ActionableView from "./components/Library/View/ActionableView.vue";
 import EditProbeServiceRequestButton from "./components/Action/EditProbeServiceRequestButton.vue";
-import EditProbeOrdererButton from "./components/Action/EditProbeOrdererButton.vue";
 import EditProbePatientButton from "./components/Action/EditProbePatientButton.vue";
 import EditProbeOwnerButton from "./components/Action/EditProbeOwnerButton.vue";
 import SpecimenMetaView from "./components/View/Probe/SpecimenMetaView.vue";
@@ -91,10 +99,18 @@ import EditProbeServiceTimeButton from "./components/Action/EditProbeServiceTime
 import AddIdentificationObservationButton from "./components/Action/AddIdentificationObservationButton.vue";
 import IdentificationView from "./components/View/Observation/IdentificationView.vue";
 import EditIdentificationObservationButton from "./components/Action/EditIdentificationObservationButton.vue";
+import OrdererOrgView from "./components/View/Probe/OrdererOrgView.vue";
+import EditProbeOrdererOrgButton from "./components/Action/EditProbeOrdererOrgButton.vue";
+import OrdererPracView from "./components/View/Probe/OrdererPracView.vue";
+import EditProbeOrdererPracButton from "./components/Action/EditProbeOrdererPracButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    EditProbeOrdererPracButton,
+    OrdererPracView,
+    EditProbeOrdererOrgButton,
+    OrdererOrgView,
     EditIdentificationObservationButton,
     IdentificationView,
     AddIdentificationObservationButton,
@@ -105,11 +121,9 @@ export default {
     SpecimenMetaView,
     EditProbeOwnerButton,
     EditProbePatientButton,
-    EditProbeOrdererButton,
     EditProbeServiceRequestButton,
     ActionableView,
     OwnerView,
-    OrdererView,
     PatientView,
     ServiceRequestView,
   },

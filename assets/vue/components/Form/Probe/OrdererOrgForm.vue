@@ -10,11 +10,11 @@
         </form-field>
       </div>
     </div>
-    <form-field for-id="orderer" :label="$t('probe.orderer')" :field="fields.orderer">
-      <actionable-preview class="mb-2" v-if="entity.orderer && entity.orderer['@id']">
-        <organization-view :organization="entity.orderer"/>
+    <form-field for-id="ordererOrg" :label="$t('organization._name')" :field="fields.ordererOrg">
+      <actionable-preview class="mb-2" v-if="entity.ordererOrg && entity.ordererOrg['@id']">
+        <organization-view :organization="entity.ordererOrg"/>
         <template #actions>
-          <edit-organization-button :organization="entity.orderer"/>
+          <edit-organization-button :organization="entity.ordererOrg"/>
         </template>
       </actionable-preview>
 
@@ -31,8 +31,8 @@
       </div>
 
       <div class="mb-2">
-        <radio id="orderer" :choices="orderers" :field="fields.orderer" :value-string="value => value['@id']"
-               v-model="entity.orderer" @update:model-value="validateField('orderer')"/>
+        <radio id="ordererOrg" :choices="ordererOrgs" :field="fields.ordererOrg" :value-string="value => value['@id']"
+               v-model="entity.ordererOrg" @update:model-value="validateField('ordererOrg')"/>
         <span class="form-text">{{ itemHits }}</span>
       </div>
 
@@ -75,11 +75,11 @@ export default {
     return {
       fields: {
         requisitionIdentifier: createField(requiredRule),
-        orderer: createField(requiredRule),
+        ordererOrg: createField(requiredRule),
       },
       entity: {
         requisitionIdentifier: null,
-        orderer: null,
+        ordererOrg: null,
       },
 
       searchName: "",
@@ -96,7 +96,7 @@ export default {
       const order = [{property: 'postalCode', order: 'asc'}, {property: 'name', order: 'asc'}]
       return createQuery({}, [], ['name', 'postalCode'], [], filter, order)
     },
-    orderers: function () {
+    ordererOrgs: function () {
       return this.items.map(item => ({label: formatOrganizationShort(item), value: item}))
     },
     itemHits: function () {
@@ -112,7 +112,7 @@ export default {
     items: {
       handler: function (items) {
         if (items.length === 1) {
-          this.entity.orderer = items[0]
+          this.entity.ordererOrg = items[0]
         }
       }
     }

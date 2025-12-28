@@ -5,7 +5,12 @@
       <service-request-form :template="serviceRequestTemplate" @update="serviceRequest = $event"/>
 
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
-      <orderer-form @update="orderer = $event"/>
+      <template v-if="payload?.laboratoryFunction === 'REFERENCE'">
+        <orderer-org-form @update="ordererOrg = $event"/>
+      </template>
+      <template v-else>
+        <orderer-prac-form @update="ordererPrac = $event"/>
+      </template>
     </div>
     <template v-if="specimens">
       <div class="col-lg-4 col-md-6">
@@ -42,21 +47,23 @@ import LoopingRhombusSpinner from './components/Library/View/Base/LoopingRhombus
 import ButtonConfirmModal from './components/Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import ServiceRequestForm from "./components/Form/Probe/ServiceRequestForm.vue";
 import moment from "moment";
-import OrdererForm from "./components/Form/Probe/OrdererForm.vue";
 import SpecimenMetaForm from "./components/Form/Probe/SpecimenMetaForm.vue";
 import OwnerForm from "./components/Form/Probe/OwnerForm.vue";
 import FindPatientForm from "./components/Form/Probe/FindPatientForm.vue";
 import ServiceTimeForm from "./components/Form/Probe/ServiceTimeForm.vue";
 import {probeConverter} from "./services/domain/converters";
+import OrdererOrgForm from "./components/Form/Probe/OrdererOrgForm.vue";
+import OrdererPracForm from "./components/Form/Probe/OrdererPracForm.vue";
 
 export default {
   emits: ['added'],
   components: {
+    OrdererPracForm,
+    OrdererOrgForm,
     ServiceTimeForm,
     OwnerForm,
     FindPatientForm,
     SpecimenMetaForm,
-    OrdererForm,
     ServiceRequestForm,
     ButtonConfirmModal,
     LoopingRhombusSpinner,
@@ -66,7 +73,8 @@ export default {
       specimens: undefined,
 
       serviceRequest: null,
-      orderer: null,
+      ordererOrg: null,
+      ordererPrac: null,
 
       specimenMeta: null,
       patient: null,
@@ -79,7 +87,9 @@ export default {
   },
   computed: {
     canConfirm: function () {
-      return this.serviceRequest && this.orderer && this.specimenMeta && this.serviceTime &&
+      return this.serviceRequest && this.specimenMeta && this.serviceTime &&
+          (this.payload.laboratoryFunction !== 'REFERENCE' || this.ordererOrg) &&
+          (this.payload.laboratoryFunction !== 'PRIMARY' || this.ordererPrac) &&
           (this.payload.specimenSource !== 'HUMAN' || this.patient) &&
           (this.payload.specimenSource !== 'ANIMAL' || this.owner)
     },
@@ -121,17 +131,22 @@ export default {
         base = {...base, ...this.serviceTimeTemplate, ...this.serviceTime}
       }
 
-      if (this.orderer) {
-        base.requisitionIdentifier = this.orderer.requisitionIdentifier
-        base = {...base, ...probeConverter.writeOrderer(this.orderer.orderer)}
+      if (base.laboratoryFunction === 'REFERENCE' && this.ordererOrg) {
+        base.requisitionIdentifier = this.ordererOrg.requisitionIdentifier
+        base = {...base, ...probeConverter.writeOrdererOrg(this.ordererOrg.ordererOrg)}
       }
 
-      if (this.owner) {
+      if (base.laboratoryFunction === 'PRIMARY' && this.ordererPrac) {
+        base.requisitionIdentifier = this.ordererPrac.requisitionIdentifier
+        base = {...base, ...probeConverter.writeOrdererPrac(this.ordererPrac.ordererPrac)}
+      }
+
+      if (base.specimenSource === 'ANIMAL' && this.owner) {
         base.animalName = this.owner.animalName
         base = {...base, ...probeConverter.writeAnimalKeeper(this.owner.animalKeeper)}
       }
 
-      if (this.patient) {
+      if (base.specimenSource === 'HUMAN' && this.patient) {
         base = {...base, ...probeConverter.writePatient(this.patient.patient)}
       }
 

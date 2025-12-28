@@ -56,7 +56,7 @@ class Organization
     /**
      * @var Collection<int, Probe>
      */
-    #[ORM\OneToMany(targetEntity: Probe::class, mappedBy: 'orderer')]
+    #[ORM\OneToMany(targetEntity: Probe::class, mappedBy: 'ordererOrg')]
     private Collection $probes;
 
     public function __construct()
