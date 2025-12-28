@@ -16,26 +16,28 @@ export const formatDateTime = function (value) {
   return moment(value).format('DD.MM.YYYY HH:mm')
 }
 
-export const formatObservation = function (observation, specimens, translator) {
+export const formatObservation = function (observation, organisms, translator) {
   if (!observation) {
     return '-'
   }
 
-  const prefix = formatDateTime(observation.effectiveAt) + " " +
-    translator('probe._analysis_type_short.'+observation.analysisType) + " ";
+  const observationLabel = formatDateTime(observation.effectiveAt) + " "
+  const analysisLabel = translator('probe._analysis_type_short.' + observation.analysisType) + " ";
+
   if (observation.analysisType === 'IDENTIFICATION') {
     if (observation.interpretation !== 'POS') {
-      return prefix + translator('messages.failed');
+      return observationLabel + analysisLabel + translator('messages.failed');
     } else {
-      const specimen = specimens.find(s => s['@id'] === observation.specimen)
-      return prefix + specimen?.displayName
+      const organism = organisms.find(s => s['@id'] === observation.organism)
+      return observationLabel + organism?.displayName
     }
   } else {
     if (observation.interpretation) {
-      return prefix + translator('observation._interpretation.' + observation.interpretation)
+      const interpretationLabel = translator('observation._interpretation.' + observation.interpretation);
+      return observationLabel + analysisLabel + interpretationLabel
     }
 
-    return prefix + translator('messages.failed');
+    return observationLabel + translator('messages.failed');
   }
 }
 

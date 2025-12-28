@@ -1,35 +1,35 @@
 <template>
 
-  <form-field for-id="observation" :label="$t('elm_report.observation')" :field="fields.observation">
+  <form-field for-id="observation" :label="$t('observation._name')" :field="fields.observation">
     <custom-select id="observation" :choices="observationChoices" :field="fields.observation"
                    v-model="entity.observation" @update:model-value="validateField('observation')"/>
   </form-field>
 
-  <actionable-preview>
-    <identification-view v-if="entity.observation?.analysisType === 'IDENTIFICATION'"
+  <actionable-preview v-if="entity.observation">
+    <identification-view v-if="entity.observation.analysisType === 'IDENTIFICATION'"
                          :organisms="organisms" :observation="entity.observation"/>
   </actionable-preview>
 
   <hr/>
 
-  <form-field for-id="leadingCode" :label="$t('elm_report.leading_code')" :field="fields.leadingCode">
+  <form-field for-id="leadingCode" :label="$t('leading_code._name')" :field="fields.leadingCode">
     <custom-select id="leadingCode" :choices="leadingCodeChoices" :field="fields.leadingCode"
                    v-model="entity.leadingCode" @update:model-value="validateField('leadingCode')"/>
   </form-field>
 
-  <form-field for-id="organism" :label="$t('elm_report.organism')" :field="fields.organism">
-    <custom-select id="organism" :choices="organismChoices" :field="fields.organism"
-                   v-model="entity.organism" @update:model-value="validateField('organism')"/>
+  <form-field for-id="organism" :label="$t('organism._name')" :field="fields.organism">
+    <searchable-select id="organism" :choices="organismChoices" :field="fields.organism"
+                       v-model="entity.organism" @update:model-value="validateField('organism')"/>
     <text-area id="organismText" :field="fields.organismText" v-model="entity.organismText"
                @blur="blurField('organismText')" @update:modelValue="validateField('organismText')"/>
   </form-field>
 
-  <form-field for-id="specimen" :label="$t('elm_report.specimen')" :field="fields.specimen">
+  <form-field for-id="specimen" :label="$t('specimen._name')" :field="fields.specimen">
     <custom-select id="specimen" :choices="specimenChoices" :field="fields.specimen"
                    v-model="entity.specimen" @update:model-value="validateField('specimen')"/>
   </form-field>
 
-  <form-field for-id="interpretation" :label="$t('elm_report.interpretation')" :field="fields.interpretation">
+  <form-field for-id="interpretation" :label="$t('observation.interpretation')" :field="fields.interpretation">
     <custom-select id="interpretation" :choices="interpretationChoices" :field="fields.interpretation"
                    v-model="entity.interpretation" @update:model-value="validateField('interpretation')"/>
   </form-field>
@@ -47,12 +47,12 @@ import Checkbox from "../Library/FormInput/Checkbox.vue";
 import IdentificationView from "../View/Observation/IdentificationView.vue";
 import ActionablePreview from "../Library/View/ActionablePreview.vue";
 import {formatObservation} from "../../services/domain/formatter";
-
-const SEARCH_CUTOFF = 10
+import SearchableSelect from "../Library/FormInput/SearchableSelect.vue";
 
 export default {
   emits: ['update'],
   components: {
+    SearchableSelect,
     ActionablePreview,
     IdentificationView,
     Checkbox,
@@ -87,8 +87,8 @@ export default {
     }
   },
   props: {
-    pathogen: {
-      type: String,
+    probe: {
+      type: Object,
       required: false
     },
     observations: {
@@ -110,10 +110,10 @@ export default {
   },
   computed: {
     observationChoices: function () {
-      return this.observations.map(o => ({label: formatObservation(o), value: o}))
+      return this.observations.map(o => ({label: formatObservation(o, this.organisms, this.$t), value: o}))
     },
     leadingCodeChoices: function () {
-      const filtered = this.leadingCodes.filter(lc => lc.pathogen === this.pathogen)
+      const filtered = this.leadingCodes.filter(lc => lc.pathogen === this.probe.pathogen)
       return filtered.map(organism => ({label: organism.displayName, value: organism}))
     },
     organismChoices: function () {
@@ -156,7 +156,8 @@ export default {
           return;
         }
 
-        this.entity.leadingCode = this.leadingCodeChoices[0].value
+        // TODO select only if necessary (i.e. undefined or not within new collection)
+        this.entity.leadingCode = (this.leadingCodeChoices[0] ?? null)?.value
       }
     },
     'entity.leadingCode': {
@@ -178,5 +179,8 @@ export default {
       }
     }
   },
+  mounted() {
+    this.entity.observation = this.observations[0] ?? null
+  }
 }
 </script>

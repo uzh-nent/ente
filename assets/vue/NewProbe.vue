@@ -12,30 +12,28 @@
         <orderer-prac-form @update="ordererPrac = $event"/>
       </template>
     </div>
-    <template v-if="specimens">
-      <div class="col-lg-4 col-md-6">
-        <h3>{{ $t('probe._name') }}</h3>
-        <specimen-meta-form :specimens="specimens" :template="specimenMetaTemplate" @update="specimenMeta = $event"/>
+    <div class="col-lg-4 col-md-6">
+      <h3>{{ $t('probe._name') }}</h3>
+      <specimen-meta-form :specimens="specimens" :template="specimenMetaTemplate" @update="specimenMeta = $event"/>
 
-        <template v-if="payload?.specimenSource === 'HUMAN'">
-          <h3 class="mt-5">{{ $t('patient._name') }}</h3>
-          <find-patient-form @update="patient = $event"/>
-        </template>
+      <template v-if="payload?.specimenSource === 'HUMAN'">
+        <h3 class="mt-5">{{ $t('patient._name') }}</h3>
+        <find-patient-form @update="patient = $event"/>
+      </template>
 
-        <template v-if="payload?.specimenSource === 'ANIMAL'">
-          <h3 class="mt-5">{{ $t('animal_keeper._name') }}</h3>
-          <owner-form @update="owner = $event"/>
-        </template>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <h3>{{ $t('probe.progress') }}</h3>
-        <service-time-form :template="serviceTimeTemplate" @update="serviceTime = $event"/>
+      <template v-if="payload?.specimenSource === 'ANIMAL'">
+        <h3 class="mt-5">{{ $t('animal_keeper._name') }}</h3>
+        <owner-form @update="owner = $event"/>
+      </template>
+    </div>
+    <div class="col-lg-4 col-md-6">
+      <h3>{{ $t('probe.progress') }}</h3>
+      <service-time-form :template="serviceTimeTemplate" @update="serviceTime = $event"/>
 
-        <button class="btn btn-primary mt-5" :disabled="!canConfirm || isConfirming" @click="confirm">
-          {{ $t('_action.add_probe.title') }}
-        </button>
-      </div>
-    </template>
+      <button class="btn btn-primary mt-5" :disabled="!canConfirm || isConfirming" @click="confirm">
+        {{ $t('_action.add_probe.title') }}
+      </button>
+    </div>
   </div>
 </template>
 

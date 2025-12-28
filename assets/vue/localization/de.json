@@ -69,6 +69,10 @@
       "added": "Resultat gespeichert.",
       "title": "Resultat bearbeiten"
     },
+    "add_elm_report": {
+      "added": "ELM Bericht versandt.",
+      "title": "ELM Bericht erfassen"
+    },
     "edit_probe_orderer_org": {
       "edited": "Organisation gespeichert.",
       "title": "Organisation bearbeiten"
@@ -249,6 +253,9 @@
       "POS": "Positiv",
       "NEG": "Negativ"
     }
+  },
+  "elm_report": {
+    "_name": "BAG ELM Bericht"
   },
   "organism": {
     "_name": "Organismus"

@@ -133,6 +133,7 @@ const preloadApi = {
       organisms: window.organisms.member,
 
       observations: window.observations.member,
+      elmReports: window.elmReports.member,
     }
   },
 }
@@ -173,6 +174,9 @@ const api = {
   },
   postObservation: function (payload) {
     return restClient.post('/api/observations', payload)
+  },
+  postElmReport: function (payload) {
+    return restClient.post('/api/elm_reports', payload)
   }
 }
 

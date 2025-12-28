@@ -67,16 +67,25 @@
       <h3 class="mt-5">{{ $t('observation._name') }}</h3>
       <add-identification-observation-button
           v-if="missingIdentificationObservation" @added="observations.push($event)"
-          :probe="probe" :organisms="organisms" />
+          :probe="probe" :organisms="organisms"/>
       <div class="d-flex flex-column gap-2">
         <actionable-view v-for="observation in identificationObservations" :key="observation['@id']">
           <identification-view
-              :organisms="organisms" :observation="observation" />
+              :organisms="organisms" :observation="observation"/>
           <template v-slot:actions v-if="!probe.finishedAt">
-            <edit-identification-observation-button :probe="probe" :organisms="organisms" :observation="observation" />
+            <edit-identification-observation-button :probe="probe" :organisms="organisms" :observation="observation"/>
           </template>
         </actionable-view>
       </div>
+
+      <template v-if="observations.length > 0">
+        <h3 class="mt-5">{{ $t('elm_report._name') }}</h3>
+        <add-elm-report-button
+            :probe="probe" :observations="observations"
+            :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
+            @added="elmReports.push($event)"
+        />
+      </template>
     </div>
   </div>
 </template>
@@ -103,10 +112,12 @@ import OrdererOrgView from "./components/View/Probe/OrdererOrgView.vue";
 import EditProbeOrdererOrgButton from "./components/Action/EditProbeOrdererOrgButton.vue";
 import OrdererPracView from "./components/View/Probe/OrdererPracView.vue";
 import EditProbeOrdererPracButton from "./components/Action/EditProbeOrdererPracButton.vue";
+import AddElmReportButton from "./components/Action/AddElmReportButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    AddElmReportButton,
     EditProbeOrdererPracButton,
     OrdererPracView,
     EditProbeOrdererOrgButton,
@@ -136,6 +147,7 @@ export default {
       organisms: undefined,
 
       observations: undefined,
+      elmReports: undefined,
     }
   },
   computed: {
@@ -152,12 +164,15 @@ export default {
     }
   },
   mounted() {
-    const {probe, specimens, leadingCodes, organisms, observations} = preloadApi.getViewActiveProbe()
+    const {probe, specimens, leadingCodes, organisms, observations, elmReports} = preloadApi.getViewActiveProbe()
+    this.probe = probe
+
     this.specimens = specimens
     this.leadingCodes = leadingCodes
     this.organisms = organisms
+
     this.observations = observations
-    this.probe = probe
+    this.elmReports = elmReports
   }
 }
 </script>
