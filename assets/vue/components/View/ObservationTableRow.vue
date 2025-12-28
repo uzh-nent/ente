@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td>{{ $t(`probe._analysis_type.${observation.analysisType}`) }}</td>
-    <td>{{ formatDate(observation.effectiveDate) }}</td>
+    <td>{{ formatDateTime(observation.effectiveAt) }}</td>
     <td>
         <span class="badge bg-success" v-if="observation.interpretation ==='POS'">
           {{ $t(`message.successful`) }}
@@ -18,10 +18,10 @@
 
 <script>
 
-import {formatDate, formatOrganism} from "../../services/domain/formatter";
+import {formatDateTime, formatOrganism} from "../../services/domain/formatter";
 
 export default {
-  methods: {formatDate},
+  methods: {formatDateTime},
   props: {
     observation: {
       type: Object,

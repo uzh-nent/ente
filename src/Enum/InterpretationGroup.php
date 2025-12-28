@@ -9,7 +9,7 @@ enum InterpretationGroup : string implements TranslatableInterface
 {
     case POS = 'POS';
     case POS_NEG = 'POS-NEG';
-    case TEXT = 'TEXT';
+    case TEXT = 'TEXT'; // POS + TEXT
 
     public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {

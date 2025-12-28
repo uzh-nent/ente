@@ -74,7 +74,7 @@ export default {
       this.$emit('edited')
     },
     focusOrderer: function () {
-      document.getElementById('ordererIdentifier')?.focus()
+      document.getElementById('requisitionIdentifier')?.focus()
     }
   }
 }

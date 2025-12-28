@@ -23,7 +23,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Api\Processor\ProbeProcessor;
 use App\Entity\Probe\AnimalKeeperCopy;
-use App\Entity\Probe\OrdererCopy;
+use App\Entity\Probe\OrdererOrgCopy;
 use App\Entity\Probe\PatientCopy;
 use App\Entity\Probe\ServiceRequest;
 use App\Entity\Probe\ServiceTime;

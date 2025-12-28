@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form-field for-id="laboratoryFunction" :label="$t('probe.laboratory_function')" :field="fields.ordererIdentifier">
+    <form-field for-id="laboratoryFunction" :label="$t('probe.laboratory_function')" :field="fields.requisitionIdentifier">
       <radio id="laboratoryFunction" :choices="laboratoryFunctions" :field="fields.laboratoryFunction" :disabled="editMode"
              v-model="entity.laboratoryFunction" @update:model-value="validateField('laboratoryFunction')"/>
     </form-field>

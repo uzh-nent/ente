@@ -57,9 +57,9 @@ class Observation
     #[Groups(['observation:read', 'observation:write'])]
     private AnalysisType $analysisType = AnalysisType::IDENTIFICATION;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Groups(['observation:read', 'observation:write'])]
-    private ?\DateTimeImmutable $effectiveDate = null;
+    private ?\DateTimeImmutable $effectiveAt = null;
 
     #[ORM\Column(type: Types::STRING, enumType: Interpretation::class, nullable: true)]
     #[Groups(['observation:read', 'observation:write'])]
@@ -93,14 +93,14 @@ class Observation
         $this->analysisType = $analysisType;
     }
 
-    public function getEffectiveDate(): ?\DateTimeImmutable
+    public function getEffectiveAt(): ?\DateTimeImmutable
     {
-        return $this->effectiveDate;
+        return $this->effectiveAt;
     }
 
-    public function setEffectiveDate(?\DateTimeImmutable $effectiveDate): void
+    public function setEffectiveAt(?\DateTimeImmutable $effectiveAt): void
     {
-        $this->effectiveDate = $effectiveDate;
+        $this->effectiveAt = $effectiveAt;
     }
 
     public function getInterpretation(): ?Interpretation

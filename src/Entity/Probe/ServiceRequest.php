@@ -3,6 +3,7 @@
 namespace App\Entity\Probe;
 
 use App\Entity\Organization;
+use App\Entity\Practitioner;
 use App\Enum\AnalysisType;
 use App\Enum\LaboratoryFunction;
 use App\Enum\Pathogen;
@@ -13,7 +14,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 trait ServiceRequest
 {
-    use OrdererCopy;
+    use OrdererOrgCopy;
+    use OrdererPracCopy;
 
     #[ORM\Column(type: Types::STRING, enumType: LaboratoryFunction::class)]
     #[Groups(['probe:read', 'probe:write'])]
@@ -36,11 +38,15 @@ trait ServiceRequest
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
-    private ?string $ordererIdentifier = null;
+    private ?string $requisitionIdentifier = null;
 
     #[ORM\ManyToOne(targetEntity: Organization::class, inversedBy: 'probes')]
     #[Groups(['probe:read', 'probe:write'])]
-    private ?Organization $orderer = null;
+    private ?Organization $ordererOrg = null;
+
+    #[ORM\ManyToOne(targetEntity: Practitioner::class, inversedBy: 'probes')]
+    #[Groups(['probe:read', 'probe:write'])]
+    private ?Practitioner $ordererPrac = null;
 
     public function getLaboratoryFunction(): LaboratoryFunction
     {
@@ -88,23 +94,33 @@ trait ServiceRequest
         $this->analysisTypes = SerializerExtension::unserializeEnumArray(AnalysisType::class, $analysisTypes);
     }
 
-    public function getOrdererIdentifier(): ?string
+    public function getRequisitionIdentifier(): ?string
     {
-        return $this->ordererIdentifier;
+        return $this->requisitionIdentifier;
     }
 
-    public function setOrdererIdentifier(?string $ordererIdentifier): void
+    public function setRequisitionIdentifier(?string $requisitionIdentifier): void
     {
-        $this->ordererIdentifier = $ordererIdentifier;
+        $this->requisitionIdentifier = $requisitionIdentifier;
     }
 
-    public function getOrderer(): ?Organization
+    public function getOrdererOrg(): ?Organization
     {
-        return $this->orderer;
+        return $this->ordererOrg;
     }
 
-    public function setOrderer(?Organization $orderer): void
+    public function setOrdererOrg(?Organization $ordererOrg): void
     {
-        $this->orderer = $orderer;
+        $this->ordererOrg = $ordererOrg;
+    }
+
+    public function getOrdererPrac(): ?Practitioner
+    {
+        return $this->ordererPrac;
+    }
+
+    public function setOrdererPrac(?Practitioner $ordererPrac): void
+    {
+        $this->ordererPrac = $ordererPrac;
     }
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <labeled-value :label="$t('observation.effective_date')">
-      {{ formatDate(observation.effectiveDate) }}
+    <labeled-value :label="$t('observation.effective_at')">
+      {{ formatDateTime(observation.effectiveAt) }}
     </labeled-value>
 
     <labeled-value :label="$t(`probe._analysis_type.IDENTIFICATION`)">
@@ -27,12 +27,12 @@
 
 <script>
 
-import {formatDate, formatOrganism} from "../../../services/domain/formatter";
+import {formatDate, formatDateTime, formatOrganism} from "../../../services/domain/formatter";
 import LabeledValue from "../../Library/View/LabeledValue.vue";
 
 export default {
   components: {LabeledValue},
-  methods: {formatDate},
+  methods: {formatDateTime, formatDate},
   props: {
     observation: {
       type: Object,

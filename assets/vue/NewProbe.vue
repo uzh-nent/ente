@@ -122,7 +122,7 @@ export default {
       }
 
       if (this.orderer) {
-        base.ordererIdentifier = this.orderer.ordererIdentifier
+        base.requisitionIdentifier = this.orderer.requisitionIdentifier
         base = {...base, ...probeConverter.writeOrderer(this.orderer.orderer)}
       }
 
@@ -159,7 +159,7 @@ export default {
     const {specimens} = preloadApi.getNewProbe()
     this.specimens = specimens
 
-    document.getElementById('ordererIdentifier')?.focus()
+    document.getElementById('requisitionIdentifier')?.focus()
   }
 }
 </script>

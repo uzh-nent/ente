@@ -46,7 +46,7 @@ export default {
     },
     template: function () {
       return {
-        effectiveDate: moment().format('YYYY-MM-DD'),
+        effectiveAt: moment().format(),
         identificationSuccessful: true,
       }
     },

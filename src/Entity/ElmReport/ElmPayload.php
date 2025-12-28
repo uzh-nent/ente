@@ -26,8 +26,8 @@ trait ElmPayload
     #[ORM\Column(type: Types::STRING, enumType: Interpretation::class, nullable: true)]
     private ?Interpretation $interpretation = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
-    private ?\DateTimeImmutable $effectiveDate = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $effectiveAt = null;
 
     public function getLeadingCode(): LeadingCode
     {
@@ -79,13 +79,13 @@ trait ElmPayload
         $this->interpretation = $interpretation;
     }
 
-    public function getEffectiveDate(): ?\DateTimeImmutable
+    public function getEffectiveAt(): ?\DateTimeImmutable
     {
-        return $this->effectiveDate;
+        return $this->effectiveAt;
     }
 
-    public function setEffectiveDate(?\DateTimeImmutable $effectiveDate): void
+    public function setEffectiveAt(?\DateTimeImmutable $effectiveAt): void
     {
-        $this->effectiveDate = $effectiveDate;
+        $this->effectiveAt = $effectiveAt;
     }
 }

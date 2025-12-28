@@ -2,11 +2,11 @@
   <div>
     <div class="row">
       <div class="col-md-6">
-        <form-field for-id="ordererIdentifier" :label="$t('probe.orderer_identifier')"
-                    :field="fields.ordererIdentifier">
-          <text-input id="ordererIdentifier" type="text" :field="fields.ordererIdentifier"
-                      v-model="entity.ordererIdentifier"
-                      @blur="blurField('ordererIdentifier')" @update:modelValue="validateField('ordererIdentifier')"/>
+        <form-field for-id="requisitionIdentifier" :label="$t('probe.requisition_identifier')"
+                    :field="fields.requisitionIdentifier">
+          <text-input id="requisitionIdentifier" type="text" :field="fields.requisitionIdentifier"
+                      v-model="entity.requisitionIdentifier"
+                      @blur="blurField('requisitionIdentifier')" @update:modelValue="validateField('requisitionIdentifier')"/>
         </form-field>
       </div>
     </div>
@@ -74,11 +74,11 @@ export default {
   data() {
     return {
       fields: {
-        ordererIdentifier: createField(requiredRule),
+        requisitionIdentifier: createField(requiredRule),
         orderer: createField(requiredRule),
       },
       entity: {
-        ordererIdentifier: null,
+        requisitionIdentifier: null,
         orderer: null,
       },
 

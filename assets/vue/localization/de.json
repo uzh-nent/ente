@@ -144,7 +144,7 @@
     "progress": "Verlauf",
     "animal_name": "Tiername",
     "received_date": "Empfangen am",
-    "orderer_identifier": "Probe-Referenz",
+    "requisition_identifier": "Probe-Referenz",
     "analysis_start_date": "Ansatzdatum",
     "orderer": "Auftraggeber",
     "_pathogen": {
@@ -213,7 +213,7 @@
   },
   "observation": {
     "_name": "Resultat",
-    "effective_date": "Resultat erfasst am",
+    "effective_at": "Resultat vom",
     "identification_successful": "Identifizierung erfolgreich",
     "interpretation_text": "Kommentar",
     "cgMLST": "cgMLST"

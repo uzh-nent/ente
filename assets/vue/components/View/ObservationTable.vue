@@ -13,7 +13,7 @@
         <tbody>
         <tr v-for="observation in observations" :key="observation['@id']">
           <td>{{$t(`probe._analysis_type.${observation.analysisType}`)}}</td>
-          <td>{{ formatDate(observation.effectiveDate)}}</td>
+          <td>{{ formatDateTime(observation.effectiveAt)}}</td>
           <td>
             <template v-if="observation.analysisType === 'IDENTIFICATION'">
               <span class="badge bg-success" v-if="observation.interpretation ==='POS'">
@@ -36,10 +36,10 @@
 
 <script>
 
-import {formatDate} from "../../services/domain/formatter";
+import {formatDate, formatDateTime} from "../../services/domain/formatter";
 
 export default {
-  methods: {formatDate},
+  methods: {formatDateTime, formatDate},
   props: {
     observations: {
       type: Array,

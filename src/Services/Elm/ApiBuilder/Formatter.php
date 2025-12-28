@@ -120,4 +120,9 @@ readonly class Formatter
             "display" => $display
         ];
     }
+
+    public function datetime(?\DateTimeImmutable $dateTimeImmutable): ?string
+    {
+        return $dateTimeImmutable?->format('c');
+    }
 }

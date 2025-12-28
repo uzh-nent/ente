@@ -4,6 +4,7 @@ namespace App\Services\Elm;
 
 use App\Entity\ElmReport;
 use App\Entity\Probe;
+use App\Enum\LaboratoryFunction;
 use App\Services\Elm\ApiBuilder\Dto\AddressDto;
 use App\Services\Elm\ApiBuilder\Dto\PersonDto;
 use App\Services\Elm\ApiBuilder\Dto\ResourceReference;
@@ -60,6 +61,7 @@ readonly class ApiBuilder
                 "id" => $reference->id(),
                 "subject" => $this->formatter->reference($patientResource["resource"]),
                 "collection" => [
+                    // here, could also send datetime; but not known from orderer (yet)
                     "collectedDateTime" => $this->formatter->date($probe->getSpecimenCollectionDate())
                 ]
             ]
@@ -97,16 +99,16 @@ readonly class ApiBuilder
     private function createOrganizationOrdererResource(Probe $probe): array
     {
         $address = new AddressDto();
-        $probe->writeOrdererAddressTo($address);
+        $probe->writeOrdererOrgAddressTo($address);
 
-        $reference = new ResourceReference('Organization', $probe->getOrderer()->getId());
+        $reference = new ResourceReference('Organization', $probe->getOrdererOrg()->getId());
 
         $organizationOrdererResource = [
             "fullUrl" => $reference->fullUrl(),
             "resource" => [
                 "resourceType" => $reference->type(),
                 "id" => $reference->id(),
-                "name" => $probe->getOrdererName(),
+                "name" => $probe->getOrdererOrgName(),
                 "address" => [$this->formatter->address($address)]
             ]
         ];
@@ -114,9 +116,31 @@ readonly class ApiBuilder
         return $this->formatter->normalizeNullableArray($organizationOrdererResource);
     }
 
-    private function createPractitionerRoleResource(Probe $probe, array $orderOrganizationResource): array
+    private function createPractitionerOrdererResource(Probe $probe): array
     {
-        $reference = new ResourceReference('PractitionerRole', $probe->getOrderer()->getId());
+        $address = new AddressDto();
+        $probe->writeOrdererPracAddressTo($address);
+
+        $person = new PersonDto();
+        $probe->writeOrdererPracPersonTo($person);
+
+        $reference = new ResourceReference('Practitioner', $probe->getOrdererPrac()->getId());
+        $organizationOrdererResource = [
+            "fullUrl" => $reference->fullUrl(),
+            "resource" => [
+                "resourceType" => $reference->type(),
+                "id" => $reference->id(),
+                "name" => $this->formatter->name($person),
+                "address" => [$this->formatter->address($address)]
+            ]
+        ];
+
+        return $this->formatter->normalizeNullableArray($organizationOrdererResource);
+    }
+
+    private function createReferencePractitionerRoleResource(Probe $probe, array $orderOrganizationResource): array
+    {
+        $reference = new ResourceReference('PractitionerRole', $probe->getOrdererOrg()->getId());
 
         return [
             "fullUrl" => $reference->fullUrl(),
@@ -124,7 +148,20 @@ readonly class ApiBuilder
                 "resourceType" => $reference->type(),
                 "id" => $reference->id(),
                 "organization" => $this->formatter->reference($orderOrganizationResource["resource"]),
-                // TODO scenario 1: reference Practitioner instead https://fhir.ch/ig/ch-elm/usecase.html
+            ]
+        ];
+    }
+
+    private function createPrimaryPractitionerRoleResource(Probe $probe, array $orderPractitionerResource): array
+    {
+        $reference = new ResourceReference('PractitionerRole', $probe->getOrdererOrg()->getId());
+
+        return [
+            "fullUrl" => $reference->fullUrl(),
+            "resource" => [
+                "resourceType" => $reference->type(),
+                "id" => $reference->id(),
+                "practitioner" => $this->formatter->reference($orderPractitionerResource["resource"]),
             ]
         ];
     }
@@ -146,7 +183,7 @@ readonly class ApiBuilder
                     "coding" => [$this->formatter->codedIdentifier($elmReport->getLeadingCode())]
                 ],
                 "subject" => $this->formatter->reference($patientResource["resource"]),
-                "effectiveDateTime" => $elmReport->getEffectiveDate(),
+                "effectiveDateTime" => $this->formatter->datetime($elmReport->getEffectiveAt()),
                 "performer" => [$this->formatter->reference($organizationResource["resource"])],
                 "specimen" => $this->formatter->reference($specimenResource["resource"]),
             ]
@@ -165,7 +202,8 @@ readonly class ApiBuilder
         }
 
         if ($elmReport->getOrganismText()) {
-            // TODO: test value string submission; maybe not needed at all
+            // TODO: test value string submission with LOINC 56475-7
+            // maybe also need other values here, then
             $observationResource['resource']['valueString'] = [
                 "valueString" => $elmReport->getOrganismText()
             ];
@@ -212,7 +250,7 @@ readonly class ApiBuilder
     {
         $reference = new ResourceReference('ServiceRequest', $probe->getId());
 
-        return [
+        $serviceRequestResource = [
             "fullUrl" => $reference->fullUrl(),
             "resource" => [
                 "resourceType" => $reference->type(),
@@ -230,6 +268,12 @@ readonly class ApiBuilder
                 "specimen" => [$this->formatter->reference($specimenResource["resource"])]
             ]
         ];
+
+        if ($probe->getLaboratoryFunction() === LaboratoryFunction::REFERENCE) {
+            $serviceRequestResource['resource']['requisition'] = ["value" => $probe->getRequisitionIdentifier()];
+        }
+
+        return $serviceRequestResource;
     }
 
     private function createRawCompositionResource(ElmReport $elmReport): array
@@ -258,13 +302,15 @@ readonly class ApiBuilder
             ],
         ];
         $resource['subject'] = $this->formatter->reference($patientResource["resource"]);
-        $resource['date'] = date("c");
+        $resource['date'] = $this->formatter->datetime(new \DateTimeImmutable());
         $resource['author'] = [$this->formatter->reference($organizationResource["resource"])];
-        $resource['title'] = "Laborbericht";
+        $resource['title'] = "Laborbericht vom " . date('d.m.Y');
         $resource['section'] = [
             [
                 "title" => "Ergebnisse",
                 "code" => [
+                    // reference to microbiological studies here (instead of genotyping), as then 3.4.1 seems to not apply: https://elm.wiki.bagapps.ch/Dokumente/CH-ELM_appendix_2_FHIR_Document_Breakdown.pdf
+                    // in 3.4.1., it references to https://fhir.ch/ig/ch-elm/ValueSet-ch-elm-results-laboratory-observation-geno.html and https://fhir.ch/ig/ch-elm/ValueSet-ch-elm-results-laboratory-observation-susc.html
                     "coding" => [PredefinedCodes::loincMicrobiologyStudies()]
                 ],
                 "entry" => [$this->formatter->reference($observationResource["resource"])],
@@ -285,7 +331,7 @@ readonly class ApiBuilder
             "id" => $reference->id(),
             "identifier" => $compositionResource['resource']['identifier'],
             "type" => "document",
-            "timestamp" => date("c"),
+            "timestamp" => $this->formatter->datetime(new \DateTimeImmutable()),
             "entry" => $entries
         ];
     }
@@ -311,20 +357,42 @@ readonly class ApiBuilder
         ];
     }
 
+    private function createPractitionerRole(Probe $probe): array
+    {
+        $createOrganizationOrdererResources = function (Probe $probe) {
+            $organizationOrdererResource = $this->createOrganizationOrdererResource($probe);
+            $ordererPractitionerRoleResource = $this->createReferencePractitionerRoleResource($probe, $organizationOrdererResource);
+
+            return [$ordererPractitionerRoleResource, $organizationOrdererResource];
+        };
+
+        $createPractitionerOrdererResources = function (Probe $probe) {
+            $practitionerOrdererResource = $this->createPractitionerOrdererResource($probe);
+            $ordererPractitionerRoleResource = $this->createPrimaryPractitionerRoleResource($probe, $practitionerOrdererResource);
+
+            return [$ordererPractitionerRoleResource, $practitionerOrdererResource];
+        };
+
+        return match ($probe->getLaboratoryFunction()) {
+            LaboratoryFunction::REFERENCE => $createOrganizationOrdererResources($probe),
+            LaboratoryFunction::PRIMARY => $createPractitionerOrdererResources($probe),
+        };
+    }
+
     public function build(Probe $probe, ElmReport $elmReport): array
     {
         $patientResource = $this->createPatientResource($probe);
         $specimenResource = $this->createSpecimenResource($probe, $elmReport, $patientResource);
         $organizationResource = $this->createNENTOrganizationResource();
-        $organizationOrdererResource = $this->createOrganizationOrdererResource($probe);
-        $ordererPractitionerRoleResource = $this->createPractitionerRoleResource($probe, $organizationOrdererResource);
+
+        [$ordererPractitionerRoleResource, $ordererResource] = $this->createPractitionerRole($probe);
         $observationResource = $this->createObservationResource($elmReport, $patientResource, $organizationResource, $specimenResource);
         $serviceRequestResource = $this->createServiceRequestResource($probe, $patientResource, $specimenResource, $ordererPractitionerRoleResource, $observationResource);
         $rawCompositionResource = $this->createRawCompositionResource($elmReport);
         $diagnosticReportResource = $this->createDiagnosticReportResource($elmReport, $patientResource, $organizationResource, $specimenResource, $observationResource, $serviceRequestResource, $rawCompositionResource);
         $compositionResource = $this->createFullCompositionResource($rawCompositionResource, $diagnosticReportResource, $patientResource, $organizationResource, $observationResource);
 
-        $entries = [$compositionResource, $diagnosticReportResource, $patientResource, $observationResource, $specimenResource, $serviceRequestResource, $ordererPractitionerRoleResource, $organizationResource, $organizationOrdererResource];
+        $entries = [$compositionResource, $diagnosticReportResource, $patientResource, $observationResource, $specimenResource, $serviceRequestResource, $ordererPractitionerRoleResource, $organizationResource, $ordererResource];
         $bundleResource = $this->createBundleResource($elmReport, $compositionResource, $entries);
 
         return $this->createDocumentReferenceResource($elmReport, $bundleResource);

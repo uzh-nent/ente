@@ -2,10 +2,10 @@
 
   <div class="row">
     <div class="col-md-6">
-      <form-field for-id="effectiveDate" :label="$t('observation.effective_date')" :field="fields.effectiveDate">
+      <form-field for-id="effectiveAt" :label="$t('observation.effective_at')" :field="fields.effectiveAt">
         <date-time-input
-            id="effectiveDate" format="date" :field="fields.effectiveDate" v-model="entity.effectiveDate"
-            @blur="blurField('effectiveDate')" @update:modelValue="validateField('effectiveDate')"/>
+            id="effectiveAt" format="datetime" :field="fields.effectiveAt" v-model="entity.effectiveAt"
+            @blur="blurField('effectiveAt')" @update:modelValue="validateField('effectiveAt')"/>
       </form-field>
     </div>
   </div>
@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       fields: {
-        effectiveDate: createField(requiredRule),
+        effectiveAt: createField(requiredRule),
         identificationSuccessful: createField(),
 
         organism: createField(),
@@ -87,7 +87,7 @@ export default {
         interpretationText: createField(),
       },
       entity: {
-        effectiveDate: null,
+        effectiveAt: null,
         identificationSuccessful: null,
 
         organism: null,

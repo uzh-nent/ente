@@ -9,17 +9,17 @@
     </labeled-value>
 
     <labeled-value :label="$t('probe.finished_at')" v-if="probe.finishedAt">
-      {{ formatDate(probe.finishedAt) }}
+      {{ formatDateTime(probe.finishedAt) }}
     </labeled-value>
   </div>
 </template>
 
 <script>
 import LabeledValue from "../../Library/View/LabeledValue.vue";
-import {formatDate} from "../../../services/domain/formatter";
+import {formatDate, formatDateTime} from "../../../services/domain/formatter";
 
 export default {
-  methods: {formatDate},
+  methods: {formatDateTime, formatDate},
   components: {LabeledValue},
   props: {
     probe: {
