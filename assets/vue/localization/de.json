@@ -243,7 +243,11 @@
     "effective_at": "Resultat vom",
     "identification_successful": "Identifizierung erfolgreich",
     "interpretation_text": "Kommentar",
-    "cgMLST": "cgMLST"
+    "cgMLST": "cgMLST",
+    "_interpretation": {
+      "POS": "Positiv",
+      "NEG": "Negativ"
+    }
   },
   "organism": {
     "_name": "Organismus"

@@ -209,8 +209,9 @@ class ImportTasks extends Command
     private function parseInterpretationGroup(string $interpretation): InterpretationGroup
     {
         return match ($interpretation) {
-            'POS-NEG', 'TEXT' => InterpretationGroup::POS_NEG, // mapping TEXT to POS_NEG as probably a typo in the source data
+            'POS-NEG' => InterpretationGroup::POS_NEG, // mapping TEXT to POS_NEG as probably a typo in the source data
             'POS' => InterpretationGroup::POS,
+            'TEXT' => InterpretationGroup::TEXT,
             default => throw new \Exception("Unknown interpretation $interpretation"),
         };
     }

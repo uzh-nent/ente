@@ -16,6 +16,29 @@ export const formatDateTime = function (value) {
   return moment(value).format('DD.MM.YYYY HH:mm')
 }
 
+export const formatObservation = function (observation, specimens, translator) {
+  if (!observation) {
+    return '-'
+  }
+
+  const prefix = formatDateTime(observation.effectiveAt) + " " +
+    translator('probe._analysis_type_short.'+observation.analysisType) + " ";
+  if (observation.analysisType === 'IDENTIFICATION') {
+    if (observation.interpretation !== 'POS') {
+      return prefix + translator('messages.failed');
+    } else {
+      const specimen = specimens.find(s => s['@id'] === observation.specimen)
+      return prefix + specimen?.displayName
+    }
+  } else {
+    if (observation.interpretation) {
+      return prefix + translator('observation._interpretation.' + observation.interpretation)
+    }
+
+    return prefix + translator('messages.failed');
+  }
+}
+
 export const formatAddressCity = function (value) {
   if (!value) {
     return '-'
