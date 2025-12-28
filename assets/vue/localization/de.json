@@ -8,6 +8,7 @@
   },
   "_form": {
     "other_or_unknown": "Anderes/Unbekannt",
+    "search": "Suchen",
     "timeFilter": {
       "from": "Von",
       "until": "Bis"

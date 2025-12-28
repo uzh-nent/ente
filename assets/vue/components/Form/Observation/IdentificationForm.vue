@@ -22,20 +22,19 @@
     <template v-if="entity.identificationSuccessful">
       <div class="col-md-12">
         <form-field for-id="searchOrganism" :label="$t('organism._name')" :field="fields.organism">
-          <text-input v-if="searchEnabled" class="mb-2" id="searchOrganism" type="text" v-model="searchOrganism"/>
-          <radio id="organism" :choices="organismChoices" :field="fields.organism"
-                 :value-string="value => value['@id']"
-                 v-model="entity.organism" @update:model-value="validateField('organism')"/>
-          <span v-if="!searchEnabled && organismChoices.length === 0"
-                class="form-text">{{ $t('_form.observation.identification.no_organism_defined') }}</span>
-          <span v-if="searchEnabled" class="form-text">{{ itemHits }}</span>
+          <searchable-radio
+              v-if="organismChoices.length > 0" id="organism"
+              :choices="organismChoices" :field="fields.organism"
+              :value-string="value => value['@id']"
+              v-model="entity.organism" @update:model-value="validateField('organism')"/>
+          <span v-else class="form-text">{{ $t('_form.observation.identification.no_organism_defined') }}</span>
         </form-field>
       </div>
       <div class="col-md-12">
         <form-field for-id="cgMLST" :label="$t('observation.cgMLST')"
                     :field="fields.cgMLST">
           <text-input id="cgMLST" :field="fields.cgMLST" v-model="entity.cgMLST"
-                     @blur="blurField('cgMLST')" @update:modelValue="validateField('cgMLST')"/>
+                      @blur="blurField('cgMLST')" @update:modelValue="validateField('cgMLST')"/>
         </form-field>
       </div>
     </template>
@@ -61,12 +60,12 @@ import Checkbox from "../../Library/FormInput/Checkbox.vue";
 import debounce from "lodash.debounce";
 import {sortOrganisms} from "../../../services/domain/sorters";
 import {formatOrganism} from "../../../services/domain/formatter";
-
-const SEARCH_CUTOFF = 10
+import SearchableRadio from "../../Library/FormInput/SearchableRadio.vue";
 
 export default {
   emits: ['update'],
   components: {
+    SearchableRadio,
     Checkbox,
     CustomSelect,
     Radio,
@@ -94,10 +93,6 @@ export default {
         cgMLST: null,
         interpretationText: null,
       },
-
-      searchOrganism: null,
-      filteredOrganisms: null,
-      filteredOrganismsTerm: null
     }
   },
   props: {
@@ -111,54 +106,14 @@ export default {
     },
   },
   computed: {
-    potentialOrganisms: function () {
+    organismChoices: function () {
       const organisms = this.pathogen ? this.organisms.filter(o => o.pathogen === this.pathogen) : []
       sortOrganisms(organisms)
 
-      return organisms
-    },
-    searchEnabled: function () {
-      return this.potentialOrganisms.length > SEARCH_CUTOFF
-    },
-    organismChoices: function () {
-      let source = this.searchEnabled ? this.filteredOrganisms : this.potentialOrganisms
-      source = !source && this.template.organism ? [this.template.organism] : source
-      const maxedCollection = source?.slice(0, SEARCH_CUTOFF) ?? [];
-      return maxedCollection.map(o => ({label: formatOrganism(o), value: o}))
-    },
-    itemHits: function () {
-      let hits = this.organismChoices.length;
-      if (this.organismChoices.length < this.filteredOrganisms?.length) {
-        hits = `${hits}+`
-      }
-
-      return this.$t('_action.hits', {hits: hits})
-    }
-  },
-  methods: {
-    filterOrganisms: function (searchOrganism) {
-      if (!searchOrganism) {
-        this.filteredOrganisms = null
-        this.filteredOrganismsTerm = null
-        return
-      }
-
-      const extendsPreviousSearch = this.filteredOrganismsTerm && this.filteredOrganisms && searchOrganism.includes(this.filteredOrganismsTerm);
-      const base = [...(extendsPreviousSearch ? this.filteredOrganisms : this.potentialOrganisms)]
-      const keywords = searchOrganism.split(" ").map(kw => kw.toLowerCase())
-      this.filteredOrganisms = base.filter(o => {
-        const match = o.displayName.toLowerCase()
-        return keywords.every(kw => match.includes(kw))
-      })
-      this.filteredOrganismsTerm = searchOrganism
+      return organisms.map(o => ({label: formatOrganism(o), value: o}))
     }
   },
   watch: {
-    searchOrganism: {
-      handler: debounce(function (searchOrganism) {
-        this.filterOrganisms(searchOrganism)
-      }, 200, {'leading': true}),
-    },
     'entity.identificationSuccessful': {
       handler: function (identificationSuccessful) {
         if (identificationSuccessful) {
