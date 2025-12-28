@@ -174,7 +174,9 @@ export default {
     const {specimens} = preloadApi.getNewProbe()
     this.specimens = specimens
 
-    document.getElementById('requisitionIdentifier')?.focus()
+    this.$nextTick(() => {
+      document.getElementById('requisitionIdentifier')?.focus()
+    })
   }
 }
 </script>
