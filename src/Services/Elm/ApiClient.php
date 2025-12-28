@@ -10,17 +10,17 @@ readonly class ApiClient
     {
     }
 
-    public function validateDocumentReference(string $json, ?string &$error = null): ?string
+    public function validateDocumentReference(string $json, ?string &$error = null): string
     {
         return $this->performApiCall($json, "/DocumentReference/\$Validate", $error);
     }
 
-    public function sendDocumentReference(string $json, ?string &$error = null): ?string
+    public function sendDocumentReference(string $json, ?string &$error = null): string
     {
         return $this->performApiCall($json, "/DocumentReference/", $error);
     }
 
-    private function performApiCall(string $json, string $endpoint, ?string &$error = null): ?string
+    private function performApiCall(string $json, string $endpoint, ?string &$error = null): string
     {
         $ch = curl_init();
 

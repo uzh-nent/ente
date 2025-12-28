@@ -8,7 +8,7 @@ use App\Enum\AdministrativeGender;
 use App\Tests\Builders\Traits\AddressBuilder;
 
 /**
- * @extends AbstractBuilder<Organization>
+ * @extends AbstractBuilder<Patient>
  */
 class PatientBuilder extends AbstractBuilder
 {

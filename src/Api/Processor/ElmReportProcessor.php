@@ -52,7 +52,7 @@ readonly class ElmReportProcessor implements ProcessorInterface
         $result = $this->persistProcessor->process($data, $operation, $uriVariables, $context);
 
         $this->elmService->send($data);
-        DoctrineHelper::persistAndFlush($data);
+        DoctrineHelper::persistAndFlush($this->registry, $data);
 
         return $result;
     }

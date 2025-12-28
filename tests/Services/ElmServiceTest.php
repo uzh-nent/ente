@@ -21,11 +21,17 @@ final class ElmServiceTest extends KernelTestCase
         // prepare test data
         /** @var ManagerRegistry $doctrine */
         $doctrine = self::getContainer()->get(ManagerRegistry::class);
-        $probe = new ProbeBuilder()->withReferenceLaboratoryOrder()->withHumanProbe()->build();
-        $report = new ElmReportBuilder()->withProbe($probe)->withSalmonellaComplete()->build();
-        DoctrineHelper::persistAndFlush($doctrine,
-            $probe, $probe->getOrdererOrg(), $probe->getPatient(),
-            $report, $report->getLeadingCode(), $report->getSpecimen(), $report->getOrganism()
+        $probe = (new ProbeBuilder())->withReferenceLaboratoryOrder()->withHumanProbe()->build();
+        $report = (new ElmReportBuilder())->withProbe($probe)->withSalmonellaComplete()->build();
+        DoctrineHelper::persistAndFlush(
+            $doctrine,
+            $probe,
+            $probe->getOrdererOrg(),
+            $probe->getPatient(),
+            $report,
+            $report->getLeadingCode(),
+            $report->getSpecimen(),
+            $report->getOrganism()
         );
 
         // do API submission
