@@ -33,7 +33,7 @@ readonly class ElmService implements ElmServiceInterface
             return;
         }
 
-        $report->setApiStatus(ElmApiStatus::IN_PROGRESS);
+        $report->setApiStatus(ElmApiStatus::QUEUED);
     }
 
     private function validateDocumentReference(ElmReport $report): bool
@@ -82,21 +82,45 @@ readonly class ElmService implements ElmServiceInterface
             return false;
         }
 
-        $successful = $this->apiParser->parseDocumentReference($responseJson, $documentId);
-        if (!$successful) {
-            $this->logger->error("validateDocumentReference failed for " . $report->getId() . " with " . $error);
-            $report->setApiStatus(ElmApiStatus::VALIDATION_ERROR);
+        $successful = $this->apiParser->tryParseDocumentReference($responseJson, $status, $documentId);
+        if (!$successful || !$documentId || !$status) {
+            $this->logger->error("sendDocumentReference document parse failed for " . $report->getId() . " with " . $error);
+            $report->setApiStatus(ElmApiStatus::SEND_ERROR);
 
             return false;
         }
 
-        $report->setSendResponseDocumentReferenceId($documentId);
+        $report->setApiQueueStatus($status);
+        $report->setDocumentReferenceId($documentId);
+        $report->setApiStatus($this->apiParser->setApiStatusFromQueueStatus($status));
 
         return true;
     }
 
     public function checkProgress(ElmReport $report): void
     {
-        // TODO: Implement checkProgress() method.
+        $error = null;
+        $responseJson = $this->apiClient->getDocumentReference($report, $error);
+        $report->setLastDocumentReferenceResponseJson($responseJson);
+
+        if ($error) {
+            $this->logger->error("getDocumentReference error for " . $report->getId() . " with " . $error);
+            return;
+        }
+
+        $successful = $this->apiParser->checkOperationOutcomeSuccessful($responseJson);
+        if (!$successful) {
+            $this->logger->error("getDocumentReference issues for " . $report->getId() . " with " . $error);
+            return;
+        }
+
+        $successful = $this->apiParser->tryParseDocumentReference($responseJson, $status);
+        if (!$successful || !$status) {
+            $this->logger->error("getDocumentReference failed for " . $report->getId() . " with " . $error);
+            return;
+        }
+
+        $report->setApiQueueStatus($status);
+        $report->setApiStatus($this->apiParser->setApiStatusFromQueueStatus($status));
     }
 }

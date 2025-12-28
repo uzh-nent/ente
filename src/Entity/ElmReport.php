@@ -14,9 +14,7 @@ namespace App\Entity;
 use App\Entity\ElmReport\ElmPayload;
 use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\IdTrait;
-use App\Enum\CodeSystem;
 use App\Enum\ElmApiStatus;
-use App\Enum\Interpretation;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -49,12 +47,17 @@ class ElmReport
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private ?string $sendResponseJson = null;
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $sendResponseDocumentReferenceId = null;
-
-    // per default in-progress, then need to poll API until done
     #[ORM\Column(type: Types::STRING, enumType: ElmApiStatus::class)]
     private ElmApiStatus $apiStatus = ElmApiStatus::CREATING;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $apiQueueStatus = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private ?string $documentReferenceId = null;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?string $lastDocumentReferenceResponseJson = null;
 
     public function getProbe(): Probe
     {
@@ -126,16 +129,6 @@ class ElmReport
         $this->sendResponseJson = $sendResponseJson;
     }
 
-    public function getSendResponseDocumentReferenceId(): ?string
-    {
-        return $this->sendResponseDocumentReferenceId;
-    }
-
-    public function setSendResponseDocumentReferenceId(?string $sendResponseDocumentReferenceId): void
-    {
-        $this->sendResponseDocumentReferenceId = $sendResponseDocumentReferenceId;
-    }
-
     public function getApiStatus(): ElmApiStatus
     {
         return $this->apiStatus;
@@ -144,5 +137,35 @@ class ElmReport
     public function setApiStatus(ElmApiStatus $apiStatus): void
     {
         $this->apiStatus = $apiStatus;
+    }
+
+    public function getApiQueueStatus(): ?string
+    {
+        return $this->apiQueueStatus;
+    }
+
+    public function setApiQueueStatus(?string $apiQueueStatus): void
+    {
+        $this->apiQueueStatus = $apiQueueStatus;
+    }
+
+    public function getDocumentReferenceId(): ?string
+    {
+        return $this->documentReferenceId;
+    }
+
+    public function setDocumentReferenceId(?string $documentReferenceId): void
+    {
+        $this->documentReferenceId = $documentReferenceId;
+    }
+
+    public function getLastDocumentReferenceResponseJson(): ?string
+    {
+        return $this->lastDocumentReferenceResponseJson;
+    }
+
+    public function setLastDocumentReferenceResponseJson(?string $lastStatusResponseJson): void
+    {
+        $this->lastDocumentReferenceResponseJson = $lastStatusResponseJson;
     }
 }

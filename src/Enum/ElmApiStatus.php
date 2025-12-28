@@ -9,7 +9,7 @@ enum ElmApiStatus : string
     case VALIDATION_ISSUES = 'VALIDATION_ISSUES'; // failed validation
     case SEND_ERROR = 'SEND_ERROR';
     case SEND_ISSUES = 'SEND_ISSUES';
-    case IN_PROGRESS = 'IN_PROGRESS';
-    case SUCCESSFUL = 'SUCCESSFUL';
+    case QUEUED = 'QUEUED';
+    case COMPLETED = 'COMPLETED';
     case FAILED = 'FAILED';
 }

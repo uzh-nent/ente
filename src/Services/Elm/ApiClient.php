@@ -2,6 +2,7 @@
 
 namespace App\Services\Elm;
 
+use App\Entity\ElmReport;
 use Psr\Log\LoggerInterface;
 
 readonly class ApiClient
@@ -12,15 +13,20 @@ readonly class ApiClient
 
     public function validateDocumentReference(string $json, ?string &$error = null): string
     {
-        return $this->performApiCall($json, "/DocumentReference/\$Validate", $error);
+        return $this->performApiCall("/DocumentReference/\$Validate", $json, $error);
     }
 
     public function sendDocumentReference(string $json, ?string &$error = null): string
     {
-        return $this->performApiCall($json, "/DocumentReference/", $error);
+        return $this->performApiCall("/DocumentReference/", $json, $error);
     }
 
-    private function performApiCall(string $json, string $endpoint, ?string &$error = null): string
+    public function getDocumentReference(ElmReport $report, ?string &$error = null): string
+    {
+        return $this->performApiCall("/DocumentReference/" . $report->getDocumentReferenceId(), null, $error);
+    }
+
+    private function performApiCall(string $endpoint, ?string $payload = null, ?string &$error = null): string
     {
         $ch = curl_init();
 
@@ -28,10 +34,15 @@ readonly class ApiClient
         curl_setopt($ch, CURLOPT_SSLCERT, $this->elmSSLCertPath);
         curl_setopt($ch, CURLOPT_SSLKEY, $this->elmSSLKeyPath);
 
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json+fhir'));
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
         curl_setopt($ch, CURLOPT_REFERER, $this->baseUrl);
+
+        // post if payload is set
+        if ($payload) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json+fhir'));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        }
+
         curl_setopt($ch, CURLOPT_HEADER, 0); // do not return headers
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // store response in a variable
 
