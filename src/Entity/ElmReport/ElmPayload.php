@@ -8,25 +8,32 @@ use App\Entity\Specimen;
 use App\Enum\Interpretation;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 trait ElmPayload
 {
     #[ORM\ManyToOne(targetEntity: LeadingCode::class)]
+    #[Groups(['elm-payload:read', 'elm-payload:write'])]
     private ?LeadingCode $leadingCode = null;
 
     #[ORM\ManyToOne(targetEntity: Organism::class)]
+    #[Groups(['elm-payload:read', 'elm-payload:write'])]
     private ?Organism $organism = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['elm-payload:read', 'elm-payload:write'])]
     private ?string $organismText = null;
 
     #[ORM\ManyToOne(targetEntity: Specimen::class)]
+    #[Groups(['elm-payload:read', 'elm-payload:write'])]
     private ?Specimen $specimen = null;
 
     #[ORM\Column(type: Types::STRING, enumType: Interpretation::class, nullable: true)]
+    #[Groups(['elm-payload:read', 'elm-payload:write'])]
     private ?Interpretation $interpretation = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[Groups(['elm-payload:read', 'elm-payload:write'])]
     private ?\DateTimeImmutable $effectiveAt = null;
 
     public function getLeadingCode(): LeadingCode

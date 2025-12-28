@@ -45,7 +45,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[Patch]
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: ['probe' => SearchFilterInterface::STRATEGY_EXACT])]
-#[ApiFilter(OrderFilter::class, properties: ['analysisStopAt'])]
+#[ApiFilter(OrderFilter::class, properties: ['effectiveAt'])]
 class Observation
 {
     use IdTrait;

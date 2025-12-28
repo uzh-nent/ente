@@ -20,6 +20,7 @@ readonly class ElmService implements ElmServiceInterface
     public function send(ElmReport $report): void
     {
         $report->setDiagnosticReportId($report->getId());
+        $report->setSentAt(new \DateTimeImmutable());
 
         $payload = $this->apiBuilder->build($report->getProbe(), $report);
         $json = json_encode($payload, JSON_PRETTY_PRINT);
