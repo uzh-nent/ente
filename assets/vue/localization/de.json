@@ -168,7 +168,7 @@
     "_name": "Probe",
     "pathogen": "Pathogen",
     "service_request": "Auftrag",
-    "speciment_collection_date": "Entnahmedatum",
+    "specimen_collection_date": "Entnahmedatum",
     "specimen_source": "Herkunft",
     "specimen_source_text": "Herkunft",
     "specimen_isolate": "Isolat",

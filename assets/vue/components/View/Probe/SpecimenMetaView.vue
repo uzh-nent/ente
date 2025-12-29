@@ -1,7 +1,7 @@
 <template>
   <div>
-    <labeled-value :label="$t('probe.speciment_collection_date')">
-      {{ formatDate(probe.specimentCollectionDate) }}
+    <labeled-value :label="$t('probe.specimen_collection_date')">
+      {{ formatDate(probe.specimenCollectionDate) }}
     </labeled-value>
 
     <labeled-value :label="$t('probe.specimen_source')">

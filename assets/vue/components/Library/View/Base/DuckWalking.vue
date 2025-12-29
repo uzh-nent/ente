@@ -1,16 +1,18 @@
 <template>
-  <div class="duck__wrapper">
-    <div class="duck">
-      <div class="duck__foot duck__foot--1"></div>
-      <div class="duck__foot duck__foot--2"></div>
-      <div class="duck duck__inner">
-        <div class="duck__mouth"></div>
-        <div class="duck__head">
-          <div class="duck__eye"></div>
-          <div class="duck__white"></div>
+  <div class="outer-wrapper">
+    <div class="duck__wrapper">
+      <div class="duck">
+        <div class="duck__foot duck__foot--1"></div>
+        <div class="duck__foot duck__foot--2"></div>
+        <div class="duck duck__inner">
+          <div class="duck__mouth"></div>
+          <div class="duck__head">
+            <div class="duck__eye"></div>
+            <div class="duck__white"></div>
+          </div>
+          <div class="duck__body"></div>
+          <div class="duck__wing"></div>
         </div>
-        <div class="duck__body"></div>
-        <div class="duck__wing"></div>
       </div>
     </div>
   </div>
@@ -36,29 +38,33 @@ export default {}
   --duck-speed-half: calc(var(--duck-speed) / 2);
 }
 
+.outer-wrapper {
+  display: inline-block;
+  margin-top: -0.5em;
+  position: relative;
+  top: -0.5em;
+}
+
 .duck__wrapper {
-  font-size: 0.4em;
+  font-size: 0.12em;
+  width: 10em;
 }
 
 .duck {
   display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
   position: relative;
 }
 
 .duck__wrapper {
-  display: -ms-grid;
-  display: grid;
+  display: inline-grid;
   place-content: center;
 }
 
 .duck__head {
-  -ms-flex-item-align: end;
   align-self: flex-end;
   width: 6em;
   height: 4em;

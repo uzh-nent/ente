@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <span>
     <a class="no-underline" href="#" @click="tryShow" :class="labelClass">
       <slot name="label"/>
       <i v-if="icon" :class="icon"></i>
@@ -12,7 +12,7 @@
         <slot name="footer"/>
       </template>
     </modal>
-  </div>
+  </span>
 </template>
 
 <script>

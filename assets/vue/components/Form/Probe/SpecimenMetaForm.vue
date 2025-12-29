@@ -1,8 +1,8 @@
 <template>
   <div>
-    <form-field for-id="specimentCollectionDate" :label="$t('probe.speciment_collection_date')" :field="fields.specimentCollectionDate">
-      <date-time-input id="specimentCollectionDate" :field="fields.specimentCollectionDate" v-model="entity.specimentCollectionDate" format="date"
-                       @blur="blurField('specimentCollectionDate')" @update:modelValue="validateField('specimentCollectionDate')"/>
+    <form-field for-id="specimenCollectionDate" :label="$t('probe.specimen_collection_date')" :field="fields.specimenCollectionDate">
+      <date-time-input id="specimenCollectionDate" :field="fields.specimenCollectionDate" v-model="entity.specimenCollectionDate" format="date"
+                       @blur="blurField('specimenCollectionDate')" @update:modelValue="validateField('specimenCollectionDate')"/>
     </form-field>
 
     <!-- select specimen source -->
@@ -150,7 +150,7 @@ export default {
   data() {
     return {
       fields: {
-        specimentCollectionDate: createField(),
+        specimenCollectionDate: createField(),
         specimenSource: createField(requiredRule),
         specimenSourceText: createField(),
         specimenText: createField(),
@@ -169,7 +169,7 @@ export default {
         specimenIsolate: createField(),
       },
       entity: {
-        specimentCollectionDate: null,
+        specimenCollectionDate: null,
         specimenSource: null,
         specimenSourceText: null,
         specimenText: null,

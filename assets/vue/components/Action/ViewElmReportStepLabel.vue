@@ -70,8 +70,8 @@ export default {
         } else {
           return 'success';
         }
-      } else if (this.step === 'send') {
-        if (this.report.apiStatus === 'IN_QUEUE') {
+      } else if (this.step === 'queue') {
+        if (this.report.apiStatus === 'QUEUED') {
           return 'in_queue'
         } else if (this.report.apiStatus === 'COMPLETED') {
           return 'success';
@@ -116,7 +116,7 @@ export default {
       return this.$t('elm_report._status.' + this.status)
     },
     labelColor: function () {
-      if (this.status === 'successful') {
+      if (this.status === 'success') {
         return 'success'
       }
 
@@ -129,7 +129,7 @@ export default {
     icon: function () {
       if (this.status === 'technical_error' || this.status === 'validation_error') {
         return "fas fa-xmark-circle"
-      } else if (this.status === 'successful') {
+      } else if (this.status === 'success') {
         return "fas fa-check-circle"
       }
 
@@ -147,7 +147,7 @@ export default {
       return `${this.report.diagnosticReportId}.json`
     },
     stepResponseDownloadUrl: function () {
-      let stepResponseJson = null
+      let stepResponseJson
       if (this.step === 'validation') {
         stepResponseJson = this.report.validationResponseJson
       } else if (this.step === 'send') {
