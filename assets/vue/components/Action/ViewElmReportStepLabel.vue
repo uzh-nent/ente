@@ -45,6 +45,7 @@
     <labeled-value :label="$t('elm_report.queue_id')" v-if="report.documentReferenceId">
       {{ report.documentReferenceId }}
     </labeled-value>
+    <operation-result-view class="mt-2" :json="stepResponseJson" />
   </label-modal>
 </template>
 
@@ -53,9 +54,10 @@ import LabeledValue from "../Library/View/LabeledValue.vue";
 import LabelModal from "../Library/Behaviour/Modal/LabelModal.vue";
 import DuckWalking from "../Library/View/Base/DuckWalking.vue";
 import {api} from "../../services/api";
+import OperationResultView from "../View/ElmReport/OperationResultView.vue";
 
 export default {
-  components: {DuckWalking, LabelModal, LabeledValue},
+  components: {OperationResultView, DuckWalking, LabelModal, LabeledValue},
   props: {
     report: {
       type: Object,
@@ -161,20 +163,21 @@ export default {
     requestFilename: function () {
       return `${this.report.diagnosticReportId}.json`
     },
-    stepResponseDownloadUrl: function () {
-      let stepResponseJson
+    stepResponseJson: function () {
       if (this.step === 'validation') {
-        stepResponseJson = this.report.validationResponseJson
+        return this.report.validationResponseJson
       } else if (this.step === 'send') {
-        stepResponseJson = this.report.sendResponseJson
+        return this.report.sendResponseJson
       } else {
-        stepResponseJson = this.report.lastDocumentReferenceResponseJson
+        return this.report.lastDocumentReferenceResponseJson
       }
-      if (!stepResponseJson) {
+    },
+    stepResponseDownloadUrl: function () {
+      if (!this.stepResponseJson) {
         return null;
       }
 
-      const blob = new Blob([stepResponseJson], {type: 'application/json'});
+      const blob = new Blob([this.stepResponseJson], {type: 'application/json'});
       return window.URL.createObjectURL(blob);
     },
     stepResponseFilename: function () {

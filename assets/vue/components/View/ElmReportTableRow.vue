@@ -16,7 +16,6 @@
       <view-elm-report-step-label :report="report" step="validation" />
       <view-elm-report-step-label :report="report" step="send" />
       <view-elm-report-step-label :report="report" step="queue" />
-      {{ report.documentReferenceId }}
     </td>
   </tr>
 </template>
