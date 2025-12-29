@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     confirm: async function () {
-      const payload = { ...this.template, ...this.post }
+      const payload = { ...this.extendedTemplate, ...this.post }
       const organization = await api.postOrganization(payload)
       this.$emit('added', organization)
 

@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     confirm: async function () {
-      const payload = { ...this.template, ...this.post }
+      const payload = { ...this.extendedTemplate, ...this.post }
       const patient = await api.postPatient(payload)
       this.$emit('added', patient)
 

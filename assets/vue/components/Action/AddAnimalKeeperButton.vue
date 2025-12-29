@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     confirm: async function () {
-      const payload = {...this.template, ...this.post}
+      const payload = {...this.extendedTemplate, ...this.post}
       const animalKeeper = await api.postAnimalKeeper(payload)
       this.$emit('added', animalKeeper)
 
