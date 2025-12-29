@@ -24,16 +24,16 @@ use Symfony\Component\HttpFoundation\RequestStack;
 readonly class ElmReportProvider implements ProviderInterface
 {
     public function __construct(
+        /** @var ProviderInterface<ElmReport> */
         #[Autowire(service: 'api_platform.doctrine.orm.state.item_provider')]
-        private ProviderInterface   $itemProvider,
+        private ProviderInterface $itemProvider,
+        /** @var ProviderInterface<ElmReport> */
         #[Autowire(service: 'api_platform.doctrine.orm.state.collection_provider')]
-        private ProviderInterface   $collectionProvider,
-        private ManagerRegistry     $managerRegistry,
+        private ProviderInterface $collectionProvider,
+        private ManagerRegistry $managerRegistry,
         private ElmServiceInterface $elmService,
         private RequestStack $requestStack,
-
-    )
-    {
+    ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
@@ -43,7 +43,7 @@ readonly class ElmReportProvider implements ProviderInterface
             $request = $this->requestStack->getCurrentRequest();
             if ($request->query->get('poll') !== null && isset($uriVariables['id'])) {
                 $repository = $this->managerRegistry->getRepository(ElmReport::class);
-                /** @var ElmReport $elmReport */
+                /** @var ?ElmReport $elmReport */
                 $elmReport = $repository->find($uriVariables['id']);
                 if ($elmReport && $elmReport->getApiStatus() === ElmApiStatus::QUEUED) {
                     $this->elmService->checkProgress($elmReport);

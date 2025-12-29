@@ -37,7 +37,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    processor: ElmReportProcessor::class, provider: ElmReportProvider::class,
+    processor: ElmReportProcessor::class,
+    provider: ElmReportProvider::class,
     denormalizationContext: ['groups' => ['comment:write', 'elm-payload:write', 'elm-report:write']],
     normalizationContext: ['groups' => ['time:read', 'attribution:read', 'comment:read', 'elm-payload:read', 'elm-report:read']],
     paginationEnabled: false
