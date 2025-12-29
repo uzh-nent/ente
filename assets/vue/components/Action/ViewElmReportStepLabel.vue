@@ -45,7 +45,7 @@
     <labeled-value :label="$t('elm_report.queue_id')" v-if="report.documentReferenceId && step !== 'validation'">
       {{ report.documentReferenceId }}
     </labeled-value>
-    <operation-result-view class="mt-2" :json="stepResponseJson" />
+    <operation-result-view class="mt-2" :json="stepResponseJson"/>
   </label-modal>
 </template>
 
@@ -186,14 +186,14 @@ export default {
   },
   methods: {
     pollQueue: function () {
-      api.poll(this.report)
-      window.setTimeout(() => this.pollQueue(), 20 * 1000)
+      if (this.step === 'queue' && this.report.apiStatus === 'QUEUED') {
+        api.poll(this.report)
+        window.setTimeout(() => this.pollQueue(), 20 * 1000)
+      }
     }
   },
   mounted() {
-    if (this.step === 'queue' && this.report.apiStatus === 'QUEUED') {
-      this.pollQueue()
-    }
+    this.pollQueue()
   },
 }
 
