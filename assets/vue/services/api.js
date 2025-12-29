@@ -128,6 +128,7 @@ const preloadApi = {
     return {
       probe: window.probe,
 
+      users: window.users.member,
       specimens: window.specimens.member,
       leadingCodes: window.leadingCodes.member,
       organisms: window.organisms.member,

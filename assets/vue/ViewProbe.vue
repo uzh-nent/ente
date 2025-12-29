@@ -1,6 +1,6 @@
 <template>
   <div class="row" v-if="probe">
-    <div class="col-lg-4 col-md-6">
+    <div class="col-lg-4">
       <h3>{{ $t('probe.service_request') }}</h3>
       <actionable-view>
         <service-request-view :probe="probe"/>
@@ -55,37 +55,50 @@
         </actionable-view>
       </template>
     </div>
-    <div class="col-lg-4 col-md-6">
-      <h3>{{ $t('probe.progress') }}</h3>
-      <actionable-view>
-        <service-time-view :probe="probe"/>
-        <template v-slot:actions v-if="!probe.finishedAt">
-          <edit-probe-service-time-button :probe="probe"/>
-        </template>
-      </actionable-view>
+    <div class="col-lg-8">
+      <div class="row">
+        <div class="col-lg-6">
+          <h3>{{ $t('probe.progress') }}</h3>
+          <actionable-view>
+            <service-time-view :probe="probe"/>
+            <template v-slot:actions v-if="!probe.finishedAt">
+              <edit-probe-service-time-button :probe="probe"/>
+            </template>
+          </actionable-view>
 
-      <h3 class="mt-5">{{ $t('observation._name') }}</h3>
-      <add-identification-observation-button
-          v-if="missingIdentificationObservation" @added="observations.push($event)"
-          :probe="probe" :organisms="organisms"/>
-      <div class="d-flex flex-column gap-2">
-        <actionable-view v-for="observation in identificationObservations" :key="observation['@id']">
-          <identification-view
-              :organisms="organisms" :observation="observation"/>
-          <template v-slot:actions v-if="!probe.finishedAt">
-            <edit-identification-observation-button :probe="probe" :organisms="organisms" :observation="observation"/>
+          <h3 class="mt-5">{{ $t('observation._name') }}</h3>
+          <add-identification-observation-button
+              v-if="missingIdentificationObservation" @added="observations.push($event)"
+              :probe="probe" :organisms="organisms"/>
+          <div class="d-flex flex-column gap-2">
+            <actionable-view v-for="observation in identificationObservations" :key="observation['@id']">
+              <identification-view
+                  :organisms="organisms" :observation="observation"/>
+              <template v-slot:actions v-if="!probe.finishedAt">
+                <edit-identification-observation-button :probe="probe" :organisms="organisms"
+                                                        :observation="observation"/>
+              </template>
+              <template v-slot:footer>
+                <attribution-view :users="users" :entity="observation"/>
+              </template>
+            </actionable-view>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <template v-if="observations.length > 0">
+            <h3 class="mt-5">{{ $t('elm_report._name') }}</h3>
+            <add-elm-report-button
+                :probe="probe" :observations="observations"
+                :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
+                @added="elmReports.push($event)"
+            />
+            <elm-report-table
+                class="mt-2"
+                v-if="elmReports.length > 0" :reports="elmReports"
+                :users="users" :organisms="organisms" :leading-codes="leadingCodes" />
           </template>
-        </actionable-view>
+        </div>
       </div>
-
-      <template v-if="observations.length > 0">
-        <h3 class="mt-5">{{ $t('elm_report._name') }}</h3>
-        <add-elm-report-button
-            :probe="probe" :observations="observations"
-            :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
-            @added="elmReports.push($event)"
-        />
-      </template>
     </div>
   </div>
 </template>
@@ -113,10 +126,14 @@ import EditProbeOrdererOrgButton from "./components/Action/EditProbeOrdererOrgBu
 import OrdererPracView from "./components/View/Probe/OrdererPracView.vue";
 import EditProbeOrdererPracButton from "./components/Action/EditProbeOrdererPracButton.vue";
 import AddElmReportButton from "./components/Action/AddElmReportButton.vue";
+import AttributionView from "./components/View/AttributionView.vue";
+import ElmReportTable from "./components/View/ElmReportTable.vue";
 
 export default {
   emits: ['added'],
   components: {
+    ElmReportTable,
+    AttributionView,
     AddElmReportButton,
     EditProbeOrdererPracButton,
     OrdererPracView,
@@ -142,6 +159,7 @@ export default {
     return {
       probe: undefined,
 
+      users: undefined,
       specimens: undefined,
       leadingCodes: undefined,
       organisms: undefined,
@@ -164,9 +182,10 @@ export default {
     }
   },
   mounted() {
-    const {probe, specimens, leadingCodes, organisms, observations, elmReports} = preloadApi.getViewActiveProbe()
+    const {probe, users, specimens, leadingCodes, organisms, observations, elmReports} = preloadApi.getViewActiveProbe()
     this.probe = probe
 
+    this.users = users
     this.specimens = specimens
     this.leadingCodes = leadingCodes
     this.organisms = organisms

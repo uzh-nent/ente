@@ -2,6 +2,7 @@
 
 namespace App\Entity\Probe;
 
+use ApiPlatform\Metadata\ApiProperty;
 use App\Entity\AnimalKeeper;
 use App\Entity\Patient;
 use App\Entity\Specimen;
@@ -60,6 +61,7 @@ trait SpecimenMeta
 
     #[ORM\ManyToOne(targetEntity: AnimalKeeper::class, inversedBy: 'probes')]
     #[Groups(['probe:read', 'probe:write'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?AnimalKeeper $animalKeeper = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
@@ -68,10 +70,12 @@ trait SpecimenMeta
 
     #[ORM\ManyToOne(targetEntity: Patient::class, inversedBy: 'probes')]
     #[Groups(['probe:read', 'probe:write'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?Patient $patient = null;
 
     #[ORM\ManyToOne(targetEntity: Specimen::class)]
     #[Groups(['probe:read', 'probe:write'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?Specimen $specimen = null;
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: true)]

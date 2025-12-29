@@ -4,7 +4,8 @@
       "connection_error": "Ein Teil der Seite kann nicht geladen werden. Prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut."
     },
     "successful": "erfolgreich",
-    "failed": "fehlgeschlagen"
+    "failed": "fehlgeschlagen",
+    "changed_at": "geändert am"
   },
   "_form": {
     "other_or_unknown": "Anderes/Unbekannt",
@@ -259,7 +260,16 @@
     }
   },
   "elm_report": {
-    "_name": "BAG ELM Bericht"
+    "_name": "BAG ELM Bericht",
+    "sent_at": "Versandt am",
+    "payload": "Inhalt",
+    "status": "Status",
+    "api_status": {
+      "technical_error": "Technischer Fehler",
+      "validation_error": "Validierungsfehler",
+      "queued": "In der Warteschlange vom BAG",
+      "completed": "Erfolgreich übermittelt"
+    }
   },
   "organism": {
     "_name": "Organismus"

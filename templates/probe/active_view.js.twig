@@ -1,5 +1,6 @@
 window.probe = JSON.parse({{ subRequest('/api/probes/'~probe.id)|json_encode|raw }})
 
+window.users = JSON.parse({{ subRequest('/api/users')|json_encode|raw }})
 window.specimens = JSON.parse({{ subRequest('/api/specimens')|json_encode|raw }})
 window.leadingCodes = JSON.parse({{ subRequest('/api/leading_codes')|json_encode|raw }})
 window.organisms = JSON.parse({{ subRequest('/api/organisms')|json_encode|raw }})

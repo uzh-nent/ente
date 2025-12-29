@@ -29,7 +29,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    denormalizationContext: ['groups' => ['coded-identifier:read', 'organism:read']],
+    normalizationContext: ['groups' => ['coded-identifier:read', 'organism:read']],
     paginationEnabled: false
 )]
 #[Get]

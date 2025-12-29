@@ -15,6 +15,7 @@ use ApiPlatform\Doctrine\Common\Filter\SearchFilterInterface;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -27,6 +28,7 @@ use App\Entity\ElmReport\ElmPayload;
 use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
 use App\Entity\Traits\IdTrait;
+use App\Entity\Traits\TimeTrait;
 use App\Enum\ElmApiStatus;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -36,8 +38,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     processor: ElmReportProcessor::class, provider: ElmReportProvider::class,
-    normalizationContext: ['groups' => ['comment:write', 'elm-payload:write', 'elm-report:write']],
-    denormalizationContext: ['groups' => ['attribution:read', 'comment:read', 'elm-payload:read', 'elm-report:read']]
+    denormalizationContext: ['groups' => ['comment:write', 'elm-payload:write', 'elm-report:write']],
+    normalizationContext: ['groups' => ['attribution:read', 'comment:read', 'elm-payload:read', 'elm-report:read']],
+    paginationEnabled: false
 )]
 #[Get]
 #[Post]
@@ -48,15 +51,18 @@ class ElmReport
 {
     use IdTrait;
     use AttributionTrait;
+    use TimeTrait;
     use CommentTrait;
     use ElmPayload;
 
     #[ORM\ManyToOne(targetEntity: Probe::class)]
     #[Groups(['elm-report:read', 'elm-report:write'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?Probe $probe = null;
 
     #[ORM\ManyToOne(targetEntity: Observation::class)]
     #[Groups(['elm-report:read', 'elm-report:write'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?Observation $observation = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
@@ -84,7 +90,6 @@ class ElmReport
     private ElmApiStatus $apiStatus = ElmApiStatus::CREATING;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    #[Groups(['elm-report:read'])]
     private ?string $apiQueueStatus = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]

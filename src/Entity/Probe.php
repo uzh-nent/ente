@@ -22,9 +22,6 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Api\Processor\ProbeProcessor;
-use App\Entity\Probe\AnimalKeeperCopy;
-use App\Entity\Probe\OrdererOrgCopy;
-use App\Entity\Probe\PatientCopy;
 use App\Entity\Probe\ServiceRequest;
 use App\Entity\Probe\ServiceTime;
 use App\Entity\Probe\SpecimenMeta;
@@ -32,7 +29,6 @@ use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
-use App\Enum\ProbeStatus;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -41,8 +37,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     processor: ProbeProcessor::class,
-    normalizationContext: ['groups' => ['orderer:write', 'animal-keeper:write', 'patient:write', 'comment:write', 'probe:write']],
-    denormalizationContext: ['groups' => ['attribution:read', 'orderer:read', 'animal-keeper:read', 'patient:read', 'comment:read', 'probe:read']]
+    normalizationContext: ['groups' => ['attribution:read', 'orderer:read', 'animal-keeper:read', 'patient:read', 'comment:read', 'probe:read']],
+    denormalizationContext: ['groups' => ['orderer:write', 'animal-keeper:write', 'patient:write', 'comment:write', 'probe:write']]
 )]
 #[Get]
 #[Post]

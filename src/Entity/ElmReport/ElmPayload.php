@@ -2,6 +2,7 @@
 
 namespace App\Entity\ElmReport;
 
+use ApiPlatform\Metadata\ApiProperty;
 use App\Entity\LeadingCode;
 use App\Entity\Organism;
 use App\Entity\Specimen;
@@ -14,10 +15,12 @@ trait ElmPayload
 {
     #[ORM\ManyToOne(targetEntity: LeadingCode::class)]
     #[Groups(['elm-payload:read', 'elm-payload:write'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?LeadingCode $leadingCode = null;
 
     #[ORM\ManyToOne(targetEntity: Organism::class)]
     #[Groups(['elm-payload:read', 'elm-payload:write'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?Organism $organism = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
@@ -26,6 +29,7 @@ trait ElmPayload
 
     #[ORM\ManyToOne(targetEntity: Specimen::class)]
     #[Groups(['elm-payload:read', 'elm-payload:write'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?Specimen $specimen = null;
 
     #[ORM\Column(type: Types::STRING, enumType: Interpretation::class, nullable: true)]

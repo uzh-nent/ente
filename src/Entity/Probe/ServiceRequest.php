@@ -2,6 +2,7 @@
 
 namespace App\Entity\Probe;
 
+use ApiPlatform\Metadata\ApiProperty;
 use App\Entity\Organization;
 use App\Entity\Practitioner;
 use App\Enum\AnalysisType;
@@ -42,10 +43,12 @@ trait ServiceRequest
 
     #[ORM\ManyToOne(targetEntity: Organization::class, inversedBy: 'probes')]
     #[Groups(['probe:read', 'probe:write'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?Organization $ordererOrg = null;
 
     #[ORM\ManyToOne(targetEntity: Practitioner::class, inversedBy: 'probes')]
     #[Groups(['probe:read', 'probe:write'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?Practitioner $ordererPrac = null;
 
     public function getLaboratoryFunction(): LaboratoryFunction

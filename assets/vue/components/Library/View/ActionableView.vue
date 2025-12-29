@@ -8,11 +8,15 @@
         <slot name="actions"/>
       </div>
     </div>
+    <div v-if="$slots.footer" class="card-footer">
+      <slot name="footer"/>
+    </div>
   </div>
 </template>
 
 <script>
 
-export default {}
+export default {
+}
 
 </script>

@@ -37,8 +37,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     processor: ObservationProcessor::class,
-    normalizationContext: ['groups' => ['comment:write', 'observation:write']],
-    denormalizationContext: ['groups' => ['time:read', 'attribution:read', 'comment:read', 'observation:read']]
+    denormalizationContext: ['groups' => ['comment:write', 'observation:write']],
+    normalizationContext: ['groups' => ['time:read', 'attribution:read', 'comment:read', 'observation:read']],
+    paginationEnabled: false
 )]
 #[Get]
 #[Post]

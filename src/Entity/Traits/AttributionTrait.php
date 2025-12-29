@@ -11,6 +11,7 @@
 
 namespace App\Entity\Traits;
 
+use ApiPlatform\Metadata\ApiProperty;
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -19,10 +20,12 @@ trait AttributionTrait
 {
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[Groups(['attribution:read'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?User $createdBy = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[Groups(['attribution:read'])]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?User $lastChangedBy = null;
 
     public function getCreatedBy(): User

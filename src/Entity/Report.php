@@ -11,9 +11,11 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
 use App\Entity\Traits\IdTrait;
+use App\Entity\Traits\TimeTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,17 +26,21 @@ class Report
     use IdTrait;
     use CommentTrait;
     use AttributionTrait;
+    use TimeTrait;
 
     #[ORM\ManyToOne(targetEntity: Organization::class)]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?Probe $probe = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $title = null;
 
     #[ORM\ManyToOne(targetEntity: Organization::class)]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?Organization $receiver = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private ?User $signedBy = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]

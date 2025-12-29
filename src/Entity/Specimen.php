@@ -28,7 +28,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    denormalizationContext: ['groups' => ['coded-identifier:read', 'specimen:read']],
+    normalizationContext: ['groups' => ['coded-identifier:read', 'specimen:read']],
     paginationEnabled: false
 )]
 #[Get]
