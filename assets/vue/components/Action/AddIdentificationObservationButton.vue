@@ -72,7 +72,7 @@ export default {
       displaySuccess(successMessage)
     },
     focusIdentification: function () {
-      document.getElementById('searchOrganism')?.focus()
+      document.getElementById('identificationSuccessful')?.focus()
     }
   }
 }

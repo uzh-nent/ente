@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" v-if="specimens">
     <div class="col-lg-4 col-md-6">
       <h3>{{ $t('probe.service_request') }}</h3>
       <service-request-form :template="serviceRequestTemplate" @update="serviceRequest = $event"/>
