@@ -1,32 +1,4 @@
-<template>
-  <div class="duck__outer-wrapper">
-    <div class="duck__wrapper">
-      <div class="duck">
-        <div class="duck__foot duck__foot--1"></div>
-        <div class="duck__foot duck__foot--2"></div>
-        <div class="duck duck__inner">
-          <div class="duck__mouth"></div>
-          <div class="duck__head">
-            <div class="duck__eye"></div>
-            <div class="duck__white"></div>
-          </div>
-          <div class="duck__body"></div>
-          <div class="duck__wing"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
 
-<script>
-/**
- * Source: https://github.com/MdUsmanAnsari/walking-duck-animation
- * MIT licensed
- */
-export default {}
-</script>
-
-<style scoped>
 :root {
   --color-yellow: #ffed02;
   --color-light-orange-1: #fece00;
@@ -192,10 +164,14 @@ export default {}
 }
 
 .duck__foot--1, .duck__foot--2 {
-  left: 40%;
+  left: 50%;
   bottom: 0;
   -webkit-transform: translate(-50%, 80%);
   transform: translate(-50%, 80%);
+}
+
+.duck__foot--2 {
+  left: 65%;
 }
 
 .duck__foot--1 {
@@ -208,135 +184,7 @@ export default {}
   animation: foot-ans var(--duck-speed) var(--duck-speed-half) linear infinite;
 }
 
-@-webkit-keyframes foot-ans {
-  0% {
-    -webkit-transform: translate(-50%, 80%) rotate(0deg);
-    transform: translate(-50%, 80%) rotate(0deg);
-  }
-  10% {
-    -webkit-transform: translate(-150%, 80%) rotate(10deg);
-    transform: translate(-150%, 80%) rotate(10deg);
-  }
-  20% {
-    -webkit-transform: translate(-150%, 10%) rotate(10deg);
-    transform: translate(-150%, 10%) rotate(10deg);
-  }
-  40% {
-    -webkit-transform: translate(400%, 10%) rotate(-20deg);
-    transform: translate(400%, 10%) rotate(-20deg);
-  }
-  60% {
-    -webkit-transform: translate(600%, 60%) rotate(-20deg);
-    transform: translate(600%, 60%) rotate(-20deg);
-  }
-  70% {
-    -webkit-transform: translate(500%, 60%) rotate(0deg);
-    transform: translate(500%, 60%) rotate(0deg);
-  }
-}
-
-@keyframes foot-ans {
-  0% {
-    -webkit-transform: translate(-50%, 80%) rotate(0deg);
-    transform: translate(-50%, 80%) rotate(0deg);
-  }
-  10% {
-    -webkit-transform: translate(-150%, 80%) rotate(10deg);
-    transform: translate(-150%, 80%) rotate(10deg);
-  }
-  20% {
-    -webkit-transform: translate(-150%, 10%) rotate(10deg);
-    transform: translate(-150%, 10%) rotate(10deg);
-  }
-  40% {
-    -webkit-transform: translate(400%, 10%) rotate(-20deg);
-    transform: translate(400%, 10%) rotate(-20deg);
-  }
-  60% {
-    -webkit-transform: translate(600%, 60%) rotate(-20deg);
-    transform: translate(600%, 60%) rotate(-20deg);
-  }
-  70% {
-    -webkit-transform: translate(500%, 60%) rotate(0deg);
-    transform: translate(500%, 60%) rotate(0deg);
-  }
-}
-
 .duck__inner {
   -webkit-animation: bird-up-down var(--duck-speed-half) linear infinite;
   animation: bird-up-down var(--duck-speed-half) linear infinite;
 }
-
-@-webkit-keyframes bird-up-down {
-  0%,
-  100% {
-    -webkit-transform: translateY(0.4em);
-    transform: translateY(0.4em);
-  }
-  50% {
-    -webkit-transform: translateY(0em);
-    transform: translateY(0em);
-  }
-}
-
-@keyframes bird-up-down {
-  0%,
-  100% {
-    -webkit-transform: translateY(0.4em);
-    transform: translateY(0.4em);
-  }
-  50% {
-    -webkit-transform: translateY(0em);
-    transform: translateY(0em);
-  }
-}
-
-@-webkit-keyframes wing-animation {
-  0%,
-  100% {
-    -webkit-transform: translate(0, -50%) rotate(16deg);
-    transform: translate(0, -50%) rotate(16deg);
-  }
-  50% {
-    -webkit-transform: translate(0, -50%) rotate(-2deg);
-    transform: translate(0, -50%) rotate(-2deg);
-  }
-}
-
-@keyframes wing-animation {
-  0%,
-  100% {
-    -webkit-transform: translate(0, -50%) rotate(16deg);
-    transform: translate(0, -50%) rotate(16deg);
-  }
-  50% {
-    -webkit-transform: translate(0, -50%) rotate(-2deg);
-    transform: translate(0, -50%) rotate(-2deg);
-  }
-}
-
-@-webkit-keyframes eye-animation {
-  0%,
-  20% {
-    -webkit-transform: scaleY(1);
-    transform: scaleY(1);
-  }
-  10% {
-    -webkit-transform: scaleY(0);
-    transform: scaleY(0);
-  }
-}
-
-@keyframes eye-animation {
-  0%,
-  20% {
-    -webkit-transform: scaleY(1);
-    transform: scaleY(1);
-  }
-  10% {
-    -webkit-transform: scaleY(0);
-    transform: scaleY(0);
-  }
-}
-
-</style>

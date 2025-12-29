@@ -15,10 +15,27 @@
         <div class="d-flex flex-row vh-100">
             <div class="d-flex flex-column justify-content-between bg-light px-2 py-3">
                 <div class="menu">
-                    <p>
-                        🦆 | <b id="shortname">{{ app.user.shortname }}</b>
+                    <div>
+                        <div class="duck__outer-wrapper">
+                            <div class="duck__wrapper">
+                                <div class="duck">
+                                    <div class="duck__foot duck__foot--1"></div>
+                                    <div class="duck__foot duck__foot--2"></div>
+                                    <div class="duck duck__inner">
+                                        <div class="duck__mouth"></div>
+                                        <div class="duck__head">
+                                            <div class="duck__eye"></div>
+                                            <div class="duck__white"></div>
+                                        </div>
+                                        <div class="duck__body"></div>
+                                        <div class="duck__wing"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        | <b id="shortname">{{ app.user.shortname }}</b>
                         <a href="/logout">{{ "logout.title"|trans({}, 'security') }}</a>
-                    </p>
+                    </div>
 
                     {% set is_admin = app.request.pathInfo starts with "/admin" %}
 
