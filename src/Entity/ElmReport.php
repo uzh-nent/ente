@@ -39,7 +39,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ApiResource(
     processor: ElmReportProcessor::class, provider: ElmReportProvider::class,
     denormalizationContext: ['groups' => ['comment:write', 'elm-payload:write', 'elm-report:write']],
-    normalizationContext: ['groups' => ['attribution:read', 'comment:read', 'elm-payload:read', 'elm-report:read']],
+    normalizationContext: ['groups' => ['time:read', 'attribution:read', 'comment:read', 'elm-payload:read', 'elm-report:read']],
     paginationEnabled: false
 )]
 #[Get]
