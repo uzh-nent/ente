@@ -42,7 +42,7 @@
         {{ $t('messages.download') }}
       </a>
     </labeled-value>
-    <labeled-value :label="$t('elm_report.queue_id')" v-if="report.documentReferenceId">
+    <labeled-value :label="$t('elm_report.queue_id')" v-if="report.documentReferenceId && step !== 'validation'">
       {{ report.documentReferenceId }}
     </labeled-value>
     <operation-result-view class="mt-2" :json="stepResponseJson" />
