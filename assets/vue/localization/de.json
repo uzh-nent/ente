@@ -13,6 +13,9 @@
       "from": "Von",
       "until": "Bis"
     },
+    "elm_report": {
+      "no_leading_choices_for_pathogen": "Für dieses Pathogen sind keine Leading Codes definiert."
+    },
     "observation": {
       "identification": {
         "no_organism_defined": "Kein Organismus definiert für dieses Pathogen."
@@ -246,6 +249,7 @@
   "observation": {
     "_name": "Resultat",
     "effective_at": "Resultat vom",
+    "interpretation": "Resultat",
     "identification_successful": "Identifizierung erfolgreich",
     "interpretation_text": "Kommentar",
     "cgMLST": "cgMLST",
@@ -259,6 +263,9 @@
   },
   "organism": {
     "_name": "Organismus"
+  },
+  "leading_code": {
+    "_name": "Leading Code"
   },
   "address": {
     "_name": "Adresse",

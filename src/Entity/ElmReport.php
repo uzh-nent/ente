@@ -59,7 +59,7 @@ class ElmReport
     #[Groups(['elm-report:read', 'elm-report:write'])]
     private ?Observation $observation = null;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Groups(['elm-report:read'])]
     private ?\DateTimeImmutable $sentAt = null;
 

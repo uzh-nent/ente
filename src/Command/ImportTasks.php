@@ -76,6 +76,7 @@ class ImportTasks extends Command
             $entity->setDisplayName($leadingCode['display_name']);
             $entity->setSystem(CodeSystem::LOINC);
 
+            $entity->setPathogen(self::parsePathogen($leadingCode['pathogen']));
             $entity->setOrganismGroup($leadingCode['organism_group']);
             $entity->setSpecimenGroup($leadingCode['specimen_group']);
             $entity->setInterpretationGroup(self::parseInterpretationGroup($leadingCode['interpretation_group']));
@@ -92,6 +93,7 @@ class ImportTasks extends Command
             $existingLeadingCode = array_find($leadingCodes, fn(LeadingCode $s) => $s->isDuplicateOf($entity));
             if ($existingLeadingCode) {
                 $existingLeadingCode->setDisplayName($entity->getDisplayName());
+                $existingLeadingCode->setPathogen($entity->getPathogen());
                 $existingLeadingCode->setOrganismGroup($entity->getOrganismGroup());
                 $existingLeadingCode->setSpecimenGroup($entity->getSpecimenGroup());
                 $existingLeadingCode->setInterpretationGroup($entity->getInterpretationGroup());
@@ -200,7 +202,7 @@ class ImportTasks extends Command
             'Shigella' => Pathogen::SHIGELLA,
             'Vibrio cholerae' => Pathogen::VIBRIO_CHOLERAE,
             'Listeria monocytogenes' => Pathogen::LISTERIA_MONOCYTOGENES,
-            'Yersinia pestis' => Pathogen::YERSINIA,
+            'Yersinia Pestis', 'Yersinia pestis' => Pathogen::YERSINIA,
             'Enterohaemorrhagic Escherichia coli' => Pathogen::ESCHERICHIA_COLI,
             default => throw new \Exception("Unknown pathogen $pathogen"),
         };

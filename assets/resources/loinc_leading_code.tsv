@@ -23,7 +23,7 @@ code	display_name	pathogen	organism_group	specimen_group	interpretation_group	sp
 93385-3	Salmonella sp DNA [Presence] by NAA with probe detection in Positive blood culture	Salmonella	sal_org		POS	119297000
 49612-5	Salmonella sp DNA [Presence] in Specimen by NAA with probe detection	Salmonella	sal_org		POS
 97313-1	Salmonella sp DNA [Presence] in Stool by NAA with probe detection	Salmonella	sal_org		POS	119339001
-65756-9	Salmonella sp serovar [Type] in Isolate	Salmonella	sal_org_omplete		POS	119303007
+65756-9	Salmonella sp serovar [Type] in Isolate	Salmonella	sal_org_complete		POS	119303007
 105065-7	Shigella species+EIEC invasion plasmid antigen H ipaH gene [Presence] in Specimen	Shigella			POS
 21262-1	Escherichia coli shiga-like toxin [Presence] in Stool by Immunoassay	Enterohaemorrhagic Escherichia coli			POS	119339001
 51940-5	Escherichia coli shiga-like toxin 1 [Presence] in Stool by Immunoassay	Enterohaemorrhagic Escherichia coli			POS	119339001
