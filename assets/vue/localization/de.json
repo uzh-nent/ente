@@ -270,13 +270,16 @@
     "sent_at": "Versandt am",
     "payload": "Inhalt",
     "request": "Anfrage",
+    "response": "Antwort",
     "step": "Schritt",
     "status": "Status",
+    "request_id": "Anfrage-ID (DiagnosticReport)",
+    "queue_id": "Verarbeitungs-ID (DocumentReference)",
     "_status": {
       "technical_error": "Technischer Fehler",
       "validation_error": "Validierungsfehler",
       "in_queue": "In Verarbeitung",
-      "successful": "Erfolgreich"
+      "success": "Erfolgreich"
     },
     "_step": {
       "validation": "Validierung",

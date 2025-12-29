@@ -1,36 +1,50 @@
 <template>
-  <label-modal v-if="show"
+  <label-modal v-if="show" modal-size="lg"
                :icon="icon" :label="showLabel ? label : null" :label-color="labelColor"
                :title="$t('_action.view_api_status.title')">
     <template v-slot:label v-if="status === 'in_queue'">
       <duck-walking/>
     </template>
 
-    <labeled-value :label="$t('elm_report.request')">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class=" p-2 bg-light">
+          <labeled-value :label="$t('elm_report.step')">
+            {{ $t('elm_report._step.' + step) }}
+          </labeled-value>
+
+          <labeled-value :label="$t('elm_report.status')">
+            <span :class="'text-' + labelColor">
+              <i v-if="icon" :class="icon"/>
+              <duck-walking v-if="status === 'in_queue'"/>
+              {{ label }}
+            </span>
+          </labeled-value>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="mt-5">{{ $t('elm_report.request') }}</h3>
+    <labeled-value :label="$t('elm_report.payload')">
       <a :href="requestDownloadUrl" :download="requestFilename">
         <i class="fas fa-download"/>
         {{ $t('messages.download') }}
       </a>
     </labeled-value>
-
-    <labeled-value :label="$t('elm_report.step')">
-      {{ $t('elm_report._step.' + step) }}
+    <labeled-value :label="$t('elm_report.request_id')">
+      {{ report.diagnosticReportId }}
     </labeled-value>
 
-    <labeled-value :label="$t('elm_report.status')">
-      <span :class="'text-' + labelColor">
-        <i v-if="icon" :class="icon"/>
-        <duck-walking v-if="status === 'in_queue'"/>
-        {{ label }}
-      </span>
-    </labeled-value>
-
-    <div class="mt-2">
+    <h3 class="mt-5">{{ $t('elm_report.response') }}</h3>
+    <labeled-value :label="$t('elm_report.response')">
       <a v-if="stepResponseDownloadUrl" :href="stepResponseDownloadUrl" :download="stepResponseFilename">
         <i class="fas fa-download"/>
-        {{ $t('_action.view_api_status.download_response') }}
+        {{ $t('messages.download') }}
       </a>
-    </div>
+    </labeled-value>
+    <labeled-value :label="$t('elm_report.queue_id')" v-if="report.documentReferenceId">
+      {{ report.documentReferenceId }}
+    </labeled-value>
   </label-modal>
 </template>
 
