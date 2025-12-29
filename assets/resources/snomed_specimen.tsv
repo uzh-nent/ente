@@ -5,9 +5,11 @@ specimen_group	code	display_name
 	122575003	Urine specimen
 	258580003	Whole blood specimen
 	258450006	Cerebrospinal fluid specimen
+	119324002	Specimen of unknown material
 geni_spec	258527002	Anal swab
 geni_spec	119324002	Specimen of unknown material
 geni_spec	257261003	Swab
 geni_spec	122575003	Urine specimen
 sterile_spec	119371008	Specimen from abscess
 sterile_spec	119297000	Blood specimen (specimen)
+sterile_spec	119324002	Specimen of unknown material
