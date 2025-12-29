@@ -5,7 +5,8 @@
     },
     "successful": "erfolgreich",
     "failed": "fehlgeschlagen",
-    "changed_at": "geändert am"
+    "changed_at": "geändert am",
+    "download": "herunterladen"
   },
   "_form": {
     "other_or_unknown": "Anderes/Unbekannt",
@@ -28,6 +29,11 @@
       "title": "Filter",
       "apply": "Setzen",
       "clear": "Zurücksetzen"
+    },
+    "view_api_status": {
+      "title": "API Status",
+      "download_request": "Anfrage herunterladen",
+      "download_response": "Antwort herunterladen"
     },
     "add_probe": {
       "added": "Probe hinzugefügt.",
@@ -263,12 +269,19 @@
     "_name": "BAG ELM Bericht",
     "sent_at": "Versandt am",
     "payload": "Inhalt",
+    "request": "Anfrage",
+    "step": "Schritt",
     "status": "Status",
-    "api_status": {
+    "_status": {
       "technical_error": "Technischer Fehler",
       "validation_error": "Validierungsfehler",
-      "queued": "In der Warteschlange vom BAG",
-      "completed": "Erfolgreich übermittelt"
+      "in_queue": "In Verarbeitung",
+      "successful": "Erfolgreich"
+    },
+    "_step": {
+      "validation": "Validierung",
+      "send": "Versand",
+      "queue": "Verarbeitung"
     }
   },
   "organism": {

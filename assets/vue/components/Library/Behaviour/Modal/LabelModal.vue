@@ -1,40 +1,47 @@
 <template>
-  <button class="btn" :class="active ? 'btn-' + color : 'btn-outline-' + color" @click="tryShow">
-    <i v-if="icon" :class="icon"></i>
-    <template v-if="buttonSize !== 'sm' || !icon">&nbsp;{{ title }}</template>
+  <div>
+    <a class="no-underline" href="#" @click="tryShow" :class="labelClass">
+      <slot name="label"/>
+      <i v-if="icon" :class="icon"></i>
+      {{ label }}
+    </a>
 
     <modal :title="title" :size="modalSize" :show="show" @hide="tryHide">
-      <slot />
+      <slot/>
       <template #footer>
-        <slot name="footer" />
+        <slot name="footer"/>
       </template>
     </modal>
-  </button>
+  </div>
 </template>
 
 <script>
 import Modal from './Modal.vue'
 
 export default {
-  components: { Modal },
+  components: {Modal},
   emits: ['hiding', 'showing'],
   props: {
+    label: {
+      type: String,
+      required: true
+    },
     title: {
       type: String,
       required: true
     },
     icon: {
-      type: Array,
+      type: [Array, String],
       default: null
     },
     active: {
       type: Boolean,
       default: false
     },
-    buttonSize: {
+    labelColor: {
       type: String,
-      default: 'md',
-      validator: value => ['sm', 'md'].includes(value)
+      default: null,
+      validator: value => ['success', 'danger'].includes(value)
     },
     modalSize: {
       type: String,
@@ -46,13 +53,23 @@ export default {
       default: 'primary'
     }
   },
-  data () {
+  data() {
     return {
       show: false
     }
   },
+  computed: {
+    labelClass: function () {
+      if (!this.labelColor) {
+        return null
+      }
+
+      return 'text-' + this.labelColor
+    }
+  },
   methods: {
-    tryShow: function () {
+    tryShow: function (e) {
+      e.preventDefault()
       if (!this.show) {
         this.show = true
         this.$emit('showing')
@@ -67,3 +84,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.no-underline {
+  text-decoration: none;
+}
+</style>

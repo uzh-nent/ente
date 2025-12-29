@@ -13,54 +13,22 @@
       </template>
     </td>
     <td>
-      <template v-if="report.apiStatus === 'VALIDATION_ERROR'">
-        <i class="fas fa-xmark-circle"></i>
-        {{ $t('elm_report.api_status.technical_error') }}
-      </template>
-      <template v-else-if="report.apiStatus === 'VALIDATION_ISSUES'">
-        <i class="fas fa-xmark-circle"></i>
-        {{ $t('elm_report.api_status.validation_error') }}
-      </template>
-      <template v-else>
-        <i class="fas fa-check-circle"></i>
-
-        <template v-if="report.apiStatus === 'SEND_ERROR'">
-          <i class="fas fa-xmark-circle"></i>
-          {{ $t('elm_report.api_status.technical_error') }}
-        </template>
-        <template v-else-if="report.apiStatus === 'SEND_ISSUES'">
-          <i class="fas fa-xmark-circle"></i>
-          {{ $t('elm_report.api_status.validation_error') }}
-        </template>
-        <template v-else>
-          <i class="fas fa-check-circle"></i>
-
-          <template v-if="report.apiStatus === 'QUEUED'">
-            <duck-walking/>
-            {{ $t('elm_report.api_status.queued') }}
-          </template>
-          <template v-else-if="report.apiStatus === 'COMPLETED'">
-            <i class="fas fa-check-circle"></i>
-            {{ $t('elm_report.api_status.completed') }}
-          </template>
-          <template v-else>
-            <i class="fas fa-xmark-circle"></i>
-            {{ $t('elm_report.api_status.validation_error') }}
-          </template>
-
-          {{ report.documentReferenceId }}
-        </template>
-      </template>
+      <view-elm-report-step-label :report="report" step="validation" />
+      <view-elm-report-step-label :report="report" step="send" />
+      <view-elm-report-step-label :report="report" step="queue" />
+      {{ report.documentReferenceId }}
     </td>
   </tr>
 </template>
 
 <script>
 import AttributionView from "./AttributionView.vue";
-import DuckWalking from "../Library/View/Base/DuckWalking.vue";
+import ViewElmReportStepLabel from "../Action/ViewElmReportStepLabel.vue";
 
 export default {
-  components: {DuckWalking, AttributionView},
+  components: {
+    ViewElmReportStepLabel,
+    AttributionView},
   props: {
     report: {
       type: Object,
