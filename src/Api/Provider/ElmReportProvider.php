@@ -16,6 +16,7 @@ use App\Helper\DoctrineHelper;
 use App\Services\Interfaces\ElmServiceInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @implements ProviderInterface<ElmReport>
@@ -28,7 +29,9 @@ readonly class ElmReportProvider implements ProviderInterface
         #[Autowire(service: 'api_platform.doctrine.orm.state.collection_provider')]
         private ProviderInterface   $collectionProvider,
         private ManagerRegistry     $managerRegistry,
-        private ElmServiceInterface $elmService
+        private ElmServiceInterface $elmService,
+        private RequestStack $requestStack,
+
     )
     {
     }
@@ -37,10 +40,11 @@ readonly class ElmReportProvider implements ProviderInterface
     {
         // Post is validated in the processor
         if ($operation instanceof Get) {
-            if (isset($context['poll']) && isset($context['id'])) {
+            $request = $this->requestStack->getCurrentRequest();
+            if ($request->query->get('poll') !== null && isset($uriVariables['id'])) {
                 $repository = $this->managerRegistry->getRepository(ElmReport::class);
                 /** @var ElmReport $elmReport */
-                $elmReport = $repository->find($context['id']);
+                $elmReport = $repository->find($uriVariables['id']);
                 if ($elmReport && $elmReport->getApiStatus() === ElmApiStatus::QUEUED) {
                     $this->elmService->checkProgress($elmReport);
                     DoctrineHelper::persistAndFlush($this->managerRegistry, $elmReport);

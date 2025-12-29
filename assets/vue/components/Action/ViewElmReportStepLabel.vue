@@ -52,6 +52,7 @@
 import LabeledValue from "../Library/View/LabeledValue.vue";
 import LabelModal from "../Library/Behaviour/Modal/LabelModal.vue";
 import DuckWalking from "../Library/View/Base/DuckWalking.vue";
+import {api} from "../../services/api";
 
 export default {
   components: {DuckWalking, LabelModal, LabeledValue},
@@ -179,7 +180,18 @@ export default {
     stepResponseFilename: function () {
       return `${this.report.diagnosticReportId}-reponse-${this.step}.json`
     }
-  }
+  },
+  methods: {
+    pollQueue: function () {
+      api.poll(this.report)
+      window.setTimeout(() => this.pollQueue(), 20 * 1000)
+    }
+  },
+  mounted() {
+    if (this.step === 'queue' && this.report.apiStatus === 'QUEUED') {
+      this.pollQueue()
+    }
+  },
 }
 
 </script>

@@ -94,6 +94,10 @@ const restClient = {
     const response = await axios.get(url)
     return response.data
   },
+  poll: async function (instance) {
+    const response = await axios.get(instance['@id'] + "?poll=1")
+    this._writeAllProperties(instance, {}, response.data)
+  },
   post: async function (collectionUrl, post) {
     const normalizedPost = this._normalizePayload(post)
     const response = await axios.post(collectionUrl, normalizedPost, {headers: {'Content-Type': 'application/ld+json'}})
@@ -142,6 +146,9 @@ const preloadApi = {
 const api = {
   get: function (id) {
     return restClient.get(id)
+  },
+  poll: function (entity) {
+    return restClient.poll(entity)
   },
   patch: function (instance, patch) {
     return restClient.patch(instance, patch)
