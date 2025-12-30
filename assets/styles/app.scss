@@ -17,3 +17,14 @@ $font-family-sans-serif: 'Source Sans Pro', sans-serif;
 
 @import "breadcrumb.scss";
 @import "duck";
+
+
+.clickable {
+  cursor: pointer;
+}
+
+.hover-bg-light {
+  &:hover {
+    background-color: $gray-200;
+  }
+}

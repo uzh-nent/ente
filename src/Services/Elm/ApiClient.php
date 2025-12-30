@@ -16,6 +16,15 @@ readonly class ApiClient
         return $this->performApiCall("/DocumentReference/\$Validate", $json, $error);
     }
 
+    public function validateBundle(string $json, ?string &$error = null): string
+    {
+        // compared to validate document reference, validating the bundle is more localized
+        // this includes more localized errors (i.e. there is a separate entry for the missing patient.gender)
+        // however, there are also many false errors thrown (e.g. if patient.gender is missing, 5 other errors appear)
+        // so overall, not really more useful than a document reference
+        return $this->performApiCall("/Bundle/\$Validate", $json, $error);
+    }
+
     public function sendDocumentReference(string $json, ?string &$error = null): string
     {
         return $this->performApiCall("/DocumentReference/", $json, $error);

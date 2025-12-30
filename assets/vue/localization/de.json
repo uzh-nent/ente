@@ -125,7 +125,10 @@
     "search_by_name": "Suche nach Name",
     "search_by_family_name": "Suche nach Nachname",
     "search_by_ahv_numer": "Suche nach AHV-Nummer",
-    "filter_by_birth_date": "Geburtsdatum"
+    "filter_by_birth_date": "Geburtsdatum",
+    "probe_navigation": {
+      "no_probes": "Keine Proben gefunden."
+    }
   },
   "organization": {
     "_name": "Organisation",

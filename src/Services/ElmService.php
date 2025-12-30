@@ -26,6 +26,7 @@ readonly class ElmService implements ElmServiceInterface
         $json = json_encode($payload, JSON_PRETTY_PRINT);
         $report->setRequestJson($json);
 
+        // validate document reference instead of bundle as error reporting of bundle is not more useful
         if (!$this->validateDocumentReference($report)) {
             return;
         }

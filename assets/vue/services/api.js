@@ -128,6 +128,11 @@ const preloadApi = {
       specimens: window.specimens.member,
     }
   },
+  getActiveProbes: function () {
+    return {
+      activeProbes: window.activeProbes.member,
+    }
+  },
   getViewActiveProbe: function () {
     return {
       probe: window.probe,

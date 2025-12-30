@@ -20,6 +20,7 @@ import Organizations from "./Organizations.vue";
 import Practitioners from "./Practitioners.vue";
 import Patients from "./Patients.vue";
 import AnimalKeepers from "./AnimalKeepers.vue";
+import ActiveProbes from "./ActiveProbes.vue";
 
 
 // configure locales
@@ -69,5 +70,9 @@ $(document).ready(function () {
 
   if (document.getElementById('vue-probe-view') != null) {
     createVue(ViewProbe).mount('#vue-probe-view')
+  }
+
+  if (document.getElementById('vue-active-probes') != null) {
+    createVue(ActiveProbes).mount('#vue-active-probes')
   }
 })

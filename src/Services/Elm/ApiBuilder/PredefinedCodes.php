@@ -48,13 +48,4 @@ readonly class PredefinedCodes
             "display" => "Microbiology studies (set)"
         ];
     }
-
-    public static function snomedGenotyping(): array
-    {
-        return [
-            "system" => "http://snomed.info/sct",
-            "code" => "726528006",
-            "display" => "Genotyping"
-        ];
-    }
 }

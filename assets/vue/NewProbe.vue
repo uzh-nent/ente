@@ -1,5 +1,5 @@
 <template>
-  <div class="row" v-if="specimens">
+  <div class="row">
     <div class="col-lg-4 col-md-6">
       <h3>{{ $t('probe.service_request') }}</h3>
       <service-request-form :template="serviceRequestTemplate" @update="serviceRequest = $event"/>
@@ -168,10 +168,11 @@ export default {
       }
     }
   },
-  mounted() {
+  beforeMount() {
     const {specimens} = preloadApi.getNewProbe()
     this.specimens = specimens
-
+  },
+  mounted() {
     this.$nextTick(() => {
       document.getElementById('requisitionIdentifier')?.focus()
     })

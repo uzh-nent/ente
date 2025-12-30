@@ -268,7 +268,7 @@ readonly class ApiBuilder
                 ],
                 "status" => "completed", // predefined value
                 "intent" => "order", // predefined value
-                "code" => $observationResource['resource']['code'], // always equal
+                "code" => $observationResource['resource']['code'], // for now equal to observation value. could also store laboratory--specific code here (see 4.8 CH ELM ServiceRequest)
                 "subject" => $this->formatter->reference($patientResource["resource"]),
                 "requester" => $this->formatter->reference($ordererPractitionerRoleResource["resource"]),
                 "specimen" => [$this->formatter->reference($specimenResource["resource"])]
@@ -315,8 +315,7 @@ readonly class ApiBuilder
             [
                 "title" => "Ergebnisse",
                 "code" => [
-                    // reference to microbiological studies here (instead of genotyping), as then 3.4.1 seems to not apply: https://elm.wiki.bagapps.ch/Dokumente/CH-ELM_appendix_2_FHIR_Document_Breakdown.pdf
-                    // in 3.4.1., it references to https://fhir.ch/ig/ch-elm/ValueSet-ch-elm-results-laboratory-observation-geno.html and https://fhir.ch/ig/ch-elm/ValueSet-ch-elm-results-laboratory-observation-susc.html
+                    // reference to microbiological studies here as  4.7 composition.section.code https://elm.wiki.bagapps.ch/Dokumente/FOPH_CH-ELM%20getting%20started.pdf
                     "coding" => [PredefinedCodes::loincMicrobiologyStudies()]
                 ],
                 "entry" => [$this->formatter->reference($observationResource["resource"])],

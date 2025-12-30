@@ -27,10 +27,17 @@ class ProbeController extends AbstractController
     }
 
     #[Route('/probes/active', name: 'probe_active')]
-    public function active(ManagerRegistry $managerRegistry): Response
+    public function active(): Response
     {
-        $probes = $managerRegistry->getRepository(Probe::class)->findAll();
-        return $this->render('probe/active.html.twig', ['probes' => $probes]);
+        return $this->render('probe/active.html.twig');
+    }
+
+    #[Route('/probes/active.js', name: 'probe_active_js')]
+    public function activeJs(): Response
+    {
+        $response = $this->render('probe/active.js.twig');
+
+        return $this->sendJavascript($response);
     }
 
     #[Route('/probes/active/{probe}/view', name: 'probe_active_view')]
@@ -39,10 +46,10 @@ class ProbeController extends AbstractController
         return $this->render('probe/active_view.html.twig', ['probe' => $probe]);
     }
 
-    #[Route('/probes/active/{probe}.js', name: 'probe_active_js')]
-    public function activeJsView(Probe $probe): Response
+    #[Route('/probes/active/{probe}.js', name: 'probe_view_js')]
+    public function viewJs(Probe $probe): Response
     {
-        $response = $this->render('probe/active_view.js.twig', ['probe' => $probe]);
+        $response = $this->render('probe/view.js.twig', ['probe' => $probe]);
 
         return $this->sendJavascript($response);
     }
@@ -51,6 +58,12 @@ class ProbeController extends AbstractController
     public function all(): Response
     {
         return $this->render('index.html.twig');
+    }
+
+    #[Route('/probes/all/{probe}/view', name: 'probe_all_view')]
+    public function allView(Probe $probe): Response
+    {
+        return $this->render('probe/all_view.html.twig', ['probe' => $probe]);
     }
 
     private function sendJavascript(Response $response): Response
