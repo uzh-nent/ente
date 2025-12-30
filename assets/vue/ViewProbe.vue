@@ -68,6 +68,7 @@
 
           <h3 class="mt-5">{{ $t('observation._name') }}</h3>
           <add-identification-observation-button
+              ref="addIdentificationObservationButton"
               v-if="missingIdentificationObservation" @added="observations.push($event)"
               :probe="probe" :organisms="organisms"/>
           <div class="d-flex flex-column gap-2">
@@ -192,6 +193,12 @@ export default {
 
     this.observations = observations
     this.elmReports = elmReports
+
+    if (this.missingIdentificationObservation) {
+      this.$nextTick(() => {
+        this.$refs.addIdentificationObservationButton.$el?.focus()
+      })
+    }
   }
 }
 </script>

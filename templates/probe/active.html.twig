@@ -1,0 +1,33 @@
+{% extends '_layout.html.twig' %}
+
+{% block title %}{{ 'active.description'|trans }}{% endblock %}
+{% block description %}{{ 'active.description'|trans }}{% endblock %}
+
+{% trans_default_domain "probe" %}
+{% import "macros/components.html.twig" as components %}
+
+{% block content %}
+    <h1>{{ 'active.title'|trans }}</h1>
+    <div class="row">
+    {% for probe in probes %}
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="flex-grow-1">
+                            {{ probe.identifier }}<br>
+                            {{ probe.requisitionIdentifier }}
+                        </div>
+                        <div>
+                            <a href="{{ path("probe_active_view", {"probe": probe.id}) }}">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Probe;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -26,9 +27,10 @@ class ProbeController extends AbstractController
     }
 
     #[Route('/probes/active', name: 'probe_active')]
-    public function active(): Response
+    public function active(ManagerRegistry $managerRegistry): Response
     {
-        return $this->render('probe/active_view.html.twig');
+        $probes = $managerRegistry->getRepository(Probe::class)->findAll();
+        return $this->render('probe/active.html.twig', ['probes' => $probes]);
     }
 
     #[Route('/probes/active/{probe}/view', name: 'probe_active_view')]
