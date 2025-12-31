@@ -210,9 +210,7 @@ readonly class ApiBuilder
         if ($elmReport->getOrganismText()) {
             // TODO: test value string submission with LOINC 56475-7
             // maybe also need other values here, then
-            $observationResource['resource']['valueString'] = [
-                "valueString" => $elmReport->getOrganismText()
-            ];
+            $observationResource['resource']['valueString'] = $elmReport->getOrganismText();
         }
 
         return $observationResource;
