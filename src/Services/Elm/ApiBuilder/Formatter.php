@@ -102,6 +102,7 @@ readonly class Formatter
         return match ($system) {
             CodeSystem::SNOMED => "http://snomed.info/sct",
             CodeSystem::LOINC => "http://loinc.org",
+            CodeSystem::FOPH_CODE_RESERVE => 'urn:oid:2.16.756.5.30.1.129.1.5.1',
             default => null
         };
     }
