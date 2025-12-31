@@ -19,19 +19,12 @@ Probedaten:
 
 ## Future features
 
-Fragen:
-- special cases PDF: Shigellen, Yersinien, Listerien, Campylobacter
-- special cases result reporting: Identifikation Campylobacter, E.Coli 
-- resistenzprüfung: no
-- Salmonella: Wird präziser als Salmonella Types erfasst?
-
 
 Bericht Auftraggeber
 - Titel Bericht erfassen  
 - Empfänger (default: Auftraggeber)
 - Kommentare erfassen  
 - Medizinisch berechtigt auf Bericht setzen
-
 
 features v1.0:
 - Rechnungen
