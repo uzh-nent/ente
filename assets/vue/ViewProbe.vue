@@ -60,7 +60,7 @@
         <div class="col-lg-6">
           <h3>{{ $t('probe.progress') }}</h3>
           <actionable-view>
-            <service-time-view :probe="probe"/>
+            <service-time-view :probe="probe" :users="users" />
             <template v-slot:actions v-if="!probe.finishedAt">
               <edit-probe-service-time-button :probe="probe"/>
             </template>
@@ -85,19 +85,21 @@
             </actionable-view>
           </div>
         </div>
-        <div class="col-lg-12">
-          <template v-if="observations.length > 0">
-            <h3 class="mt-5">{{ $t('elm_report._name') }}</h3>
-            <add-elm-report-button
-                :probe="probe" :observations="observations"
-                :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
-                @added="elmReports.push($event)"
-            />
-            <elm-report-table
-                class="mt-2"
-                v-if="elmReports.length > 0" :reports="elmReports"
-                :users="users" :organisms="organisms" :leading-codes="leadingCodes" />
-          </template>
+        <div class="col-lg-12 mt-5" v-if="observations.length > 0">
+          <h3>{{ $t('elm_report._name') }}</h3>
+          <add-elm-report-button
+              v-if="!probe.finishedAt"
+              :probe="probe" :observations="observations"
+              :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
+              @added="elmReports.push($event)"
+          />
+          <elm-report-table
+              class="mt-2"
+              v-if="elmReports.length > 0" :reports="elmReports"
+              :users="users" :organisms="organisms" :leading-codes="leadingCodes"/>
+        </div>
+        <div class="col-lg-6 mt-5" v-if="!missingIdentificationObservation && missingPrimaryObservations.length === 0">
+          <toggle-finished-button :probe="probe"/>
         </div>
       </div>
     </div>
@@ -129,10 +131,12 @@ import EditProbeOrdererPracButton from "./components/Action/EditProbeOrdererPrac
 import AddElmReportButton from "./components/Action/AddElmReportButton.vue";
 import AttributionView from "./components/View/AttributionView.vue";
 import ElmReportTable from "./components/View/ElmReportTable.vue";
+import ToggleFinishedButton from "./components/Action/ToggleFinishedButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    ToggleFinishedButton,
     ElmReportTable,
     AttributionView,
     AddElmReportButton,

@@ -44,7 +44,7 @@ class ProbeController extends AbstractController
     public function activeView(Probe $probe): Response
     {
         if ($probe->getFinishedAt()) {
-            return $this->redirectToRoute('probe_all_view', ['probe' => $probe]);
+            return $this->redirectToRoute('probe_all_view', ['probe' => $probe->getId()]);
         }
 
         return $this->render('probe/active_view.html.twig', ['probe' => $probe]);
@@ -76,7 +76,7 @@ class ProbeController extends AbstractController
     public function allView(Probe $probe): Response
     {
         if (!$probe->getFinishedAt()) {
-            return $this->redirectToRoute('probe_active_view', ['probe' => $probe]);
+            return $this->redirectToRoute('probe_active_view', ['probe' => $probe->getId()]);
         }
 
         return $this->render('probe/all_view.html.twig', ['probe' => $probe]);

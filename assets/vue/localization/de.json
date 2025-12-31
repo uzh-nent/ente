@@ -111,6 +111,12 @@
       "edited": "Patient gespeichert.",
       "title": "Patient bearbeiten"
     },
+    "toggle_finished": {
+      "finish": "Abschliessen",
+      "finished": "Probe abgeschlossen.",
+      "open": "Öffnen",
+      "opened": "Probe wieder geöffnet."
+    },
     "add": "hinzufügen",
     "edit": "speichern",
     "remove": "entfernen",
@@ -183,7 +189,9 @@
     "specimen_location": "Ort",
     "progress": "Verlauf",
     "animal_name": "Tiername",
-    "received_date": "Empfangen am",
+    "received_date": "Empfangsdatum",
+    "created_at": "Erstellt am",
+    "finished_at": "Abgeschlossen am",
     "requisition_identifier": "Probe-Referenz",
     "analysis_start_date": "Ansatzdatum",
     "orderer": "Auftraggeber",
