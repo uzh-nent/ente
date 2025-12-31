@@ -34,7 +34,9 @@ features v1.0:
 features v?:
 - login using azureAD
 - add practitioner orderer in case of reference lab
-- create service request online
+- create service request online by customer
+- improve ELM api integration (sync value sets, add patient reporting type such as anonymous to leading codes)
 - technical:
   - frontend share person, address, contact forms
   - run integration test with API request
+
