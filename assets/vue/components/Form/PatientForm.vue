@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import {templatedForm, createField, requiredRule, countryCode} from './utils/form'
+import {templatedForm, createField, requiredRule, countryCode, ahvNumberRule} from './utils/form'
 import FormField from '../Library/FormLayout/FormField'
 import TextInput from '../Library/FormInput/TextInput.vue'
 import TextArea from '../Library/FormInput/TextArea.vue'
@@ -95,7 +95,7 @@ export default {
     return {
       fields: {
         birthDate: createField(requiredRule),
-        ahvNumber: createField(),
+        ahvNumber: createField(ahvNumberRule),
 
         gender: createField(),
         givenName: createField(),

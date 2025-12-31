@@ -75,6 +75,31 @@ export const requiredRule = {
   errorMessage: '_validation.required'
 }
 
+export const ahvNumberRule = {
+  isValid: function (value) {
+    if (!value) {
+      return true
+    }
+
+    const digits = value.split('').map(d => parseInt(d, 10));
+    if (digits.length !== 13) {
+      return false;
+    }
+
+    const checksum = digits[12];
+
+    let sum = 0;
+    let multiplier = 3;
+    for (let i = 11; i >= 0; i--) {
+      sum += digits[i] * multiplier;
+      multiplier = (multiplier === 3) ? 1 : 3;
+    }
+
+    return (sum + checksum) % 10 === 0;
+  },
+  errorMessage: '_validation.invalid_ahv'
+}
+
 const emailRegex = /^\S+@\S+\.\S+$/
 export const emailRule = {
   isValid: function (value) {
