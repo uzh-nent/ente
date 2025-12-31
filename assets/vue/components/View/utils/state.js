@@ -22,7 +22,7 @@ export const localStoragePersisted = function(componentIdentifier, properties) {
         return state
       },
     },
-    mounted() {
+    beforeMount() {
       // recover old query state
       const state = localStorage.getItem(this.persistedStateKey);
       if (state) {

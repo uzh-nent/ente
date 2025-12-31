@@ -1,0 +1,14 @@
+{% extends '_layout.html.twig' %}
+
+{% block title %}{{ probe.identifier }}{% endblock %}
+{% block description %}{{ 'all_view.description'|trans }}{% endblock %}
+
+{% trans_default_domain "probe" %}
+{% import "macros/components.html.twig" as components %}
+
+{% block content %}
+    <h1>{{ probe.identifier }}</h1>
+
+    <script src="{{ url('probe_view_js', {'probe': probe.id}) }}"></script>
+    {{ components.vue_entry_point('vue-probe-view') }}
+{% endblock %}

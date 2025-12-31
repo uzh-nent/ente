@@ -3,7 +3,8 @@ enum:
 
 SALMONELLA: "Salmonella"
 SHIGELLA: "Shigella"
-YERSINIA_PESTIS: "Yersinia Pestis"
+YERSINIA: "Yersinia"
 LISTERIA_MONOCYTOGENES: "Listeria Monocytogenes"
 VIBRIO_CHOLERAE: "Vibrio Cholerae"
 ESCHERICHIA_COLI: "Escherichia Coli"
+CAMPYLOBACTER: "Campylobacter"

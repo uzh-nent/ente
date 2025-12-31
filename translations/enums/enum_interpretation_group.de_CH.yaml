@@ -3,3 +3,4 @@ enum:
 
 POS: "POS"
 POS-NEG: "POS-NEG"
+TEXT: "TEXT"

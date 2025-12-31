@@ -119,6 +119,9 @@ const router = {
   },
   navigateToActiveProbe: function (probe) {
     this.navigateTo('/probes/active/' + iriToId(probe['@id']) + '/view')
+  },
+  navigateToProbe: function (probe) {
+    this.navigateTo('/probes/all/' + iriToId(probe['@id']) + '/view')
   }
 }
 
@@ -131,6 +134,11 @@ const preloadApi = {
   getActiveProbes: function () {
     return {
       activeProbes: window.activeProbes.member,
+    }
+  },
+  getAllProbes: function () {
+    return {
+      organisms: window.organisms.member,
     }
   },
   getViewActiveProbe: function () {
@@ -157,6 +165,10 @@ const api = {
   },
   patch: function (instance, patch) {
     return restClient.patch(instance, patch)
+  },
+  getPaginatedProbes: function (query) {
+    query['collections'] = 1
+    return restClient.getPaginatedCollection('/api/probes', query)
   },
   getPaginatedOrganisations: function (query) {
     return restClient.getPaginatedCollection('/api/organizations', query)

@@ -27,24 +27,11 @@
       <div class="row">
         <div v-for="probe in filteredProbes" :key="probe['@id']"
              :class="'col-lg-' + (12 / this.columnCount)">
-          <div class="card clickable hover-bg-light" @click="$emit('navigate', probe)">
+          <div class="card clickable hover-bg-light" @click="$emit('navigate', probe)" tabindex="0" role="button">
             <div class="card-body">
               <b>{{ probe.identifier }}</b> <br/>
 
-              <template v-if="probe.laboratoryFunction === 'PRIMARY'">
-                {{ $t('service.ecoli_identification') }}
-                {{ probe.analysisTypes.map(t => $t(`probe._analysis_type_short.${t}`)).join(', ') }}
-              </template>
-
-              <template v-if="probe.laboratoryFunction === 'REFERENCE'">
-                {{ $t('service.identification_typing') }}
-                <template v-if="probe.pathogen">
-                  {{ $t(`probe._pathogen.${probe.pathogen}`) }}
-                </template>
-                <template v-else>
-                  {{ probe.pathogenName }}
-                </template>
-              </template>
+              {{ formatService(probe) }}
             </div>
           </div>
         </div>
@@ -54,6 +41,8 @@
 </template>
 
 <script>
+
+import {formatProbeService} from "../../services/domain/formatter";
 
 const PREFIX_LENGTH = 4
 
@@ -98,6 +87,11 @@ export default {
       }
 
       return this.probes.filter(p => p.identifier.substring(PREFIX_LENGTH).includes(this.filterProbes))
+    },
+  },
+  methods: {
+    formatService: function (probe) {
+      return formatProbeService(probe, this.$t)
     }
   },
   watch: {

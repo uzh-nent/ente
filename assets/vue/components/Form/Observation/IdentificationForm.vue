@@ -27,7 +27,7 @@
               :choices="organismChoices" :field="fields.organism"
               :value-string="value => value['@id']"
               v-model="entity.organism" @update:model-value="validateField('organism')"/>
-          <span v-else class="form-text">{{ $t('_form.observation.identification.no_organism_defined') }}</span>
+          <p v-else class="form-text">{{ $t('_form.observation.identification.no_organism_defined') }}</p>
         </form-field>
       </div>
       <div class="col-md-12">
@@ -107,7 +107,7 @@ export default {
   },
   computed: {
     organismChoices: function () {
-      const organisms = this.pathogen ? this.organisms.filter(o => o.pathogen === this.pathogen) : []
+      const organisms = this.pathogen ? this.organisms.filter(o => o.pathogen === this.pathogen) : this.organisms.filter(o => !o.pathogen)
       sortOrganisms(organisms)
 
       return organisms.map(o => ({label: formatOrganism(o), value: o}))

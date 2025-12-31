@@ -29,6 +29,8 @@ use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -45,9 +47,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[Patch]
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: [
-    'identifier' => SearchFilterInterface::STRATEGY_IPARTIAL, 'ordererIdentifier' => SearchFilterInterface::STRATEGY_IPARTIAL,
+    'identifier' => SearchFilterInterface::STRATEGY_ISTART, 'requisitionIdentifier' => SearchFilterInterface::STRATEGY_ISTART,
     'pathogen' => SearchFilterInterface::STRATEGY_EXACT,
-    'orderer' => SearchFilterInterface::STRATEGY_EXACT, 'patient' => SearchFilterInterface::STRATEGY_EXACT, 'animalKeeper' => SearchFilterInterface::STRATEGY_EXACT,
+    'orderer' => SearchFilterInterface::STRATEGY_EXACT, 'patient' => SearchFilterInterface::STRATEGY_EXACT, 'animalKeeper' => SearchFilterInterface::STRATEGY_EXACT, 'practitioner' => SearchFilterInterface::STRATEGY_EXACT,
 ])]
 #[ApiFilter(ExistsFilter::class, properties: ['finishedAt'])]
 #[ApiFilter(OrderFilter::class, properties: ['identifier'])]
@@ -65,6 +67,18 @@ class Probe
     #[ORM\Column(type: Types::STRING, unique: true)]
     #[Groups(['probe:read'])]
     private string $identifier = '';
+
+    /**
+     * @var Collection<int, Observation>
+     */
+    #[Groups(['probe:collections'])]
+    #[ORM\OneToMany(targetEntity: Observation::class, mappedBy: 'probe')]
+    private Collection $observations;
+
+    public function __construct()
+    {
+        $this->observations = new ArrayCollection();
+    }
 
     public function getIdentifier(): string
     {
@@ -94,5 +108,13 @@ class Probe
     public function setAnalysisStartDate(?\DateTimeImmutable $analysisStartDate): void
     {
         $this->analysisStartDate = $analysisStartDate;
+    }
+
+    /**
+     * @return Collection<int, Observation>
+     */
+    public function getObservations(): Collection
+    {
+        return $this->observations;
     }
 }

@@ -143,3 +143,25 @@ export const formatPatientShort = function (value) {
 
   return [value.ahvNumber, value.givenName, value.familyName, value.postalCode, value.city].filter(e => e).join(" ")
 }
+
+export const formatProbeService = (probe, t) => {
+  if (probe.laboratoryFunction === 'PRIMARY') {
+    const identification = t('service.ecoli_identification');
+    const types = probe.analysisTypes
+      .map(tKey => t(`probe._analysis_type_short.${tKey}`))
+      .join(', ');
+
+    return `${identification} ${types}`.trim();
+  }
+
+  if (probe.laboratoryFunction === 'REFERENCE') {
+    const identification = t('service.identification_typing');
+    const pathogenLabel = probe.pathogen
+      ? t(`probe._pathogen.${probe.pathogen}`)
+      : (probe.pathogenName || '');
+
+    return `${identification} ${pathogenLabel}`.trim();
+  }
+
+  return '';
+};

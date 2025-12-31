@@ -24,7 +24,7 @@ class LeadingCodeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('codedIdentifier', CodedIdentifierType::class, ['inherit_data' => true, 'label' => false]);
-        $builder->add('pathogen', EnumType::class, ['class' => Pathogen::class]);
+        $builder->add('pathogen', EnumType::class, ['class' => Pathogen::class, 'required' => false]);
         $builder->add('organismGroup', TextType::class, ['required' => false]);
         $builder->add('specimen', EntityType::class, ['required' => false, 'class' => Specimen::class,
             'choice_label' => function (Specimen $specimen): string {

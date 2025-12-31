@@ -1,0 +1,15 @@
+{% extends '_layout.html.twig' %}
+
+{% block title %}{{ 'all.description'|trans }}{% endblock %}
+{% block description %}{{ 'all.description'|trans }}{% endblock %}
+
+{% trans_default_domain "probe" %}
+{% import "macros/components.html.twig" as components %}
+
+{% block content %}
+    <h1>{{ 'all.title'|trans }}</h1>
+
+    <script src="{{ url('probe_all_js') }}"></script>
+    {{ components.vue_entry_point('vue-all-probes') }}
+
+{% endblock %}

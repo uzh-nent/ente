@@ -4,3 +4,4 @@ enum:
 LOINC: "LOINC"
 SNOMED: "SNOMED"
 NENT: "NENT (Custom)"
+FOPH_CODE_RESERVE: 'FOPH Code Reserve'

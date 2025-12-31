@@ -13,6 +13,7 @@ export const probeConverter = {
   writeOrdererPrac: function (pracitioner) {
     return {
       ordererPrac: pracitioner['@id'],
+      ordererPracTitle: pracitioner.title,
       ordererPracGivenName: pracitioner.givenName,
       ordererPracFamilyName: pracitioner.familyName,
       ordererPracAddressLines: pracitioner.addressLines,
@@ -58,6 +59,7 @@ export const probeConverter = {
   },
   reconstructOrdererPracPractitioner: function (probe) {
     return {
+      title: probe.ordererPracTitle,
       givenName: probe.ordererPracGivenName,
       familyName: probe.ordererPracFamilyName,
       addressLines: probe.ordererPracAddressLines,

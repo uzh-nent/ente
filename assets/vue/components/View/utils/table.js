@@ -26,6 +26,7 @@ export const paginatedQuery = function (itemsPerPage, loadItems) {
     data() {
       return {
         isLoading: false,
+        isMounted: false,
 
         items: [],
         totalItems: 0,
@@ -46,7 +47,6 @@ export const paginatedQuery = function (itemsPerPage, loadItems) {
           this.load(newVal, this.query)
         },
         deep: true,
-        immediate: true
       }
     },
     methods: {
@@ -54,7 +54,7 @@ export const paginatedQuery = function (itemsPerPage, loadItems) {
         this.load(this.page, this.query)
       },
       load: function (page, query) {
-        if (this.query === null) {
+        if (this.query === null || !this.isMounted) {
           return
         }
 
@@ -67,6 +67,10 @@ export const paginatedQuery = function (itemsPerPage, loadItems) {
           this.totalItems = response.totalItems
         })
       }
+    },
+    mounted() {
+      this.isMounted = true
+      this.reload()
     }
   }
 }

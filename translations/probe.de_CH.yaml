@@ -13,3 +13,7 @@ active_view:
 all:
   title: 'Alle Proben'
   description: 'Verzeichnis aller erfassten Proben'
+
+all_view:
+  title: 'Abgeschlossene Probe'
+  description: 'Abgeschlossene Probe'

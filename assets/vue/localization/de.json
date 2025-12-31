@@ -126,6 +126,8 @@
     "search_by_family_name": "Suche nach Nachname",
     "search_by_ahv_numer": "Suche nach AHV-Nummer",
     "filter_by_birth_date": "Geburtsdatum",
+    "search_by_identifier": "Suche nach Probe",
+    "search_by_requisition_identifier": "Suche nach Probe-Referenz",
     "probe_navigation": {
       "no_probes": "Keine Proben gefunden."
     }
@@ -184,6 +186,7 @@
     "requisition_identifier": "Probe-Referenz",
     "analysis_start_date": "Ansatzdatum",
     "orderer": "Auftraggeber",
+    "identifier": "Identifikation",
     "_pathogen": {
       "SALMONELLA": "Salmonella",
       "SHIGELLA": "Shigella",

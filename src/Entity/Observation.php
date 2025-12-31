@@ -79,7 +79,7 @@ class Observation
     #[Groups(['observation:read', 'observation:write'])]
     private ?Organism $organism = null;
 
-    #[ORM\ManyToOne(targetEntity: Probe::class)]
+    #[ORM\ManyToOne(targetEntity: Probe::class, inversedBy: 'observations')]
     #[ApiProperty(readableLink: false, writableLink: false)]
     #[Groups(['observation:read', 'observation:write'])]
     private ?Probe $probe = null;
