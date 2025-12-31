@@ -26,6 +26,7 @@
 
       <div class="row">
         <div v-for="probe in filteredProbes" :key="probe['@id']"
+             class="mb-4"
              :class="'col-lg-' + (12 / this.columnCount)">
           <div class="card clickable hover-bg-light" @click="$emit('navigate', probe)" tabindex="0" role="button">
             <div class="card-body">

@@ -1,12 +1,12 @@
 <template>
   <div class="row">
-    <div :class="'col-lg-' + (this.referenceColumnCount * 3)">
+    <div class="pe-4" :class="'col-lg-' + (this.referenceColumnCount * 3)">
       <h2>{{ $t('probe._laboratory_function.REFERENCE') }}</h2>
 
       <probe-navigation-view :probes="this.referenceProbes" :column-count="this.referenceColumnCount"
                              :focus="this.referenceColumnCount >= this.primaryColumnCount" @navigate="navigateToProbe" />
     </div>
-    <div :class="'col-lg-' + (this.primaryColumnCount * 3)">
+    <div class="ps-4" :class="'col-lg-' + (this.primaryColumnCount * 3)">
       <h2>{{ $t('probe._laboratory_function.PRIMARY') }}</h2>
 
       <probe-navigation-view :probes="this.primaryProbes" :column-count="this.primaryColumnCount"
