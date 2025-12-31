@@ -1,16 +1,19 @@
 <template>
   <tr>
     <td>
-      {{ probe.identifier }} <br/>
+      <b>{{ probe.identifier }}</b> <br/>
       {{ probe.requisitionIdentifier }}
     </td>
     <td>
       {{ service }}
     </td>
-    <td>{{ probe.observations?.length }}</td>
+    <td>
+      {{ probe.observations?.length }}
+    </td>
     <td>
       <button class="btn btn-outline-secondary" @click="navigateToProbe(probe)">
-        <i class="fas fa-eye"></i>
+        <i v-if="this.probe.finishedAt" class="fas fa-eye"></i>
+        <i v-else class="fas fa-edit"></i>
       </button>
     </td>
   </tr>
