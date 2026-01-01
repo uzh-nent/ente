@@ -1,5 +1,5 @@
 <template>
-  <button class="btn" :class="{'btn-secondary': probe.finishedAt, 'btn-primary': !probe.finishedAt}"
+  <button class="btn" :class="{'btn-secondary': !recommendFinishing, 'btn-primary': recommendFinishing}"
           @click="toggleFinish" :disabled="isLoading">
     <span class="d-flex gap-3 align-items-center">
           <looping-rhombus-spinner v-if="isLoading" class="white"/>
@@ -27,10 +27,19 @@ export default {
       type: Object,
       required: true
     },
+    hasReports: {
+      type: Boolean,
+      required: false
+    }
   },
   data() {
     return {
       isLoading: false
+    }
+  },
+  computed: {
+    recommendFinishing: function () {
+      return !this.probe.finishedAt && this.hasReports
     }
   },
   methods: {

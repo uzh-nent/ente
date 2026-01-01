@@ -120,6 +120,9 @@
       "edited": "Patient gespeichert.",
       "title": "Patient bearbeiten"
     },
+    "download_probe_worksheet": {
+      "download": "Arbeitsblatt herunterladen"
+    },
     "toggle_finished": {
       "finish": "Abschliessen",
       "finished": "Probe abgeschlossen.",

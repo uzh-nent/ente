@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "172a4668724e78cece56335396b9f843",
+    "content-hash": "5ba69c8de45df86a5d15bf6fccf2bd12",
     "packages": [
         {
             "name": "api-platform/doctrine-common",
@@ -2578,6 +2578,57 @@
                 "source": "https://github.com/famoser/agnes"
             },
             "time": "2024-11-17T10:10:23+00:00"
+        },
+        {
+            "name": "famoser/pdf-generator",
+            "version": "v0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/famoser/pdf-generator.git",
+                "reference": "30bc2362ab48a44bf4b37cb130ea5151eaeb9704"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/famoser/pdf-generator/zipball/30bc2362ab48a44bf4b37cb130ea5151eaeb9704",
+                "reference": "30bc2362ab48a44bf4b37cb130ea5151eaeb9704",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "ext-gd": "*",
+                "ext-json": "*",
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "famoser/agnes": "^4.2",
+                "friendsofphp/php-cs-fixer": "^3",
+                "mockery/mockery": "^1.2",
+                "phpstan/phpstan": "^2.0",
+                "phpunit/phpunit": "^9.5.4",
+                "rector/rector": "^2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Famoser\\PdfGenerator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Florian Moser",
+                    "email": "git@famoser.ch"
+                }
+            ],
+            "description": "a clean pdf generator without dependencies",
+            "support": {
+                "issues": "https://github.com/famoser/pdf-generator/issues",
+                "source": "https://github.com/famoser/pdf-generator/tree/v0.7"
+            },
+            "time": "2025-01-02T13:49:34+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

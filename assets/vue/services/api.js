@@ -122,6 +122,9 @@ const router = {
   },
   navigateToProbe: function (probe) {
     this.navigateTo('/probes/all/' + iriToId(probe['@id']) + '/view')
+  },
+  linkProbeWorksheetPdf: function (probe) {
+    return '/probes/active/' + iriToId(probe['@id']) + '/worksheet.pdf'
   }
 }
 
@@ -152,6 +155,7 @@ const preloadApi = {
 
       observations: window.observations.member,
       elmReports: window.elmReports.member,
+      reports: window.reports.member,
     }
   },
 }

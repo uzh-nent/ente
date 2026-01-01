@@ -1,5 +1,5 @@
 <template>
-  <a class="btn" :class="{'btn-primary': !hasObservations, 'btn-secondary': !hasObservations}"
+  <a class="btn" :class="{'btn-primary': !hasObservations, 'btn-secondary': hasObservations}"
      :href="link" download>
     <i class="fas fa-download" />
     {{ $t('_action.download_probe_worksheet.download') }}

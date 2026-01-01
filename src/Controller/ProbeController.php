@@ -59,11 +59,12 @@ class ProbeController extends AbstractController
         return $this->sendJavascript($response);
     }
 
-    #[Route('/probes/active/{probe}-worksheet.pdf', name: 'probe_worksheet_pdf')]
+    #[Route('/probes/active/{probe}/worksheet.pdf', name: 'probe_worksheet_pdf')]
     public function worksheetPdf(Probe $probe, PdfServiceInterface $pdfService): Response
     {
         $pdf = $pdfService->generateWorksheet($probe);
-        return $this->file($pdf, $probe->getIdentifier().'-worksheet.pdf');
+
+        return new Response($pdf, Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
     }
 
     #[Route('/probes/all', name: 'probe_all')]

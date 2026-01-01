@@ -56,35 +56,34 @@
       </template>
     </div>
     <div class="col-lg-8">
-      <div class="row">
-        <div class="col-lg-6">
-          <h3>{{ $t('probe.progress') }}</h3>
+      <h3>{{ $t('probe.progress') }}</h3>
+      <actionable-view class="w-50">
+        <service-time-view :probe="probe" :users="users"/>
+        <template v-slot:actions v-if="!probe.finishedAt">
+          <edit-probe-service-time-button :probe="probe"/>
+        </template>
+      </actionable-view>
+
+      <download-probe-worksheet-button class="mt-5" :probe="probe" :has-observations="observations.length > 0" />
+
+      <div class="d-flex flex-column gap-2 mt-5">
+        <h3>{{ $t('observation._name') }}</h3>
+        <add-identification-observation-button
+            ref="addIdentificationObservationButton"
+            v-if="missingIdentificationObservation" @added="observations.push($event)"
+            :probe="probe" :organisms="organisms"/>
+        <div class="w-50" v-if="identificationObservation">
           <actionable-view>
-            <service-time-view :probe="probe" :users="users"/>
+            <identification-view
+                :organisms="organisms" :observation="identificationObservation"/>
             <template v-slot:actions v-if="!probe.finishedAt">
-              <edit-probe-service-time-button :probe="probe"/>
+              <edit-identification-observation-button :probe="probe" :organisms="organisms"
+                                                      :observation="identificationObservation"/>
+            </template>
+            <template v-slot:footer>
+              <attribution-view :users="users" :entity="identificationObservation"/>
             </template>
           </actionable-view>
-        </div>
-        <div class="col-lg-12 mt-5">
-          <div class="d-flex flex-column gap-2">
-            <h3>{{ $t('observation._name') }}</h3>
-            <add-identification-observation-button
-                ref="addIdentificationObservationButton"
-                v-if="missingIdentificationObservation" @added="observations.push($event)"
-                :probe="probe" :organisms="organisms"/>
-            <actionable-view v-if="identificationObservation">
-              <identification-view
-                  :organisms="organisms" :observation="identificationObservation"/>
-              <template v-slot:actions v-if="!probe.finishedAt">
-                <edit-identification-observation-button :probe="probe" :organisms="organisms"
-                                                        :observation="identificationObservation"/>
-              </template>
-              <template v-slot:footer>
-                <attribution-view :users="users" :entity="identificationObservation"/>
-              </template>
-            </actionable-view>
-          </div>
 
           <add-test-observations-button
               ref="addTestObservationsButton"
@@ -92,7 +91,7 @@
               :probe="probe" :missing-analysis-types="missingTestObservations"/>
           <test-observation-table v-if="testObservations.length > 0" :users="users" :observations="observations"/>
         </div>
-        <div class="col-lg-12 mt-5" v-if="observations.length > 0">
+        <div class="mt-5" v-if="observations.length > 0">
           <h3>{{ $t('elm_report._name') }}</h3>
           <add-elm-report-button
               v-if="!probe.finishedAt"
@@ -105,8 +104,8 @@
               v-if="elmReports.length > 0" :reports="elmReports"
               :users="users" :organisms="organisms" :leading-codes="leadingCodes"/>
         </div>
-        <div class="col-lg-6 mt-5" v-if="!missingIdentificationObservation && missingTestObservations.length === 0">
-          <toggle-finished-button :probe="probe"/>
+        <div class="mt-5" v-if="!missingIdentificationObservation && missingTestObservations.length === 0">
+          <toggle-finished-button :probe="probe" :has-reports="reports.length > 0" />
         </div>
       </div>
     </div>
@@ -141,10 +140,12 @@ import ElmReportTable from "./components/View/ElmReportTable.vue";
 import ToggleFinishedButton from "./components/Action/ToggleFinishedButton.vue";
 import AddTestObservationsButton from "./components/Action/AddTestObservationsButton.vue";
 import TestObservationTable from "./components/View/TestObservationTable.vue";
+import DownloadProbeWorksheetButton from "./components/Action/DownloadProbeWorksheetButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    DownloadProbeWorksheetButton,
     TestObservationTable,
     AddTestObservationsButton,
     ToggleFinishedButton,
@@ -182,6 +183,7 @@ export default {
 
       observations: undefined,
       elmReports: undefined,
+      reports: undefined
     }
   },
   computed: {
@@ -201,7 +203,7 @@ export default {
     },
   },
   mounted() {
-    const {probe, users, specimens, leadingCodes, organisms, observations, elmReports} = preloadApi.getViewActiveProbe()
+    const {probe, users, specimens, leadingCodes, organisms, observations, elmReports, reports} = preloadApi.getViewActiveProbe()
     this.probe = probe
 
     this.users = users
@@ -211,6 +213,7 @@ export default {
 
     this.observations = observations
     this.elmReports = elmReports
+    this.reports = reports
 
     if (this.missingIdentificationObservation) {
       this.$nextTick(() => {
