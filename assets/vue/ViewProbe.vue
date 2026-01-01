@@ -60,27 +60,28 @@
         <div class="col-lg-6">
           <h3>{{ $t('probe.progress') }}</h3>
           <actionable-view>
-            <service-time-view :probe="probe" :users="users" />
+            <service-time-view :probe="probe" :users="users"/>
             <template v-slot:actions v-if="!probe.finishedAt">
               <edit-probe-service-time-button :probe="probe"/>
             </template>
           </actionable-view>
-
-          <h3 class="mt-5">{{ $t('observation._name') }}</h3>
-          <add-identification-observation-button
-              ref="addIdentificationObservationButton"
-              v-if="missingIdentificationObservation" @added="observations.push($event)"
-              :probe="probe" :organisms="organisms"/>
-          <div class="d-flex flex-column gap-2" v-if="identificationObservations.length > 0">
-            <actionable-view v-for="observation in identificationObservations" :key="observation['@id']">
+        </div>
+        <div class="col-lg-12 mt-5">
+          <div class="d-flex flex-column gap-2">
+            <h3>{{ $t('observation._name') }}</h3>
+            <add-identification-observation-button
+                ref="addIdentificationObservationButton"
+                v-if="missingIdentificationObservation" @added="observations.push($event)"
+                :probe="probe" :organisms="organisms"/>
+            <actionable-view v-if="identificationObservation">
               <identification-view
-                  :organisms="organisms" :observation="observation"/>
+                  :organisms="organisms" :observation="identificationObservation"/>
               <template v-slot:actions v-if="!probe.finishedAt">
                 <edit-identification-observation-button :probe="probe" :organisms="organisms"
-                                                        :observation="observation"/>
+                                                        :observation="identificationObservation"/>
               </template>
               <template v-slot:footer>
-                <attribution-view :users="users" :entity="observation"/>
+                <attribution-view :users="users" :entity="identificationObservation"/>
               </template>
             </actionable-view>
           </div>
@@ -89,9 +90,7 @@
               ref="addTestObservationsButton"
               v-if="missingTestObservations.length > 0" @added="observations.push($event)"
               :probe="probe" :missing-analysis-types="missingTestObservations"/>
-          <div class="d-flex flex-column gap-2" v-if="testObservations.length > 0">
-            {{ testObservations.length }}
-          </div>
+          <test-observation-table v-if="testObservations.length > 0" :users="users" :observations="observations"/>
         </div>
         <div class="col-lg-12 mt-5" v-if="observations.length > 0">
           <h3>{{ $t('elm_report._name') }}</h3>
@@ -141,10 +140,12 @@ import AttributionView from "./components/View/AttributionView.vue";
 import ElmReportTable from "./components/View/ElmReportTable.vue";
 import ToggleFinishedButton from "./components/Action/ToggleFinishedButton.vue";
 import AddTestObservationsButton from "./components/Action/AddTestObservationsButton.vue";
+import TestObservationTable from "./components/View/TestObservationTable.vue";
 
 export default {
   emits: ['added'],
   components: {
+    TestObservationTable,
     AddTestObservationsButton,
     ToggleFinishedButton,
     ElmReportTable,
@@ -188,8 +189,8 @@ export default {
       return this.probe.analysisTypes.some(at => at === 'IDENTIFICATION') &&
           !this.observations.some(o => o.analysisType === 'IDENTIFICATION')
     },
-    identificationObservations: function () {
-      return this.observations.filter(o => o.analysisType === 'IDENTIFICATION')
+    identificationObservation: function () {
+      return this.observations.find(o => o.analysisType === 'IDENTIFICATION')
     },
     missingTestObservations: function () {
       return this.probe.analysisTypes.filter(at => at !== 'IDENTIFICATION' &&

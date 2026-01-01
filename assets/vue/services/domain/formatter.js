@@ -96,6 +96,18 @@ export const formatPatientName = function (value, translator) {
   return formatPersonName(value) + genderSuffix
 }
 
+export const formatAhvNumber = function (value, translator) {
+  if (!value) {
+    return '-'
+  }
+
+  if (value.length !== 13) {
+    return value
+  }
+
+  return value.substring(0, 3) + "." + value.substring(3, 7) + "." + value.substring(7, 11) + "." + value.substr(11)
+}
+
 
 export const formatOrganizationShort = function (value) {
   if (!value) {
