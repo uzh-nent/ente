@@ -4,7 +4,7 @@
       button-size="sm" color="secondary"
       :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
       @showing="focusInterpretation">
-    <test-shared-form :template="observation" @update="sharedPatch = $event"/>
+    <test-shared-form :template="sharedTemplate" @update="sharedPatch = $event"/>
     <test-form :id="observation.analysisType" :template="observation" @update="testPatch = $event"/>
   </button-confirm-modal>
 </template>
@@ -16,6 +16,7 @@ import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import TestForm from "../Form/Observation/TestForm.vue";
 import TestSharedForm from "../Form/Observation/TestSharedForm.vue";
+import moment from "moment";
 
 export default {
   emits: ['edited'],
@@ -37,11 +38,16 @@ export default {
     },
   },
   computed: {
+    sharedTemplate: function () {
+      return {
+        effectiveAt: moment().format()
+      }
+    },
     canConfirm: function () {
       return !!this.payload
     },
     payload: function () {
-      return {...this.sharedPatch, ...this.testPatch}
+      return {...this.sharedTemplate, ...this.sharedPatch, ...this.testPatch}
     }
   },
   methods: {

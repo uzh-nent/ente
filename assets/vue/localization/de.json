@@ -84,8 +84,8 @@
       "title": "Resultat erfassen",
       "no_missing_observations": "Keine fehlenden Testergebnisse vorhanden."
     },
-    "edit_test_observations": {
-      "added": "Resultat gespeichert.",
+    "edit_test_observation": {
+      "edited": "Resultat gespeichert.",
       "title": "Resultat ändern"
     },
     "add_elm_report": {

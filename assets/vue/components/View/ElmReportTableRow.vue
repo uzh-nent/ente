@@ -1,9 +1,6 @@
 <template>
   <tr>
     <td>
-      <attribution-view :users="users" :entity="report"/>
-    </td>
-    <td>
       {{ leadingCode.displayName }}
       <template v-if="organism">
         <br>{{ organism.displayName }}
@@ -16,6 +13,9 @@
       <view-elm-report-step-label :report="report" step="validation" />
       <view-elm-report-step-label :report="report" step="send" />
       <view-elm-report-step-label :report="report" step="queue" />
+    </td>
+    <td>
+      <attribution-view :users="users" :entity="report"/>
     </td>
   </tr>
 </template>

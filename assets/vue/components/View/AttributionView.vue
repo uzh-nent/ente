@@ -1,10 +1,12 @@
 <template>
-  <template v-if="hasChanges">
-    {{ formatDateTime(entity.lastChangedAt) }} / {{ lastChangedBy?.abbreviation }}
-  </template>
-  <template v-else>
-    {{ formatDateTime(entity.createdAt) }} / {{ createdBy?.abbreviation }}
-  </template>
+  <span class="text-nowrap">
+    <template v-if="hasChanges">
+      {{ formatDateTime(entity.lastChangedAt) }} / {{ lastChangedBy?.abbreviation }}
+    </template>
+    <template v-else>
+      {{ formatDateTime(entity.createdAt) }} / {{ createdBy?.abbreviation }}
+    </template>
+  </span>
 </template>
 
 <script>

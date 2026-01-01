@@ -78,14 +78,10 @@
                                href="#">{{ "index.title"|trans({}, "administration") }}</a>
                         </li>
                     </ul>
-                    <p class="mb-0">
-                        {{ 'layout.open_source'|trans }}
-                        <a href="https://gitlab.uzh.ch/uzh-nent/ente" target="_blank">nent/ente</a>.
-                    </p>
                 </div>
             </div>
             <div class="divider ms-2"></div>
-            <div class="content flex-grow-1 px-2 py-2">
+            <div class="content flex-grow-1 px-2 pt-2 pb-4 overflow-y-scroll">
                 <div>
                     {% if breadcrumbs is defined and breadcrumbs|length > 0 %}
                         <nav aria-label="breadcrumb">
