@@ -7,3 +7,4 @@ window.organisms = JSON.parse({{ subRequest('/api/organisms')|json_encode|raw }}
 
 window.observations = JSON.parse({{ subRequest('/api/observations?probe='~probe.id)|json_encode|raw }})
 window.elmReports = JSON.parse({{ subRequest('/api/elm_reports?probe='~probe.id)|json_encode|raw }})
+window.reports = JSON.parse({{ subRequest('/api/reports?probe='~probe.id)|json_encode|raw }})
