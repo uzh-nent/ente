@@ -136,7 +136,7 @@ readonly class ApiBuilder
             "resource" => [
                 "resourceType" => $reference->type(),
                 "id" => $reference->id(),
-                "name" => $this->formatter->name($person),
+                "name" => [$this->formatter->name($person)],
                 "address" => [$this->formatter->address($address)]
             ]
         ];
@@ -160,7 +160,7 @@ readonly class ApiBuilder
 
     private function createPrimaryPractitionerRoleResource(Probe $probe, array $orderPractitionerResource): array
     {
-        $reference = new ResourceReference('PractitionerRole', $probe->getOrdererOrg()->getId());
+        $reference = new ResourceReference('PractitionerRole', $probe->getOrdererPrac()->getId());
 
         return [
             "fullUrl" => $reference->fullUrl(),
@@ -205,13 +205,15 @@ readonly class ApiBuilder
             $observationResource['resource']['valueCodeableConcept'] = [
                 "coding" => [$this->formatter->codedIdentifier($elmReport->getOrganism())]
             ];
+        } else if ($elmReport->getOrganismText()) {
+            $observationResource['resource']['valueString'] = $elmReport->getOrganismText();
+        } else {
+            $observationResource['resource']['dataAbsentReason'] = [
+                "coding" => [PredefinedCodes::dataAbsentReason()]
+            ];
         }
 
-        if ($elmReport->getOrganismText()) {
-            // TODO: test value string submission with LOINC 56475-7
-            // maybe also need other values here, then
-            $observationResource['resource']['valueString'] = $elmReport->getOrganismText();
-        }
+        if (!$elmReport->getOrganism() && !$elmReport->getOrganismText())
 
         return $observationResource;
     }

@@ -2,13 +2,7 @@
   <tr>
     <td>{{ $t(`probe._analysis_type.${observation.analysisType}`) }}</td>
     <td>
-      <span class="badge" :class="{
-            'bg-warning': !observation.interpretation,
-            'bg-danger': observation.interpretation === 'POS' ,
-            'bg-success': observation.interpretation === 'NEG'
-          }">
-        {{ $t(`observation._interpretation.${observation.interpretation ?? 'NONE'}`) }}
-      </span>
+      <test-interpretation-badge :observation="observation" />
       <span class="d-block whitespace-preserve-newlines" v-if="observation.interpretationText">
         {{observation.interpretationText}}
       </span>
@@ -28,9 +22,10 @@
 import {formatDate, formatDateTime, formatOrganism} from "../../services/domain/formatter";
 import EditTestObservationButton from "../Action/EditTestObservationButton.vue";
 import AttributionView from "./AttributionView.vue";
+import TestInterpretationBadge from "./Observation/TestInterpretationBadge.vue";
 
 export default {
-  components: {AttributionView, EditTestObservationButton},
+  components: {TestInterpretationBadge, AttributionView, EditTestObservationButton},
   methods: {formatDate, formatDateTime},
   props: {
     observation: {

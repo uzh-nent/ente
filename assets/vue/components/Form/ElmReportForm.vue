@@ -8,6 +8,7 @@
   <actionable-preview v-if="entity.observation">
     <identification-view v-if="entity.observation.analysisType === 'IDENTIFICATION'"
                          :organisms="organisms" :observation="entity.observation"/>
+    <test-view v-else :observation="entity.observation" />
   </actionable-preview>
 
   <hr/>
@@ -55,10 +56,12 @@ import IdentificationView from "../View/Observation/IdentificationView.vue";
 import ActionablePreview from "../Library/View/ActionablePreview.vue";
 import {formatObservation} from "../../services/domain/formatter";
 import SearchableSelect from "../Library/FormInput/SearchableSelect.vue";
+import TestView from "../View/Observation/TestView.vue";
 
 export default {
   emits: ['update'],
   components: {
+    TestView,
     SearchableSelect,
     ActionablePreview,
     IdentificationView,
@@ -127,6 +130,8 @@ export default {
       let filtered = [...this.organisms]
       if (this.entity.leadingCode?.organismGroup) {
         filtered = filtered.filter(s => s.organismGroup === this.entity.leadingCode.organismGroup)
+      } else {
+        filtered = filtered.filter(s => !s.organismGroup)
       }
       return filtered.map(organism => ({label: organism.displayName, value: organism}))
     },
@@ -184,6 +189,10 @@ export default {
 
         // match by organism
         const currentOrganism = this.organisms.find(o => o['@id'] === this.entity.observation?.organism)
+        if (!currentOrganism) {
+          return;
+        }
+
         const organismGroups = this.organisms.filter(o => o.code === currentOrganism.code).map(o => o.organismGroup)
         const organismLeadingCode = availableLeadingCodes.filter(lc => organismGroups.includes(lc.organismGroup))
         availableLeadingCodes = organismLeadingCode.length > 0 ? organismLeadingCode : availableLeadingCodes
