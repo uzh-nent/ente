@@ -79,6 +79,11 @@
       "edited": "Resultat gespeichert.",
       "title": "Resultat bearbeiten"
     },
+    "add_test_observations": {
+      "added": "Resultat gespeichert.",
+      "title": "Resultat erfassen",
+      "no_missing_observations": "Keine fehlenden Testergebnisse vorhanden."
+    },
     "add_elm_report": {
       "added": "ELM Bericht versandt.",
       "title": "ELM Bericht erfassen"
@@ -214,7 +219,7 @@
     "_analysis_type": {
       "IDENTIFICATION": "Identif-/Typisierung",
       "EC_STEC": "Shigatoxin bildend (STEC)",
-      "EC_EPEC": " Enteropathogene (EPEC)",
+      "EC_EPEC": "Enteropathogene (EPEC)",
       "EC_ETEC": "Enterotoxin bildend (ETEC)",
       "EC_EIEC": "Enteroinvasive (EIEC) / Shigella",
       "EC_EAEC": "Enteroaggregative (EAEC)"
@@ -276,8 +281,9 @@
     "interpretation_text": "Kommentar",
     "cgMLST": "cgMLST",
     "_interpretation": {
-      "POS": "Positiv",
-      "NEG": "Negativ"
+      "POS": "Nachweis (Positiv)",
+      "NEG": "Kein Nachweis (Negativ)",
+      "NONE": "Keine Aussage möglich"
     }
   },
   "elm_report": {

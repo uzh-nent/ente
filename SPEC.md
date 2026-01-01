@@ -19,7 +19,6 @@ Probedaten:
 
 ## Future features
 
-
 Bericht Auftraggeber
 - Titel Bericht erfassen  
 - Empfänger (default: Auftraggeber)
@@ -33,6 +32,7 @@ features v1.0:
 
 features v?:
 - login using azureAD
+- add attribution to stammdaten
 - add practitioner orderer in case of reference lab
 - create service request online by customer
 - improve ELM api integration (sync value sets, add patient reporting type such as anonymous to leading codes)

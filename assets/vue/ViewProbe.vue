@@ -71,7 +71,7 @@
               ref="addIdentificationObservationButton"
               v-if="missingIdentificationObservation" @added="observations.push($event)"
               :probe="probe" :organisms="organisms"/>
-          <div class="d-flex flex-column gap-2">
+          <div class="d-flex flex-column gap-2" v-if="identificationObservations.length > 0">
             <actionable-view v-for="observation in identificationObservations" :key="observation['@id']">
               <identification-view
                   :organisms="organisms" :observation="observation"/>
@@ -83,6 +83,14 @@
                 <attribution-view :users="users" :entity="observation"/>
               </template>
             </actionable-view>
+          </div>
+
+          <add-test-observations-button
+              ref="addTestObservationsButton"
+              v-if="missingTestObservations.length > 0" @added="observations.push($event)"
+              :probe="probe" :missing-analysis-types="missingTestObservations"/>
+          <div class="d-flex flex-column gap-2" v-if="testObservations.length > 0">
+            {{ testObservations.length }}
           </div>
         </div>
         <div class="col-lg-12 mt-5" v-if="observations.length > 0">
@@ -98,7 +106,7 @@
               v-if="elmReports.length > 0" :reports="elmReports"
               :users="users" :organisms="organisms" :leading-codes="leadingCodes"/>
         </div>
-        <div class="col-lg-6 mt-5" v-if="!missingIdentificationObservation && missingPrimaryObservations.length === 0">
+        <div class="col-lg-6 mt-5" v-if="!missingIdentificationObservation && missingTestObservations.length === 0">
           <toggle-finished-button :probe="probe"/>
         </div>
       </div>
@@ -132,10 +140,12 @@ import AddElmReportButton from "./components/Action/AddElmReportButton.vue";
 import AttributionView from "./components/View/AttributionView.vue";
 import ElmReportTable from "./components/View/ElmReportTable.vue";
 import ToggleFinishedButton from "./components/Action/ToggleFinishedButton.vue";
+import AddTestObservationsButton from "./components/Action/AddTestObservationsButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    AddTestObservationsButton,
     ToggleFinishedButton,
     ElmReportTable,
     AttributionView,
@@ -181,10 +191,13 @@ export default {
     identificationObservations: function () {
       return this.observations.filter(o => o.analysisType === 'IDENTIFICATION')
     },
-    missingPrimaryObservations: function () {
+    missingTestObservations: function () {
       return this.probe.analysisTypes.filter(at => at !== 'IDENTIFICATION' &&
           !this.observations.some(o => o.analysisType === at))
-    }
+    },
+    testObservations: function () {
+      return this.observations.filter(o => o.analysisType !== 'IDENTIFICATION')
+    },
   },
   mounted() {
     const {probe, users, specimens, leadingCodes, organisms, observations, elmReports} = preloadApi.getViewActiveProbe()
@@ -201,6 +214,10 @@ export default {
     if (this.missingIdentificationObservation) {
       this.$nextTick(() => {
         this.$refs.addIdentificationObservationButton.$el?.focus()
+      })
+    } else if (this.missingTestObservations.length > 0) {
+      this.$nextTick(() => {
+        this.$refs.addTestObservationsButton.$el?.focus()
       })
     }
   }
