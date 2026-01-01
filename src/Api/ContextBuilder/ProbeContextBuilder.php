@@ -13,6 +13,9 @@ final readonly class ProbeContextBuilder implements SerializerContextBuilderInte
     {
     }
 
+    /**
+     * @param array<string, mixed>|null $extractedAttributes
+     */
     public function createFromRequest(Request $request, bool $normalization, ?array $extractedAttributes = null): array
     {
         $context = $this->decorated->createFromRequest($request, $normalization, $extractedAttributes);

@@ -205,15 +205,13 @@ readonly class ApiBuilder
             $observationResource['resource']['valueCodeableConcept'] = [
                 "coding" => [$this->formatter->codedIdentifier($elmReport->getOrganism())]
             ];
-        } else if ($elmReport->getOrganismText()) {
+        } elseif ($elmReport->getOrganismText()) {
             $observationResource['resource']['valueString'] = $elmReport->getOrganismText();
         } else {
             $observationResource['resource']['dataAbsentReason'] = [
                 "coding" => [PredefinedCodes::dataAbsentReason()]
             ];
         }
-
-        if (!$elmReport->getOrganism() && !$elmReport->getOrganismText())
 
         return $observationResource;
     }

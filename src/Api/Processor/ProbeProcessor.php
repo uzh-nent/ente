@@ -64,7 +64,7 @@ readonly class ProbeProcessor implements ProcessorInterface
 
             if ($data->getFinishedAt() && !$data->getFinishedBy()) {
                 $data->setFinishedBy($user);
-            } else if (!$data->getFinishedAt()) {
+            } elseif (!$data->getFinishedAt()) {
                 $data->setFinishedBy(null);
             }
         }
