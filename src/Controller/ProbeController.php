@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Probe;
+use App\Services\Interfaces\PdfServiceInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,6 +57,13 @@ class ProbeController extends AbstractController
         $response = $this->render('probe/view.js.twig', ['probe' => $probe]);
 
         return $this->sendJavascript($response);
+    }
+
+    #[Route('/probes/active/{probe}-worksheet.pdf', name: 'probe_worksheet_pdf')]
+    public function worksheetPdf(Probe $probe, PdfServiceInterface $pdfService): Response
+    {
+        $pdf = $pdfService->generateWorksheet($probe);
+        return $this->file($pdf, $probe->getIdentifier().'-worksheet.pdf');
     }
 
     #[Route('/probes/all', name: 'probe_all')]
