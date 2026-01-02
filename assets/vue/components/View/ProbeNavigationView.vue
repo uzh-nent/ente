@@ -28,13 +28,13 @@
         <div v-for="probe in filteredProbes" :key="probe['@id']"
              class="mb-4"
              :class="'col-lg-' + (12 / this.columnCount)">
-          <div class="card clickable hover-bg-light" @click="$emit('navigate', probe)" tabindex="0" role="button">
+          <a class="card clickable hover-bg-light no-underline" :href="probeHref(probe)" tabindex="0">
             <div class="card-body">
               <b>{{ probe.identifier }}</b> <br/>
 
               {{ formatService(probe) }}
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -44,6 +44,7 @@
 <script>
 
 import {formatProbeService} from "../../services/domain/formatter";
+import {router} from "../../services/api";
 
 const PREFIX_LENGTH = 4
 
@@ -93,6 +94,9 @@ export default {
   methods: {
     formatService: function (probe) {
       return formatProbeService(probe, this.$t)
+    },
+    probeHref: function (probe) {
+      return router.linkToActiveProbe(probe)
     }
   },
   watch: {
@@ -114,3 +118,9 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.no-underline {
+  text-decoration: none;
+}
+</style>

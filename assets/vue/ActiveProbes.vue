@@ -4,14 +4,13 @@
       <h2>{{ $t('probe._laboratory_function.REFERENCE') }}</h2>
 
       <probe-navigation-view :probes="this.referenceProbes" :column-count="this.referenceColumnCount"
-                             :focus="this.referenceColumnCount >= this.primaryColumnCount" @navigate="navigateToProbe" />
+                             :focus="this.referenceColumnCount >= this.primaryColumnCount" />
     </div>
     <div class="ps-4" :class="'col-lg-' + (this.primaryColumnCount * 3)">
       <h2>{{ $t('probe._laboratory_function.PRIMARY') }}</h2>
 
       <probe-navigation-view :probes="this.primaryProbes" :column-count="this.primaryColumnCount"
-                             :focus="this.primaryColumnCount > this.referenceColumnCount"
-                             @navigate="navigateToProbe" />
+                             :focus="this.primaryColumnCount > this.referenceColumnCount"/>
     </div>
   </div>
 </template>
@@ -66,11 +65,6 @@ export default {
     primaryColumnCount: function () {
       return 4 - this.referenceColumnCount
     },
-  },
-  methods: {
-    navigateToProbe: function (probe) {
-      router.navigateToActiveProbe(probe)
-    }
   },
   beforeMount() {
     const {activeProbes} = preloadApi.getActiveProbes()

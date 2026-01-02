@@ -118,10 +118,13 @@ const router = {
     window.location.href = route
   },
   navigateToActiveProbe: function (probe) {
-    this.navigateTo('/probes/active/' + iriToId(probe['@id']) + '/view')
+    this.navigateTo(this.linkToActiveProbe(probe))
   },
   navigateToProbe: function (probe) {
     this.navigateTo('/probes/all/' + iriToId(probe['@id']) + '/view')
+  },
+  linkToActiveProbe: function (probe) {
+    return '/probes/active/' + iriToId(probe['@id']) + '/view'
   },
   linkProbeWorksheetPdf: function (probe) {
     return '/probes/active/' + iriToId(probe['@id']) + '/worksheet.pdf'
