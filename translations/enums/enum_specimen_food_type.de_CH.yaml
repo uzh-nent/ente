@@ -1,0 +1,8 @@
+enum:
+  title: Lebensmittelart
+
+POULTRY: Geflügel
+MEAT: Fleisch
+DAIRY: Milchprodukte
+EGG: Eier
+FISH: Fisch

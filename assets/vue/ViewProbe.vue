@@ -64,15 +64,16 @@
         </template>
       </actionable-view>
 
-      <download-probe-worksheet-button class="mt-5" :probe="probe" :has-observations="observations.length > 0" />
+      <download-probe-worksheet-button class="mt-5" :probe="probe" :has-observations="observations.length > 0"/>
 
-      <div class="d-flex flex-column gap-2 mt-5">
+      <div class="mt-5">
         <h3>{{ $t('observation._name') }}</h3>
         <add-identification-observation-button
-            ref="addIdentificationObservationButton"
-            v-if="missingIdentificationObservation" @added="observations.push($event)"
+            v-if="missingIdentificationObservation"
+            class="mt-2" ref="addIdentificationObservationButton"
+            @added="observations.push($event)"
             :probe="probe" :organisms="organisms"/>
-        <div class="w-50" v-if="identificationObservation">
+        <div v-if="identificationObservation" class="w-50 mt-2">
           <actionable-view>
             <identification-view
                 :organisms="organisms" :observation="identificationObservation"/>
@@ -84,13 +85,16 @@
               <attribution-view :users="users" :entity="identificationObservation"/>
             </template>
           </actionable-view>
-
-          <add-test-observations-button
-              ref="addTestObservationsButton"
-              v-if="missingTestObservations.length > 0" @added="observations.push($event)"
-              :probe="probe" :missing-analysis-types="missingTestObservations"/>
-          <test-observation-table v-if="testObservations.length > 0" :users="users" :observations="observations"/>
         </div>
+        <add-test-observations-button
+            v-if="missingTestObservations.length > 0"
+            class="mt-2" ref="addTestObservationsButton"
+            @added="observations.push($event)"
+            :probe="probe" :missing-analysis-types="missingTestObservations"/>
+        <test-observation-table
+            v-if="testObservations.length > 0" class="mt-2"
+            :users="users" :observations="observations"/>
+
         <div class="mt-5" v-if="observations.length > 0">
           <h3>{{ $t('elm_report._name') }}</h3>
           <add-elm-report-button
@@ -105,7 +109,7 @@
               :users="users" :organisms="organisms" :leading-codes="leadingCodes"/>
         </div>
         <div class="mt-5" v-if="!missingIdentificationObservation && missingTestObservations.length === 0">
-          <toggle-finished-button :probe="probe" :has-reports="reports.length > 0" />
+          <toggle-finished-button :probe="probe" :has-reports="reports.length > 0"/>
         </div>
       </div>
     </div>
@@ -203,7 +207,16 @@ export default {
     },
   },
   mounted() {
-    const {probe, users, specimens, leadingCodes, organisms, observations, elmReports, reports} = preloadApi.getViewActiveProbe()
+    const {
+      probe,
+      users,
+      specimens,
+      leadingCodes,
+      organisms,
+      observations,
+      elmReports,
+      reports
+    } = preloadApi.getViewActiveProbe()
     this.probe = probe
 
     this.users = users

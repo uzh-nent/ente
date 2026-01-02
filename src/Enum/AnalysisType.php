@@ -2,7 +2,10 @@
 
 namespace App\Enum;
 
-enum AnalysisType: string
+use Symfony\Contracts\Translation\TranslatableInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+enum AnalysisType: string implements TranslatableInterface
 {
     case IDENTIFICATION = "IDENTIFICATION";
 
@@ -20,4 +23,9 @@ enum AnalysisType: string
      * needs separate PCR test (while STEC, EPEC, ETEC, EIEC are done in the same test)
      */
     case EAEC = "EC_EAEC";
+
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
+    {
+        return $translator->trans($this->value, [], 'enum_analysis_type');
+    }
 }

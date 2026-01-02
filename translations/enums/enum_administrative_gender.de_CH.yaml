@@ -1,0 +1,6 @@
+enum:
+  title: "Analysetyp"
+
+MALE: 'M'
+FEMALE: 'F'
+OTHER: O

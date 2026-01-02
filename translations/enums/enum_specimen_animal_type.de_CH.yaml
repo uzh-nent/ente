@@ -1,0 +1,8 @@
+enum:
+  title: Tierart
+
+CATTLE: Rind
+PIG: Schwein
+CHICKEN: Huhn
+BIRD: Vogel
+REPTILIAN: Reptil

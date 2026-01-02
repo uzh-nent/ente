@@ -1,0 +1,9 @@
+enum:
+  title: Analysetyp
+
+HUMAN: Mensch
+ANIMAL: Tier
+FOOD: Lebensmittel
+FEED: Futtermittel
+ENVIRONMENT: Umwelt
+LABORATORY_STRAIN: Laborstamm

@@ -1,0 +1,10 @@
+enum:
+  title: "Analysetyp"
+
+
+IDENTIFICATION: Identifikation / Typisierung
+EC_STEC: Shigatoxin bildend (STEC)
+EC_EPEC: Enteropathogene (EPEC)
+EC_ETEC: Enterotoxische (ETEC)
+EC_EIEC: Enteroinvasive (EIEC) / Shigella
+EC_EAEC: Enteroaggregative (EAEC)
