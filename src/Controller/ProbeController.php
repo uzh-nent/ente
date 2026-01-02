@@ -68,31 +68,6 @@ class ProbeController extends AbstractController
         return new Response($pdf, Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
     }
 
-    #[Route('/probes/active/{probe}/report.pdf', name: 'probe_report_pdf')]
-    public function reportPdf(Probe $probe, PdfServiceInterface $pdfService): Response
-    {
-        $report = new Report();
-        $report->setProbe($probe);
-        $report->setDate(new \DateTimeImmutable());
-        $report->setValidationBy($this->getUser());
-        $report->setPayload([]);
-        $report->setTitle("Schlussbericht");
-        $report->attribute($this->getUser());
-
-        $report->setPayload([
-            "report" => true,
-            "results" => [[
-                "analysis" => "Identifizierung / Typisierung von Listeria",
-                "method" => 59,
-                "result" => "Nachweis von Listeria monocytogenes Serogruppe IV (Serotypen 4b, 4d oder 4e)",
-                "comment" => "Diese Analyse wurde ausserhalb des akkreditierten Geltungsbereichs durchgeführt. Methode Vitullo et al. Molecular and Cellular Probes 27 (2013) 68-70"
-            ]]
-        ]);
-        $pdf = $pdfService->generateReport($report);
-
-        return new Response($pdf, Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
-    }
-
     #[Route('/probes/all', name: 'probe_all')]
     public function all(): Response
     {

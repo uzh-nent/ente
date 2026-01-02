@@ -78,6 +78,9 @@ class Report
     #[Groups(['report:read', 'report:write'])]
     private ?\DateTimeImmutable $date = null;
 
+    /**
+     * @var array<string, string[][]>|null
+     */
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['report:read', 'report:write'])]
     private ?array $payload = null;
@@ -151,11 +154,17 @@ class Report
         $this->date = $date;
     }
 
+    /**
+     * @return array<string, string[][]>|null
+     */
     public function getPayload(): ?array
     {
         return $this->payload;
     }
 
+    /**
+     * @param array<string, string[][]>|null $payload
+     */
     public function setPayload(?array $payload): void
     {
         $this->payload = $payload;

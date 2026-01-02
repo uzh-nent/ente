@@ -166,6 +166,9 @@ class PdfService implements PdfServiceInterface
         $flow->add($innerFlow);
     }
 
+    /**
+     * @param mixed[] $layout
+     */
     private function printReportLayout(Document $document, int $pageIndex, Report $report, array $layout, float $contentWidth): void
     {
         $printer = $document->setPosition(0, $pageIndex)->createPrinter();
@@ -235,7 +238,7 @@ class PdfService implements PdfServiceInterface
         }
         $flow->add($text);
         $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_RIGHT);
-        $text->addSpan(($pageIndex + 1) . "/".$document->getPageCount(), $this->textStyle, $this->fontSize, 1);
+        $text->addSpan(($pageIndex + 1) . "/" . $document->getPageCount(), $this->textStyle, $this->fontSize, 1);
         $flow->add($text);
 
         // size & print footer
@@ -245,6 +248,9 @@ class PdfService implements PdfServiceInterface
         $footerPrinter->place($allocation);
     }
 
+    /**
+     * @param mixed[] $layout
+     */
     private function addAddress(Document $document, Report $report, array $layout): void
     {
         $flow = new Flow(FlowDirection::COLUMN);
@@ -261,9 +267,9 @@ class PdfService implements PdfServiceInterface
         $text = new Text();
         if ($report->getReceiver() === ReportReceiver::PRACTITIONER) {
             $address = $report->getReceiverPrac()->getFullAddress();
-        } else if ($report->getReceiver() === ReportReceiver::ORGANIZATION) {
+        } elseif ($report->getReceiver() === ReportReceiver::ORGANIZATION) {
             $address = $report->getReceiverOrg()->getFullAddress();
-        } else if ($report->getReceiver() === ReportReceiver::PROBE_ORDERER_ORG) {
+        } elseif ($report->getReceiver() === ReportReceiver::PROBE_ORDERER_ORG) {
             $address = $report->getProbe()->getOrdererOrgFullAddress();
         } else {
             $address = $report->getProbe()->getOrdererPracFullAddress();
@@ -392,10 +398,10 @@ class PdfService implements PdfServiceInterface
     {
         $label = $this->translator->trans("Service", [], "entity_probe");
         if ($probe->getLaboratoryFunction() === LaboratoryFunction::REFERENCE) {
-            $value = AnalysisType::IDENTIFICATION->trans($this->translator) . " " .$probe->getPathogen()->trans($this->translator);
+            $value = AnalysisType::IDENTIFICATION->trans($this->translator) . " " . $probe->getPathogen()->trans($this->translator);
         } else {
             $analysisTypes = array_map(fn(AnalysisType $v) => $v->trans($this->translator), $probe->getAnalysisTypes());
-            $value = Pathogen::ESCHERICHIA_COLI->trans($this->translator) ." ".join(", ", $analysisTypes);
+            $value = Pathogen::ESCHERICHIA_COLI->trans($this->translator) . " " . join(", ", $analysisTypes);
         }
         $flow->add($this->createLabeledValueElement($label, $value, primary: true));
 
@@ -470,7 +476,7 @@ class PdfService implements PdfServiceInterface
             );
 
             $ordererFlow->add($recipient);
-        } else if ($probe->getSpecimenSource() === SpecimenSource::ANIMAL) {
+        } elseif ($probe->getSpecimenSource() === SpecimenSource::ANIMAL) {
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("entity.title", [], "animal_keeper"),
                 $probe->getAnimalKeeperFullAddress(),
@@ -480,7 +486,7 @@ class PdfService implements PdfServiceInterface
             $this->addSpace($ordererFlow, $this->spacer / 2);
             $label = $this->translator->trans("Animal name", [], "trait_probe_specimen_meta");
             $ordererFlow->add($this->createLabeledValueElement($label, $probe->getAnimalName()));
-        } else if ($probe->getSpecimenLocation()) {
+        } elseif ($probe->getSpecimenLocation()) {
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("Specimen location", [], "trait_probe_specimen_meta"),
                 $probe->getSpecimenLocation()
@@ -537,7 +543,10 @@ class PdfService implements PdfServiceInterface
         return $ordererFlow;
     }
 
-    private function createRecipientElement(string $label, string $address, ?string $contact = null, ?array $identifiers = null): AbstractElement
+    /**
+     * @param string[]|null $identifiers
+     */
+    private function createRecipientElement(string $label, string $address, ?string $contact = null, ?array $identifiers = []): AbstractElement
     {
         $recipientFlow = new Flow(FlowDirection::COLUMN);
 
@@ -546,7 +555,7 @@ class PdfService implements PdfServiceInterface
         $recipientFlow->add($text);
 
         // identifiers (AHV-number etc)
-        if ($identifiers && count($identifiers) > 0) {
+        if (count($identifiers) > 0) {
             $text = new Text();
             $identifiersText = join("\n", array_filter($identifiers));
             $text->addSpan($identifiersText, $this->textStyle, $this->fontSize, 1);
@@ -591,11 +600,14 @@ class PdfService implements PdfServiceInterface
         return $labelFlow;
     }
 
+    /**
+     * @param string[] $result
+     */
     private function addResult(array $result, Flow $flow): void
     {
         $text = new Text();
         $text->addSpan($result['analysis'], $this->textStyle, $this->fontSize);
-        $text->addSpan(" (".$result['method'].")", $this->textStyle, $this->smallFontSize);
+        $text->addSpan(" (" . $result['method'] . ")", $this->textStyle, $this->smallFontSize);
         $text->addSpan(": \n", $this->textStyle, $this->fontSize);
         $text->addSpan($result["result"], $this->textStyle, $this->fontSize);
         if ($result['comment']) {
@@ -604,7 +616,7 @@ class PdfService implements PdfServiceInterface
         }
 
         $block = new Block($text);
-        $block->setMargin([0, $this->spacer/2, 0, 0]);
+        $block->setMargin([0, $this->spacer / 2, 0, 0]);
         $flow->add($block);
     }
 }

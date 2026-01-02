@@ -180,7 +180,7 @@ trait PatientCopy
     {
         $fullName = trim($this->getPatientGivenName() . " " . $this->getPatientFamilyName());
         if ($genderTranslator && $this->getPatientGender()) {
-            $fullName .= " (".$genderTranslator($this->getPatientGender()).")";
+            $fullName .= " (" . $genderTranslator($this->getPatientGender()) . ")";
         }
 
         $countryPrefix = $this->getPatientCountryCode() === 'CH' ? "" : $this->getPatientCountryCode() . " ";
