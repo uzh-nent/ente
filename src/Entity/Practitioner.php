@@ -86,4 +86,11 @@ class Practitioner
     {
         return $this->probes;
     }
+
+    public function getFullAddress(): string
+    {
+        $fullName = trim($this->getGivenName() . " " . $this->getFullAddress());
+
+        return join("\n", array_filter([$fullName, $this->getAddress()]));
+    }
 }

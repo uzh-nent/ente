@@ -77,4 +77,16 @@ trait AnimalKeeperCopy
     {
         $this->animalKeeperCountryCode = $animalKeeperCountryCode;
     }
+
+    public function getAnimalKeeperFullAddress(): string
+    {
+        $countryPrefix = $this->getAnimalKeeperCountryCode() === 'CH' ? "" : $this->getAnimalKeeperCountryCode() . " ";
+        $city = trim($this->getAnimalKeeperPostalCode() . " " . $this->getAnimalKeeperCity());
+
+        return join("\n", array_filter([
+            $this->getAnimalKeeperName(),
+            $this->getAnimalKeeperAddressLines(),
+            $countryPrefix . $city
+        ]));
+    }
 }

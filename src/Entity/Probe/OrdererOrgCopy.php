@@ -111,4 +111,27 @@ trait OrdererOrgCopy
         $target->setPostalCode($this->ordererOrgPostalCode);
         $target->setCountryCode($this->ordererOrgCountryCode);
     }
+
+    public function getOrdererOrgFullAddress(): string
+    {
+        $countryPrefix = $this->getOrdererOrgCountryCode() === 'CH' ? "" : $this->getOrdererOrgCountryCode() . " ";
+        $city = trim($this->getOrdererOrgPostalCode() . " " . $this->getOrdererOrgCity());
+
+        return join("\n", array_filter([
+            $this->getOrdererOrgName(),
+            $this->getOrdererOrgAddressLines(),
+            $countryPrefix . $city
+        ]));
+    }
+
+    public function getOrdererOrgShortAddress(): string
+    {
+        $countryPrefix = $this->getOrdererOrgCountryCode() === 'CH' ? "" : $this->getOrdererOrgCountryCode() . " ";
+        $city = trim($this->getOrdererOrgPostalCode() . " " . $this->getOrdererOrgCity());
+
+        return join(", ", array_filter([
+            $this->getOrdererOrgName(),
+            $countryPrefix . $city
+        ]));
+    }
 }

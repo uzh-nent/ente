@@ -4,9 +4,11 @@ namespace App\Services;
 
 use App\Entity\Probe;
 use App\Entity\Report;
+use App\Enum\AdministrativeGender;
 use App\Enum\AnalysisType;
 use App\Enum\LaboratoryFunction;
 use App\Enum\Pathogen;
+use App\Enum\ReportReceiver;
 use App\Enum\SpecimenSource;
 use App\Services\Interfaces\PdfServiceInterface;
 use Famoser\PdfGenerator\Frontend\Content\ImagePlacement;
@@ -20,99 +22,254 @@ use Famoser\PdfGenerator\Frontend\Layout\ContentBlock;
 use Famoser\PdfGenerator\Frontend\Layout\Flow;
 use Famoser\PdfGenerator\Frontend\Layout\Style\FlowDirection;
 use Famoser\PdfGenerator\Frontend\Layout\Text;
+use Famoser\PdfGenerator\Frontend\LayoutEngine\Allocate\AllocationVisitor;
+use Famoser\PdfGenerator\Frontend\Printer;
 use Famoser\PdfGenerator\Frontend\Resource\Font;
 use Famoser\PdfGenerator\Frontend\Resource\Image;
-use Famoser\PdfGenerator\Tests\Resources\ResourcesProvider;
-use Symfony\Component\Filesystem\Path;
-use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function PHPUnit\Framework\returnArgument;
 
 class PdfService implements PdfServiceInterface
 {
     private float $fontSize = 4;
     private float $smallFontSize = 4 / 1.3;
     private float $spacer = 6;
-    private float $labelWidth = 24;
+    private float $labelWidth = 25;
     private TextStyle $textStyle;
     private TextStyle $emphasisTextStyle;
     private TextStyle $boldTextStyle;
 
-    private string $resourcesDir;
-
-    private float $documentContentWidth = 210 - 2 * 15;
-
+    private string $worksheetResourcesDir;
+    private string $reportResourcesDir;
 
     public function __construct(string $rootDir, private readonly TranslatorInterface $translator, private readonly string $organizationName)
     {
-        $this->resourcesDir = $rootDir . '/assets/resources/worksheet';
+        $this->worksheetResourcesDir = $rootDir . '/assets/resources/worksheet';
+        $this->reportResourcesDir = $rootDir . '/assets/resources/report';
 
-        $normalFont = Font::createFromDefault(Font\FontFamily::Times);
+        $normalFont = Font::createFromDefault(Font\FontFamily::Helvetica);
         $this->textStyle = new TextStyle($normalFont);
 
-        $boldTextStyle = Font::createFromDefault(Font\FontFamily::Times, Font\FontWeight::Bold);
+        $boldTextStyle = Font::createFromDefault(Font\FontFamily::Helvetica, Font\FontWeight::Bold);
         $this->boldTextStyle = new TextStyle($boldTextStyle);
 
-        $emphasisTextStyle = Font::createFromDefault(Font\FontFamily::Times, Font\FontWeight::Bold, Font\FontStyle::Italic);
+        $emphasisTextStyle = Font::createFromDefault(Font\FontFamily::Helvetica, Font\FontWeight::Bold, Font\FontStyle::Oblique);
         $this->emphasisTextStyle = new TextStyle($emphasisTextStyle);
     }
 
     public function generateWorksheet(Probe $probe): string
     {
-        $document = new Document();
-
-        $printer = $document->createPrinter(-5);
-        $printer->printText($this->organizationName, $this->textStyle, $this->smallFontSize);
-        $document->setPosition(0);
+        $document = new Document(pageSize: [210, 297], margin: 15);
+        $contentWidth = 210 - 2 * 15;
 
         $flow = new Flow(FlowDirection::COLUMN);
 
-        $this->addHeader($probe, $flow);
+        $this->addWorksheetHeader($probe, $flow);
         $this->addSpace($flow, $this->spacer);
 
-        $this->addDivider($flow);
+        $this->addDivider($flow, $contentWidth);
         $this->addSpace($flow, $this->spacer / 8);
-        $this->addProbeMeta($probe, $flow);
+        $this->addWorksheetProbeMeta($probe, $flow, $contentWidth);
         $this->addSpace($flow, $this->spacer / 8);
-        $this->addDivider($flow);
+        $this->addDivider($flow, $contentWidth);
         $this->addSpace($flow, $this->spacer / 8);
-        $this->addServiceTimeMeta($probe, $flow);
+        $this->addWorksheetServiceTimeMeta($probe, $flow);
 
-        $this->addAnalysisContent($probe, $flow);
+        $this->addWorksheetAnalysisContent($probe, $flow);
 
         $document->add($flow);
+
+        for ($i = 0; $i < $document->getPageCount(); $i++) {
+            $printer = $document->createPrinter(-5, $i);
+            $printer->printText($this->organizationName, $this->textStyle, $this->smallFontSize);
+        }
 
         return $document->save();
     }
 
-    private function addHeader(Probe $probe, Flow $flow): void
+    public function generateReport(Report $report): string
+    {
+        $document = new Document(pageSize: [210, 297], margin: [32, 47, 22, 38]);
+        $contentWidth = 210 - (32 + 22);
+
+        $layoutJson = file_get_contents($this->reportResourcesDir . "/layout.json");
+        $layout = json_decode($layoutJson, true);
+
+        $flow = new Flow(FlowDirection::COLUMN, $this->spacer / 2);
+
+        $this->addAddress($document, $report, $layout);
+        $this->addSpace($flow, $this->spacer * 3);
+        $this->addReportHeader($report, $flow);
+        $this->addDivider($flow, $contentWidth);
+        $this->addServiceRequest($report->getProbe(), $flow);
+        $this->addDivider($flow, $contentWidth);
+
+        $this->addReportProbeMeta($report, $flow, $contentWidth);
+        $this->addDivider($flow, $contentWidth);
+        $this->addReportServiceTimeElement($report, $flow);
+
+        $document->add($flow);
+
+        for ($i = 0; $i < $document->getPageCount(); $i++) {
+            $document->setPosition(currentPageIndex: $i);
+            $printer = $document->createPrinter(0, $i);
+            $printer = $printer->position(-32, -47);
+            $this->printReportLayout($printer, $layout);
+        }
+
+        return $document->save();
+    }
+
+    private function addReportHeader(Report $report, Flow $flow): void
+    {
+        $text = new Text();
+        $text->addSpan($report->getDate()->format("d.m.Y") . " / " . $report->getCreatedBy()->getAbbreviation(), $this->textStyle, $this->fontSize);
+        $flow->add($text);
+
+        $this->addSpace($flow, $this->spacer);
+
+        $text = new Text();
+        $text->addSpan($report->getProbe()->getIdentifier() . " - " . $report->getTitle(), $this->boldTextStyle, $this->fontSize * 1.6);
+        $flow->add($text);
+    }
+
+    private function addReportProbeMeta(Report $report, Flow $flow, float $width): void
+    {
+        $gap = $this->spacer;
+        $innerFlow = new Flow(FlowDirection::ROW, $gap);
+
+        $specimenMetaElement = $this->createSpecimenMetaElement($report->getProbe());
+        $specimenMetaWidth = $this->labelWidth * 2 + 18;
+        $specimenMetaElement->setWidth($specimenMetaWidth);
+        $innerFlow->add($specimenMetaElement);
+
+        $specimenSourceElement = $this->createSpecimenSourceElement($report->getProbe());
+        if ($specimenSourceElement) {
+            $specimenSourceElement->setWidth($width - $specimenMetaWidth - $gap);
+            $innerFlow->add($specimenSourceElement);
+        }
+
+        $flow->add($innerFlow);
+    }
+
+    private function printReportLayout(Printer $printer, array $layout): void
+    {
+        // UZH logo
+        $path = $this->reportResourcesDir . '/logo.png';
+        $imagePlacement = $this->createImagePlacement($path, 50);
+        $logoPrinter = $printer->position(12.2, 4);
+        $logoPrinter->print($imagePlacement);
+
+        // vetsuisse logo
+        $path = $this->reportResourcesDir . '/logo_faculty.png';
+        $imagePlacement = $this->createImagePlacement($path, 15);
+        $facultyLogoPrinter = $printer->position(9, 165);
+        $facultyLogoPrinter->print($imagePlacement);
+
+        // department
+        $flow = new Flow(FlowDirection::COLUMN);
+        $text = new Text();
+        $text->addSpan($layout['department'], $this->boldTextStyle, $this->fontSize, 0.8);
+        $flow->add($text);
+        $this->addSpace($flow, $this->spacer / 8);
+        $text = new Text();
+        $text->addSpan($layout['name'], $this->textStyle, $this->fontSize, 0.8);
+        $flow->add($text);
+
+        // address
+        $this->addSpace($flow, $this->spacer / 2);
+        $text = new Text();
+        $text->addSpan($layout['organization'] . "\n" . $layout['department'] . "\n" . $layout['address'] . "\n" . $layout['webpage'], $this->textStyle, $this->smallFontSize, 0.8);
+        $flow->add($text);
+
+        // contact
+        $this->addSpace($flow, $this->spacer / 2);
+        $text = new Text();
+        $text->addSpan($this->translator->trans("report.contact", [], "report") . ":\n", $this->textStyle, $this->smallFontSize, 0.8);
+        foreach ($layout['responsible'] as $responsible) {
+            $text->addSpan($responsible['name'], $this->boldTextStyle, $this->smallFontSize, 0.8);
+            if (isset($responsible['function'])) {
+                $text->addSpan(" (" . $responsible['function'] . ")", $this->textStyle, $this->smallFontSize, 0.8);
+            }
+            if (isset($responsible['email'])) {
+                $text->addSpan("\n  " . $responsible['email'], $this->textStyle, $this->smallFontSize, 0.8);
+            }
+            $text->addSpan("\n", $this->textStyle, $this->smallFontSize, 0.8);
+        }
+        $flow->add($text);
+
+        // contact
+        $text = new Text();
+        $text->addSpan($layout['contact'], $this->textStyle, $this->smallFontSize, 0.8);
+        $flow->add($text);
+
+        // size & print
+        $allocationVisitor = new AllocationVisitor(79 - 10, 270);
+        $allocation = $flow->accept($allocationVisitor);
+        $logoPrinter = $printer->position(131, 8); // 131 + 79 = 210 = A4 width
+        $logoPrinter->place($allocation);
+    }
+
+    private function addAddress(Document $document, Report $report, array $layout): void
+    {
+        $flow = new Flow(FlowDirection::COLUMN);
+
+        $text = new Text();
+        $text->addSpan($layout['organization'] . ", " . $layout['department'] . "\n" .
+            str_replace("\n", ", ", $layout['address']), $this->textStyle, $this->fontSize / 2, 1); // around six points
+        $flow->add($text);
+
+        $this->addSpace($flow, $this->spacer / 4);
+        $this->addDivider($flow, 74);
+        $this->addSpace($flow, $this->spacer / 2);
+
+        $text = new Text();
+        if ($report->getReceiver() === ReportReceiver::PRACTITIONER) {
+            $address = $report->getReceiverPrac()->getFullAddress();
+        } else if ($report->getReceiver() === ReportReceiver::ORGANIZATION) {
+            $address = $report->getReceiverOrg()->getFullAddress();
+        } else if ($report->getReceiver() === ReportReceiver::PROBE_ORDERER_ORG) {
+            $address = $report->getProbe()->getOrdererOrgFullAddress();
+        } else {
+            $address = $report->getProbe()->getOrdererPracFullAddress();
+        }
+        $text->addSpan($address, $this->textStyle, $this->fontSize, 1);
+        $flow->add($text);
+
+        // hardcoded address position
+        $document->setPosition(0, 0);
+        $document->add($flow);
+    }
+
+    private function addWorksheetHeader(Probe $probe, Flow $flow): void
     {
         $text = new Text();
         $text->addSpan($probe->getIdentifier(), $this->boldTextStyle, $this->fontSize * 1.6 * 2);
         $flow->add($text);
     }
 
-    private function addProbeMeta(Probe $probe, Flow $flow): void
+    private function addWorksheetProbeMeta(Probe $probe, Flow $flow, float $width): void
     {
         $gap = $this->spacer / 2;
         $innerFlow = new Flow(FlowDirection::ROW, $gap);
 
         $ordererElement = $this->createOrdererElement($probe);
-        $ordererElement->setWidth($this->documentContentWidth / 3 - $gap);
+        $ordererElement->setWidth($width / 3 - $gap);
         $innerFlow->add($ordererElement);
 
         $specimenMetaElement = $this->createSpecimenMetaElement($probe);
-        $specimenMetaElement->setWidth($this->documentContentWidth / 3);
+        $specimenMetaElement->setWidth($width / 3);
         $innerFlow->add($specimenMetaElement);
 
-        $specimenMetaElement = $this->createSpecimenSourceElement($probe);
-        $specimenMetaElement->setWidth($this->documentContentWidth / 3 - $gap);
-        $innerFlow->add($specimenMetaElement);
+        $specimenSourceElement = $this->createSpecimenSourceElement($probe);
+        if ($specimenSourceElement) {
+            $specimenSourceElement->setWidth($width / 3 - $gap);
+            $innerFlow->add($specimenSourceElement);
+        }
 
         $flow->add($innerFlow);
     }
 
-    private function addServiceTimeMeta(Probe $probe, Flow $flow): void
+    private function addWorksheetServiceTimeMeta(Probe $probe, Flow $flow): void
     {
         $innerFlow = new Flow(FlowDirection::ROW);
 
@@ -130,7 +287,7 @@ class PdfService implements PdfServiceInterface
         $flow->add($innerFlow);
     }
 
-    private function addAnalysisContent(Probe $probe, Flow $flow): void
+    private function addWorksheetAnalysisContent(Probe $probe, Flow $flow): void
     {
         foreach ($probe->getAnalysisTypes() as $analysisType) {
             $analysisLabel = $analysisType->trans($this->translator);
@@ -149,17 +306,8 @@ class PdfService implements PdfServiceInterface
             $innerFlow->add($text);
 
             if ($analysisType === AnalysisType::IDENTIFICATION && in_array($probe->getPathogen(), [Pathogen::SHIGELLA, Pathogen::YERSINIA, Pathogen::LISTERIA_MONOCYTOGENES])) {
-                $path = $this->resourcesDir . '/' . $probe->getPathogen()->name . '.png';
-
-                $imageInfo = getimagesize($path);
-                $originalWidth = $imageInfo[0];
-                $originalHeight = $imageInfo[1];
-
-                $targetWidth = 210 - 2 * 15;
-                $targetHeight = ($originalHeight / $originalWidth) * $targetWidth;
-
-                $image = Image::createFromFile($path);
-                $imagePlacement = new ImagePlacement($targetWidth, $targetHeight, $image);
+                $path = $this->worksheetResourcesDir . '/' . $probe->getPathogen()->name . '.png';
+                $imagePlacement = $this->createImagePlacement($path, 210 - 2 * 15);
 
                 $block = new ContentBlock($imagePlacement);
                 $block->setMargin([0, $this->spacer / 2, 0, 0]);
@@ -178,6 +326,18 @@ class PdfService implements PdfServiceInterface
         }
     }
 
+    private function createImagePlacement(string $path, float $targetWidth): ImagePlacement
+    {
+        $imageInfo = getimagesize($path);
+        $originalWidth = $imageInfo[0];
+        $originalHeight = $imageInfo[1];
+
+        $targetHeight = ($originalHeight / $originalWidth) * $targetWidth;
+
+        $image = Image::createFromFile($path);
+        return new ImagePlacement($targetWidth, $targetHeight, $image);
+    }
+
     private function addSpace(Flow $flow, float $height = 10): void
     {
         $block = new ContentBlock();
@@ -185,17 +345,30 @@ class PdfService implements PdfServiceInterface
         $flow->add($block);
     }
 
-    private function addDivider(Flow $flow): void
+    private function addDivider(Flow $flow, float $width): void
     {
         $dividerStyle = new DrawingStyle(0.2);
-        $divider = new Rectangle($this->documentContentWidth, 0, $dividerStyle);
+        $divider = new Rectangle($width, 0, $dividerStyle);
         $flow->add(new ContentBlock($divider));
     }
 
-    public function generateReport(Report $report): string
+    private function addServiceRequest(Probe $probe, Flow $flow): void
     {
-        // TODO
-        return "";
+        $label = $this->translator->trans("Service", [], "entity_probe");
+        if ($probe->getLaboratoryFunction() === LaboratoryFunction::REFERENCE) {
+            $value = AnalysisType::IDENTIFICATION->trans($this->translator) . " " .$probe->getPathogen()->trans($this->translator);
+        } else {
+            $analysisTypes = array_map(fn(AnalysisType $v) => $v->trans($this->translator), $probe->getAnalysisTypes());
+            $value = Pathogen::ESCHERICHIA_COLI->trans($this->translator) ." ".join(", ", $analysisTypes);
+        }
+        $flow->add($this->createLabeledValueElement($label, $value, primary: true));
+
+        $label = $this->translator->trans("Orderer", [], "entity_probe");
+        $value = $probe->getOrdererOrg() ? $probe->getOrdererOrgShortAddress() : $probe->getOrdererPracShortAddress();
+        $flow->add($this->createLabeledValueElement($label, $value, primary: true));
+
+        $label = $this->translator->trans("Requisition identifier", [], "trait_probe_service_request");
+        $flow->add($this->createLabeledValueElement($label, $probe->getRequisitionIdentifier(), primary: true, boldValue: true));
     }
 
     private function createSpecimenMetaElement(Probe $probe): AbstractElement
@@ -250,41 +423,50 @@ class PdfService implements PdfServiceInterface
         return $flow;
     }
 
-    private function createSpecimenSourceElement(Probe $probe): AbstractElement
+    private function createSpecimenSourceElement(Probe $probe): ?AbstractElement
     {
         $ordererFlow = new Flow(FlowDirection::COLUMN);
         if ($probe->getSpecimenSource() === SpecimenSource::HUMAN) {
-            $name = trim($probe->getPatientGivenName() . " " . $probe->getPatientFamilyName());
-            if ($probe->getPatientGender()) {
-                $name .= " (" . $probe->getPatientGender()->trans($this->translator) . ")";
-            }
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("entity.title", [], "entity_patient"),
-                [
-                    $name,
-                    $probe->getPatientAddressLines(),
-                    $probe->getPatientCountryCode() . " " . $probe->getPatientPostalCode() . " " . $probe->getPatientCity()
-                ],
+                $probe->getPatientFullAddress(fn(AdministrativeGender $v) => $v->trans($this->translator)),
                 identifiers: [$probe->getPatientBirthDate()?->format('d.m.Y'), $probe->getPatientAhvNumber()]
             );
         } else if ($probe->getSpecimenSource() === SpecimenSource::ANIMAL) {
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("entity.title", [], "animal_keeper"),
-                [
-                    $probe->getAnimalKeeperName(),
-                    $probe->getAnimalKeeperAddressLines(),
-                    $probe->getAnimalKeeperCountryCode() . " " . $probe->getAnimalKeeperPostalCode() . " " . $probe->getAnimalKeeperCity()
-                ],
+                $probe->getAnimalKeeperFullAddress(),
             );
-        } else {
+        } else if ($probe->getSpecimenLocation()) {
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("Specimen location", [], "trait_probe_specimen_meta"),
-                [$probe->getSpecimenLocation()]
+                $probe->getSpecimenLocation()
             );
+        } else {
+            return null;
         }
         $ordererFlow->add($recipient);
 
         return $ordererFlow;
+    }
+
+    private function addReportServiceTimeElement(Report $report, Flow $flow): void
+    {
+        $innerFlow = new Flow(FlowDirection::ROW, 4);
+
+        $label = $this->translator->trans("Received date", [], "trait_probe_service_time");
+        $value = $report->getProbe()->getReceivedDate()?->format("d.m.Y") ?? "";
+        $innerFlow->add($this->createLabeledValueElement($label, $value));
+
+        $label = $this->translator->trans("Analysis start date", [], "trait_probe_service_time");
+        $value = $report->getProbe()->getAnalysisStartDate()?->format("d.m.Y") ?? "";
+        $innerFlow->add($this->createLabeledValueElement($label, $value));
+
+        $label = $this->translator->trans("Date", [], "entity_report");
+        $value = $report->getDate()?->format("d.m.Y") ?? "";
+        $innerFlow->add($this->createLabeledValueElement($label, $value));
+
+        $flow->add($innerFlow);
     }
 
     private function createOrdererElement(Probe $probe): AbstractElement
@@ -293,21 +475,13 @@ class PdfService implements PdfServiceInterface
         if ($probe->getLaboratoryFunction() === LaboratoryFunction::REFERENCE) {
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("meta.orderer_organization", [], "report"),
-                [
-                    $probe->getOrdererOrgName(),
-                    $probe->getOrdererOrgAddressLines(),
-                    $probe->getOrdererOrgCountryCode() . " " . $probe->getOrdererOrgPostalCode() . " " . $probe->getOrdererOrgCity()
-                ],
+                $probe->getOrdererOrgFullAddress(),
                 $probe->getOrdererOrgContact()
             );
         } else {
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("meta.orderer_practitioner", [], "report"),
-                [
-                    trim($probe->getOrdererPracGivenName() . " " . $probe->getOrdererPracFamilyName()),
-                    $probe->getOrdererPracAddressLines(),
-                    $probe->getOrdererPracCountryCode() . " " . $probe->getOrdererPracPostalCode() . " " . $probe->getOrdererPracCity()
-                ],
+                $probe->getOrdererPracFullAddress(),
                 $probe->getOrdererPracContact()
             );
         }
@@ -320,7 +494,7 @@ class PdfService implements PdfServiceInterface
         return $ordererFlow;
     }
 
-    private function createRecipientElement(string $label, array $address, ?string $contact = null, ?array $identifiers = null): AbstractElement
+    private function createRecipientElement(string $label, string $address, ?string $contact = null, ?array $identifiers = null): AbstractElement
     {
         $recipientFlow = new Flow(FlowDirection::COLUMN);
 
@@ -340,8 +514,7 @@ class PdfService implements PdfServiceInterface
 
         // address
         $text = new Text();
-        $addressText = join("\n", array_filter($address));
-        $text->addSpan($addressText, $this->textStyle, $this->fontSize, 1);
+        $text->addSpan($address, $this->textStyle, $this->fontSize, 1);
         $contentBlock = new Block($text);
         $contentBlock->setMargin([0, $this->spacer / 2, 0, 0]);
         $recipientFlow->add($contentBlock);
@@ -358,18 +531,18 @@ class PdfService implements PdfServiceInterface
         return $recipientFlow;
     }
 
-    private function createLabeledValueElement(string $label, string $value): AbstractElement
+    private function createLabeledValueElement(string $label, string $value, bool $primary = false, bool $boldValue = false): AbstractElement
     {
         $labelFlow = new Flow();
 
         $text = new Text();
-        $text->addSpan($label . ": ", $this->textStyle, $this->smallFontSize);
+        $text->addSpan($label . ": ", $this->textStyle, $primary ? $this->fontSize : $this->smallFontSize);
         $contentBlock = new Block($text);
-        $contentBlock->setWidth($this->labelWidth);
+        $contentBlock->setWidth($primary ? $this->labelWidth * 1.6 : $this->labelWidth);
         $labelFlow->add($contentBlock);
 
         $text = new Text();
-        $text->addSpan($value, $this->textStyle, $this->fontSize, 1);
+        $text->addSpan($value, $boldValue ? $this->boldTextStyle : $this->textStyle, $this->fontSize, 1);
         $labelFlow->add($text);
 
         return $labelFlow;

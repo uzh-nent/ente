@@ -1,0 +1,24 @@
+{
+  "organization": "Universität Zürich",
+  "department": "Institut für Lebensmittelsicherheit und -hygiene",
+  "name": "NENT Nationales Zentrum für enteropathogene Bakterien und Listerien",
+  "address": "Winterthurerstrasse 272\nCH-8057 Zürich",
+  "webpage": "www.ils.uzh.ch",
+  "responsible": [
+    {
+      "name": "Dr. med. vet. A. Diethelm",
+      "email": "andrea.diethelm@uzh.ch"
+    },
+    {
+      "name": "Dr. med. vet. J. Horlbog",
+      "email": "jule.horlbog@uzh.ch"
+    },
+    {
+      "name": "PD Dr. G. Bloemberg, FAMH",
+      "function": "Leiter"
+    }
+  ],
+  "contact": "Telefon +41 44 635 86 71\nTelefax +41 44 635 89 08",
+  "conditions": "Methodencodierung (siehe hochgestellte Zahl unter Ergebnisse) gemäss Dokument gültige Prüfverfahren Homepage NENT. Die Untersuchungsergebnisse haben Gültigkeit für das geprüfte Objekt wie erhalten. Ohne schriftliche Genehmigung des ILS darf der Bericht nicht auszugsweise vervielfältigt werden. Der Auftraggeber kann beim Prüflabor Angaben über die Messunsicherheit erfragen.",
+  "report_conditions": "Bemerkung: Resultate bezüglich typhoiden/paratyphoiden Salmonellen, Vibrio cholerae und Listeria monocytogenes (humane Isolate) werden von NENT zusätzlich an das BAG gemeldet"
+}

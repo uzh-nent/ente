@@ -10,6 +10,7 @@ use App\Services\Elm\ApiBuilder\Dto\PersonDto;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 trait PatientCopy
 {
@@ -164,5 +165,22 @@ trait PatientCopy
     {
         $target->setGivenName($this->patientGivenName);
         $target->setFamilyName($this->patientFamilyName);
+    }
+
+    public function getPatientFullAddress(?callable $genderTranslator): string
+    {
+        $fullName = trim($this->getPatientGivenName() . " " . $this->getPatientFamilyName());
+        if ($genderTranslator && $this->getPatientGender()) {
+            $fullName .= " (".$genderTranslator($this->getPatientGender()).")";
+        }
+
+        $countryPrefix = $this->getPatientCountryCode() === 'CH' ? "" : $this->getPatientCountryCode() . " ";
+        $city = trim($this->getPatientPostalCode() . " " . $this->getPatientCity());
+
+        return join("\n", array_filter([
+            $fullName,
+            $this->getPatientAddressLines(),
+            $countryPrefix . $city
+        ]));
     }
 }

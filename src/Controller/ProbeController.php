@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Probe;
+use App\Entity\Report;
 use App\Services\Interfaces\PdfServiceInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,6 +64,21 @@ class ProbeController extends AbstractController
     public function worksheetPdf(Probe $probe, PdfServiceInterface $pdfService): Response
     {
         $pdf = $pdfService->generateWorksheet($probe);
+
+        return new Response($pdf, Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
+    }
+
+    #[Route('/probes/active/{probe}/report.pdf', name: 'probe_report_pdf')]
+    public function reportPdf(Probe $probe, PdfServiceInterface $pdfService): Response
+    {
+        $report = new Report();
+        $report->setProbe($probe);
+        $report->setDate(new \DateTimeImmutable());
+        $report->setValidationBy($this->getUser());
+        $report->setPayload([]);
+        $report->setTitle("Schlussbericht");
+        $report->attribute($this->getUser());
+        $pdf = $pdfService->generateReport($report);
 
         return new Response($pdf, Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
     }

@@ -2,5 +2,6 @@ entity:
     title: 'Probe'
     plural: 'Proben'
 
-
 Requisition identifier: "Probe-Referenz"
+Service: 'Auftrag'
+Orderer: 'Auftraggeber'

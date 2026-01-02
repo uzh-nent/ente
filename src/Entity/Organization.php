@@ -71,4 +71,9 @@ class Organization
     {
         return $this->probes;
     }
+
+    public function getFullAddress(): string
+    {
+        return join("\n", array_filter([$this->getName(), $this->getAddress()]));
+    }
 }

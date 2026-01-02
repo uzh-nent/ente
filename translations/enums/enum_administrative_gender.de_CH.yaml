@@ -1,6 +1,6 @@
 enum:
   title: "Analysetyp"
 
-MALE: 'M'
-FEMALE: 'F'
-OTHER: O
+MALE: 'männlich'
+FEMALE: 'weiblich'
+OTHER: 'divers'

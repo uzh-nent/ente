@@ -72,4 +72,15 @@ trait AddressTrait
     {
         $this->countryCode = $countryCode;
     }
+
+    public function getAddress(): string
+    {
+        $countryPrefix = $this->getCountryCode() === 'CH' ? "" : $this->getCountryCode() . " ";
+        $city = trim($this->getPostalCode() . " " . $this->getCity());
+
+        return join("\n", array_filter([
+            $this->getAddressLines(),
+            $countryPrefix . $city
+        ]));
+    }
 }

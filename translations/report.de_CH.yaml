@@ -3,3 +3,6 @@ content:
 meta:
   orderer_organization: 'Auftraggeber (Primärlabor)'
   orderer_practitioner: 'Auftraggeber (Mediziner:in)'
+report:
+  contact: 'Kontakt'
+  history: 'Verlauf'

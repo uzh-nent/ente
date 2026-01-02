@@ -25,6 +25,8 @@ use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
+use App\Enum\CodeSystem;
+use App\Enum\ReportReceiver;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -58,15 +60,19 @@ class Report
     #[Groups(['report:read', 'report:write'])]
     private ?string $title = null;
 
+    #[ORM\Column(type: Types::STRING, enumType: CodeSystem::class)]
+    #[Groups(['coded-identifier:read'])]
+    private ReportReceiver $receiver = ReportReceiver::PROBE_ORDERER_ORG;
+
     #[ORM\ManyToOne(targetEntity: Organization::class)]
     #[ApiProperty(readableLink: false, writableLink: false)]
     #[Groups(['report:read', 'report:write'])]
-    private ?Organization $receiver = null;
+    private ?Organization $receiverOrg = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\ManyToOne(targetEntity: Practitioner::class)]
     #[ApiProperty(readableLink: false, writableLink: false)]
     #[Groups(['report:read', 'report:write'])]
-    private ?User $signedBy = null;
+    private ?Practitioner $receiverPrac = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     #[Groups(['report:read', 'report:write'])]
@@ -74,7 +80,12 @@ class Report
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['report:read', 'report:write'])]
-    private ?string $payload = null;
+    private ?array $payload = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ApiProperty(readableLink: false, writableLink: false)]
+    #[Groups(['report:read', 'report:write'])]
+    private ?User $validationBy = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['report:read', 'report:write'])]
@@ -100,24 +111,34 @@ class Report
         $this->title = $title;
     }
 
-    public function getReceiver(): ?Organization
+    public function getReceiver(): ReportReceiver
     {
         return $this->receiver;
     }
 
-    public function setReceiver(?Organization $receiver): void
+    public function setReceiver(ReportReceiver $receiver): void
     {
         $this->receiver = $receiver;
     }
 
-    public function getSignedBy(): ?User
+    public function getReceiverOrg(): ?Organization
     {
-        return $this->signedBy;
+        return $this->receiverOrg;
     }
 
-    public function setSignedBy(?User $signedBy): void
+    public function setReceiverOrg(?Organization $receiverOrg): void
     {
-        $this->signedBy = $signedBy;
+        $this->receiverOrg = $receiverOrg;
+    }
+
+    public function getReceiverPrac(): ?Practitioner
+    {
+        return $this->receiverPrac;
+    }
+
+    public function setReceiverPrac(?Practitioner $receiverPrac): void
+    {
+        $this->receiverPrac = $receiverPrac;
     }
 
     public function getDate(): ?\DateTimeImmutable
@@ -130,14 +151,24 @@ class Report
         $this->date = $date;
     }
 
-    public function getPayload(): ?string
+    public function getPayload(): ?array
     {
         return $this->payload;
     }
 
-    public function setPayload(?string $payload): void
+    public function setPayload(?array $payload): void
     {
         $this->payload = $payload;
+    }
+
+    public function getValidationBy(): ?User
+    {
+        return $this->validationBy;
+    }
+
+    public function setValidationBy(?User $validationBy): void
+    {
+        $this->validationBy = $validationBy;
     }
 
     public function getFilename(): ?string
