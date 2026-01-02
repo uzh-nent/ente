@@ -466,22 +466,29 @@ class PdfService implements PdfServiceInterface
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("entity.title", [], "entity_patient"),
                 $probe->getPatientFullAddress(fn(AdministrativeGender $v) => $v->trans($this->translator)),
-                identifiers: [$probe->getPatientBirthDate()?->format('d.m.Y'), $probe->getPatientAhvNumber()]
+                identifiers: [$probe->getPatientBirthDate()?->format('d.m.Y'), $probe->getPatientAhvNumberFormatted()]
             );
+
+            $ordererFlow->add($recipient);
         } else if ($probe->getSpecimenSource() === SpecimenSource::ANIMAL) {
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("entity.title", [], "animal_keeper"),
                 $probe->getAnimalKeeperFullAddress(),
             );
+            $ordererFlow->add($recipient);
+
+            $this->addSpace($ordererFlow, $this->spacer / 2);
+            $label = $this->translator->trans("Animal name", [], "trait_probe_specimen_meta");
+            $ordererFlow->add($this->createLabeledValueElement($label, $probe->getAnimalName()));
         } else if ($probe->getSpecimenLocation()) {
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("Specimen location", [], "trait_probe_specimen_meta"),
                 $probe->getSpecimenLocation()
             );
+            $ordererFlow->add($recipient);
         } else {
             return null;
         }
-        $ordererFlow->add($recipient);
 
         return $ordererFlow;
     }

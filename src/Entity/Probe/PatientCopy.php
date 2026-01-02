@@ -65,6 +65,15 @@ trait PatientCopy
         return $this->patientAhvNumber;
     }
 
+    public function getPatientAhvNumberFormatted(): ?string
+    {
+        if (!$this->patientAhvNumber || strlen($this->patientAhvNumber) !== 13) {
+            return $this->patientAhvNumber;
+        }
+
+        return substr($this->patientAhvNumber, 0, 3) . '.' . substr($this->patientAhvNumber, 3, 4) . '.' . substr($this->patientAhvNumber, 7, 4) . '.' . substr($this->patientAhvNumber, 11);
+    }
+
     public function setPatientAhvNumber(?string $patientAhvNumber): void
     {
         $this->patientAhvNumber = $patientAhvNumber;
