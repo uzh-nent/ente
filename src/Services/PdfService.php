@@ -32,10 +32,12 @@ class PdfService implements PdfServiceInterface
 {
     private float $fontSize = 4;
     private float $smallFontSize = 4 / 1.3;
+    private float $tinyFontSize = 4 / 1.6;
     private float $spacer = 6;
     private float $labelWidth = 25;
     private TextStyle $textStyle;
     private TextStyle $emphasisTextStyle;
+    private TextStyle $secondaryTextStyle;
     private TextStyle $boldTextStyle;
 
     private string $worksheetResourcesDir;
@@ -54,6 +56,9 @@ class PdfService implements PdfServiceInterface
 
         $emphasisTextStyle = Font::createFromDefault(Font\FontFamily::Helvetica, Font\FontWeight::Bold, Font\FontStyle::Oblique);
         $this->emphasisTextStyle = new TextStyle($emphasisTextStyle);
+
+        $secondaryTextStyle = Font::createFromDefault(Font\FontFamily::Helvetica, Font\FontWeight::Normal, Font\FontStyle::Oblique);
+        $this->secondaryTextStyle = new TextStyle($secondaryTextStyle);
     }
 
     public function generateWorksheet(Probe $probe): string
@@ -106,14 +111,17 @@ class PdfService implements PdfServiceInterface
         $this->addReportProbeMeta($report, $flow, $contentWidth);
         $this->addDivider($flow, $contentWidth);
         $this->addReportServiceTimeElement($report, $flow);
+        $this->addSpace($flow, $this->spacer);
+
+        $this->addReportResultHeader($flow);
+        foreach ($report->getPayload()['results'] as $result) {
+            $this->addResult($result, $flow);
+        }
 
         $document->add($flow);
 
         for ($i = 0; $i < $document->getPageCount(); $i++) {
-            $document->setPosition(currentPageIndex: $i);
-            $printer = $document->createPrinter(0, $i);
-            $printer = $printer->position(-32, -47);
-            $this->printReportLayout($printer, $layout);
+            $this->printReportLayout($document, $i, $report, $layout, $contentWidth);
         }
 
         return $document->save();
@@ -129,6 +137,13 @@ class PdfService implements PdfServiceInterface
 
         $text = new Text();
         $text->addSpan($report->getProbe()->getIdentifier() . " - " . $report->getTitle(), $this->boldTextStyle, $this->fontSize * 1.6);
+        $flow->add($text);
+    }
+
+    private function addReportResultHeader(Flow $flow): void
+    {
+        $text = new Text();
+        $text->addSpan($this->translator->trans("report.results", [], "report"), $this->boldTextStyle, $this->fontSize * 1.3);
         $flow->add($text);
     }
 
@@ -151,18 +166,21 @@ class PdfService implements PdfServiceInterface
         $flow->add($innerFlow);
     }
 
-    private function printReportLayout(Printer $printer, array $layout): void
+    private function printReportLayout(Document $document, int $pageIndex, Report $report, array $layout, float $contentWidth): void
     {
+        $printer = $document->setPosition(0, $pageIndex)->createPrinter();
+        $noMarginPrinter = $printer->position(-32, -47); // minus the left / top margins
+
         // UZH logo
         $path = $this->reportResourcesDir . '/logo.png';
         $imagePlacement = $this->createImagePlacement($path, 50);
-        $logoPrinter = $printer->position(12.2, 4);
+        $logoPrinter = $noMarginPrinter->position(12.2, 4);
         $logoPrinter->print($imagePlacement);
 
         // vetsuisse logo
         $path = $this->reportResourcesDir . '/logo_faculty.png';
         $imagePlacement = $this->createImagePlacement($path, 15);
-        $facultyLogoPrinter = $printer->position(9, 165);
+        $facultyLogoPrinter = $noMarginPrinter->position(9, 165);
         $facultyLogoPrinter->print($imagePlacement);
 
         // department
@@ -203,10 +221,28 @@ class PdfService implements PdfServiceInterface
         $flow->add($text);
 
         // size & print
-        $allocationVisitor = new AllocationVisitor(79 - 10, 270);
+        $allocationVisitor = new AllocationVisitor(89 - 22, 270);
         $allocation = $flow->accept($allocationVisitor);
-        $logoPrinter = $printer->position(131, 8); // 131 + 79 = 210 = A4 width
+        $logoPrinter = $noMarginPrinter->position(121, 8); // 121 + 89 = 210 = A4 width
         $logoPrinter->place($allocation);
+
+        // footer
+        $flow = new Flow(FlowDirection::COLUMN);
+        $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_JUSTIFIED);
+        $text->addSpan($layout['conditions'], $this->textStyle, $this->tinyFontSize, 1);
+        if ($report->getPayload()['report']) {
+            $text->addSpan($layout['report_conditions'], $this->textStyle, $this->tinyFontSize, 1);
+        }
+        $flow->add($text);
+        $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_RIGHT);
+        $text->addSpan(($pageIndex + 1) . "/".$document->getPageCount(), $this->textStyle, $this->fontSize, 1);
+        $flow->add($text);
+
+        // size & print footer
+        $allocationVisitor = new AllocationVisitor($contentWidth, 270);
+        $allocation = $flow->accept($allocationVisitor);
+        $footerPrinter = $printer->position(top: 212 + $this->spacer); // 297 - 47 - 38 (the two vertical margins)
+        $footerPrinter->place($allocation);
     }
 
     private function addAddress(Document $document, Report $report, array $layout): void
@@ -215,7 +251,7 @@ class PdfService implements PdfServiceInterface
 
         $text = new Text();
         $text->addSpan($layout['organization'] . ", " . $layout['department'] . "\n" .
-            str_replace("\n", ", ", $layout['address']), $this->textStyle, $this->fontSize / 2, 1); // around six points
+            str_replace("\n", ", ", $layout['address']), $this->textStyle, $this->tinyFontSize, 1); // around six points
         $flow->add($text);
 
         $this->addSpace($flow, $this->spacer / 4);
@@ -546,5 +582,22 @@ class PdfService implements PdfServiceInterface
         $labelFlow->add($text);
 
         return $labelFlow;
+    }
+
+    private function addResult(array $result, Flow $flow): void
+    {
+        $text = new Text();
+        $text->addSpan($result['analysis'], $this->textStyle, $this->fontSize);
+        $text->addSpan(" (".$result['method'].")", $this->textStyle, $this->smallFontSize);
+        $text->addSpan(": \n", $this->textStyle, $this->fontSize);
+        $text->addSpan($result["result"], $this->textStyle, $this->fontSize);
+        if ($result['comment']) {
+            $text->addSpan("\n", $this->textStyle, $this->fontSize);
+            $text->addSpan($result["comment"], $this->secondaryTextStyle, $this->smallFontSize, 1);
+        }
+
+        $block = new Block($text);
+        $block->setMargin([0, $this->spacer/2, 0, 0]);
+        $flow->add($block);
     }
 }
