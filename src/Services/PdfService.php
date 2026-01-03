@@ -26,6 +26,7 @@ use Famoser\PdfGenerator\Frontend\LayoutEngine\Allocate\AllocationVisitor;
 use Famoser\PdfGenerator\Frontend\Printer;
 use Famoser\PdfGenerator\Frontend\Resource\Font;
 use Famoser\PdfGenerator\Frontend\Resource\Image;
+use PhpParser\Comment\Doc;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PdfService implements PdfServiceInterface
@@ -93,7 +94,7 @@ class PdfService implements PdfServiceInterface
 
     public function generateReport(Report $report): string
     {
-        $document = new Document(pageSize: [210, 297], margin: [32, 47, 22, 38]);
+        $document = new Document(pageSize: [210, 297], margin: [32, 80, 22, 38]);
         $contentWidth = 210 - (32 + 22);
 
         $layoutJson = file_get_contents($this->reportResourcesDir . "/layout.json");
@@ -118,7 +119,10 @@ class PdfService implements PdfServiceInterface
             $this->addResult($result, $flow);
         }
 
+        $this->addSpace($flow, $this->spacer);
         $document->add($flow);
+
+        $this->addReportSignature($report, $document, $layout, $contentWidth);
 
         for ($i = 0; $i < $document->getPageCount(); $i++) {
             $this->printReportLayout($document, $i, $report, $layout, $contentWidth);
@@ -137,13 +141,6 @@ class PdfService implements PdfServiceInterface
 
         $text = new Text();
         $text->addSpan($report->getProbe()->getIdentifier() . " - " . $report->getTitle(), $this->boldTextStyle, $this->fontSize * 1.6);
-        $flow->add($text);
-    }
-
-    private function addReportResultHeader(Flow $flow): void
-    {
-        $text = new Text();
-        $text->addSpan($this->translator->trans("report.results", [], "report"), $this->boldTextStyle, $this->fontSize * 1.3);
         $flow->add($text);
     }
 
@@ -166,13 +163,40 @@ class PdfService implements PdfServiceInterface
         $flow->add($innerFlow);
     }
 
+    private function addReportResultHeader(Flow $flow): void
+    {
+        $text = new Text();
+        $text->addSpan($this->translator->trans("report.results", [], "report"), $this->boldTextStyle, $this->fontSize * 1.3);
+        $flow->add($text);
+    }
+
+    /**
+     * @param mixed[] $layout
+     */
+    private function addReportSignature(Report $report, Document $document, array $layout, float $contentWidth): void
+    {
+        $text = new Text();
+        $text->addSpan($layout['greeting'] ."\n", $this->textStyle, $this->fontSize);
+        $text->addSpan($report->getValidationBy()->getName(), $this->textStyle, $this->fontSize);
+        $block = new Block($text);
+        $block->setWidth($contentWidth - 20);
+        $document->add($text);
+
+        if ($report->getPayload()['certified']) {
+            $printer = $document->createPrinter();
+            $certificationPrinter = $printer->position(left: $contentWidth - 15, top: -15 + $this->spacer / 2);
+            $certificationImagePath = $this->reportResourcesDir . "/certification.png";
+            $certificationPrinter->printImage(15, 15, $certificationImagePath);
+        }
+    }
+
     /**
      * @param mixed[] $layout
      */
     private function printReportLayout(Document $document, int $pageIndex, Report $report, array $layout, float $contentWidth): void
     {
         $printer = $document->setPosition(0, $pageIndex)->createPrinter();
-        $noMarginPrinter = $printer->position(-32, -47); // minus the left / top margins
+        $noMarginPrinter = $printer->position(-32, -80); // minus the left / top margins
 
         // UZH logo
         $path = $this->reportResourcesDir . '/logo.png';
@@ -233,8 +257,8 @@ class PdfService implements PdfServiceInterface
         $flow = new Flow(FlowDirection::COLUMN);
         $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_JUSTIFIED);
         $text->addSpan($layout['conditions'], $this->textStyle, $this->tinyFontSize, 1);
-        if ($report->getPayload()['report']) {
-            $text->addSpan($layout['report_conditions'], $this->textStyle, $this->tinyFontSize, 1);
+        if ($report->getPayload()['bag_reported']) {
+            $text->addSpan($layout['bag_reported_conditions'], $this->textStyle, $this->tinyFontSize, 1);
         }
         $flow->add($text);
         $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_RIGHT);
@@ -244,7 +268,7 @@ class PdfService implements PdfServiceInterface
         // size & print footer
         $allocationVisitor = new AllocationVisitor($contentWidth, 270);
         $allocation = $flow->accept($allocationVisitor);
-        $footerPrinter = $printer->position(top: 212 + $this->spacer); // 297 - 47 - 38 (the two vertical margins)
+        $footerPrinter = $printer->position(top: 179 + $this->spacer); // 297 - 80 - 38 (the two vertical margins)
         $footerPrinter->place($allocation);
     }
 
@@ -278,7 +302,7 @@ class PdfService implements PdfServiceInterface
         $flow->add($text);
 
         // hardcoded address position
-        $document->setPosition(0, 0);
+        $document->setPosition(-33, 0); // 80-33 = 47; 47 is where the address should start
         $document->add($flow);
     }
 
@@ -518,6 +542,26 @@ class PdfService implements PdfServiceInterface
         $flow->add($innerFlow);
     }
 
+    /**
+     * @param string[] $result
+     */
+    private function addResult(array $result, Flow $flow): void
+    {
+        $text = new Text();
+        $text->addSpan($result['analysis'], $this->textStyle, $this->fontSize);
+        $text->addSpan(" (" . $result['method'] . ")", $this->textStyle, $this->smallFontSize);
+        $text->addSpan(": \n", $this->textStyle, $this->fontSize);
+        $text->addSpan($result["result"], $this->textStyle, $this->fontSize);
+        if ($result['comment']) {
+            $text->addSpan("\n", $this->textStyle, $this->fontSize);
+            $text->addSpan($result["comment"], $this->secondaryTextStyle, $this->smallFontSize, 1);
+        }
+
+        $block = new Block($text);
+        $block->setMargin([0, $this->spacer / 2, 0, 0]);
+        $flow->add($block);
+    }
+
     private function createOrdererElement(Probe $probe): AbstractElement
     {
         $ordererFlow = new Flow(FlowDirection::COLUMN);
@@ -598,25 +642,5 @@ class PdfService implements PdfServiceInterface
         $labelFlow->add($text);
 
         return $labelFlow;
-    }
-
-    /**
-     * @param string[] $result
-     */
-    private function addResult(array $result, Flow $flow): void
-    {
-        $text = new Text();
-        $text->addSpan($result['analysis'], $this->textStyle, $this->fontSize);
-        $text->addSpan(" (" . $result['method'] . ")", $this->textStyle, $this->smallFontSize);
-        $text->addSpan(": \n", $this->textStyle, $this->fontSize);
-        $text->addSpan($result["result"], $this->textStyle, $this->fontSize);
-        if ($result['comment']) {
-            $text->addSpan("\n", $this->textStyle, $this->fontSize);
-            $text->addSpan($result["comment"], $this->secondaryTextStyle, $this->smallFontSize, 1);
-        }
-
-        $block = new Block($text);
-        $block->setMargin([0, $this->spacer / 2, 0, 0]);
-        $flow->add($block);
     }
 }
