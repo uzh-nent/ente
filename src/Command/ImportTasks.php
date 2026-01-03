@@ -20,15 +20,12 @@ use App\Enum\CodeSystem;
 use App\Enum\InterpretationGroup;
 use App\Enum\Pathogen;
 use App\Helper\DoctrineHelper;
-use Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension;
 use Doctrine\Persistence\ManagerRegistry;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class ImportTasks extends Command
 {

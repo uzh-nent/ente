@@ -2,7 +2,6 @@
 
 namespace App\Entity\Probe;
 
-use App\Entity\Organization;
 use App\Entity\Practitioner;
 use App\Services\Elm\ApiBuilder\Dto\AddressDto;
 use App\Services\Elm\ApiBuilder\Dto\PersonDto;

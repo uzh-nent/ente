@@ -2,9 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Organization;
 use App\Entity\User;
-use App\Form\Traits\CodedIdentifierType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;

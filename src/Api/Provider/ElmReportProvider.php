@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Api\Provider;
 
-use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Operation;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\State\ProviderInterface;
 use App\Entity\ElmReport;
 use App\Enum\ElmApiStatus;

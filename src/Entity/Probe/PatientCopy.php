@@ -3,14 +3,12 @@
 namespace App\Entity\Probe;
 
 use App\Entity\Patient;
-use App\Entity\Practitioner;
 use App\Enum\AdministrativeGender;
 use App\Services\Elm\ApiBuilder\Dto\AddressDto;
 use App\Services\Elm\ApiBuilder\Dto\PersonDto;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 trait PatientCopy
 {

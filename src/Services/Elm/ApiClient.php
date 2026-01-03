@@ -3,7 +3,6 @@
 namespace App\Services\Elm;
 
 use App\Entity\ElmReport;
-use Psr\Log\LoggerInterface;
 
 readonly class ApiClient
 {

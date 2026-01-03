@@ -10,8 +10,8 @@ use App\Enum\SpecimenAnimalType;
 use App\Enum\SpecimenFoodType;
 use App\Enum\SpecimenSource;
 use Doctrine\DBAL\Types\Types;
-use Symfony\Component\Serializer\Attribute\Groups;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 trait SpecimenMeta
 {

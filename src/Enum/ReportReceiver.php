@@ -2,8 +2,6 @@
 
 namespace App\Enum;
 
-use Symfony\Contracts\Translation\TranslatorInterface;
-
 enum ReportReceiver : string
 {
     case PROBE_ORDERER_ORG = 'PROBE_ORDERER_ORG';

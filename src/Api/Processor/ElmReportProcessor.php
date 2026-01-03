@@ -3,17 +3,11 @@
 namespace App\Api\Processor;
 
 use ApiPlatform\Metadata\Operation;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\ElmReport;
-use App\Entity\Observation;
-use App\Entity\Probe;
 use App\Entity\User;
-use App\Enum\LaboratoryFunction;
 use App\Helper\DoctrineHelper;
-use App\Services\ElmService;
 use App\Services\Interfaces\ElmServiceInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;

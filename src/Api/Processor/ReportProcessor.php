@@ -3,18 +3,11 @@
 namespace App\Api\Processor;
 
 use ApiPlatform\Metadata\Operation;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Report;
-use App\Entity\Observation;
-use App\Entity\Probe;
 use App\Entity\User;
-use App\Enum\LaboratoryFunction;
 use App\Helper\DoctrineHelper;
-use App\Services\ElmService;
-use App\Services\Interfaces\ElmServiceInterface;
 use App\Services\Interfaces\FileServiceInterface;
 use App\Services\Interfaces\PdfServiceInterface;
 use Doctrine\Persistence\ManagerRegistry;

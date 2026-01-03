@@ -23,10 +23,8 @@ use Famoser\PdfGenerator\Frontend\Layout\Flow;
 use Famoser\PdfGenerator\Frontend\Layout\Style\FlowDirection;
 use Famoser\PdfGenerator\Frontend\Layout\Text;
 use Famoser\PdfGenerator\Frontend\LayoutEngine\Allocate\AllocationVisitor;
-use Famoser\PdfGenerator\Frontend\Printer;
 use Famoser\PdfGenerator\Frontend\Resource\Font;
 use Famoser\PdfGenerator\Frontend\Resource\Image;
-use PhpParser\Comment\Doc;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PdfService implements PdfServiceInterface
@@ -176,7 +174,7 @@ class PdfService implements PdfServiceInterface
     private function addReportSignature(Report $report, Document $document, array $layout, float $contentWidth): void
     {
         $text = new Text();
-        $text->addSpan($layout['greeting'] ."\n", $this->textStyle, $this->fontSize);
+        $text->addSpan($layout['greeting'] . "\n", $this->textStyle, $this->fontSize);
         $text->addSpan($report->getValidationBy()->getName(), $this->textStyle, $this->fontSize);
         $block = new Block($text);
         $block->setWidth($contentWidth - 20);

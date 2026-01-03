@@ -3,11 +3,7 @@
 namespace App\Entity\Probe;
 
 use ApiPlatform\Metadata\ApiProperty;
-use App\Entity\Organization;
 use App\Entity\User;
-use App\Enum\AnalysisType;
-use App\Enum\LaboratoryFunction;
-use App\Enum\Pathogen;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
