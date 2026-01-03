@@ -19,24 +19,38 @@ Probedaten:
 
 ## Future features
 
-Bericht Auftraggeber
-- Titel Bericht erfassen  
-- Empfänger (default: Auftraggeber)
-- Kommentare erfassen  
-- Medizinisch berechtigt auf Bericht setzen
-
 features v1.0:
+- Textbausteine
+- UI for report generation
+- add help to patient address if countryCode != CH: should enter current address in CH
+
+features v1.1 data-model:
+- wait feedback API
+- wait urgent feedback users
+- refactor address / contact partial forms
+	-	add department, webpage to organization
+	-	add structured contact info (email, tel) to animal keeper / practitioner / organization / patient
+	-	add GLN to practitioner
+	-	add BER to organization
+	-	add UID to animal keeper
+	-	ensure address shown completely everywhere
+	-	report tel number of patient
+
+features v1.2:
+- wait feedback users
+- wait stable data model
+- Find probes from stammdaten
+- Improve AllProbes view: filter by service, entity; add compact view of observation
 - Rechnungen
 - Statistik (bis 2025)
 - Statistik (ab 2025)
 
 features v?:
 - login using azureAD
-- add attribution to stammdaten
-- add practitioner orderer in case of reference lab
-- create service request online by customer
+- improve stammdaten: add attribution, apply changes to all active probes
+- add practitioner orderer in reference lab scenario
+- let customer create service request online
 - improve ELM api integration (sync value sets, add patient reporting type such as anonymous to leading codes)
 - technical:
-  - frontend share person, address, contact forms
   - run integration test with API request
 
