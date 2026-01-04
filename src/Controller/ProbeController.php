@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Probe;
+use App\Entity\Report;
+use App\Enum\ReportReceiver;
 use App\Services\Interfaces\PdfServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProbeController extends AbstractController
 {
@@ -60,6 +63,37 @@ class ProbeController extends AbstractController
     public function worksheetPdf(Probe $probe, PdfServiceInterface $pdfService): Response
     {
         $pdf = $pdfService->generateWorksheet($probe);
+
+        return new Response($pdf, Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
+    }
+
+    #[Route('/probes/active/{probe}/report.pdf', name: 'probe_report_pdf')]
+    public function reportPdf(Probe $probe, PdfServiceInterface $pdfService, TranslatorInterface $translator): Response
+    {
+        $report = new Report();
+        $report->setProbe($probe);
+        $report->setDate(new \DateTimeImmutable());
+        /** @phpstan-ignore-next-line */
+        $report->setValidationBy($this->getUser());
+        $report->setPayload([]);
+        $report->setTitle("Schlussbericht");
+        $report->setReceiver($probe->getOrdererOrg() ? ReportReceiver::PROBE_ORDERER_ORG : ReportReceiver::PROBE_ORDERER_PRAC);
+        /** @phpstan-ignore-next-line */
+        $report->attribute($this->getUser());
+
+        /** @phpstan-ignore-next-line */
+        $report->setPayload([
+            "bag_reported" => true,
+            "certified" => true,
+            "results" => [[
+                "analysis" => "Identifizierung / Typisierung von " . $probe->getPathogen()->trans($translator),
+                "method" => 99,
+                "result" => "Keine Aussage",
+                "comment" => null,
+            ]]
+        ]);
+
+        $pdf = $pdfService->generateReport($report);
 
         return new Response($pdf, Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
     }
