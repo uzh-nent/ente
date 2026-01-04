@@ -95,7 +95,7 @@
             v-if="testObservations.length > 0" class="mt-2"
             :users="users" :observations="observations"/>
 
-        <div class="mt-5" v-if="observations.length > 0">
+        <div class="mt-5" v-if="probe.patient && observations.length > 0 && (!probe.finishedAt || elmReports.length > 0)">
           <h3>{{ $t('elm_report._name') }}</h3>
           <add-elm-report-button
               v-if="!probe.finishedAt"
