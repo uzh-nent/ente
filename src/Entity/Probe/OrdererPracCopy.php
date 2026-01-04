@@ -11,13 +11,17 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 trait OrdererPracCopy
 {
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
-    private string $ordererPracGivenName = '';
+    private ?string $ordererPracTitle = null;
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
-    private string $ordererPracFamilyName = '';
+    private ?string $ordererPracGivenName = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $ordererPracFamilyName = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
@@ -39,22 +43,32 @@ trait OrdererPracCopy
     #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererPracContact = null;
 
-    public function getOrdererPracGivenName(): string
+    public function getOrdererPracTitle(): ?string
+    {
+        return $this->ordererPracTitle;
+    }
+
+    public function setOrdererPracTitle(?string $ordererPracTitle): void
+    {
+        $this->ordererPracTitle = $ordererPracTitle;
+    }
+
+    public function getOrdererPracGivenName(): ?string
     {
         return $this->ordererPracGivenName;
     }
 
-    public function setOrdererPracGivenName(string $ordererPracGivenName): void
+    public function setOrdererPracGivenName(?string $ordererPracGivenName): void
     {
         $this->ordererPracGivenName = $ordererPracGivenName;
     }
 
-    public function getOrdererPracFamilyName(): string
+    public function getOrdererPracFamilyName(): ?string
     {
         return $this->ordererPracFamilyName;
     }
 
-    public function setOrdererPracFamilyName(string $ordererPracFamilyName): void
+    public function setOrdererPracFamilyName(?string $ordererPracFamilyName): void
     {
         $this->ordererPracFamilyName = $ordererPracFamilyName;
     }
