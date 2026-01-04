@@ -297,7 +297,9 @@ class PdfService implements PdfServiceInterface
             $address = $report->getProbe()->getOrdererPracFullAddress();
         }
         $text->addSpan($address, $this->textStyle, $this->fontSize, 1);
-        $flow->add($text);
+        $addressBlock = new Block($text);
+        $addressBlock->setWidth(74);
+        $flow->add($addressBlock);
 
         // hardcoded address position
         $document->setPosition(-33, 0); // 80-33 = 47; 47 is where the address should start
