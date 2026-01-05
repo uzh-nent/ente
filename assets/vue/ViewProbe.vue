@@ -10,7 +10,7 @@
       </actionable-view>
 
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
-      <template v-if="probe.laboratoryFunction === 'REFERENCE'">
+      <template v-if="probe.ordererOrg">
         <actionable-view>
           <orderer-org-view :probe="probe"/>
           <template v-slot:actions v-if="!probe.finishedAt">
@@ -18,7 +18,7 @@
           </template>
         </actionable-view>
       </template>
-      <template v-else-if="probe.laboratoryFunction === 'PRIMARY'">
+      <template v-if="probe.ordererPrac">
         <actionable-view>
           <orderer-prac-view :probe="probe"/>
           <template v-slot:actions v-if="!probe.finishedAt">

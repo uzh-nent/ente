@@ -144,7 +144,7 @@ readonly class ApiBuilder
         return $this->formatter->normalizeNullableArray($organizationOrdererResource);
     }
 
-    private function createReferencePractitionerRoleResource(Probe $probe, array $orderOrganizationResource): array
+    private function createOrganizationPractitionerRoleResource(Probe $probe, array $orderOrganizationResource): array
     {
         $reference = new ResourceReference('PractitionerRole', $probe->getOrdererOrg()->getId());
 
@@ -158,7 +158,7 @@ readonly class ApiBuilder
         ];
     }
 
-    private function createPrimaryPractitionerRoleResource(Probe $probe, array $orderPractitionerResource): array
+    private function createPractitionerPractitionerRoleResource(Probe $probe, array $orderPractitionerResource): array
     {
         $reference = new ResourceReference('PractitionerRole', $probe->getOrdererPrac()->getId());
 
@@ -273,7 +273,7 @@ readonly class ApiBuilder
             ]
         ];
 
-        if ($probe->getLaboratoryFunction() === LaboratoryFunction::REFERENCE) {
+        if ($probe->getRequisitionIdentifier()) {
             $serviceRequestResource['resource']['requisition'] = ["value" => $probe->getRequisitionIdentifier()];
         }
 
@@ -362,24 +362,28 @@ readonly class ApiBuilder
 
     private function createPractitionerRole(Probe $probe): array
     {
-        $createOrganizationOrdererResources = function (Probe $probe) {
+        // for reference probes, the orderer organization is the first laboratory that tested positive
+        // if the practitioner orderer is also set, then this would refer to the primary practition
+
+        // for primary probes, often the primary practition is not set, but the orderer is again a laboratory
+        // this order laboratory however is only able to do course-grained checks (tests many pathogens at the same time, but with low certainty)
+        // hence if something is positive, it sends it to more specialized laboratories (such as NENT). this test is however again to be seen as a primary test
+
+        if ($probe->getOrdererOrg()) {
             $organizationOrdererResource = $this->createOrganizationOrdererResource($probe);
-            $ordererPractitionerRoleResource = $this->createReferencePractitionerRoleResource($probe, $organizationOrdererResource);
+            $ordererPractitionerRoleResource = $this->createOrganizationPractitionerRoleResource($probe, $organizationOrdererResource);
+
+            // the (primary) practitioner might also be set
+            // we do not report it so far
 
             return [$ordererPractitionerRoleResource, $organizationOrdererResource];
-        };
+        }
 
-        $createPractitionerOrdererResources = function (Probe $probe) {
-            $practitionerOrdererResource = $this->createPractitionerOrdererResource($probe);
-            $ordererPractitionerRoleResource = $this->createPrimaryPractitionerRoleResource($probe, $practitionerOrdererResource);
 
-            return [$ordererPractitionerRoleResource, $practitionerOrdererResource];
-        };
+        $practitionerOrdererResource = $this->createPractitionerOrdererResource($probe);
+        $ordererPractitionerRoleResource = $this->createPractitionerPractitionerRoleResource($probe, $practitionerOrdererResource);
 
-        return match ($probe->getLaboratoryFunction()) {
-            LaboratoryFunction::REFERENCE => $createOrganizationOrdererResources($probe),
-            LaboratoryFunction::PRIMARY => $createPractitionerOrdererResources($probe),
-        };
+        return [$ordererPractitionerRoleResource, $practitionerOrdererResource];
     }
 
     public function build(Probe $probe, ElmReport $elmReport): array

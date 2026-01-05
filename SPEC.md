@@ -19,6 +19,11 @@ Probedaten:
 
 ## Future features
 
+urgent:
+- prevent submit of invalid system
+- allow primärproben to select mediziner:in
+
+
 features v1.0:
 - Textbausteine
 - UI for report generation

@@ -5,12 +5,10 @@
       <service-request-form :template="serviceRequestTemplate" @update="serviceRequest = $event"/>
 
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
-      <template v-if="payload?.laboratoryFunction === 'REFERENCE'">
-        <orderer-org-form @update="ordererOrg = $event"/>
-      </template>
-      <template v-else>
+      <orderer-org-form @update="ordererOrg = $event"/>
+      <!--
         <orderer-prac-form @update="ordererPrac = $event"/>
-      </template>
+        -->
     </div>
     <div class="col-lg-4 col-md-6">
       <h3>{{ $t('probe._name') }}</h3>
@@ -86,8 +84,7 @@ export default {
   computed: {
     canConfirm: function () {
       return this.serviceRequest && this.specimenMeta && this.serviceTime &&
-          (this.payload.laboratoryFunction !== 'REFERENCE' || this.ordererOrg) &&
-          (this.payload.laboratoryFunction !== 'PRIMARY' || this.ordererPrac) &&
+          (this.ordererOrg || this.ordererPrac) &&
           (this.payload.specimenSource !== 'HUMAN' || this.patient) &&
           (this.payload.specimenSource !== 'ANIMAL' || this.owner)
     },
@@ -129,12 +126,12 @@ export default {
         base = {...base, ...this.serviceTimeTemplate, ...this.serviceTime}
       }
 
-      if (base.laboratoryFunction === 'REFERENCE' && this.ordererOrg) {
+      if (this.ordererOrg) {
         base.requisitionIdentifier = this.ordererOrg.requisitionIdentifier
         base = {...base, ...probeConverter.writeOrdererOrg(this.ordererOrg.ordererOrg)}
       }
 
-      if (base.laboratoryFunction === 'PRIMARY' && this.ordererPrac) {
+      if (this.ordererPrac) {
         base.requisitionIdentifier = this.ordererPrac.requisitionIdentifier
         base = {...base, ...probeConverter.writeOrdererPrac(this.ordererPrac.ordererPrac)}
       }
