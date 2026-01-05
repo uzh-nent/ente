@@ -19,15 +19,18 @@ Probedaten:
 
 ## Future features
 
-urgent:
-- prevent submit of invalid system
-- allow primärproben to select mediziner:in
-
-
 features v1.0:
+- remove comment_report from report
 - Textbausteine
 - UI for report generation
+- prevent submit of invalid system
+- allow primärproben to select mediziner:in
 - add help to patient address if countryCode != CH: should enter current address in CH
+- hide unused leading codes (or in general, stammdaten)
+- mediziner:in, patient:in
+- reason for "identification not possible": "kein wachstum", "mischkultur", "andere"
+- nur mit medizinische validierung dürfen berichte erstellt werden
+- report: patientenfelder definieren (ahv-nummer, geburtsdatum), bemerkung kann weggelassen werden
 
 features v1.1 data-model:
 - wait feedback API
@@ -55,6 +58,7 @@ features v?:
 - improve stammdaten: add attribution, apply changes to all active probes
 - add practitioner orderer in reference lab scenario
 - let customer create service request online
+- digitalize additional data from laborblatt
 - improve ELM api integration (sync value sets, add patient reporting type such as anonymous to leading codes)
 - technical:
   - run integration test with API request
