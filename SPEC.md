@@ -21,16 +21,23 @@ Probedaten:
 
 features v1.0:
 - remove comment_report from report
-- Textbausteine
-- UI for report generation
-- prevent submit of invalid system
+- allow multiple addresses in report
+- allow animal keeper to be optional
+- fix typo in food type "fleisch", check other (including feed type)
+- improve "0 Ergebnisse", "1 Ergebnisse" display
+- elm report: ensure only LOINC, SNOMED, FOPH systems selectable
+- vibrio: add PRC analysis result (Cholera-Toxin, tdh, trh parahämoliticus); allow to add/remove analysis (or "nicht durchgeführt")
+- show number of next probe when creating probe
+- fix bug: mensch erfasst, dann auf herkunft anderes geändert, nachher konte nicht speichern
 - allow primärproben to select mediziner:in
 - add help to patient address if countryCode != CH: should enter current address in CH
-- hide unused leading codes (or in general, stammdaten)
 - mediziner:in, patient:in
+- hide unused leading codes (or in general, stammdaten)
 - reason for "identification not possible": "kein wachstum", "mischkultur", "andere"
 - nur mit medizinische validierung dürfen berichte erstellt werden
 - report: patientenfelder definieren (ahv-nummer, geburtsdatum), bemerkung kann weggelassen werden
+- Textbausteine
+- UI for report generation
 
 features v1.1 data-model:
 - wait feedback API
