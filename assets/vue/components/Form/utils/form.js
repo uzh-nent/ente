@@ -1,7 +1,40 @@
-/**
- * Encapsulates standard functionality for templated forms
- * You need to implement the fields, the rest is automatic.
- */
+export const componentForm = {
+  emits: ['update'],
+  data () {
+    return {
+      components: {},
+      componentTemplate: {},
+      componentEntity: {}
+    }
+  },
+  props: {
+    template: {
+      type: Object,
+      default: {}
+    }
+  },
+  watch: {
+    updatePayload: {
+      deep: true,
+      immediate: true,
+      handler: function () {
+        this.$emit('update', this.updatePayload)
+      }
+    },
+    template: {
+      immediate: true,
+      handler: function (newTemplate) {
+        this.componentTemplate = createComponentTemplateFromTemplate(this.components, newTemplate)
+      }
+    }
+  },
+  computed: {
+    updatePayload: function () {
+      return updatePayloadFromComponentEntity(this.components, this.componentEntity, this.template)
+    },
+  }
+}
+
 export const templatedForm = {
   emits: ['update'],
   data () {
@@ -188,6 +221,53 @@ const updatePayload = function (fields, values, template = null) {
       }
 
       result[fieldName] = values[fieldName]
+    }
+  }
+
+  return result
+}
+
+
+const createComponentTemplateFromTemplate = function (components, template = null, componentTemplateDefault = null) {
+  const componentEntity = {}
+  for (const componentName in components) {
+    if (Object.prototype.hasOwnProperty.call(components, componentName)) {
+      const newComponent = {}
+      for (const fieldName in components[componentName]) {
+        if (template && fieldName in template) {
+          newComponent[fieldName] = template[componentName]
+        } else if (
+          componentTemplateDefault && componentName in componentTemplateDefault &&
+          componentTemplateDefault[componentName] && fieldName in componentTemplateDefault[componentName]
+        ) {
+          newComponent[fieldName] = componentTemplateDefault[componentName][fieldName]
+        } else {
+          newComponent[fieldName] = null
+        }
+      }
+
+      componentEntity[componentName] = newComponent
+    }
+  }
+
+  return componentEntity
+}
+
+const updatePayloadFromComponentEntity = function (components, componentEntity, template = null) {
+  const result = {}
+  for (const componentName in components) {
+    if (Object.prototype.hasOwnProperty.call(components, componentName)) {
+      if (!componentEntity[componentName]) {
+        return null
+      }
+
+      for (const fieldName in components[componentName]) {
+        if (template && template[componentName] === componentEntity[componentName][fieldName]) {
+          continue
+        }
+
+        result[fieldName] = componentEntity[componentName][fieldName]
+      }
     }
   }
 
