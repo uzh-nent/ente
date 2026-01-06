@@ -8,7 +8,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 enum SpecimenFoodType : string implements TranslatableInterface
 {
     case POULTRY = 'POULTRY'; // Geflügel
-    case MEAT = 'ANIMAL'; // Fleisch
+    case MEAT = 'MEAT'; // Fleisch
     case DAIRY = 'DAIRY'; // Milchprodukte
     case EGG = 'EGG';
     case FISH = 'FISH';
