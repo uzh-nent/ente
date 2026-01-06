@@ -58,16 +58,22 @@ priority 3:
 - allow proben to select mediziner:in
 
 features v1.0:
+- priority 1-3
 - add help to patient address if countryCode != CH: should enter current address in CH
 - hide unused leading codes (or in general, stammdaten)
 - reason for "identification not possible": "kein wachstum", "mischkultur", "andere"
-- nur mit medizinische validierung dürfen berichte erstellt werden
+- nur mit medizinischer validierung dürfen berichte erstellt werden
 - editing organization/practitioner/animal keeper: pre-select, allow to remove selection
 - improve "0 Ergebnisse", "1 Ergebnisse" display
+- refactor linking entities:
+  - reuse code of forms (see component branch)
+  - "link" entity in search, copy inside entity
+  - only edit copied data, not stammdaten itself
+  - propose to sync into master data if edited
+  - propose to sync from master data if not edited
+  - (also ensures the entity is always shown)
 
 features v1.1 data-model:
-- wait feedback API
-- wait urgent feedback users
 - refactor address / contact partial forms
 	-	add department, webpage to organization
 	-	add structured contact info (email, tel) to animal keeper / practitioner / organization / patient
