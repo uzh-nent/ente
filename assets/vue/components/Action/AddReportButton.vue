@@ -2,8 +2,27 @@
   <button-confirm-modal
       :title="$t('_action.add_report.title')" icon="fas fa-plus"
       :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm"
-      @showing="focusObservation">
+      @showing="focusAddressAdd">
     <report-meta-form :template="reportMetaTemplate" :probe="probe" @update="reportMeta = $event"/>
+
+    <hr/>
+    <!-- TODO button to add customer -->
+    <add-address-button ref="addAddressButton" @add="addresses.push($event)" />
+    <div class="d-flex flex-column gap-2 mt-2" v-if="addresses.length > 0">
+      <div v-for="address in addresses" :key="address" class="bg-light p-2 rounded d-flex">
+        <div class="flex-grow-1 items-center">
+          {{ address.replace("\n", ", ") }}
+        </div>
+        <div class="ms-2">
+          <button class="btn btn-sm btn-outline-danger" @click="addresses.splice(addresses.indexOf(address), 1)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
   </button-confirm-modal>
 </template>
 
@@ -15,10 +34,12 @@ import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vu
 import ElmReportForm from "../Form/ElmReportForm.vue";
 import ReportMetaForm from "../Form/ReportMetaForm.vue";
 import moment from "moment";
+import AddAddressButton from "./AddAddressButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    AddAddressButton,
     ReportMetaForm,
     ElmReportForm,
     ButtonConfirmModal,
@@ -27,7 +48,7 @@ export default {
     return {
       reportMeta: null,
       addresses: [],
-      results: []
+      results: [],
     }
   },
   props: {
@@ -85,12 +106,17 @@ export default {
       const successMessage = this.$t('_action.add_report.added')
       displaySuccess(successMessage)
     },
-    focusObservation: function () {
-      document.getElementById('addAddressButton')?.focus()
+    focusAddressAdd: function () {
+      this.$nextTick(() => {
+        this.$refs.addAddressButton.$el?.focus()
+      })
     }
   },
   mounted() {
     this.addresses = this.reports.length ? this.reports[this.reports.length - 1].addresses : []
+    this.addresses = this.addresses ?? []
+
+    
   }
 }
 </script>

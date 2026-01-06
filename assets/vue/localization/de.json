@@ -39,6 +39,9 @@
       "added": "Probe hinzugefügt.",
       "title": "Probe hinzufügen"
     },
+    "add_address": {
+      "title": "Adresse hinzufügen"
+    },
     "add_organization": {
       "added": "Organisation hinzugefügt.",
       "title": "Organisation hinzufügen"
@@ -339,6 +342,10 @@
     "date": "Datum",
     "certified": "Zertifizierungs-Siegel",
     "title": "Titel",
+    "address_source": "Quelle",
+    "_address_source": {
+      "CUSTOM": "Andere"
+    },
     "_predefined_title": {
       "INTERMEDIATE":  "Zwischenbericht",
       "FINAL":  "Schlussbericht",

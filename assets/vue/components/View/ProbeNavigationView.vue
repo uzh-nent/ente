@@ -76,12 +76,12 @@ export default {
       }
 
       const first = this.probes[0].identifier.substring(0, PREFIX_LENGTH)
-      const last = this.probes[0].identifier.substring(0, PREFIX_LENGTH)
+      const last = this.probes[this.probes.length-1].identifier.substring(0, PREFIX_LENGTH)
       if (first === last) {
         return first
       }
 
-      return first.substring(0, 1) + "X".repeat(PREFIX_LENGTH - 1)
+      return first.substring(0, 1) + "2X-"
     },
     filteredProbes: function () {
       if (!this.filterProbes) {
@@ -103,7 +103,7 @@ export default {
     filteredProbes: {
       handler: function (filteredProbes) {
         if (filteredProbes.length === 1 && this.filterProbes?.length > 0) {
-          this.$emit('navigate', filteredProbes[0])
+          window.location = this.probeHref(filteredProbes[0])
         }
       }
     }

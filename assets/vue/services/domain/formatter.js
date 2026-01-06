@@ -58,6 +58,24 @@ export const formatAddressCity = function (value) {
   return cityLine.join(" ")
 }
 
+
+export const formatOrganizationAddress = function (value) {
+  if (!value) {
+    return '-'
+  }
+
+  return value.name + "\n" + formatAddress(value)
+}
+
+export const formatPractitionerAddress = function (value) {
+  if (!value) {
+    return '-'
+  }
+
+  const nameValues = [value.givenName, value.familyName]
+  return nameValues.filter(v => v).join(" ") + "\n" + formatAddress(value)
+}
+
 export const formatAddress = function (value) {
   if (!value) {
     return '-'
