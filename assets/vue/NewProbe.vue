@@ -85,8 +85,8 @@ export default {
     canConfirm: function () {
       return this.serviceRequest && this.specimenMeta && this.serviceTime &&
           (this.ordererOrg || this.ordererPrac) &&
-          (this.payload.specimenSource !== 'HUMAN' || this.patient) &&
-          (this.payload.specimenSource !== 'ANIMAL' || this.owner)
+          (this.payload.specimenSource !== 'HUMAN' || this.patient)
+      // note: allowed to add animal without reference to animal keeper
     },
     serviceRequestTemplate: function () {
       return {
@@ -128,17 +128,24 @@ export default {
 
       if (this.ordererOrg) {
         base.requisitionIdentifier = this.ordererOrg.requisitionIdentifier
-        base = {...base, ...probeConverter.writeOrdererOrg(this.ordererOrg.ordererOrg)}
+        if (this.ordererOrg.ordererOrg) {
+          base = {...base, ...probeConverter.writeOrdererOrg(this.ordererOrg.ordererOrg)}
+        }
       }
 
+      // TODO only show if enabled in UI
       if (this.ordererPrac) {
         base.requisitionIdentifier = this.ordererPrac.requisitionIdentifier
-        base = {...base, ...probeConverter.writeOrdererPrac(this.ordererPrac.ordererPrac)}
+        if (this.ordererPrac.ordererPrac) {
+          base = {...base, ...probeConverter.writeOrdererPrac(this.ordererPrac.ordererPrac)}
+        }
       }
 
       if (base.specimenSource === 'ANIMAL' && this.owner) {
         base.animalName = this.owner.animalName
-        base = {...base, ...probeConverter.writeAnimalKeeper(this.owner.animalKeeper)}
+        if (this.owner.animalKeeper) {
+          base = {...base, ...probeConverter.writeAnimalKeeper(this.owner.animalKeeper)}
+        }
       }
 
       if (base.specimenSource === 'HUMAN' && this.patient) {

@@ -77,7 +77,7 @@ export default {
     return {
       fields: {
         animalName: createField(),
-        animalKeeper: createField(requiredRule),
+        animalKeeper: createField(),
       },
       entity: {
         animalName: null,
