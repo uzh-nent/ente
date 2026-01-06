@@ -1,5 +1,5 @@
 export const createResults = function (probe, observations, organisms, translator) {
-  return observations.map(o => {
+  const observationResults = observations.map(o => {
     if (o.analysisType === 'IDENTIFICATION') {
       const pathogenLabel = translator('probe._pathogen.' + probe.pathogen);
 
@@ -29,6 +29,30 @@ export const createResults = function (probe, observations, organisms, translato
       }
     }
   })
+
+  const otherResults = probe.analysisTypes
+    .filter(analysisType => !observations.find(o => o.analysisType === analysisType))
+    .map(analysisType => {
+      const result = translator('report._interpretation.PENDING')
+
+      if (analysisType === 'IDENTIFICATION') {
+        const pathogenLabel = translator('probe._pathogen.' + probe.pathogen);
+        return {
+          analysis: translator('report.service.identification_of') + " " + pathogenLabel,
+          method: mapToIdentificationMethodCode(probe.pathogen),
+          result,
+        }
+      } else {
+        const analysisTypeLabel = translator('report._analysis_type.' + analysisType);
+        return {
+          analysis: analysisTypeLabel + " (PCR)",
+          method: mapToPcrMethodCode(analysisTypeLabel),
+          result,
+        }
+      }
+  })
+
+  return observationResults.concat(otherResults)
 }
 
 const mapToPcrMethodCode = function (analysisType) {

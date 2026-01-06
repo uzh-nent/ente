@@ -138,7 +138,7 @@ export default {
           ...template,
           ...this.results[index]
         }
-      })
+      }).filter((_, index) => this.shownResults.includes(index))
 
       return payload
     }

@@ -361,7 +361,8 @@
     "_interpretation": {
       "POS": "Nachweis von",
       "NEG": "Kein Nachweis von",
-      "NONE": "Keine Aussage möglich"
+      "NONE": "Keine Aussage möglich",
+      "PENDING": "Resultat folgt (Analyse in Bearbeitung)"
     },
     "service": {
       "ecoli_identification": "E. Coli Identifizierung",
