@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     canConfirm: function () {
-      return !!this.reportMeta
+      return !!this.payload && this.addresses.length > 0
     },
     reportMetaTemplate: function () {
       const template = {date: moment().format('YYYY-MM-DD'), certified: true}
@@ -95,7 +95,7 @@ export default {
       return createResults(this.probe, this.observations, this.organisms, this.$t)
     },
     payload: function () {
-      const payload = {...this.reportMetaTemplate, ...this.reportMeta, probe: this.probe['@id']}
+      const payload = {...this.reportMetaTemplate, ...this.reportMeta, addresses: this.addresses, probe: this.probe['@id']}
 
       // normalize title
       if (payload.predefinedTitle) {

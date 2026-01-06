@@ -14,7 +14,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ReportController extends AbstractController
 {
-    #[Route('/report/{report}/download/{filename}', name: 'report_download')]
+    #[Route('/reports/{report}/download/{filename}', name: 'report_download')]
     public function reportPdf(Report $report, FileServiceInterface $fileService): Response
     {
         $folder = $fileService->getFolderPath(FileServiceInterface::REPORT_FOLDER);

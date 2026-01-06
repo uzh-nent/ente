@@ -118,6 +118,7 @@
               :reports="reports"
               @added="reports.push($event)"
           />
+          <report-table class="mt-2" :users="users" :reports="reports" />
         </div>
 
         <div class="mt-5" v-if="!missingIdentificationObservation && missingTestObservations.length === 0">
@@ -158,10 +159,12 @@ import AddTestObservationsButton from "./components/Action/AddTestObservationsBu
 import TestObservationTable from "./components/View/TestObservationTable.vue";
 import DownloadProbeWorksheetButton from "./components/Action/DownloadProbeWorksheetButton.vue";
 import AddReportButton from "./components/Action/AddReportButton.vue";
+import ReportTable from "./components/View/ReportTable.vue";
 
 export default {
   emits: ['added'],
   components: {
+    ReportTable,
     AddReportButton,
     DownloadProbeWorksheetButton,
     TestObservationTable,

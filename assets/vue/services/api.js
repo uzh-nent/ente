@@ -128,6 +128,9 @@ const router = {
   },
   linkProbeWorksheetPdf: function (probe) {
     return '/probes/active/' + iriToId(probe['@id']) + '/worksheet.pdf'
+  },
+  linkReportPdf: function (report) {
+    return '/reports/' + iriToId(report['@id']) + '/download/' + report.filename
   }
 }
 

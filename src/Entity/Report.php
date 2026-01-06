@@ -66,7 +66,7 @@ class Report
      * @var string[]
      */
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
-    #[Groups(['probe:read', 'probe:write'])]
+    #[Groups(['report:read', 'report:write'])]
     private array $addresses = [];
 
     /**

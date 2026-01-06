@@ -43,12 +43,14 @@ Probedaten:
 
 ## Future features
 
-urgent:
-- Textbausteine
-- UI for report generation
+today:
+- implement certified, possibly move to SQL table?
+- button to add probe organization to addresses, also do by default
 - report: patientenfelder definieren (ahv-nummer, geburtsdatum)
 
-priority 2:
+next:
+- refactor report to resolve TODOs
+- Textbausteine
 - elm report: ensure only LOINC, SNOMED, FOPH systems selectable
 - vibrio: add PRC analysis result (Cholera-Toxin, tdh, trh parahämoliticus); allow to add/remove analysis (or "nicht durchgeführt")
 
