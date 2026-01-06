@@ -62,6 +62,10 @@ class Report
     #[Groups(['report:read', 'report:write'])]
     private ?\DateTimeImmutable $date = null;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Groups(['report:read', 'report:write'])]
+    private bool $claimCertification = false;
+
     /**
      * @var string[]
      */
@@ -74,7 +78,7 @@ class Report
      */
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['report:read', 'report:write'])]
-    private ?array $payload = null;
+    private ?array $results = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['report:read', 'report:write'])]
@@ -110,6 +114,16 @@ class Report
         $this->date = $date;
     }
 
+    public function getClaimCertification(): bool
+    {
+        return $this->claimCertification;
+    }
+
+    public function setClaimCertification(bool $claimCertification): void
+    {
+        $this->claimCertification = $claimCertification;
+    }
+
     /**
      * @return string[]
      */
@@ -129,17 +143,17 @@ class Report
     /**
      * @return array<string, string[][]>|null
      */
-    public function getPayload(): ?array
+    public function getResults(): ?array
     {
-        return $this->payload;
+        return $this->results;
     }
 
     /**
-     * @param array<string, string[][]>|null $payload
+     * @param array<string, string[][]>|null $results
      */
-    public function setPayload(?array $payload): void
+    public function setResults(?array $results): void
     {
-        $this->payload = $payload;
+        $this->results = $results;
     }
 
     public function getFilename(): ?string

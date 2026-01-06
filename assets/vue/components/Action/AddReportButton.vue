@@ -82,7 +82,7 @@ export default {
       return !!this.payload && this.addresses.length > 0
     },
     reportMetaTemplate: function () {
-      const template = {date: moment().format('YYYY-MM-DD'), certified: true}
+      const template = {date: moment().format('YYYY-MM-DD'), claimCertification: true}
       if (this.probe.analysisTypes.length > this.observations.length) {
         return {...template, predefinedTitle: 'INTERMEDIATE'}
       } else if (this.reports.length === 0) {
@@ -95,7 +95,7 @@ export default {
       return createResults(this.probe, this.observations, this.organisms, this.$t)
     },
     payload: function () {
-      const payload = {...this.reportMetaTemplate, ...this.reportMeta, addresses: this.addresses, probe: this.probe['@id']}
+      const payload = {...this.reportMetaTemplate, ...this.reportMeta, probe: this.probe['@id']}
 
       // normalize title
       if (payload.predefinedTitle) {
@@ -106,13 +106,14 @@ export default {
       delete payload.predefinedTitle
       delete payload.customTitle
 
-      const results = this.resultTemplates.map((template, index) => {
+      // add sublists
+      payload.addresses = this.addresses
+      payload.results = this.resultTemplates.map((template, index) => {
         return {
           ...template,
           ...this.results[index]
         }
       })
-      payload.payload = {certified: false, results}
 
       return payload
     }

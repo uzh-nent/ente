@@ -340,7 +340,7 @@
   "report": {
     "_name": "Bericht",
     "date": "Datum",
-    "certified": "Zertifizierungs-Siegel",
+    "claim_certification": "Zertifizierungs-Siegel",
     "title": "Titel",
     "address_source": "Quelle",
     "result": "Resultat",

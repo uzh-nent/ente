@@ -8,9 +8,9 @@
     </div>
     <div class="col-md-6">
       <form-field
-          for-id="certified" :label="$t('report.certified')" :field="fields.certified">
-        <checkbox id="certified" :field="fields.certified"
-                  v-model="entity.certified" @update:model-value="validateField('certified')"/>
+          for-id="claimCertification" :label="$t('report.claim_certification')" :field="fields.claimCertification">
+        <checkbox id="claimCertification" :field="fields.claimCertification"
+                  v-model="entity.claimCertification" @update:model-value="validateField('claimCertification')"/>
       </form-field>
     </div>
     <div class="col-md-12">
@@ -68,13 +68,13 @@ export default {
     return {
       fields: {
         date: createField(requiredRule),
-        certified: createField(),
+        claimCertification: createField(),
         predefinedTitle: createField(requiredRule),
         customTitle: createField(),
       },
       entity: {
         date: null,
-        certified: null,
+        claimCertification: null,
         predefinedTitle: null,
         customTitle: null,
       },

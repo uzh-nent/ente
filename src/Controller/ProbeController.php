@@ -75,14 +75,14 @@ class ProbeController extends AbstractController
         $report = new Report();
         $report->setProbe($probe);
         $report->setDate(new \DateTimeImmutable());
-        $report->setPayload([]);
+        $report->setResults([]);
         $report->setAddresses(["Florian Moser\nOchsengasse 66\n4123 Allschwil", "Peter Schütz\nOchsengasse 66\n4123 Allschwil"]);
         $report->setTitle("Schlussbericht");
         /** @phpstan-ignore-next-line */
         $report->attribute($this->getUser());
 
         /** @phpstan-ignore-next-line */
-        $report->setPayload([
+        $report->setResults([
             "certified" => true,
             "results" => [[
                 "analysis" => "Identifizierung / Typisierung von " . $probe->getPathogen()->trans($translator),

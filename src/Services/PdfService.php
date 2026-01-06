@@ -117,7 +117,7 @@ class PdfService implements PdfServiceInterface
             $this->addSpace($flow, $this->spacer);
 
             $this->addReportResultHeader($flow);
-            foreach ($report->getPayload()['results'] as $result) {
+            foreach ($report->getResults() as $result) {
                 $this->addResult($result, $flow);
             }
 
@@ -185,7 +185,7 @@ class PdfService implements PdfServiceInterface
         $block->setWidth($contentWidth - 20);
         $document->add($text);
 
-        if ($report->getPayload()['certified']) {
+        if ($report->getClaimCertification()) {
             $printer = $document->createPrinter();
             $certificationPrinter = $printer->position(left: $contentWidth - 15, top: -15 + $this->spacer / 2);
             $certificationImagePath = $this->reportResourcesDir . "/certification.png";
