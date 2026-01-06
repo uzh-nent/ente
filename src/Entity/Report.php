@@ -74,7 +74,7 @@ class Report
     private array $addresses = [];
 
     /**
-     * @var array<string, string[][]>|null
+     * @var array<string, string[]>|null
      */
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['report:read', 'report:write'])]
@@ -141,7 +141,7 @@ class Report
     }
 
     /**
-     * @return array<string, string[][]>|null
+     * @return array<string, string[]>|null
      */
     public function getResults(): ?array
     {
@@ -149,7 +149,7 @@ class Report
     }
 
     /**
-     * @param array<string, string[][]>|null $results
+     * @param array<string, string[]>|null $results
      */
     public function setResults(?array $results): void
     {
