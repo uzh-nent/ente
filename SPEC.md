@@ -20,7 +20,6 @@ Probedaten:
 ## Future features
 
 features v1.0:
-- remove comment_report from report
 - allow multiple addresses in report
 - allow animal keeper to be optional
 - fix typo in food type "fleisch", check other (including feed type)

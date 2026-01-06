@@ -255,9 +255,6 @@ class PdfService implements PdfServiceInterface
         $flow = new Flow(FlowDirection::COLUMN);
         $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_JUSTIFIED);
         $text->addSpan($layout['conditions'], $this->textStyle, $this->tinyFontSize, 1);
-        if ($report->getPayload()['bag_reported']) {
-            $text->addSpan($layout['bag_reported_conditions'], $this->textStyle, $this->tinyFontSize, 1);
-        }
         $flow->add($text);
         $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_RIGHT);
         $text->addSpan(($pageIndex + 1) . "/" . $document->getPageCount(), $this->textStyle, $this->fontSize, 1);
