@@ -92,6 +92,10 @@
       "added": "ELM Bericht versandt.",
       "title": "ELM Bericht erfassen"
     },
+    "add_report": {
+      "added": "Bericht erstellt.",
+      "title": "Bericht erstellen"
+    },
     "edit_probe_orderer_org": {
       "edited": "Organisation gespeichert.",
       "title": "Organisation bearbeiten"
@@ -329,5 +333,17 @@
     "postal_code": "PLZ",
     "country_code": "Ländercode",
     "country_code_short": "Land"
+  },
+  "report": {
+    "_name": "Bericht",
+    "date": "Datum",
+    "certified": "Zertifizierungs-Siegel",
+    "title": "Titel",
+    "_predefined_title": {
+      "INTERMEDIATE":  "Zwischenbericht",
+      "FINAL":  "Schlussbericht",
+      "ADDENDUM": "Nachtrag",
+      "CORRECTION": "Korrigierter Bericht"
+    }
   }
 }

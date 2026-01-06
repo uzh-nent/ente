@@ -108,6 +108,18 @@
               v-if="elmReports.length > 0" :reports="elmReports"
               :users="users" :organisms="organisms" :leading-codes="leadingCodes"/>
         </div>
+
+        <div class="mt-5" v-if="observations.length > 0 && (!probe.finishedAt || reports.length > 0)">
+          <h3>{{ $t('report._name') }}</h3>
+          <add-report-button
+              v-if="!probe.finishedAt"
+              :probe="probe" :observations="observations"
+              :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
+              :reports="reports"
+              @added="reports.push($event)"
+          />
+        </div>
+
         <div class="mt-5" v-if="!missingIdentificationObservation && missingTestObservations.length === 0">
           <toggle-finished-button :probe="probe" :has-reports="reports.length > 0"/>
         </div>
@@ -145,10 +157,12 @@ import ToggleFinishedButton from "./components/Action/ToggleFinishedButton.vue";
 import AddTestObservationsButton from "./components/Action/AddTestObservationsButton.vue";
 import TestObservationTable from "./components/View/TestObservationTable.vue";
 import DownloadProbeWorksheetButton from "./components/Action/DownloadProbeWorksheetButton.vue";
+import AddReportButton from "./components/Action/AddReportButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    AddReportButton,
     DownloadProbeWorksheetButton,
     TestObservationTable,
     AddTestObservationsButton,

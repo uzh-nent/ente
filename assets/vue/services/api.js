@@ -209,6 +209,9 @@ const api = {
   },
   postElmReport: function (payload) {
     return restClient.post('/api/elm_reports', payload)
+  },
+  postReport: function (payload) {
+    return restClient.post('/api/report', payload)
   }
 }
 
