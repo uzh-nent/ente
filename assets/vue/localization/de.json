@@ -56,20 +56,20 @@
       "title": "Mediziner:in bearbeiten"
     },
     "add_patient": {
-      "added": "Patient hinzugefügt.",
-      "title": "Patient hinzufügen"
+      "added": "Patient:in hinzugefügt.",
+      "title": "Patient:in hinzufügen"
     },
     "edit_patient": {
-      "edited": "Patient gespeichert.",
-      "title": "Patient bearbeiten"
+      "edited": "Patient:in gespeichert.",
+      "title": "Patient:in bearbeiten"
     },
     "add_animal_keeper": {
-      "added": "Tierhalter hinzugefügt.",
-      "title": "Tierhalter hinzufügen"
+      "added": "Tierhalter:in hinzugefügt.",
+      "title": "Tierhalter:in hinzufügen"
     },
     "edit_animal_keeper": {
-      "edited": "Tierhalter gespeichert.",
-      "title": "Tierhalter bearbeiten"
+      "edited": "Tierhalter:in gespeichert.",
+      "title": "Tierhalter:in bearbeiten"
     },
     "add_identification_observation": {
       "added": "Resultat gespeichert.",
@@ -117,8 +117,8 @@
       "title": "Halter bearbeiten"
     },
     "edit_probe_patient": {
-      "edited": "Patient gespeichert.",
-      "title": "Patient bearbeiten"
+      "edited": "Patient:in gespeichert.",
+      "title": "Patient:in bearbeiten"
     },
     "download_probe_worksheet": {
       "download": "Arbeitsblatt herunterladen"
@@ -158,12 +158,12 @@
   },
   "practitioner": {
     "_name": "Mediziner:in",
-    "_plural": "Mediziner",
+    "_plural": "Mediziner:innen",
     "title": "Titel",
     "name": "Name"
   },
   "patient": {
-    "_name": "Patient",
+    "_name": "Patient:in",
     "_plural": "Patienten",
     "identification": "Identifikation",
     "ahv_number": "AHV-Nummer",
@@ -265,8 +265,8 @@
     }
   },
   "animal_keeper": {
-    "_name": "Tierhalter",
-    "_plural": "Tierhalter",
+    "_name": "Tierhalter:in",
+    "_plural": "Tierhalter:innen",
     "name": "Name"
   },
   "comment": {

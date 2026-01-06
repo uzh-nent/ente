@@ -3,16 +3,16 @@ index:
 
 organizations:
   title: "Organisationen"
-  description: "Auftraggeber der Proben des Referenzlabors"
+  description: "Auftraggeberinnen der Proben des Referenzlabors"
 
 practitioners:
-  title: "Mediziner"
-  description: "Auftraggeber der Proben des Primärlabors"
+  title: "Mediziner:innen"
+  description: "Auftraggeber:innen der Proben des Primärlabors"
 
 patients:
   title: "Patienten"
   description: "Patienten von denen die Proben stammen"
 
 animal_keepers:
-  title: "Tierhalter"
-  description: "Halter der Tiere von denen die Proben stammen"
+  title: "Tierhalter:innen"
+  description: "Halter:innen der Tiere von denen die Proben stammen"
