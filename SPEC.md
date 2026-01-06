@@ -46,7 +46,6 @@ Probedaten:
 urgent:
 - Textbausteine
 - UI for report generation
-- allow multiple addresses in report
 - report: patientenfelder definieren (ahv-nummer, geburtsdatum)
 
 priority 2:
@@ -56,6 +55,10 @@ priority 2:
 priority 3:
 - show number of next probe when creating probe
 - allow proben to select mediziner:in
+
+requirements engineering:
+- E.Coli report
+- Vibrio cholerae report
 
 features v1.0:
 - priority 1-3

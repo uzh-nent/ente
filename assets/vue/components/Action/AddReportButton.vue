@@ -7,7 +7,7 @@
 
     <hr/>
     <!-- TODO button to add customer -->
-    <add-address-button ref="addAddressButton" @add="addresses.push($event)" />
+    <add-address-button ref="addAddressButton" @add="addresses.push($event)"/>
     <div class="d-flex flex-column gap-2 mt-2" v-if="addresses.length > 0">
       <div v-for="address in addresses" :key="address" class="bg-light p-2 rounded d-flex">
         <div class="flex-grow-1 items-center">
@@ -23,6 +23,11 @@
 
     <hr/>
 
+    <div class="d-flex flex-column gap-3">
+      <!-- TODO implement with checkbox to hide results -->
+      <report-result-form v-for="(resultTemplate, i) in resultTemplates" :template="resultTemplate"
+                          @update="results[i] = $event"/>
+    </div>
   </button-confirm-modal>
 </template>
 
@@ -35,10 +40,13 @@ import ElmReportForm from "../Form/ElmReportForm.vue";
 import ReportMetaForm from "../Form/ReportMetaForm.vue";
 import moment from "moment";
 import AddAddressButton from "./AddAddressButton.vue";
+import {createResults} from "../../services/domain/report";
+import ReportResultForm from "../Form/ReportResultForm.vue";
 
 export default {
   emits: ['added'],
   components: {
+    ReportResultForm,
     AddAddressButton,
     ReportMetaForm,
     ElmReportForm,
@@ -83,6 +91,9 @@ export default {
         return {...template, predefinedTitle: 'ADDENDUM'}
       }
     },
+    resultTemplates: function () {
+      return createResults(this.probe, this.observations, this.organisms, this.$t)
+    },
     payload: function () {
       const payload = {...this.reportMetaTemplate, ...this.reportMeta, probe: this.probe['@id']}
 
@@ -94,6 +105,14 @@ export default {
       }
       delete payload.predefinedTitle
       delete payload.customTitle
+
+      const results = this.resultTemplates.map((template, index) => {
+        return {
+          ...template,
+          ...this.results[index]
+        }
+      })
+      payload.payload = {certified: false, results}
 
       return payload
     }
@@ -115,8 +134,6 @@ export default {
   mounted() {
     this.addresses = this.reports.length ? this.reports[this.reports.length - 1].addresses : []
     this.addresses = this.addresses ?? []
-
-    
   }
 }
 </script>

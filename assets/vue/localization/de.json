@@ -343,8 +343,27 @@
     "certified": "Zertifizierungs-Siegel",
     "title": "Titel",
     "address_source": "Quelle",
+    "result": "Resultat",
+    "comment": "Kommentar",
     "_address_source": {
       "CUSTOM": "Andere"
+    },
+    "_analysis_type": {
+      "IDENTIFICATION": "Identifizierung / Typisierung",
+      "EC_STEC": "Shigatoxin bildende E. coli (STEC)",
+      "EC_EPEC": "Enteropathogene E. coli (EPEC)",
+      "EC_ETEC": "Enterotoxische E. coli (ETEC)",
+      "EC_EIEC": "Enteroinvasive E. coli (EIEC) / Shigella",
+      "EC_EAEC": "Enteroaggregative E. coli (EAEC)"
+    },
+    "_interpretation": {
+      "POS": "Nachweis von",
+      "NEG": "Kein Nachweis von",
+      "NONE": "Keine Aussage möglich"
+    },
+    "service": {
+      "ecoli_identification": "E. Coli Identifizierung",
+      "identification_of": "Identifizierung / Typisierung von"
     },
     "_predefined_title": {
       "INTERMEDIATE":  "Zwischenbericht",
