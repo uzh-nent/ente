@@ -10,6 +10,7 @@
   },
   "_form": {
     "other_or_unknown": "Anderes/Unbekannt",
+    "other": "Anderes",
     "search": "Suchen",
     "timeFilter": {
       "from": "Von",
@@ -97,6 +98,7 @@
     },
     "add_report": {
       "added": "Bericht erstellt.",
+      "add_orderer_org": "Auftraggeber hinzufügen",
       "title": "Bericht erstellen"
     },
     "edit_probe_orderer_org": {

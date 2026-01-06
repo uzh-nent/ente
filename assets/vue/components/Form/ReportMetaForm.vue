@@ -45,7 +45,7 @@ import TestView from "../View/Observation/TestView.vue";
 const createPredefinedTitles = function (translator) {
   const values = ['INTERMEDIATE', 'FINAL', 'ADDENDUM', 'CORRECTION']
   return values.map(value => ({label: translator(`report._predefined_title.${value}`), value}))
-      .concat({label: translator('_form.other_or_unknown'), value: null})
+      .concat({label: translator('_form.other'), value: null})
 }
 
 export default {

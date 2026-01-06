@@ -6,8 +6,13 @@
     <report-meta-form :template="reportMetaTemplate" :probe="probe" @update="reportMeta = $event"/>
 
     <hr/>
-    <!-- TODO button to add customer -->
-    <add-address-button ref="addAddressButton" @add="addresses.push($event)"/>
+    <div class="d-flex gap-2">
+      <button v-if="canIncludeOrdererOrgAddress" class="btn btn-primary" @click="addresses.push(ordererOrgAddress)">
+        <i class="fas fa-plus"></i>
+        {{ $t("_action.add_report.add_orderer_org") }}
+      </button>
+      <add-address-button ref="addAddressButton" @add="addresses.push($event)"/>
+    </div>
     <div class="d-flex flex-column gap-2 mt-2" v-if="addresses.length > 0">
       <div v-for="address in addresses" :key="address" class="bg-light p-2 rounded d-flex">
         <div class="flex-grow-1 items-center">
@@ -24,9 +29,13 @@
     <hr/>
 
     <div class="d-flex flex-column gap-3">
-      <!-- TODO implement with checkbox to hide results -->
-      <report-result-form v-for="(resultTemplate, i) in resultTemplates" :template="resultTemplate"
-                          @update="results[i] = $event"/>
+      <div v-for="(resultTemplate, i) in resultTemplates" :key="i" class="mt-3 p-2 bg-light">
+        <checkbox
+            :id="'toggle-' + i" :label="resultTemplate.analysis"
+            :model-value="shownResults.includes(i)" @update:modelValue="toggleShownResults(i, $event)"
+        />
+        <report-result-form class="mt-2" v-if="shownResults.includes(i)" :template="resultTemplate" @update="results[i] = $event"/>
+      </div>
     </div>
   </button-confirm-modal>
 </template>
@@ -42,10 +51,14 @@ import moment from "moment";
 import AddAddressButton from "./AddAddressButton.vue";
 import {createResults} from "../../services/domain/report";
 import ReportResultForm from "../Form/ReportResultForm.vue";
+import {probeConverter} from "../../services/domain/converters";
+import {formatOrganizationAddress} from "../../services/domain/formatter";
+import Checkbox from "../Library/FormInput/Checkbox.vue";
 
 export default {
   emits: ['added'],
   components: {
+    Checkbox,
     ReportResultForm,
     AddAddressButton,
     ReportMetaForm,
@@ -57,6 +70,7 @@ export default {
       reportMeta: null,
       addresses: [],
       results: [],
+      shownResults: []
     }
   },
   props: {
@@ -79,7 +93,18 @@ export default {
   },
   computed: {
     canConfirm: function () {
-      return !!this.payload && this.addresses.length > 0
+      return this.reportMeta && this.results.length > 0 && this.addresses.length > 0
+    },
+    ordererOrgAddress: function () {
+      if (!this.probe.ordererOrg) {
+        return null
+      }
+
+      const organization = probeConverter.reconstructOrdererOrgOrganization(this.probe)
+      return formatOrganizationAddress(organization)
+    },
+    canIncludeOrdererOrgAddress: function () {
+      return this.ordererOrgAddress && !this.addresses.includes(this.ordererOrgAddress)
     },
     reportMetaTemplate: function () {
       const template = {date: moment().format('YYYY-MM-DD'), claimCertification: true}
@@ -119,6 +144,10 @@ export default {
     }
   },
   methods: {
+    toggleShownResults: function (i, value) {
+      const otherShownResults = this.shownResults.filter(o => o !== i)
+      this.shownResults = value ? otherShownResults.concat(i) : otherShownResults
+    },
     confirm: async function () {
       const report = await api.postReport(this.payload)
       this.$emit('added', report)
@@ -135,6 +164,13 @@ export default {
   mounted() {
     this.addresses = this.reports.length ? this.reports[this.reports.length - 1].addresses : []
     this.addresses = this.addresses ?? []
+
+    if (this.canIncludeOrdererOrgAddress) {
+      this.addresses.push(this.ordererOrgAddress)
+    }
+
+    // show all per default
+    this.shownResults = this.resultTemplates.map((_, i) => i)
   }
 }
 </script>

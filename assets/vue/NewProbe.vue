@@ -133,7 +133,7 @@ export default {
         }
       }
 
-      // TODO only show if enabled in UI
+      // TODO only include if enabled in UI
       if (this.ordererPrac) {
         base.requisitionIdentifier = this.ordererPrac.requisitionIdentifier
         if (this.ordererPrac.ordererPrac) {

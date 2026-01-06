@@ -1,20 +1,17 @@
 <template>
-  <div>
-    <h3>{{ template.analysis }}</h3>
-    <div class="row">
-      <div class="col-md-12">
-        <form-field for-id="result" :label="$t('report.result')" :field="fields.result">
-          <text-input id="result" type="text" :field="fields.result"
-                      v-model="entity.result"
-                      @blur="blurField('result')" @update:modelValue="validateField('result')"/>
-        </form-field>
+  <div class="row">
+    <div class="col-md-12">
+      <form-field for-id="result" :label="$t('report.result')" :field="fields.result">
+        <text-input id="result" type="text" :field="fields.result"
+                    v-model="entity.result"
+                    @blur="blurField('result')" @update:modelValue="validateField('result')"/>
+      </form-field>
 
-        <form-field for-id="comment" :label="$t('report.comment')" :field="fields.comment">
-          <text-area id="comment" type="text" :field="fields.comment"
-                     v-model="entity.comment"
-                     @blur="blurField('comment')" @update:modelValue="validateField('comment')"/>
-        </form-field>
-      </div>
+      <form-field for-id="comment" :label="$t('report.comment')" :field="fields.comment">
+        <text-area id="comment" type="text" :field="fields.comment"
+                   v-model="entity.comment"
+                   @blur="blurField('comment')" @update:modelValue="validateField('comment')"/>
+      </form-field>
     </div>
   </div>
 </template>

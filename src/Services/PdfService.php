@@ -486,10 +486,16 @@ class PdfService implements PdfServiceInterface
     {
         $ordererFlow = new Flow(FlowDirection::COLUMN);
         if ($probe->getSpecimenSource() === SpecimenSource::HUMAN) {
+            $ahvLabel = $this->translator->trans("Ahv number", [], "entity_patient");
+            $birthDateLabel = $this->translator->trans("Birth date", [], "entity_patient");
+            $identifiers = [
+                $ahvLabel => $probe->getPatientAhvNumber(),
+                $birthDateLabel => $probe->getPatientBirthDate()?->format('d.m.Y')
+            ];
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("entity.title", [], "entity_patient"),
                 $probe->getPatientFullAddress(fn(AdministrativeGender $v) => $v->trans($this->translator)),
-                identifiers: [$probe->getPatientBirthDate()?->format('d.m.Y'), $probe->getPatientAhvNumberFormatted()]
+                identifiers: $identifiers
             );
 
             $ordererFlow->add($recipient);
@@ -542,10 +548,12 @@ class PdfService implements PdfServiceInterface
     {
         $text = new Text();
         $text->addSpan($result['analysis'], $this->textStyle, $this->fontSize);
-        $text->addSpan(" (" . $result['method'] . ")", $this->textStyle, $this->smallFontSize);
+        if (isset($result['method'])) {
+            $text->addSpan(" (" . $result['method'] . ")", $this->textStyle, $this->smallFontSize);
+        }
         $text->addSpan(": \n", $this->textStyle, $this->fontSize);
         $text->addSpan($result["result"], $this->textStyle, $this->fontSize);
-        if ($result['comment']) {
+        if (isset($result['comment'])) {
             $text->addSpan("\n", $this->textStyle, $this->fontSize);
             $text->addSpan($result["comment"], $this->secondaryTextStyle, $this->smallFontSize, 1);
         }
@@ -593,12 +601,18 @@ class PdfService implements PdfServiceInterface
 
         // identifiers (AHV-number etc)
         if (count($identifiers) > 0) {
-            $text = new Text();
-            $identifiersText = join("\n", array_filter($identifiers));
-            $text->addSpan($identifiersText, $this->textStyle, $this->fontSize, 1);
-            $contentBlock = new Block($text);
-            $contentBlock->setMargin([0, $this->spacer / 2, 0, 0]);
-            $recipientFlow->add($contentBlock);
+            $identifierFlow = new Flow(FlowDirection::COLUMN);
+            foreach ($identifiers as $label => $value) {
+                if (!$value) {
+                    continue;
+                }
+
+                $valueElement = $this->createLabeledValueElement($label, $value);
+                $identifierFlow->add($valueElement);
+            }
+
+            $identifierFlow->setMargin([0, $this->spacer / 2, 0, 0]);
+            $recipientFlow->add($identifierFlow);
         }
 
         // address
