@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Probe;
 use App\Entity\Report;
-use App\Enum\ReportReceiver;
+use App\Helper\DoctrineHelper;
+use App\Services\Interfaces\FileServiceInterface;
 use App\Services\Interfaces\PdfServiceInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -67,23 +69,20 @@ class ProbeController extends AbstractController
         return new Response($pdf, Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
     }
 
-    #[Route('/probes/active/{probe}/report.pdf', name: 'probe_report_pdf')]
-    public function reportPdf(Probe $probe, PdfServiceInterface $pdfService, TranslatorInterface $translator): Response
+    #[Route('/probes/active/{probe}/report.pdf', name: 'probe_report_pdf_test')]
+    public function reportPdfTest(Probe $probe, PdfServiceInterface $pdfService, FileServiceInterface $fileService, ManagerRegistry $registry, TranslatorInterface $translator): Response
     {
         $report = new Report();
         $report->setProbe($probe);
         $report->setDate(new \DateTimeImmutable());
-        /** @phpstan-ignore-next-line */
-        $report->setValidationBy($this->getUser());
         $report->setPayload([]);
+        $report->setAddresses(["Florian Moser\nOchsengasse 66\n4123 Allschwil", "Peter Schütz\nOchsengasse 66\n4123 Allschwil"]);
         $report->setTitle("Schlussbericht");
-        $report->setReceiver($probe->getOrdererOrg() ? ReportReceiver::PROBE_ORDERER_ORG : ReportReceiver::PROBE_ORDERER_PRAC);
         /** @phpstan-ignore-next-line */
         $report->attribute($this->getUser());
 
         /** @phpstan-ignore-next-line */
         $report->setPayload([
-            "bag_reported" => true,
             "certified" => true,
             "results" => [[
                 "analysis" => "Identifizierung / Typisierung von " . $probe->getPathogen()->trans($translator),
@@ -94,8 +93,12 @@ class ProbeController extends AbstractController
         ]);
 
         $pdf = $pdfService->generateReport($report);
+        $preferredFilename = $report->getProbe()->getIdentifier() . " - " . $report->getTitle() . " - " . $report->getDate()->format("Y.m.d") . ".pdf";
+        $filename = $fileService->saveFile(FileServiceInterface::REPORT_FOLDER, $preferredFilename, $pdf);
+        $report->setFilename($filename);
+        DoctrineHelper::persistAndFlush($registry, $report);
 
-        return new Response($pdf, Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
+        return $this->redirectToRoute("report_download", ['report' => $report->getId(), 'filename' => $filename]);
     }
 
     #[Route('/probes/all', name: 'probe_all')]

@@ -8,7 +8,6 @@ use App\Enum\AdministrativeGender;
 use App\Enum\AnalysisType;
 use App\Enum\LaboratoryFunction;
 use App\Enum\Pathogen;
-use App\Enum\ReportReceiver;
 use App\Enum\SpecimenSource;
 use App\Services\Interfaces\PdfServiceInterface;
 use Famoser\PdfGenerator\Frontend\Content\ImagePlacement;
@@ -98,29 +97,35 @@ class PdfService implements PdfServiceInterface
         $layoutJson = file_get_contents($this->reportResourcesDir . "/layout.json");
         $layout = json_decode($layoutJson, true);
 
-        $flow = new Flow(FlowDirection::COLUMN, $this->spacer / 2);
+        foreach ($report->getAddresses() as $i => $address) {
+            if ($i > 0) {
+                $document->addPage();
+            }
 
-        $this->addAddress($document, $report, $layout);
-        $this->addSpace($flow, $this->spacer * 3);
-        $this->addReportHeader($report, $flow);
-        $this->addDivider($flow, $contentWidth);
-        $this->addServiceRequest($report->getProbe(), $flow);
-        $this->addDivider($flow, $contentWidth);
+            $flow = new Flow(FlowDirection::COLUMN, $this->spacer / 2);
 
-        $this->addReportProbeMeta($report, $flow, $contentWidth);
-        $this->addDivider($flow, $contentWidth);
-        $this->addReportServiceTimeElement($report, $flow);
-        $this->addSpace($flow, $this->spacer);
+            $this->addAddress($document, $layout, $address);
+            $this->addSpace($flow, $this->spacer * 3);
+            $this->addReportHeader($report, $flow);
+            $this->addDivider($flow, $contentWidth);
+            $this->addServiceRequest($report->getProbe(), $flow);
+            $this->addDivider($flow, $contentWidth);
 
-        $this->addReportResultHeader($flow);
-        foreach ($report->getPayload()['results'] as $result) {
-            $this->addResult($result, $flow);
+            $this->addReportProbeMeta($report, $flow, $contentWidth);
+            $this->addDivider($flow, $contentWidth);
+            $this->addReportServiceTimeElement($report, $flow);
+            $this->addSpace($flow, $this->spacer);
+
+            $this->addReportResultHeader($flow);
+            foreach ($report->getPayload()['results'] as $result) {
+                $this->addResult($result, $flow);
+            }
+
+            $this->addSpace($flow, $this->spacer);
+            $document->add($flow);
+
+            $this->addReportSignature($report, $document, $layout, $contentWidth);
         }
-
-        $this->addSpace($flow, $this->spacer);
-        $document->add($flow);
-
-        $this->addReportSignature($report, $document, $layout, $contentWidth);
 
         for ($i = 0; $i < $document->getPageCount(); $i++) {
             $this->printReportLayout($document, $i, $report, $layout, $contentWidth);
@@ -175,7 +180,7 @@ class PdfService implements PdfServiceInterface
     {
         $text = new Text();
         $text->addSpan($layout['greeting'] . "\n", $this->textStyle, $this->fontSize);
-        $text->addSpan($report->getValidationBy()->getName(), $this->textStyle, $this->fontSize);
+        $text->addSpan($report->getCreatedBy()->getName(), $this->textStyle, $this->fontSize);
         $block = new Block($text);
         $block->setWidth($contentWidth - 20);
         $document->add($text);
@@ -270,7 +275,7 @@ class PdfService implements PdfServiceInterface
     /**
      * @param mixed[] $layout
      */
-    private function addAddress(Document $document, Report $report, array $layout): void
+    private function addAddress(Document $document, array $layout, string $address): void
     {
         $flow = new Flow(FlowDirection::COLUMN);
 
@@ -284,22 +289,13 @@ class PdfService implements PdfServiceInterface
         $this->addSpace($flow, $this->spacer / 2);
 
         $text = new Text();
-        if ($report->getReceiver() === ReportReceiver::PRACTITIONER) {
-            $address = $report->getReceiverPrac()->getFullAddress();
-        } elseif ($report->getReceiver() === ReportReceiver::ORGANIZATION) {
-            $address = $report->getReceiverOrg()->getFullAddress();
-        } elseif ($report->getReceiver() === ReportReceiver::PROBE_ORDERER_ORG) {
-            $address = $report->getProbe()->getOrdererOrgFullAddress();
-        } else {
-            $address = $report->getProbe()->getOrdererPracFullAddress();
-        }
         $text->addSpan($address, $this->textStyle, $this->fontSize, 1);
         $addressBlock = new Block($text);
         $addressBlock->setWidth(74);
         $flow->add($addressBlock);
 
         // hardcoded address position
-        $document->setPosition(-33, 0); // 80-33 = 47; 47 is where the address should start
+        $document->setPosition(-33); // 80-33 = 47; 47 is where the address should start
         $document->add($flow);
     }
 

@@ -13,12 +13,17 @@ class FileService implements FileServiceInterface
         $this->persistentFilesDir = $rootDir . '/var/persistent';
     }
 
-    public function saveFile(string $filename, string $content): string
+    public function saveFile(string $folder, string $filename, string $content): string
     {
+        // create folder if it does not exist yet
+        $folder = $this->getFolderPath($folder);
+        if (!file_exists($folder)) {
+            mkdir($folder, 0777, true);
+        }
+
         // Sanitize filename: remove path separators and replace non-alphanumeric/dot/dash with underscores
         $safeFilename = preg_replace('/[^a-zA-Z0-9_.-]/', '_', basename($filename));
-
-        $filePath = $this->persistentFilesDir . '/' . $safeFilename;
+        $filePath = $folder . '/' . $safeFilename;
 
         // Ensure file does not overwrite an existing file
         if (file_exists($filePath)) {
@@ -27,16 +32,21 @@ class FileService implements FileServiceInterface
             $extension = isset($pathInfo['extension']) ? '.' . $pathInfo['extension'] : '';
             $counter = 1;
 
-            while (file_exists($this->persistentFilesDir . '/' . $baseName . '_' . $counter . $extension)) {
+            while (file_exists($folder . '/' . $baseName . '_' . $counter . $extension)) {
                 $counter++;
             }
 
             $safeFilename = $baseName . '_' . $counter . $extension;
-            $filePath = $this->persistentFilesDir . '/' . $safeFilename;
+            $filePath = $folder . '/' . $safeFilename;
         }
 
         file_put_contents($filePath, $content);
 
         return $safeFilename;
+    }
+
+    public function getFolderPath(string $folder): string
+    {
+        return  $this->persistentFilesDir . '/' . $folder;
     }
 }

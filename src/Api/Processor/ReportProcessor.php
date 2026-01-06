@@ -48,7 +48,8 @@ readonly class ReportProcessor implements ProcessorInterface
         $result = $this->persistProcessor->process($data, $operation, $uriVariables, $context);
 
         $pdf = $this->pdfService->generateReport($data);
-        $filename = $this->fileService->saveFile($data->getProbe()->getIdentifier() . "-" . $data->getTitle(), $pdf);
+        $preferredFilename = $data->getProbe()->getIdentifier() . " - " . $data->getTitle() . " - " . $data->getDate()->format("Y.m.d") . ".pdf";
+        $filename = $this->fileService->saveFile(FileServiceInterface::REPORT_FOLDER, $preferredFilename, $pdf);
         $data->setFilename($filename);
         DoctrineHelper::persistAndFlush($this->registry, $data);
 
