@@ -105,7 +105,9 @@ class PdfService implements PdfServiceInterface
             $addresses[] = $report->getProbe()->getOrdererPracFullAddress();
         }
         if ($report->getCopyToAddresses()) {
-            $addresses = array_merge($addresses, $report->getCopyToAddresses());
+            foreach ($report->getCopyToAddresses() as $copyToAddress) {
+                $addresses[] = join("\n", [$copyToAddress['name'], $copyToAddress['addressLines'], $copyToAddress['cityLine']]);
+            }
         }
 
         foreach ($addresses as $i => $address) {
@@ -119,7 +121,7 @@ class PdfService implements PdfServiceInterface
             $this->addSpace($flow, $this->spacer * 3);
             $this->addReportHeader($report, $flow);
             $this->addDivider($flow, $contentWidth);
-            $this->addServiceRequest($report->getProbe(), $flow, $addresses);
+            $this->addServiceRequest($report->getProbe(), $flow, $report->getCopyToAddresses());
             $this->addDivider($flow, $contentWidth);
 
             $this->addReportProbeMeta($report, $flow, $contentWidth);
@@ -422,7 +424,10 @@ class PdfService implements PdfServiceInterface
         $flow->add(new ContentBlock($divider));
     }
 
-    private function addServiceRequest(Probe $probe, Flow $flow, array $addresses): void
+    /**
+     * @param array<array{'name': ?string, 'addressLines': ?string, 'cityLine': ?string}>|null $copyToAddresses
+     */
+    private function addServiceRequest(Probe $probe, Flow $flow, ?array $copyToAddresses): void
     {
         $label = $this->translator->trans("Service", [], "entity_probe");
         if ($probe->getLaboratoryFunction() === LaboratoryFunction::REFERENCE) {
@@ -440,17 +445,13 @@ class PdfService implements PdfServiceInterface
         $label = $this->translator->trans("Requisition identifier", [], "trait_probe_service_request");
         $flow->add($this->createLabeledValueElement($label, $probe->getRequisitionIdentifier(), primary: true, boldValue: true));
 
-        // todo: check whether can submit more structured, as want to consider include department in the short address
-        $shortAddresses = [];
-        foreach ($addresses as $i => $address) {
-            if ($i == 0) {
-                continue;
+        if ($copyToAddresses) {
+            $shortAddresses = [];
+            foreach ($copyToAddresses as $address) {
+                $entries = array_filter([$address['name'], $address['cityLine']]);
+                $shortAddresses[] = join(", ", $entries);
             }
 
-            $addressLines = explode("\n", $address);
-            $shortAddresses[] = $addressLines[0] . ", " . $addressLines[count($addressLines) - 1];
-        }
-        if (count ($shortAddresses) > 0) {
             $label = $this->translator->trans("report.copy_to", [], "report");
             $flow->add($this->createLabeledValueElement($label, implode("; ", $shortAddresses), primary: true));
         }

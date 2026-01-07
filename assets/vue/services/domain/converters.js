@@ -1,3 +1,5 @@
+import {formatAddressLines, formatCityLine, formatPractitionerName} from "./formatter";
+
 export const probeConverter = {
   writeOrdererOrg: function (organization) {
     return {
@@ -91,4 +93,29 @@ export const probeConverter = {
       countryCode: probe.patientCountryCode,
     }
   },
+}
+
+export const addressConverter = {
+  createFromOrganization: function (organization) {
+    return {
+      name: organization.name,
+      addressLines: formatAddressLines(organization),
+      cityLine: formatCityLine(organization),
+    }
+  },
+  createFromPractitioner: function (practitioner) {
+    return {
+      name: formatPractitionerName(practitioner),
+      addressLines: formatAddressLines(practitioner),
+      cityLine: formatCityLine(practitioner),
+    }
+  },
+  createFromText: function (text) {
+    const lines = text.split('\n')
+    return {
+      name: lines[0] ?? "",
+      addressLines: lines.slice(1, lines.length - 1).join("\n"),
+      cityLine: lines[lines.length - 1] ?? "",
+    }
+  }
 }

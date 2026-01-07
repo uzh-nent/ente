@@ -62,7 +62,7 @@ export default {
         receivers.push(formatPractitionerName(practitioner))
       }
 
-      const copyToReceivers = (this.report.copyToAddresses ?? []).map(a => a.substring(0, a.indexOf("\n")));
+      const copyToReceivers = (this.report.copyToAddresses ?? []).map(a => a.name);
       return receivers.concat(copyToReceivers).join("\n")
     },
   }

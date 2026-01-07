@@ -81,18 +81,33 @@ export const formatAddress = function (value) {
     return '-'
   }
 
-  const fullAddress = [value.addressLines]
+  const fullAddress = [
+    formatAddressLines(value),
+    formatCityLine(value)
+  ];
+
+  return fullAddress.filter(e => e).join("\n")
+}
+
+export const formatAddressLines = function (value) {
+  if (!value) {
+    return '-'
+  }
+
+  return value.addressLines
+}
+
+export const formatCityLine = function (value) {
+  if (!value) {
+    return '-'
+  }
 
   const cityLineValues = [value.postalCode, value.city]
   if (value.countryCode && value.countryCode !== 'CH') {
     cityLineValues.unshift(value.countryCode)
   }
-  const cityLine = cityLineValues.filter(e => e)
-  if (cityLine.length > 0) {
-    fullAddress.push(cityLine.join(" "))
-  }
 
-  return fullAddress.filter(e => e).join("\n")
+  return cityLineValues.filter(e => e).join(" ")
 }
 
 export const formatPersonName = function (value) {

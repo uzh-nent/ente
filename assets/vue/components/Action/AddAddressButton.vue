@@ -10,7 +10,7 @@
 
     <organization-address-form v-if="addressSource === 'ORGANIZATION'" @update="organizationAddress = $event"/>
     <practitioner-address-form v-else-if="addressSource === 'PRACTITIONER'" @update="practitionerAddress = $event"/>
-    <text-area v-else id="customAddress" v-model="customAddress" />
+    <text-area v-else id="customAddress" v-model="customAddressText" />
   </button-confirm-modal>
 </template>
 
@@ -25,6 +25,7 @@ import Radio from "../Library/FormInput/Radio.vue";
 import TextArea from "../Library/FormInput/TextArea.vue";
 import OrganizationAddressForm from "../Form/Address/OrganizationAddressForm.vue";
 import PractitionerAddressForm from "../Form/Address/PractitionerAddressForm.vue";
+import {addressConverter} from "../../services/domain/converters";
 
 const createAddressSources = function (translator) {
   return [
@@ -56,7 +57,7 @@ export default {
 
       organizationAddress: null,
       practitionerAddress: null,
-      customAddress: null,
+      customAddressText: null,
     }
   },
   computed: {
@@ -69,7 +70,11 @@ export default {
       } else if (this.addressSource === 'PRACTITIONER') {
         return this.practitionerAddress
       } else {
-        return this.customAddress
+        if (!this.customAddressText) {
+          return null;
+        }
+
+        return addressConverter.createFromText(this.customAddressText)
       }
     },
     addressSources: function () {

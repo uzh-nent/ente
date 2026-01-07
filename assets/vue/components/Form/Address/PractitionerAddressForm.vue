@@ -45,6 +45,7 @@ import EditPatientButton from "../../Action/EditPatientButton.vue";
 import ActionablePreview from "../../Library/View/ActionablePreview.vue";
 import PatientView from "../../View/PatientView.vue";
 import EditPractitionerButton from "../../Action/EditPractitionerButton.vue";
+import {addressConverter} from "../../../services/domain/converters";
 
 export default {
   emits: ['update'],
@@ -95,7 +96,7 @@ export default {
     practitioner: {
       handler: function (practitioner) {
         if (practitioner) {
-          this.$emit('update', formatPractitionerAddress(practitioner))
+          this.$emit('update', addressConverter.createFromPractitioner(practitioner))
         } else {
           this.$emit('update', null)
         }

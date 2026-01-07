@@ -45,6 +45,7 @@ import EditPatientButton from "../../Action/EditPatientButton.vue";
 import ActionablePreview from "../../Library/View/ActionablePreview.vue";
 import PatientView from "../../View/PatientView.vue";
 import EditOrganizationButton from "../../Action/EditOrganizationButton.vue";
+import {addressConverter} from "../../../services/domain/converters";
 
 export default {
   emits: ['update'],
@@ -95,7 +96,7 @@ export default {
     organization: {
       handler: function (organization) {
         if (organization) {
-          this.$emit('update', formatOrganizationAddress(organization))
+          this.$emit('update', addressConverter.createFromOrganization(organization))
         } else {
           this.$emit('update', null)
         }

@@ -67,11 +67,11 @@ class Report
     private bool $claimCertification = false;
 
     /**
-     * @var string[]
+     * @var array<array{'name': ?string, 'addressLines': ?string, 'cityLine': ?string}>|null
      */
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['report:read', 'report:write'])]
-    private array $copyToAddresses = [];
+    private ?array $copyToAddresses = [];
 
     /**
      * @var array<string, string[]>|null
@@ -125,17 +125,17 @@ class Report
     }
 
     /**
-     * @return string[]
+     * @return array<array{'name': ?string, 'addressLines': ?string, 'cityLine': ?string}>|null
      */
-    public function getCopyToAddresses(): array
+    public function getCopyToAddresses(): ?array
     {
         return $this->copyToAddresses;
     }
 
     /**
-     * @param string[] $copyToAddresses
+     * @param array<array{'name': ?string, 'addressLines': ?string, 'cityLine': ?string}>|null $copyToAddresses
      */
-    public function setCopyToAddresses(array $copyToAddresses): void
+    public function setCopyToAddresses(?array $copyToAddresses): void
     {
         $this->copyToAddresses = $copyToAddresses;
     }

@@ -8,14 +8,14 @@
     <hr/>
     <div class="d-flex flex-column gap-2">
       <div v-for="address in predefinedAddresses" :key="address" class="bg-light p-2 rounded d-flex">
-        {{ address.replace("\n", ", ") }}
+        {{ address.replaceAll("\n", ", ") }}
       </div>
       <add-address-button
           :label="$t('_action.add_report.add_copy_to')" class="align-self-start mt-2"
                           ref="addAddressButton" @add="copyToAddresses.push($event)"/>
       <div v-for="address in copyToAddresses" :key="address" class="bg-light p-2 rounded d-flex">
         <div class="flex-grow-1">
-          {{ address.replace("\n", ", ") }}
+          {{ [address.name, address.addressLines, address.cityLine].join("\n").replaceAll("\n", ", ") }}
         </div>
         <div class="ms-2">
           <button class="btn btn-sm btn-outline-danger"
