@@ -9,8 +9,8 @@
     <td>
       <attribution-view :users="users" :entity="report"/>
     </td>
-    <td>
-      <a :href="pdfLink" target="_blank">
+    <td class="w-minimal">
+      <a class="btn btn-secondary" :href="pdfLink" target="_blank">
         <i class="fas fa-download"></i>
       </a>
     </td>
