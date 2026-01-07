@@ -569,7 +569,7 @@ class PdfService implements PdfServiceInterface
     }
 
     /**
-     * @param string[] $result
+     * @param array{'analysis': ?string, 'method'?: ?string, 'result': ?string, 'comment'?: ?string} $result
      */
     private function addResult(array $result, Flow $flow): void
     {

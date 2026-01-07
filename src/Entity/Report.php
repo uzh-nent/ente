@@ -74,7 +74,7 @@ class Report
     private ?array $copyToAddresses = [];
 
     /**
-     * @var array<string, string[]>|null
+     * @var array<array{'analysis': ?string, 'method'?: ?string, 'result': ?string, 'comment'?: ?string}>|null
      */
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['report:read', 'report:write'])]
@@ -141,7 +141,7 @@ class Report
     }
 
     /**
-     * @return array<string, string[]>|null
+     * @return array<array{'analysis': ?string, 'method'?: ?string, 'result': ?string, 'comment'?: ?string}>|null
      */
     public function getResults(): ?array
     {
@@ -149,7 +149,7 @@ class Report
     }
 
     /**
-     * @param array<string, string[]>|null $results
+     * @param array<array{'analysis': ?string, 'method'?: ?string, 'result': ?string, 'comment'?: ?string}>|null $results
      */
     public function setResults(?array $results): void
     {

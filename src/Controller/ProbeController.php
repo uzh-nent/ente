@@ -69,38 +69,6 @@ class ProbeController extends AbstractController
         return new Response($pdf, Response::HTTP_OK, ['Content-Type' => 'application/pdf']);
     }
 
-    #[Route('/probes/active/{probe}/report.pdf', name: 'probe_report_pdf_test')]
-    public function reportPdfTest(Probe $probe, PdfServiceInterface $pdfService, FileServiceInterface $fileService, ManagerRegistry $registry, TranslatorInterface $translator): Response
-    {
-        $report = new Report();
-        $report->setProbe($probe);
-        $report->setDate(new \DateTimeImmutable());
-        $report->setResults([]);
-        $report->setCopyToAddresses(["Florian Moser\nOchsengasse 66\n4123 Allschwil", "Peter Schütz\nOchsengasse 66\n4123 Allschwil"]);
-        $report->setTitle("Schlussbericht");
-        /** @phpstan-ignore-next-line */
-        $report->attribute($this->getUser());
-
-        /** @phpstan-ignore-next-line */
-        $report->setResults([
-            "certified" => true,
-            "results" => [[
-                "analysis" => "Identifizierung / Typisierung von " . $probe->getPathogen()->trans($translator),
-                "method" => 99,
-                "result" => "Keine Aussage",
-                "comment" => null,
-            ]]
-        ]);
-
-        $pdf = $pdfService->generateReport($report);
-        $preferredFilename = $report->getProbe()->getIdentifier() . " - " . $report->getTitle() . " - " . $report->getDate()->format("Y.m.d") . ".pdf";
-        $filename = $fileService->saveFile(FileServiceInterface::REPORT_FOLDER, $preferredFilename, $pdf);
-        $report->setFilename($filename);
-        DoctrineHelper::persistAndFlush($registry, $report);
-
-        return $this->redirectToRoute("report_download", ['report' => $report->getId(), 'filename' => $filename]);
-    }
-
     #[Route('/probes/all', name: 'probe_all')]
     public function all(): Response
     {
