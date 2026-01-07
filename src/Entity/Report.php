@@ -71,7 +71,7 @@ class Report
      */
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     #[Groups(['report:read', 'report:write'])]
-    private array $addresses = [];
+    private array $copyToAddresses = [];
 
     /**
      * @var array<string, string[]>|null
@@ -127,17 +127,17 @@ class Report
     /**
      * @return string[]
      */
-    public function getAddresses(): array
+    public function getCopyToAddresses(): array
     {
-        return $this->addresses;
+        return $this->copyToAddresses;
     }
 
     /**
-     * @param string[] $addresses
+     * @param string[] $copyToAddresses
      */
-    public function setAddresses(array $addresses): void
+    public function setCopyToAddresses(array $copyToAddresses): void
     {
-        $this->addresses = $addresses;
+        $this->copyToAddresses = $copyToAddresses;
     }
 
     /**

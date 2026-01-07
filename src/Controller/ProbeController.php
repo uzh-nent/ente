@@ -76,7 +76,7 @@ class ProbeController extends AbstractController
         $report->setProbe($probe);
         $report->setDate(new \DateTimeImmutable());
         $report->setResults([]);
-        $report->setAddresses(["Florian Moser\nOchsengasse 66\n4123 Allschwil", "Peter Schütz\nOchsengasse 66\n4123 Allschwil"]);
+        $report->setCopyToAddresses(["Florian Moser\nOchsengasse 66\n4123 Allschwil", "Peter Schütz\nOchsengasse 66\n4123 Allschwil"]);
         $report->setTitle("Schlussbericht");
         /** @phpstan-ignore-next-line */
         $report->attribute($this->getUser());

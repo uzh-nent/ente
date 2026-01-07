@@ -88,7 +88,7 @@ release v1.0 (fully represent business cases):
 features v1.1:
 - elm report: ensure only LOINC, SNOMED, FOPH systems selectable.
 - show number of next probe when creating probe
-- allow proben to select mediziner:in, verify mediziner:in is shown
+- allow proben to select mediziner:in, verify mediziner:in is shown. check that appears as expected on PDF/ELM report
 - add help to patient address if countryCode != CH: should enter current address in CH
 - hide unused leading codes (or in general, stammdaten)
 - reason for "identification not possible": "kein wachstum", "mischkultur", "andere"

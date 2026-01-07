@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form-field for-id="ordererOrg" :label="$t('practitioner._familyName')" :field="practitionerField">
+    <form-field for-id="ordererOrg" :label="$t('practitioner._name')" :field="practitionerField">
       <actionable-preview class="mb-2" v-if="practitioner && practitioner['@id']">
         <practitioner-view :practitioner="practitioner"/>
         <template #actions>
@@ -58,7 +58,7 @@ export default {
     FormField
   },
   mixins: [
-    paginatedQuery(10, api.getPaginatedOrganisations),
+    paginatedQuery(10, api.getPaginatedPractitioners),
   ],
   data() {
     return {

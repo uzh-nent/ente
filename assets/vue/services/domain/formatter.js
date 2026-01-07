@@ -72,7 +72,7 @@ export const formatPractitionerAddress = function (value) {
     return '-'
   }
 
-  const nameValues = [value.givenName, value.familyName]
+  const nameValues = [value.title, value.givenName, value.familyName]
   return nameValues.filter(v => v).join(" ") + "\n" + formatAddress(value)
 }
 
@@ -136,12 +136,20 @@ export const formatOrganizationShort = function (value) {
 }
 
 
+export const formatPractitionerName = function (value) {
+  if (!value) {
+    return '-'
+  }
+
+  return [value.title, value.givenName, value.familyName].filter(e => e).join(" ")
+}
+
 export const formatPractitionerShort = function (value) {
   if (!value) {
     return '-'
   }
 
-  return [value.postalCode, value.title, value.givenName, value.familyName].filter(e => e).join(" ")
+  return [value.postalCode, formatPractitionerName(value)].filter(e => e).join(" ")
 }
 
 

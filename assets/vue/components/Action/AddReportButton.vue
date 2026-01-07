@@ -6,20 +6,20 @@
     <report-meta-form :template="reportMetaTemplate" :probe="probe" @update="reportMeta = $event"/>
 
     <hr/>
-    <div class="d-flex gap-2">
-      <button v-if="canIncludeOrdererOrgAddress" class="btn btn-primary" @click="addresses.push(ordererOrgAddress)">
-        <i class="fas fa-plus"></i>
-        {{ $t("_action.add_report.add_orderer_org") }}
-      </button>
-      <add-address-button ref="addAddressButton" @add="addresses.push($event)"/>
-    </div>
-    <div class="d-flex flex-column gap-2 mt-2" v-if="addresses.length > 0">
-      <div v-for="address in addresses" :key="address" class="bg-light p-2 rounded d-flex">
-        <div class="flex-grow-1 items-center">
+    <div class="d-flex flex-column gap-2">
+      <div v-for="address in predefinedAddresses" :key="address" class="bg-light p-2 rounded d-flex">
+        {{ address.replace("\n", ", ") }}
+      </div>
+      <add-address-button
+          :label="$t('_action.add_report.add_copy_to')" class="align-self-start mt-2"
+                          ref="addAddressButton" @add="copyToAddresses.push($event)"/>
+      <div v-for="address in copyToAddresses" :key="address" class="bg-light p-2 rounded d-flex">
+        <div class="flex-grow-1">
           {{ address.replace("\n", ", ") }}
         </div>
         <div class="ms-2">
-          <button class="btn btn-sm btn-outline-danger" @click="addresses.splice(addresses.indexOf(address), 1)">
+          <button class="btn btn-sm btn-outline-danger"
+                  @click="copyToAddresses.splice(copyToAddresses.indexOf(address), 1)">
             <i class="fas fa-trash"></i>
           </button>
         </div>
@@ -34,7 +34,8 @@
             :id="'toggle-' + i" :label="resultTemplate.analysis"
             :model-value="shownResults.includes(i)" @update:modelValue="toggleShownResults(i, $event)"
         />
-        <report-result-form class="mt-2" v-if="shownResults.includes(i)" :template="resultTemplate" @update="results[i] = $event"/>
+        <report-result-form class="mt-2" v-if="shownResults.includes(i)" :template="resultTemplate"
+                            @update="results[i] = $event"/>
       </div>
     </div>
   </button-confirm-modal>
@@ -52,7 +53,7 @@ import AddAddressButton from "./AddAddressButton.vue";
 import {createResults} from "../../services/domain/report";
 import ReportResultForm from "../Form/ReportResultForm.vue";
 import {probeConverter} from "../../services/domain/converters";
-import {formatOrganizationAddress} from "../../services/domain/formatter";
+import {formatOrganizationAddress, formatPractitionerAddress} from "../../services/domain/formatter";
 import Checkbox from "../Library/FormInput/Checkbox.vue";
 
 export default {
@@ -68,7 +69,7 @@ export default {
   data() {
     return {
       reportMeta: null,
-      addresses: [],
+      copyToAddresses: [],
       results: [],
       shownResults: []
     }
@@ -93,18 +94,7 @@ export default {
   },
   computed: {
     canConfirm: function () {
-      return this.reportMeta && this.results.length > 0 && this.addresses.length > 0
-    },
-    ordererOrgAddress: function () {
-      if (!this.probe.ordererOrg) {
-        return null
-      }
-
-      const organization = probeConverter.reconstructOrdererOrgOrganization(this.probe)
-      return formatOrganizationAddress(organization)
-    },
-    canIncludeOrdererOrgAddress: function () {
-      return this.ordererOrgAddress && !this.addresses.includes(this.ordererOrgAddress)
+      return this.reportMeta && this.results.length > 0
     },
     reportMetaTemplate: function () {
       const template = {date: moment().format('YYYY-MM-DD'), claimCertification: true}
@@ -119,6 +109,20 @@ export default {
     resultTemplates: function () {
       return createResults(this.probe, this.observations, this.organisms, this.$t)
     },
+    predefinedAddresses: function () {
+      const addresses = [];
+      if (this.probe.ordererOrg) {
+        const organization = probeConverter.reconstructOrdererOrgOrganization(this.probe)
+        addresses.push(formatOrganizationAddress(organization))
+      }
+
+      if (this.probe.ordererPrac) {
+        const practitioner = probeConverter.reconstructOrdererPracPractitioner(this.probe)
+        addresses.push(formatPractitionerAddress(practitioner))
+      }
+
+      return addresses
+    },
     payload: function () {
       const payload = {...this.reportMetaTemplate, ...this.reportMeta, probe: this.probe['@id']}
 
@@ -132,7 +136,9 @@ export default {
       delete payload.customTitle
 
       // add sublists
-      payload.addresses = this.addresses
+      if (this.copyToAddresses.length > 0) {
+        payload.copyToAddresses = this.copyToAddresses
+      }
       payload.results = this.resultTemplates.map((template, index) => {
         return {
           ...template,
@@ -150,6 +156,7 @@ export default {
     },
     confirm: async function () {
       const report = await api.postReport(this.payload)
+      console.log(this.payload, report)
       this.$emit('added', report)
 
       const successMessage = this.$t('_action.add_report.added')
@@ -162,12 +169,8 @@ export default {
     }
   },
   mounted() {
-    this.addresses = this.reports.length ? this.reports[this.reports.length - 1].addresses : []
-    this.addresses = this.addresses ?? []
-
-    if (this.canIncludeOrdererOrgAddress) {
-      this.addresses.push(this.ordererOrgAddress)
-    }
+    this.copyToAddresses = this.reports.length ? this.reports[this.reports.length - 1].copyToAddresses : []
+    this.copyToAddresses = this.copyToAddresses ?? []
 
     // show all per default
     this.shownResults = this.resultTemplates.map((_, i) => i)

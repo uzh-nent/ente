@@ -7,7 +7,7 @@ export const createResults = function (probe, observations, organisms, translato
       if (o.interpretation) {
         const organism = o.organism ? organisms.find(org => org['@id'] === o.organism) : null
         const resultPrefix = translator('report._interpretation.' + o.interpretation)
-        result = resultPrefix + " " + (organism ? organism.displayName : pathogenLabel)
+        result = resultPrefix + " " + (organism ? organism.displayName.replace(" (organism)", "") : pathogenLabel)
       }
       return {
         analysis: translator('report.service.identification_of') + " " + pathogenLabel,

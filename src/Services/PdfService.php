@@ -97,7 +97,18 @@ class PdfService implements PdfServiceInterface
         $layoutJson = file_get_contents($this->reportResourcesDir . "/layout.json");
         $layout = json_decode($layoutJson, true);
 
-        foreach ($report->getAddresses() as $i => $address) {
+        $addresses = [];
+        if ($report->getProbe()->getOrdererOrg()) {
+            $addresses[] = $report->getProbe()->getOrdererOrgFullAddress();
+        }
+        if ($report->getProbe()->getOrdererPrac()) {
+            $addresses[] = $report->getProbe()->getOrdererPracFullAddress();
+        }
+        if ($report->getCopyToAddresses()) {
+            $addresses = array_merge($addresses, $report->getCopyToAddresses());
+        }
+
+        foreach ($addresses as $i => $address) {
             if ($i > 0) {
                 $document->addPage();
             }
@@ -108,7 +119,7 @@ class PdfService implements PdfServiceInterface
             $this->addSpace($flow, $this->spacer * 3);
             $this->addReportHeader($report, $flow);
             $this->addDivider($flow, $contentWidth);
-            $this->addServiceRequest($report->getProbe(), $flow);
+            $this->addServiceRequest($report->getProbe(), $flow, $addresses);
             $this->addDivider($flow, $contentWidth);
 
             $this->addReportProbeMeta($report, $flow, $contentWidth);
@@ -411,7 +422,7 @@ class PdfService implements PdfServiceInterface
         $flow->add(new ContentBlock($divider));
     }
 
-    private function addServiceRequest(Probe $probe, Flow $flow): void
+    private function addServiceRequest(Probe $probe, Flow $flow, array $addresses): void
     {
         $label = $this->translator->trans("Service", [], "entity_probe");
         if ($probe->getLaboratoryFunction() === LaboratoryFunction::REFERENCE) {
@@ -428,6 +439,21 @@ class PdfService implements PdfServiceInterface
 
         $label = $this->translator->trans("Requisition identifier", [], "trait_probe_service_request");
         $flow->add($this->createLabeledValueElement($label, $probe->getRequisitionIdentifier(), primary: true, boldValue: true));
+
+        // todo: check whether can submit more structured, as want to consider include department in the short address
+        $shortAddresses = [];
+        foreach ($addresses as $i => $address) {
+            if ($i == 0) {
+                continue;
+            }
+
+            $addressLines = explode("\n", $address);
+            $shortAddresses[] = $addressLines[0] . ", " . $addressLines[count($addressLines) - 1];
+        }
+        if (count ($shortAddresses) > 0) {
+            $label = $this->translator->trans("report.copy_to", [], "report");
+            $flow->add($this->createLabeledValueElement($label, implode("; ", $shortAddresses), primary: true));
+        }
     }
 
     private function createSpecimenMetaElement(Probe $probe): AbstractElement

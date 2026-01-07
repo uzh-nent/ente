@@ -2,7 +2,7 @@
   <table class="table table-striped table-hover border">
     <tbody>
     <report-table-row
-        v-for="report in reports" :key="report['@id']" :report="report" :users="users" />
+        v-for="report in reports" :key="report['@id']" :probe="probe" :report="report" :users="users" />
     </tbody>
   </table>
 </template>
@@ -17,6 +17,10 @@ export default {
   components: {ReportTableRow, ElmReportTableRow},
   methods: {formatDateTime, formatDate},
   props: {
+    probe: {
+      type: Object,
+      required: true
+    },
     reports: {
       type: Array,
       required: true

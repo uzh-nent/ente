@@ -1,7 +1,7 @@
 <template>
   <button-confirm-modal
-      :title="$t('_action.add_address.title')" icon="fas fa-plus"
-      :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
+      :title="label ?? $t('_action.add_address.title')" icon="fas fa-plus"
+      :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm"
       @showing="focusAddressSource">
     <form-field for-id="addressSource" :label="$t('report.address_source')">
       <radio id="addressSource" :choices="addressSources"
@@ -43,6 +43,12 @@ export default {
     Radio, FormField,
     PatientForm,
     ButtonConfirmModal,
+  },
+  props: {
+    label: {
+      type: String,
+      default: null
+    }
   },
   data() {
     return {

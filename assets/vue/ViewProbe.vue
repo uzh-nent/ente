@@ -118,7 +118,7 @@
               :reports="reports"
               @added="reports.push($event)"
           />
-          <report-table class="mt-2" :users="users" :reports="reports" />
+          <report-table class="mt-2" :users="users" :probe="probe" :reports="reports" />
         </div>
 
         <div class="mt-5" v-if="!missingIdentificationObservation && missingTestObservations.length === 0">

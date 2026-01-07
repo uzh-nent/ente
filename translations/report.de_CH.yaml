@@ -1,8 +1,11 @@
 content:
   result: 'Ergebnis'
+
 meta:
   orderer_organization: 'Auftraggeber (Primärlabor)'
   orderer_practitioner: 'Auftraggeber (Mediziner:in)'
+
 report:
   contact: 'Kontakt'
   results: 'Resultate'
+  copy_to: 'Kopie an'
