@@ -100,7 +100,6 @@ const restClient = {
   },
   post: async function (collectionUrl, post) {
     const normalizedPost = this._normalizePayload(post)
-    console.log(normalizedPost)
     const response = await axios.post(collectionUrl, normalizedPost, {headers: {'Content-Type': 'application/ld+json'}})
     return response.data
   },

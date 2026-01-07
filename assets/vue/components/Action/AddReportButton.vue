@@ -156,7 +156,6 @@ export default {
     },
     confirm: async function () {
       const report = await api.postReport(this.payload)
-      console.log(this.payload, report)
       this.$emit('added', report)
 
       const successMessage = this.$t('_action.add_report.added')
