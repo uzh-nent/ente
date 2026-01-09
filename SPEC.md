@@ -53,7 +53,7 @@ ELM:
 - report corrections are to be sent over E-Mail to infreport@hin.ch
 
 ELM leading code per pathogen:
-- Salmonella: `Salmonella sp serovar [Type] in Isolate`. This requires an organism from `sal_org_complete`. For Salmonella that are not yet in `sal_org_complete`: If SNOMED exists, submit as SNOMED. Else, choose leading code `Salmonella sp antigenic formula [Identifier] in Isolate by Agglutination (TEXT)` and submit as text.
+- Salmonella: `Salmonella sp serovar [Type] in Isolate`. This requires an organism from [`sal_org_complete`](https://fhir.ch/ig/ch-elm/ValueSet-ch-elm-results-sal-org-complete.html). For Salmonella that are not yet in `sal_org_complete`: If SNOMED exists, submit as SNOMED. Else, choose leading code `Salmonella sp antigenic formula [Identifier] in Isolate by Agglutination (TEXT)` and submit as text.
 - Shigella: `Shigella sp [Presence] in Specimen by Organism specific culture`. This requires an organism from `shi_org`. For Shigella that are not yet in `shi_org`: Submit more coarse-grained variant that is inside that set (contrary to Salmonella).
 - Listeria: `Listeria sp identified in Specimen by Organism specific culture`. This requires an organism from `lis_org`. ENTE only submits the high-level group 1-4, which is a result that is available fast. Then, a more precise analysis is done, with the sequencing & result visualized manually and sent over another channel to the BAG (& to the customer).
 - Vibrio: If toxin positive, then submit `Vibrio cholerae toxin Ag [Presence] in Isolate`, and after identification send "correction" ELM report. After identification, use `Vibrio sp identified in Specimen by Organism specific culture`. This requires an organism from `chol_org`, and this list is expected to be complete.
