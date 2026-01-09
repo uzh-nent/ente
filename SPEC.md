@@ -53,13 +53,13 @@ ELM:
 - report corrections are to be sent over E-Mail to infreport@hin.ch
 
 ELM leading code per pathogen:
-- Salmonella: `Salmonella sp serovar [Type] in Isolate`. This requires an organism from [`sal_org_complete`](https://fhir.ch/ig/ch-elm/ValueSet-ch-elm-results-sal-org-complete.html). For Salmonella that are not yet in `sal_org_complete`: If SNOMED exists, submit as SNOMED. Else, choose leading code `Salmonella sp antigenic formula [Identifier] in Isolate by Agglutination (TEXT)` and submit as text.
-- Shigella: `Shigella sp [Presence] in Specimen by Organism specific culture`. This requires an organism from `shi_org`. For Shigella that are not yet in `shi_org`: Submit more coarse-grained variant that is inside that set (contrary to Salmonella).
-- Listeria: `Listeria sp identified in Specimen by Organism specific culture`. This requires an organism from `lis_org`. ENTE only submits the high-level group 1-4, which is a result that is available fast. Then, a more precise analysis is done, with the sequencing & result visualized manually and sent over another channel to the BAG (& to the customer).
-- Vibrio: If toxin positive, then submit `Vibrio cholerae toxin Ag [Presence] in Isolate`, and after identification send "correction" ELM report. After identification, use `Vibrio sp identified in Specimen by Organism specific culture`. This requires an organism from `chol_org`, and this list is expected to be complete.
+- Salmonella: `Salmonella sp serovar [Type] in Isolate`. This requires an organism from [`sal_org_complete`](https://fhir.ch/ig/ch-elm/ValueSet-ch-elm-results-sal-org-complete.html). Else, choose leading code `Salmonella sp antigenic formula [Identifier] in Isolate by Agglutination (TEXT)` and submit as text.
+- Shigella: `Shigella sp [Presence] in Specimen by Organism specific culture`. This requires an organism from `shi_org`. For Shigella that are not yet in `shi_org`: Submit more coarse-grained variant that is inside that set.
+- Listeria: `Listeria sp identified in Specimen by Organism specific culture`. This requires an organism from `lis_org`. ENTE only submits the high-level group 1-4.
+- Vibrio: `Vibrio sp identified in Specimen by Organism specific culture`. This requires an organism from `chol_org`, and this list is expected to be complete. To be defined whether toxin positive needs to be reported, too.
 - STEC: `Escherichia coli Stx1 toxin stx1 gene [Presence] in Stool by NAA with probe detection` or `Escherichia coli Stx2 toxin stx2 gene [Presence] in Stool by NAA with probe detection`. Note that STEC may have both genes positive, in that case leading code `Escherichia coli shiga-like toxin DNA` is submitted.
 - Pandemic case: Use FOPH leading codes `https://fhir.ch/ig/ch-elm/CodeSystem-ch-elm-foph-code-reserve.html`
-- note that leading codes are not 100% accurate at the moment, but are subject to improvement
+- note that leading codes are not 100% accurate at the moment, and organism sets are not complete, but both are subject to improvement.
 
 
 ## Datenverwaltung
