@@ -68,32 +68,14 @@
 
       <div class="mt-5">
         <h3>{{ $t('observation._name') }}</h3>
-        <add-identification-observation-button
-            v-if="missingIdentificationObservation"
-            class="mt-2" ref="addIdentificationObservationButton"
+        <add-observations-button
+            v-if="missingObservations.length > 0" class="mt-2" ref="addObservationsButton"
+            :probe="probe" :organisms="organisms" :missing-analysis-types="missingObservations"
             @added="observations.push($event)"
-            :probe="probe" :organisms="organisms"/>
-        <div v-if="identificationObservation" class="w-50 mt-2">
-          <actionable-view>
-            <identification-view
-                :organisms="organisms" :observation="identificationObservation"/>
-            <template v-slot:actions v-if="!probe.finishedAt">
-              <edit-identification-observation-button :probe="probe" :organisms="organisms"
-                                                      :observation="identificationObservation"/>
-            </template>
-            <template v-slot:footer>
-              <attribution-view :users="users" :entity="identificationObservation"/>
-            </template>
-          </actionable-view>
-        </div>
-        <add-test-observations-button
-            v-if="missingTestObservations.length > 0"
-            class="mt-2" ref="addTestObservationsButton"
-            @added="observations.push($event)"
-            :probe="probe" :missing-analysis-types="missingTestObservations"/>
-        <test-observation-table
-            v-if="testObservations.length > 0" class="mt-2"
-            :users="users" :observations="observations"/>
+        />
+        <observation-table
+            v-if="observations.length > 0" class="mt-2"
+            :users="users" :observations="observations" :probe="probe" :organisms="organisms" />
 
         <div class="mt-5" v-if="probe.patient && observations.length > 0 && (!probe.finishedAt || elmReports.length > 0)">
           <h3>{{ $t('elm_report._name') }}</h3>
@@ -121,7 +103,7 @@
           <report-table class="mt-2" :users="users" :probe="probe" :reports="reports" />
         </div>
 
-        <div class="mt-5" v-if="!missingIdentificationObservation && missingTestObservations.length === 0">
+        <div class="mt-5" v-if="missingObservations.length === 0">
           <toggle-finished-button :probe="probe" :has-reports="reports.length > 0"/>
         </div>
       </div>
@@ -144,9 +126,6 @@ import EditProbeSpecimenMetaButton from "./components/Action/EditProbeSpecimenMe
 import ServiceTimeForm from "./components/Form/Probe/ServiceTimeForm.vue";
 import ServiceTimeView from "./components/View/Probe/ServiceTimeView.vue";
 import EditProbeServiceTimeButton from "./components/Action/EditProbeServiceTimeButton.vue";
-import AddIdentificationObservationButton from "./components/Action/AddIdentificationObservationButton.vue";
-import IdentificationView from "./components/View/Observation/IdentificationView.vue";
-import EditIdentificationObservationButton from "./components/Action/EditIdentificationObservationButton.vue";
 import OrdererOrgView from "./components/View/Probe/OrdererOrgView.vue";
 import EditProbeOrdererOrgButton from "./components/Action/EditProbeOrdererOrgButton.vue";
 import OrdererPracView from "./components/View/Probe/OrdererPracView.vue";
@@ -155,20 +134,22 @@ import AddElmReportButton from "./components/Action/AddElmReportButton.vue";
 import AttributionView from "./components/View/AttributionView.vue";
 import ElmReportTable from "./components/View/ElmReportTable.vue";
 import ToggleFinishedButton from "./components/Action/ToggleFinishedButton.vue";
-import AddTestObservationsButton from "./components/Action/AddTestObservationsButton.vue";
-import TestObservationTable from "./components/View/TestObservationTable.vue";
 import DownloadProbeWorksheetButton from "./components/Action/DownloadProbeWorksheetButton.vue";
 import AddReportButton from "./components/Action/AddReportButton.vue";
 import ReportTable from "./components/View/ReportTable.vue";
+import AddObservationsButton from "./components/Action/AddObservationsButton.vue";
+import ObservationTableRow from "./components/View/ObservationTableRow.vue";
+import ObservationTable from "./components/View/ObservationTable.vue";
 
 export default {
   emits: ['added'],
   components: {
+    ObservationTable,
+    ObservationTableRow,
+    AddObservationsButton,
     ReportTable,
     AddReportButton,
     DownloadProbeWorksheetButton,
-    TestObservationTable,
-    AddTestObservationsButton,
     ToggleFinishedButton,
     ElmReportTable,
     AttributionView,
@@ -177,9 +158,6 @@ export default {
     OrdererPracView,
     EditProbeOrdererOrgButton,
     OrdererOrgView,
-    EditIdentificationObservationButton,
-    IdentificationView,
-    AddIdentificationObservationButton,
     EditProbeServiceTimeButton,
     ServiceTimeView,
     ServiceTimeForm,
@@ -208,19 +186,8 @@ export default {
     }
   },
   computed: {
-    missingIdentificationObservation: function () {
-      return this.probe.analysisTypes.some(at => at === 'IDENTIFICATION') &&
-          !this.observations.some(o => o.analysisType === 'IDENTIFICATION')
-    },
-    identificationObservation: function () {
-      return this.observations.find(o => o.analysisType === 'IDENTIFICATION')
-    },
-    missingTestObservations: function () {
-      return this.probe.analysisTypes.filter(at => at !== 'IDENTIFICATION' &&
-          !this.observations.some(o => o.analysisType === at))
-    },
-    testObservations: function () {
-      return this.observations.filter(o => o.analysisType !== 'IDENTIFICATION')
+    missingObservations: function () {
+      return this.probe.analysisTypes.filter(at => !this.observations.some(o => o.analysisType === at))
     },
   },
   mounted() {
@@ -245,13 +212,9 @@ export default {
     this.elmReports = elmReports
     this.reports = reports
 
-    if (this.missingIdentificationObservation) {
+    if (this.missingObservations.length > 0) {
       this.$nextTick(() => {
-        this.$refs.addIdentificationObservationButton.$el?.focus()
-      })
-    } else if (this.missingTestObservations.length > 0) {
-      this.$nextTick(() => {
-        this.$refs.addTestObservationsButton.$el?.focus()
+        this.$refs.addObservationsButton.$el?.focus()
       })
     }
   }

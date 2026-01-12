@@ -1,17 +1,4 @@
 <template>
-
-  <div class="row">
-    <div class="col-md-6">
-      <form-field for-id="effectiveAt" :label="$t('observation.effective_at')" :field="fields.effectiveAt">
-        <date-time-input
-            id="effectiveAt" format="datetime" :field="fields.effectiveAt" v-model="entity.effectiveAt"
-            @blur="blurField('effectiveAt')" @update:modelValue="validateField('effectiveAt')"/>
-      </form-field>
-    </div>
-  </div>
-
-  <hr/>
-
   <div class="row">
     <div class="col-md-12">
       <checkbox id="identificationSuccessful" :label="$t('observation.identification_successful')"

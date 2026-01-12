@@ -75,20 +75,12 @@
       "edited": "Tierhalter:in gespeichert.",
       "title": "Tierhalter:in bearbeiten"
     },
-    "add_identification_observation": {
-      "added": "Resultat gespeichert.",
-      "title": "Resultat erfassen"
-    },
-    "edit_identification_observation": {
-      "edited": "Resultat gespeichert.",
-      "title": "Resultat bearbeiten"
-    },
-    "add_test_observations": {
+    "add_observations": {
       "added": "Resultat gespeichert.",
       "title": "Resultat erfassen",
       "no_missing_observations": "Keine fehlenden Testergebnisse vorhanden."
     },
-    "edit_test_observation": {
+    "edit_observation": {
       "edited": "Resultat gespeichert.",
       "title": "Resultat ändern"
     },
@@ -296,6 +288,7 @@
     "effective_at": "Resultat vom",
     "interpretation": "Resultat",
     "identification_successful": "Identifizierung erfolgreich",
+    "identification_failed": "Identifizierung fehlgeschlagen",
     "interpretation_text": "Kommentar",
     "cgMLST": "cgMLST",
     "_interpretation": {
@@ -358,7 +351,8 @@
       "EC_EPEC": "Enteropathogene E. coli (EPEC)",
       "EC_ETEC": "Enterotoxische E. coli (ETEC)",
       "EC_EIEC": "Enteroinvasive E. coli (EIEC) / Shigella",
-      "EC_EAEC": "Enteroaggregative E. coli (EAEC)"
+      "EC_EAEC": "Enteroaggregative E. coli (EAEC)",
+      "VB_TOXIN": "Cholera-Toxin (CTX)"
     },
     "_interpretation": {
       "POS": "Nachweis von",
