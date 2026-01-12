@@ -82,8 +82,6 @@ Probedaten:
 
 release v1.0 (fully represent business cases):
 - Textbausteine, attributable to pathogen
-- vibrio: add POS/NEG for Cholera-Toxin
-- e. coli reference: allow to select STEC, EPEC, ETEC and EIEC (no EAgg); report positive/negative for each 
 
 features v1.1:
 - elm report: ensure only LOINC, SNOMED, FOPH systems selectable.
