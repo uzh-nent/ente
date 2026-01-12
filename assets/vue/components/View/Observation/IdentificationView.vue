@@ -15,7 +15,7 @@
       </template>
     </labeled-value>
 
-    <labeled-value :label="$t(`observation.cgMLST`)" v-if="observation.interpretation ==='POS'">
+    <labeled-value :label="$t(`observation.cgMLST`)" v-if="observation.cgMLST">
       {{ observation.cgMLST }}
     </labeled-value>
 
