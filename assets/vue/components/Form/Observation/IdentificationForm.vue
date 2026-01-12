@@ -65,7 +65,6 @@ export default {
   data() {
     return {
       fields: {
-        effectiveAt: createField(requiredRule),
         identificationSuccessful: createField(),
 
         organism: createField(),
@@ -73,7 +72,6 @@ export default {
         interpretationText: createField(),
       },
       entity: {
-        effectiveAt: null,
         identificationSuccessful: null,
 
         organism: null,

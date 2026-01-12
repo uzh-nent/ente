@@ -10,13 +10,13 @@
       <test-shared-form :template="sharedTemplate" @update="sharedPost = $event"/>
 
       <template v-if="missingAnalysisTypes.length === 1">
-        <div class="mt-3">
-          <identification-form
-              v-if="missingAnalysisTypes[0] === 'IDENTIFICATION'" :pathogen="probe.pathogen" :organisms="organisms"
-              :template="identificationTemplate" @update="updateIdentificationObservation($event)"/>
-          <test-form
-              v-else :id="missingAnalysisTypes[0]" @update="updateObservation(missingAnalysisTypes[0], $event)"/>
-        </div>
+        <h3 class="mt-3">{{ $t('probe._analysis_type.' + missingAnalysisTypes[0]) }}</h3>
+        <identification-form
+            v-if="missingAnalysisTypes[0] === 'IDENTIFICATION'" :pathogen="probe.pathogen" :organisms="organisms"
+            :template="identificationTemplate" @update="updateIdentificationObservation($event)"/>
+        <test-form
+            v-else :id="missingAnalysisTypes[0]" :template="testTemplate"
+            @update="updateTestObservation(missingAnalysisTypes[0], $event)"/>
       </template>
       <template v-else>
         <div v-for="analysisType in missingAnalysisTypes" :key="analysisType" class="mt-3 p-2 bg-light">
@@ -30,7 +30,8 @@
                 v-if="analysisType === 'IDENTIFICATION'" :pathogen="probe.pathogen" :organisms="organisms"
                 :template="identificationTemplate" @update="updateIdentificationObservation($event)"/>
             <test-form
-                v-else :id="analysisType" @update="updateObservation(analysisType, $event)"/>
+                v-else :id="analysisType" :template="testTemplate"
+                @update="updateTestObservation(analysisType, $event)"/>
           </div>
         </div>
       </template>
@@ -96,6 +97,11 @@ export default {
       return {
         identificationSuccessful: true
       }
+    },
+    testTemplate: function () {
+      return {
+        interpretation: 'NEG'
+      }
     }
   },
   methods: {
@@ -108,7 +114,7 @@ export default {
       this.observations = value ? otherObservations.concat(newObservation) : otherObservations
     },
     updateIdentificationObservation: function (identificationObservation) {
-      const observation = {...identificationObservation}
+      const observation = {...this.identificationTemplate, ...identificationObservation}
 
       observation.interpretation = observation.identificationSuccessful ? 'POS' : 'NEG'
       delete observation.identificationSuccessful
@@ -118,6 +124,10 @@ export default {
       }
 
       this.updateObservation('IDENTIFICATION', observation)
+    },
+    updateTestObservation: function (analysisType, testObservation) {
+      const observation = {...this.testTemplate, ...testObservation}
+      this.updateObservation(analysisType, observation)
     },
     updateObservation: function (analysisType, observation) {
       const otherObservations = this.observations.filter(o => o.analysisType !== analysisType)
