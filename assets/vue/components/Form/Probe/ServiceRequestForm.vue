@@ -1,7 +1,9 @@
 <template>
   <div>
-    <form-field for-id="laboratoryFunction" :label="$t('probe.laboratory_function')" :field="fields.requisitionIdentifier">
-      <radio id="laboratoryFunction" :choices="laboratoryFunctions" :field="fields.laboratoryFunction" :disabled="editMode"
+    <form-field for-id="laboratoryFunction" :label="$t('probe.laboratory_function')"
+                :field="fields.requisitionIdentifier">
+      <radio id="laboratoryFunction" :choices="laboratoryFunctions" :field="fields.laboratoryFunction"
+             :disabled="editMode"
              v-model="entity.laboratoryFunction" @update:model-value="validateField('laboratoryFunction')"/>
     </form-field>
     <template v-if="entity.laboratoryFunction === 'PRIMARY'">
@@ -13,9 +15,25 @@
     <template v-if="entity.laboratoryFunction === 'REFERENCE'">
       <form-field for-id="pathogen" :label="$t('service.identification_typing')" :field="fields.pathogen"
                   :fake-required="true">
-        <radio id="pathogen" :choices="referencePathogens"
-               :field="fields.pathogen"
-               v-model="entity.pathogen" @update:model-value="validateField('pathogen')"/>
+
+        <div v-for="choice in referencePathogens" :key="choice.value">
+          <div class="form-check">
+            <input class="form-check-input" type="radio"
+                   name="pathogen" :id="'pathogen_' + choice.value" :value="choice.value"
+                   :checked="choice.value === entity.pathogen"
+                   @change="$event.target.checked ? entity.pathogen = choice.value : null">
+            <label class="form-check-label clickable" :for="'pathogen_' + choice.value">{{ choice.label }}</label>
+          </div>
+          <template v-if="choice.value === 'VIBRIO_CHOLERAE' && choice.value === entity.pathogen">
+            <checkboxes id="analysisTypes" class="mb-2" :choices="referenceVibrioCholeraeAnalysisTypes" :field="fields.analysisTypes"
+                        :disabled="value => value === 'IDENTIFICATION'"
+                        v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
+          </template>
+          <template v-if="choice.value === 'ESCHERICHIA_COLI' && choice.value === entity.pathogen">
+            <checkboxes id="analysisTypes" class="mb-2" :choices="referenceEscherichiaColiAnalysisTypes" :field="fields.analysisTypes"
+                        v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
+          </template>
+        </div>
       </form-field>
       <template v-if="entity.pathogen === null">
         <text-input id="pathogenName" type="text" class="shift-input-up" :field="fields.pathogenName"
@@ -49,6 +67,16 @@ const createReferencePathogens = function (translator) {
 
 const createPrimaryAnalysisTypes = function (translator) {
   const values = ['EC_STEC', 'EC_EPEC', 'EC_ETEC', 'EC_EIEC', 'EC_EAEC']
+  return values.map(value => ({label: translator(`probe._analysis_type.${value}`), value}))
+}
+
+const createReferenceVibrioCholeraeAnalysisTypes = function (translator) {
+  const values = ['IDENTIFICATION', 'VB_TOXIN']
+  return values.map(value => ({label: translator(`probe._analysis_type.${value}`), value}))
+}
+
+const createReferenceEscherichiaColiAnalysisTypes = function (translator) {
+  const values = ['EC_STEC', 'EC_EPEC', 'EC_ETEC', 'EC_EIEC']
   return values.map(value => ({label: translator(`probe._analysis_type.${value}`), value}))
 }
 export default {
@@ -97,6 +125,12 @@ export default {
     primaryAnalysisTypes: function () {
       return createPrimaryAnalysisTypes(this.$t)
     },
+    referenceVibrioCholeraeAnalysisTypes: function () {
+      return createReferenceVibrioCholeraeAnalysisTypes(this.$t)
+    },
+    referenceEscherichiaColiAnalysisTypes: function () {
+      return createReferenceEscherichiaColiAnalysisTypes(this.$t)
+    },
   },
   watch: {
     'entity.laboratoryFunction': {
@@ -111,6 +145,19 @@ export default {
           this.entity.pathogen = 'ESCHERICHIA_COLI'
           this.entity.pathogenName = null
           this.entity.analysisTypes = []
+        }
+      },
+    },
+    'entity.pathogen': {
+      handler: function (pathogen) {
+        if (this.entity.laboratoryFunction === 'REFERENCE') {
+          if (pathogen === 'VIBRIO_CHOLERAE') {
+            this.entity.analysisTypes = ['IDENTIFICATION', 'VB_TOXIN']
+          } else if (pathogen === 'ESCHERICHIA_COLI') {
+            this.entity.analysisTypes = ["EC_STEC", "EC_EPEC", "EC_ETEC", "EC_EIEC"]
+          } else {
+            this.entity.analysisTypes = ["IDENTIFICATION"]
+          }
         }
       },
     }

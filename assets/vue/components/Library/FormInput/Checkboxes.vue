@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="form-check" :class="{'form-check-inline': inline}" v-for="choice in choices" :key="choice.value">
-      <input class="form-check-input" type="checkbox" :disabled="disabled"
+      <input class="form-check-input" type="checkbox" :disabled="checkDisabled(choice.value)"
              :name="id" :id="id + '_' + choice.value" :value="choice.value"
              :checked="modelValue.includes(choice.value)"
              @change="toggle(choice.value, $event.target.checked)">
@@ -40,11 +40,23 @@ export default {
       default: false
     },
     disabled: {
-      type: Boolean,
+      type: [Boolean, Function],
       default: false
-    }
+    },
   },
   methods: {
+    checkDisabled: function (value) {
+      if (!this.disabled) {
+        return false
+      }
+
+      if (typeof this.disabled === 'function') {
+        return this.disabled(value)
+      }
+
+      return this.disabled
+
+    },
     toggle: function (value, checked) {
       const nextValue = this.modelValue.filter(v => v !== value)
       if (checked) {

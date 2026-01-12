@@ -238,7 +238,8 @@
       "EC_EPEC": "Enteropathogene (EPEC)",
       "EC_ETEC": "Enterotoxische (ETEC)",
       "EC_EIEC": "Enteroinvasive (EIEC) / Shigella",
-      "EC_EAEC": "Enteroaggregative (EAEC)"
+      "EC_EAEC": "Enteroaggregative (EAEC)",
+      "VB_TOXIN": "Cholera-Toxin (CTX)"
     },
     "_analysis_type_short": {
       "IDENTIFICATION": "Ident.",
@@ -246,7 +247,8 @@
       "EC_EPEC": "EPEC",
       "EC_ETEC": "ETEC",
       "EC_EIEC": "EIEC/Shig.",
-      "EC_EAEC": "EAEC"
+      "EC_EAEC": "EAEC",
+      "VB_TOXIN": "CTX"
     },
     "_specimen_source": {
       "HUMAN": "Mensch",
