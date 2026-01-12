@@ -4,7 +4,7 @@
     <td>
       <template v-if="observation.analysisType === 'IDENTIFICATION'">
         {{ organism }}
-        <span v-if="observation.interpretation !== 'POS'" class="badge bg-danger">
+        <span v-if="observation.interpretation === 'NEG'" class="badge bg-danger">
           {{ $t(`observation.identification_failed`) }}
         </span>
         <span class="d-block" v-if="observation.cgMLST">

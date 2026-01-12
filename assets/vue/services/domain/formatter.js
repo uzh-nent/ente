@@ -173,7 +173,7 @@ export const formatOrganism = function (organism) {
     return '-'
   }
 
-  let displayName = organism.displayName
+  let displayName = organism.displayName.trim()
   if (displayName.endsWith(" (organism)")) {
     displayName = displayName.substring(0, displayName.length - 11)
   }
