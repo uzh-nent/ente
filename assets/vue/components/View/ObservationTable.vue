@@ -2,7 +2,7 @@
   <table class="table table-striped table-hover border">
     <thead>
     <tr>
-      <th>{{ $t('service.ecoli_identification') }}</th>
+      <th>{{ $t('probe.service_request') }}</th>
       <th>{{ $t('observation._name') }}</th>
       <th>{{ $t('observation.effective_at') }}</th>
       <th></th>
@@ -10,9 +10,9 @@
     </tr>
     </thead>
     <tbody>
-    <test-observation-table-row
+    <observation-table-row
         v-for="observation in observations" :key="observation['@id']"
-        :observation="observation" :users="users" />
+        :observation="observation" :users="users" :probe="probe" :organisms="organisms" />
     </tbody>
   </table>
 </template>
@@ -20,10 +20,10 @@
 <script>
 
 import {formatDate, formatDateTime} from "../../services/domain/formatter";
-import TestObservationTableRow from "./TestObservationTableRow.vue";
+import ObservationTableRow from "./ObservationTableRow.vue";
 
 export default {
-  components: {TestObservationTableRow},
+  components: {ObservationTableRow},
   methods: {formatDateTime, formatDate},
   props: {
     observations: {
@@ -31,6 +31,14 @@ export default {
       required: true
     },
     users: {
+      type: Array,
+      required: true
+    },
+    probe: {
+      type: Object,
+      required: true
+    },
+    organisms: {
       type: Array,
       required: true
     },
