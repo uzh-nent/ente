@@ -80,10 +80,7 @@ Probedaten:
 
 ## Future features
 
-release v1.0 (fully represent business cases):
-- Textbausteine, attributable to pathogen
-
-features v1.1:
+features v1.2:
 - elm report: ensure only LOINC, SNOMED, FOPH systems selectable.
 - show number of next probe when creating probe
 - allow proben to select mediziner:in, verify mediziner:in is shown. check that appears as expected on PDF/ELM report
@@ -110,7 +107,7 @@ features v1.1:
 - Find probes from stammdaten
 - Improve AllProbes view: filter by service, entity; add compact view of observation
 
-features v1.2:
+features v1.3:
 - wait feedback users
 - Rechnungen
 - Statistik (bis 2025)
