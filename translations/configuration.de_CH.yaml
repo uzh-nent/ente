@@ -1,3 +1,6 @@
+index:
+  title: 'Konfiguration'
+
 users:
   title: "Benutzer:innen"
   description: "Alle Benutzer:innen"
@@ -14,5 +17,18 @@ user_edit:
   success:
     stored: 'Benutzer:in erfolgreich gespeichert.'
 
-index:
-  title: 'Konfiguration'
+standard_texts:
+  title: "Textbausteine"
+  description: "Alle Textbausteine"
+
+standard_text_new:
+  title: "Neuer Textbaustein"
+  description: "Neuer Textbaustein"
+  success:
+    created: "Textbaustein erfolgreich hinzugefügt."
+
+standard_text_edit:
+  title: "Textbaustein bearbeiten"
+  description: "Textbaustein bearbeiten"
+  success:
+    stored: 'Textbaustein erfolgreich gespeichert.'
