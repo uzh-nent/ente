@@ -28,16 +28,15 @@ scripts:
     script:
       - composer install --verbose --prefer-dist --no-interaction --no-dev --optimize-autoloader --no-scripts
       - npm install
-      - npm run encore production
+      - npm run build
       - rm -rf node_modules
 
   deploy:
     hook: deploy
     script:
-      - php bin/console cache:clear -n
+      - php bin/console cache:warmup -n
       - php bin/console doctrine:migrations:migrate -n
-      - chmod -R 0775 var
-      - chown -R www-data var
+      - sudo chown -R www-data:www-data .
 
   rollback:
     hook: rollback
