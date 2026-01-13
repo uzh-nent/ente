@@ -95,9 +95,9 @@
           <h3>{{ $t('report._name') }}</h3>
           <add-report-button
               v-if="!probe.finishedAt"
-              :probe="probe" :observations="observations"
+              :probe="probe" :observations="observations" :reports="reports"
               :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
-              :reports="reports"
+              :standard-texts="standardTexts"
               @added="reports.push($event)"
           />
           <report-table class="mt-2" :users="users" :probe="probe" :reports="reports" />
@@ -175,14 +175,16 @@ export default {
     return {
       probe: undefined,
 
-      users: undefined,
+      observations: undefined,
+      elmReports: undefined,
+      reports: undefined,
+
       specimens: undefined,
       leadingCodes: undefined,
       organisms: undefined,
 
-      observations: undefined,
-      elmReports: undefined,
-      reports: undefined
+      users: undefined,
+      standardTexts: undefined,
     }
   },
   computed: {
@@ -193,24 +195,27 @@ export default {
   mounted() {
     const {
       probe,
-      users,
+      observations,
+      elmReports,
+      reports,
       specimens,
       leadingCodes,
       organisms,
-      observations,
-      elmReports,
-      reports
+      users,
+      standardTexts,
     } = preloadApi.getViewActiveProbe()
     this.probe = probe
-
-    this.users = users
-    this.specimens = specimens
-    this.leadingCodes = leadingCodes
-    this.organisms = organisms
 
     this.observations = observations
     this.elmReports = elmReports
     this.reports = reports
+
+    this.specimens = specimens
+    this.leadingCodes = leadingCodes
+    this.organisms = organisms
+
+    this.users = users
+    this.standardTexts = standardTexts
 
     if (this.missingObservations.length > 0) {
       this.$nextTick(() => {

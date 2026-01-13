@@ -34,7 +34,9 @@
             :id="'toggle-' + i" :label="resultTemplate.analysis"
             :model-value="shownResults.includes(i)" @update:modelValue="toggleShownResults(i, $event)"
         />
-        <report-result-form class="mt-2" v-if="shownResults.includes(i)" :template="resultTemplate"
+        <report-result-form class="mt-2" v-if="shownResults.includes(i)"
+                            :standard-texts="standardTexts" :probe="probe"
+                            :template="resultTemplate"
                             @update="results[i] = $event"/>
       </div>
     </div>
@@ -88,6 +90,10 @@ export default {
       required: true
     },
     organisms: {
+      type: Array,
+      required: true
+    },
+    standardTexts: {
       type: Array,
       required: true
     },

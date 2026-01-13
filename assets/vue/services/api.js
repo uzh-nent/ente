@@ -154,14 +154,16 @@ const preloadApi = {
     return {
       probe: window.probe,
 
-      users: window.users.member,
+      observations: window.observations.member,
+      elmReports: window.elmReports.member,
+      reports: window.reports.member,
+
       specimens: window.specimens.member,
       leadingCodes: window.leadingCodes.member,
       organisms: window.organisms.member,
 
-      observations: window.observations.member,
-      elmReports: window.elmReports.member,
-      reports: window.reports.member,
+      users: window.users.member,
+      standardTexts: window.standardTexts.member,
     }
   },
 }
