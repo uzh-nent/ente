@@ -474,7 +474,7 @@ class PdfService implements PdfServiceInterface
         // source
         $label = $this->translator->trans("Specimen source", [], "trait_probe_specimen_meta");
         if (!$probe->getSpecimenSource()) {
-            $value = $probe->getSpecimenSourceText();
+            $value = $probe->getSpecimenSourceText() ?? "";
         } else {
             $value = $probe->getSpecimenSource()->trans($this->translator) . " ";
 
@@ -661,7 +661,7 @@ class PdfService implements PdfServiceInterface
         return $recipientFlow;
     }
 
-    private function createLabeledValueElement(string $label, string $value, bool $primary = false, bool $boldValue = false): AbstractElement
+    private function createLabeledValueElement(string $label, string $value = "", bool $primary = false, bool $boldValue = false): AbstractElement
     {
         $labelFlow = new Flow();
 
