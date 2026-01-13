@@ -10,7 +10,10 @@
 
     <labeled-value v-if="probe.laboratoryFunction === 'REFERENCE'" :label="$t('service.identification_typing')">
       <template v-if="probe.pathogen">
-        {{ $t(`probe._pathogen.${probe.pathogen}`) }}
+        {{ probe.analysisTypes
+              .map(t => t === 'IDENTIFICATION' ? $t(`probe._pathogen.${probe.pathogen}`) : $t(`probe._analysis_type_short.${t}`))
+              .join(', ')
+        }}
       </template>
       <template v-else>
         {{ probe.pathogenName }}

@@ -4,7 +4,7 @@
       <h3>{{ $t('probe.service_request') }}</h3>
       <actionable-view>
         <service-request-view :probe="probe"/>
-        <template v-slot:actions v-if="observations.length === 0 && !probe.finishedAt">
+        <template v-slot:actions v-if="!probe.finishedAt">
           <edit-probe-service-request-button :probe="probe"/>
         </template>
       </actionable-view>
