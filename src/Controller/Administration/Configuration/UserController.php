@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Administration;
+namespace App\Controller\Administration\Configuration;
 
 use App\Entity\User;
 use App\Form\UserType;
@@ -15,7 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route('/admin/users')]
+#[Route('/admin/configuration')]
 class UserController extends AbstractController
 {
     #[Route('/users', name: 'configuration_users')]

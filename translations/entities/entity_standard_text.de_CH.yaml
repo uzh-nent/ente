@@ -1,0 +1,8 @@
+entity:
+    title: 'Textbaustein'
+
+Pathogen: "Pathogen"
+Text: "Text"
+
+help:
+    pathogen: "Nur bei bestimmten Pathogen anzeigen?"
