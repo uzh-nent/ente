@@ -86,9 +86,9 @@ features v1.2:
 - allow proben to select mediziner:in, verify mediziner:in is shown. check that appears as expected on PDF/ELM report
 - add help to patient address if countryCode != CH: should enter current address in CH
 - hide unused leading codes (or in general, stammdaten)
-- reason for "identification not possible": "kein wachstum", "mischkultur", "andere"
+- reason for "identification not possible": "kein wachstum", "mischkultur", "andere". check if other default texts useful
 - nur mit medizinischer validierung dürfen berichte erstellt werden
-- improve "0 Ergebnisse", "1 Ergebnisse" display
+- improve "0 Ergebnisse", "1 Ergebnisse" display; show more than 10
 - refactor address / contact partial forms
 	-	add department, webpage to organization
 	-	add structured contact info (email, tel) to animal keeper / practitioner / organization / patient
@@ -116,6 +116,7 @@ features v1.3:
 features v?:
 - login using azureAD
 - improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc)
+- change pathogen service request; must store pathogen in observation, adapt all usages
 - add practitioner orderer in reference lab scenario
 - let customer create service request online
 - more structured result tracking (e.g. STEC E. coli Stx1, Stx2 separate tracking) / digitize additional data from laborblatt

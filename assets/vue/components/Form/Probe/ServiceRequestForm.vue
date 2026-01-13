@@ -20,7 +20,7 @@
           <div class="form-check">
             <input class="form-check-input" type="radio"
                    name="pathogen" :id="'pathogen_' + choice.value" :value="choice.value"
-                   :checked="choice.value === entity.pathogen"
+                   :checked="choice.value === entity.pathogen" :disabled="editMode"
                    @change="$event.target.checked ? entity.pathogen = choice.value : null">
             <label class="form-check-label clickable" :for="'pathogen_' + choice.value">{{ choice.label }}</label>
           </div>
