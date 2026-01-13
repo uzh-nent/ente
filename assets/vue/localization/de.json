@@ -43,6 +43,9 @@
     "add_address": {
       "title": "Adresse hinzufügen"
     },
+    "add_standard_text": {
+      "title": "Textbaustein hinzufügen"
+    },
     "add_organization": {
       "added": "Organisation hinzugefügt.",
       "title": "Organisation hinzufügen"
@@ -143,6 +146,7 @@
   "_view": {
     "filter_yields_no_entries": "Keine Einträge, die dem Filter entsprechen.",
     "search_by_name": "Suche nach Name",
+    "search_by_text": "Suche nach Text",
     "search_by_family_name": "Suche nach Nachname",
     "search_by_ahv_numer": "Suche nach AHV-Nummer",
     "filter_by_birth_date": "Geburtsdatum",
@@ -324,6 +328,9 @@
   },
   "leading_code": {
     "_name": "Leading Code"
+  },
+  "standard_text": {
+    "_name": "Textbaustein"
   },
   "address": {
     "_name": "Adresse",

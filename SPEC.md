@@ -118,7 +118,7 @@ features v1.2:
 
 features v?:
 - login using azureAD
-- improve stammdaten: add attribution, apply changes to all active probes
+- improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc)
 - add practitioner orderer in reference lab scenario
 - let customer create service request online
 - more structured result tracking (e.g. STEC E. coli Stx1, Stx2 separate tracking) / digitize additional data from laborblatt
