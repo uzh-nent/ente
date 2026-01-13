@@ -4,7 +4,7 @@
     :class="{'is-valid': field?.valid, 'is-invalid': field?.invalid }"
     v-model="internalModelValue"
     @blur="$emit('blur')">
-    <option :value="null" v-if="!required && !multiple">&mdash;</option>
+    <option :value="null" v-if="showNull">&mdash;</option>
     <option v-for="choice in choices" :key="choice.value" :value="choice.value">
       {{ choice.label }}
     </option>
@@ -67,6 +67,9 @@ export default {
   computed: {
     required: function () {
       return this.field?.rules.includes(requiredRule)
+    },
+    showNull: function () {
+      return !this.required && !this.multiple && !this.choices.some(c => c.value === null)
     }
   }
 }
