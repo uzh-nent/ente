@@ -8,7 +8,7 @@
     <!-- select specimen source -->
     <div class="row">
       <div class="col-md-12">
-        <form-field for-id="specimenSource" :label="$t('probe.specimen_source')" :field="fields.specimenSource">
+        <form-field for-id="specimenSource" :label="$t('probe.specimen_source')" :field="fields.specimenSource" :fake-required="true">
           <custom-select id="specimenSource" :choices="specimenSources" :field="fields.specimenSource" :disabled="editMode"
                          v-model="entity.specimenSource" @update:model-value="validateField('specimenSource')"/>
           <text-input v-if="!entity.specimenSource" class="mt-1"
@@ -151,7 +151,7 @@ export default {
     return {
       fields: {
         specimenCollectionDate: createField(),
-        specimenSource: createField(requiredRule),
+        specimenSource: createField(),
         specimenSourceText: createField(),
         specimenText: createField(),
 
@@ -211,9 +211,6 @@ export default {
       handler: function (specimenSource) {
         if (specimenSource) {
           this.entity.specimenSourceText = null
-          this.fields.specimenSourceText.rules = []
-        } else {
-          this.fields.specimenSourceText.rules = [requiredRule]
         }
 
         if (specimenSource !== 'LABORATORY_STRAIN' && specimenSource !== 'FEED' && specimenSource !== 'ENVIRONMENT') {
