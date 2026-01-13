@@ -27,8 +27,8 @@ scripts:
     hook: build
     script:
       - composer install --verbose --prefer-dist --no-interaction --no-dev --optimize-autoloader --no-scripts
-      - yarn install
-      - yarn run encore production
+      - npm install
+      - npm run encore production
       - rm -rf node_modules
 
   deploy:
@@ -36,7 +36,8 @@ scripts:
     script:
       - php bin/console cache:clear -n
       - php bin/console doctrine:migrations:migrate -n
-      - chmod -R 777 var
+      - chmod -R 0775 var
+      - chown -R www-data var
 
   rollback:
     hook: rollback
