@@ -98,7 +98,7 @@
               :probe="probe" :observations="observations" :reports="reports"
               :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
               :standard-texts="standardTexts"
-              @added="reports.push($event)"
+              @added="addedReport($event)"
           />
           <report-table class="mt-2" :users="users" :probe="probe" :reports="reports" />
         </div>
@@ -220,6 +220,14 @@ export default {
     if (this.missingObservations.length > 0) {
       this.$nextTick(() => {
         this.$refs.addObservationsButton.$el?.focus()
+      })
+    }
+  },
+  methods: {
+    addedReport: function (report) {
+      this.reports.push(report)
+      this.$nextTick(() =>  {
+        document.getElementById('download-report-' + report['@id'])?.click()
       })
     }
   }

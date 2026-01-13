@@ -10,7 +10,7 @@
       <attribution-view :users="users" :entity="report"/>
     </td>
     <td class="w-minimal">
-      <a class="btn btn-secondary" :href="pdfLink" target="_blank">
+      <a class="btn btn-secondary" :href="pdfLink" target="_blank" :id="'download-report-' + this.report['@id']">
         <i class="fas fa-download"></i>
       </a>
     </td>
