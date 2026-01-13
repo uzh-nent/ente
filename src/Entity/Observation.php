@@ -65,7 +65,7 @@ class Observation
     #[Groups(['observation:read', 'observation:write'])]
     private ?Interpretation $interpretation = null;
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['observation:read', 'observation:write'])]
     private ?string $interpretationText = null;
 
