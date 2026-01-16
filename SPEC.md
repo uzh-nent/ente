@@ -81,7 +81,10 @@ Probedaten:
 ## Future features
 
 features v1.2:
+- add e.coli EAEC to primärlabor
+- change pathogen service request; must store pathogen in observation, adapt all usages
 - elm report: ensure only LOINC, SNOMED, FOPH systems selectable.
+- login using EntraID/LDAP
 - show number of next probe when creating probe
 - allow proben to select mediziner:in, verify mediziner:in is shown. check that appears as expected on PDF/ELM report
 - add help to patient address if countryCode != CH: should enter current address in CH
@@ -114,9 +117,7 @@ features v1.3:
 - Statistik (ab 2025)
 
 features v?:
-- login using azureAD
 - improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc)
-- change pathogen service request; must store pathogen in observation, adapt all usages
 - add practitioner orderer in reference lab scenario
 - let customer create service request online
 - more structured result tracking (e.g. STEC E. coli Stx1, Stx2 separate tracking) / digitize additional data from laborblatt
