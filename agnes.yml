@@ -14,6 +14,9 @@ config:
   #  url: git@gitlab.uzh.ch:nent/ente-config
 
 data:
+  shared_folders:
+    - var/persistent
+
   files:
     - path: .env.local
       required: true
