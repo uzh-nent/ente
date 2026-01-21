@@ -47,7 +47,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[Patch]
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: [
-    'identifier' => SearchFilterInterface::STRATEGY_ISTART, 'requisitionIdentifier' => SearchFilterInterface::STRATEGY_ISTART,
+    'identifier' => SearchFilterInterface::STRATEGY_IPARTIAL, 'requisitionIdentifier' => SearchFilterInterface::STRATEGY_IPARTIAL,
     'pathogen' => SearchFilterInterface::STRATEGY_EXACT,
     'orderer' => SearchFilterInterface::STRATEGY_EXACT, 'patient' => SearchFilterInterface::STRATEGY_EXACT, 'animalKeeper' => SearchFilterInterface::STRATEGY_EXACT, 'practitioner' => SearchFilterInterface::STRATEGY_EXACT,
 ])]
