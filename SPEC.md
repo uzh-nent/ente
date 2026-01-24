@@ -109,6 +109,7 @@ features v1.2:
   - (also ensures the entity is always shown)
 - Find probes from stammdaten
 - Improve AllProbes view: filter by service, entity; add compact view of observation
+- open source it
 
 features v1.3:
 - wait feedback users
