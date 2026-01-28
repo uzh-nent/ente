@@ -1,1 +1,1 @@
-window.activeProbes = JSON.parse({{ subRequest('/api/probes?exists[finishedAt]=0&order[identifier]=asc')|json_encode|raw }})
+window.activeProbes = JSON.parse({{ subRequest('/api/probes?exists[finishedAt]=0&order[identifier]=asc&pagination=0')|json_encode|raw }})
