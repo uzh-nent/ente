@@ -59,6 +59,10 @@ export default {
       return this.activeProbes.filter(p => p.laboratoryFunction === 'PRIMARY')
     },
     referenceColumnCount: function () {
+      if (this.activeProbes.length === 0) {
+        return 1
+      }
+
       const ratio = (this.referenceProbes.length / this.activeProbes.length) * 4
       return Math.max(1, Math.min(3, Math.round(ratio)))
     },
