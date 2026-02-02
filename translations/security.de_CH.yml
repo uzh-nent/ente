@@ -9,7 +9,7 @@ login:
   error:
     login_failed: 'Login fehlgeschlagen.'
     bad_credentials: 'Das Passwort ist nicht korrekt.'
-  forgot_password_help: 'Passwort vergessen? Es kann durch andere Nutzende im Admin-Bereich zurückgesetzt werden.'
+  forgot_password_help: 'Passwort vergessen? Es kann im Admin-Bereich zurückgesetzt werden.'
   setup:
     add_initial_user: 'Initialer Nutzer erstellt'
 
