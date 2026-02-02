@@ -81,7 +81,6 @@ Probedaten:
 ## Future features
 
 features v1.2:
-- elm report: ensure only LOINC, SNOMED, FOPH systems selectable.
 - login using EntraID/LDAP
 - show number of next probe when creating probe
 - allow proben to select mediziner:in, verify mediziner:in is shown. check that appears as expected on PDF/ELM report
