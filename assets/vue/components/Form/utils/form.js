@@ -107,7 +107,19 @@ export const requiredRule = {
   errorMessage: '_validation.required'
 }
 
-export const ahvNumberRule = {
+export const ahvNumberLengthRule = {
+  isValid: function (value) {
+    if (!value) {
+      return true
+    }
+
+    const digits = value.split('').map(d => parseInt(d, 10));
+    return digits.length === 13
+  },
+  errorMessage: '_validation.invalid_ahv_length'
+}
+
+export const ahvNumberCheckRule = {
   isValid: function (value) {
     if (!value) {
       return true
@@ -115,7 +127,7 @@ export const ahvNumberRule = {
 
     const digits = value.split('').map(d => parseInt(d, 10));
     if (digits.length !== 13) {
-      return false;
+      return true;
     }
 
     const checksum = digits[12];
@@ -129,7 +141,7 @@ export const ahvNumberRule = {
 
     return (sum + checksum) % 10 === 0;
   },
-  errorMessage: '_validation.invalid_ahv'
+  errorMessage: '_validation.invalid_ahv_checksum'
 }
 
 const emailRegex = /^\S+@\S+\.\S+$/

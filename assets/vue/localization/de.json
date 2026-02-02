@@ -141,7 +141,8 @@
   "_validation": {
     "required": "Feld wird benötigt",
     "not_a_country_code": "Kein Längercode (eins bis dreistellig, Grossbuchstaben)",
-    "invalid_ahv": "Keine gültige AHV-Nummer (13 Ziffern, korrekte Prüfziffer)."
+    "invalid_ahv_length": "Keine gültige AHV-Nummer (nicht 13 Ziffern lang).",
+    "invalid_ahv_checksum": "Keine gültige AHV-Nummer (Prüfziffer inkorrekt)."
   },
   "_view": {
     "filter_yields_no_entries": "Keine Einträge, die dem Filter entsprechen.",
