@@ -80,15 +80,12 @@ Probedaten:
 
 ## Future features
 
+
 features v1.2:
 - login using EntraID/LDAP
-- show number of next probe when creating probe
 - allow proben to select mediziner:in, verify mediziner:in is shown. check that appears as expected on PDF/ELM report
-- add help to patient address if countryCode != CH: should enter current address in CH
 - hide unused leading codes (or in general, stammdaten)
 - reason for "identification not possible": "kein wachstum", "mischkultur", "andere". check if other default texts useful
-- nur mit medizinischer validierung dürfen berichte erstellt werden
-- improve "0 Ergebnisse", "1 Ergebnisse" display; show more than 10
 - refactor address / contact partial forms
 	-	add department, webpage to organization
 	-	add structured contact info (email, tel) to animal keeper / practitioner / organization / patient
@@ -98,7 +95,7 @@ features v1.2:
 	-	ensure address shown completely everywhere
 	-	report tel number of patient
 - refactor linking entities:
-  - reuse code of forms (see component branch)
+  - improve "0 Ergebnisse", "1 Ergebnisse" display; show more than 10
   - "link" entity in search, copy inside entity
   - only edit copied data, not stammdaten itself
   - propose to sync into master data if edited
@@ -107,6 +104,10 @@ features v1.2:
 - Find probes from stammdaten
 - Improve AllProbes view: filter by service, entity; add compact view of observation
 - open source it
+
+- show number of next probe when creating probe
+- nur mit medizinischer validierung dürfen berichte erstellt werden
+
 
 features v1.3:
 - wait feedback users
