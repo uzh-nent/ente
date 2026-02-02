@@ -1,7 +1,7 @@
 export const createResults = function (probe, observations, organisms, translator) {
   const observationResults = observations.map(o => {
     if (o.analysisType === 'IDENTIFICATION') {
-      const pathogenLabel = translator('probe._pathogen.' + probe.pathogen);
+      const pathogenLabel = translator('probe._pathogen.' + o.pathogen);
 
       let result = translator('report._interpretation.NONE')
       if (o.interpretation) {
@@ -11,7 +11,7 @@ export const createResults = function (probe, observations, organisms, translato
       }
       return {
         analysis: translator('report.service.identification_of') + " " + pathogenLabel,
-        method: mapToIdentificationMethodCode(probe.pathogen),
+        method: mapToIdentificationMethodCode(o.pathogen),
         result,
       }
     } else {

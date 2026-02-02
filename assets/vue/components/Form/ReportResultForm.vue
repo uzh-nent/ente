@@ -56,9 +56,9 @@ export default {
       type: Array,
       required: true,
     },
-    probe: {
-      type: Object,
-      required: true,
+    pathogen: {
+      type: String,
+      default: null,
     }
   },
   data() {
@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     filteredStandardTexts: function () {
-      return this.standardTexts.filter(s => !s.pathogen || s.pathogen === this.probe.pathogen)
+      return this.standardTexts.filter(s => !s.pathogen || s.pathogen === this.pathogen)
     }
   }
 }

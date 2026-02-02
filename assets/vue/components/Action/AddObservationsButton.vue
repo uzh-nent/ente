@@ -90,6 +90,8 @@ export default {
     },
     sharedTemplate: function () {
       return {
+        pathogen: this.probe.pathogen,
+        pathogenName: this.probe.pathogenName,
         effectiveAt: moment().format(),
       }
     },
