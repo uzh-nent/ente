@@ -14,25 +14,25 @@ export const componentForm = {
     }
   },
   watch: {
-    updatePayload: {
-      deep: true,
-      immediate: true,
-      handler: function () {
-        this.$emit('update', this.updatePayload)
-      }
-    },
     template: {
       immediate: true,
       handler: function (newTemplate) {
         this.componentTemplate = createComponentTemplateFromTemplate(this.components, newTemplate)
       }
-    }
+    },
+    updatePayload: {
+      deep: true,
+      immediate: true,
+      handler: function (updatePayload) {
+        this.$emit('update', updatePayload)
+      }
+    },
   },
   computed: {
     updatePayload: function () {
       return updatePayloadFromComponentEntity(this.components, this.componentEntity, this.template)
     },
-  }
+  },
 }
 
 export const templatedForm = {
@@ -50,19 +50,18 @@ export const templatedForm = {
     }
   },
   watch: {
-    updatePayload: {
-      deep: true,
-      immediate: true,
-      handler: function () {
-        this.$emit('update', this.updatePayload)
-      }
-    },
     template: {
       immediate: true,
       handler: function (newTemplate) {
-        this.entity = createEntityFromTemplate(this.fields, newTemplate, this.entity)
+        this.entity = createEntityFromTemplate(this.fields, newTemplate)
       }
-    }
+    },
+    updatePayload: {
+      immediate: true,
+      handler: function (updatePayload) {
+        this.$emit('update', updatePayload)
+      }
+    },
   },
   methods: {
     blurField: function (field) {
@@ -156,18 +155,6 @@ export const countryCode = {
   errorMessage: '_validation.not_a_country_code'
 }
 
-const sectionNumberRegex = /^[0-9]+(\.[0-9]+){0,2}$/
-export const sectionNumberRule = {
-  isValid: function (value) {
-    if (!value) {
-      return true
-    }
-
-    return sectionNumberRegex.test(value)
-  },
-  errorMessage: '_validation.invalid_section_number'
-}
-
 export const emailsRule = {
   isValid: function (value) {
     if (!value) {
@@ -188,14 +175,12 @@ const validateField = function (field, value) {
   field.invalid = field.dirty && field.errors.length > 0
 }
 
-const createEntityFromTemplate = function (fields, template = null, entityDefault = null) {
+const createEntityFromTemplate = function (fields, template = null) {
   const newEntity = {}
   for (const fieldName in fields) {
     if (Object.prototype.hasOwnProperty.call(fields, fieldName)) {
       if (template && fieldName in template) {
         newEntity[fieldName] = template[fieldName]
-      } else if (entityDefault && fieldName in entityDefault) {
-        newEntity[fieldName] = entityDefault[fieldName]
       } else {
         newEntity[fieldName] = null
       }
@@ -211,13 +196,13 @@ const updatePayload = function (fields, values, template = null) {
   const result = {}
   for (const fieldName in fields) {
     if (Object.prototype.hasOwnProperty.call(fields, fieldName)) {
-      if (template && template[fieldName] === values[fieldName]) {
-        continue
-      }
-
       validateField(fields[fieldName], values[fieldName])
       if (fields[fieldName].errors.length > 0) {
         return null
+      }
+
+      if (template && template[fieldName] === values[fieldName]) {
+        continue
       }
 
       result[fieldName] = values[fieldName]
@@ -228,19 +213,14 @@ const updatePayload = function (fields, values, template = null) {
 }
 
 
-const createComponentTemplateFromTemplate = function (components, template = null, componentTemplateDefault = null) {
+const createComponentTemplateFromTemplate = function (components, template = null) {
   const componentEntity = {}
   for (const componentName in components) {
     if (Object.prototype.hasOwnProperty.call(components, componentName)) {
       const newComponent = {}
-      for (const fieldName in components[componentName]) {
+      for (const fieldName of components[componentName]) {
         if (template && fieldName in template) {
-          newComponent[fieldName] = template[componentName]
-        } else if (
-          componentTemplateDefault && componentName in componentTemplateDefault &&
-          componentTemplateDefault[componentName] && fieldName in componentTemplateDefault[componentName]
-        ) {
-          newComponent[fieldName] = componentTemplateDefault[componentName][fieldName]
+          newComponent[fieldName] = template[fieldName]
         } else {
           newComponent[fieldName] = null
         }
@@ -261,8 +241,8 @@ const updatePayloadFromComponentEntity = function (components, componentEntity, 
         return null
       }
 
-      for (const fieldName in components[componentName]) {
-        if (template && template[componentName] === componentEntity[componentName][fieldName]) {
+      for (const fieldName of components[componentName]) {
+        if (template && fieldName in template && template[fieldName] === componentEntity[componentName][fieldName]) {
           continue
         }
 
