@@ -35,17 +35,19 @@
       {{ report.diagnosticReportId }}
     </labeled-value>
 
-    <h3 class="mt-5">{{ $t('elm_report.response') }}</h3>
-    <labeled-value :label="$t('elm_report.response')">
-      <a v-if="stepResponseDownloadUrl" :href="stepResponseDownloadUrl" :download="stepResponseFilename">
-        <i class="fas fa-download"/>
-        {{ $t('messages.download') }}
-      </a>
-    </labeled-value>
-    <labeled-value :label="$t('elm_report.queue_id')" v-if="report.documentReferenceId && step !== 'validation'">
-      {{ report.documentReferenceId }}
-    </labeled-value>
-    <operation-result-view class="mt-2" :json="stepResponseJson"/>
+    <template v-if="stepResponseJson">
+      <h3 class="mt-5">{{ $t('elm_report.response') }}</h3>
+      <labeled-value :label="$t('elm_report.response')">
+        <a v-if="stepResponseDownloadUrl" :href="stepResponseDownloadUrl" :download="stepResponseFilename">
+          <i class="fas fa-download"/>
+          {{ $t('messages.download') }}
+        </a>
+      </labeled-value>
+      <labeled-value :label="$t('elm_report.queue_id')" v-if="report.documentReferenceId && step !== 'validation'">
+        {{ report.documentReferenceId }}
+      </labeled-value>
+      <operation-result-view class="mt-2" :json="stepResponseJson"/>
+    </template>
   </label-modal>
 </template>
 
