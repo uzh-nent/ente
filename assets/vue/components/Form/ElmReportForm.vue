@@ -60,6 +60,10 @@ import {formatObservation} from "../../services/domain/formatter";
 import SearchableSelect from "../Library/FormInput/SearchableSelect.vue";
 import TestView from "../View/Observation/TestView.vue";
 
+const isElmRecognisedSystem = function (system) {
+  return ['LOINC', 'SNOMED', 'FOPH_CODE_RESERVE'].includes(system)
+}
+
 export default {
   emits: ['update'],
   components: {
@@ -129,11 +133,12 @@ export default {
         return null
       }
 
-      const filtered = this.leadingCodes.filter(lc => lc.pathogen === this.entity.observation.pathogen)
+      let filtered = this.leadingCodes.filter(lc => isElmRecognisedSystem(lc.system))
+      filtered = filtered.filter(lc => lc.pathogen === this.entity.observation.pathogen)
       return filtered.map(organism => ({label: organism.displayName, value: organism}))
     },
     organismChoices: function () {
-      let filtered = [...this.organisms]
+      let filtered = this.organisms.filter(o => isElmRecognisedSystem(o.system))
       if (this.entity.leadingCode?.organismGroup) {
         filtered = filtered.filter(s => s.organismGroup === this.entity.leadingCode.organismGroup)
       } else {
@@ -142,7 +147,7 @@ export default {
       return filtered.map(organism => ({label: organism.displayName, value: organism}))
     },
     specimenChoices: function () {
-      let filtered = [...this.specimens]
+      let filtered = this.specimens.filter(s => isElmRecognisedSystem(s.system))
       if (this.entity.leadingCode?.specimen) {
         filtered = [filtered.find(s => s['@id'] === this.entity.leadingCode.specimen)].filter(s => s)
       } else if (this.entity.leadingCode?.specimenGroup) {
