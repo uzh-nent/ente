@@ -1,120 +1,44 @@
 <template>
   <div class="row">
-    <div class="col-md-2">
-      <form-field for-id="title" :label="$t('practitioner.title')" :field="fields.title">
-        <text-input id="title" type="text" :field="fields.title" v-model="entity.title"
-                    @blur="blurField('title')" @update:modelValue="validateField('title')"/>
-      </form-field>
-    </div>
-    <div class="col-md-5">
-      <form-field for-id="givenName" :label="$t('person.given_name')" :field="fields.givenName">
-        <text-input id="givenName" type="text" :field="fields.givenName" v-model="entity.givenName"
-                    @blur="blurField('givenName')" @update:modelValue="validateField('givenName')"/>
-      </form-field>
-    </div>
-    <div class="col-md-5">
-      <form-field for-id="familyName" :label="$t('person.family_name')" :field="fields.familyName">
-        <text-input id="familyName" type="text" :field="fields.familyName" v-model="entity.familyName"
-                    @blur="blurField('familyName')" @update:modelValue="validateField('familyName')"/>
-      </form-field>
-    </div>
-  </div>
-
-  <hr/>
-  <div class="row">
-    <div class="col-md-2">
-      <form-field for-id="countryCode" :label="$t('address.country_code_short')" :field="fields.countryCode">
-        <text-input id="countryCode" type="text" :field="fields.countryCode" v-model="entity.countryCode"
-                    @blur="blurField('countryCode')" @update:modelValue="validateField('countryCode')"/>
-      </form-field>
-    </div>
     <div class="col-md-3">
-      <form-field for-id="postalCode" :label="$t('address.postal_code')" :field="fields.postalCode">
-        <text-input id="postalCode" type="text" :field="fields.postalCode" v-model="entity.postalCode"
-                    @blur="blurField('postalCode')" @update:modelValue="validateField('postalCode')"/>
-      </form-field>
+      <title-component :template="componentTemplate.title" @update="componentEntity.title = $event"/>
     </div>
-    <div class="col-md-7">
-      <form-field for-id="city" :label="$t('address.city')" :field="fields.city">
-        <text-input id="city" :field="fields.city" v-model="entity.city"
-                    @blur="blurField('city')" @update:modelValue="validateField('city')"/>
-      </form-field>
-    </div>
-    <div class="col-md-12">
-      <form-field for-id="addressLines" :label="$t('address.address_lines')" :field="fields.addressLines">
-        <text-area id="addressLines" :field="fields.addressLines" v-model="entity.addressLines"
-                   @blur="blurField('addressLines')" @update:modelValue="validateField('addressLines')"/>
-      </form-field>
+    <div class="col-md-9">
+      <person-component :template="componentTemplate.person" @update="componentEntity.person = $event"/>
     </div>
   </div>
 
   <hr/>
-  <form-field for-id="contact" :label="$t('contact.contact')" :field="fields.contact">
-    <text-area id="contact" :field="fields.contact" v-model="entity.contact"
-               @blur="blurField('contact')" @update:modelValue="validateField('contact')"/>
-  </form-field>
+  <address-component :template="componentTemplate.address" @update="componentEntity.address = $event"/>
+  <hr/>
+  <contact-component :template="componentTemplate.contact" @update="componentEntity.contact = $event"/>
 </template>
 
 <script>
-import {templatedForm, createField, requiredRule, countryCode} from './utils/form'
-import FormField from '../Library/FormLayout/FormField'
-import TextInput from '../Library/FormInput/TextInput.vue'
-import TextArea from '../Library/FormInput/TextArea.vue'
-import DateTimeInput from '../Library/FormInput/DateTimeInput.vue'
-import postalCodes from '../../../resources/postal-codes.json'
-import Radio from "../Library/FormInput/Radio.vue";
+import {componentForm} from './utils/form'
+import AddressComponent, {addressFields} from "./Shared/AddressComponent.vue";
+import PersonComponent, {personFields} from "./Shared/PersonComponent.vue";
+import ContactComponent, {contactFields} from "./Shared/ContactComponent.vue";
+import TitleComponent, {titleFields} from "./Shared/TitleComponent.vue";
+
 
 export default {
   emits: ['update'],
   components: {
-    Radio,
-    DateTimeInput,
-    TextArea,
-    TextInput,
-    FormField
+    TitleComponent,
+    ContactComponent,
+    PersonComponent,
+    AddressComponent,
   },
-  mixins: [templatedForm],
+  mixins: [componentForm],
   data() {
     return {
-      fields: {
-        title: createField(),
-        givenName: createField(requiredRule),
-        familyName: createField(requiredRule),
-
-        addressLines: createField(),
-        countryCode: createField(countryCode),
-        postalCode: createField(),
-        city: createField(),
-
-        contact: createField()
-      },
-      entity: {
-        title: null,
-        givenName: null,
-        familyName: null,
-
-        addressLines: null,
-        countryCode: null,
-        postalCode: null,
-        city: null,
-
-        contact: null,
+      components: {
+        title: titleFields,
+        person: personFields,
+        address: addressFields,
+        contact: contactFields
       }
-    }
-  },
-  watch: {
-    'entity.postalCode': {
-      immediate: true,
-      handler: function (postalCode) {
-        if (!postalCode || postalCode.length !== 4) {
-          return
-        }
-
-        if (!this.fields.city.dirty) {
-          const numberPostalCode = Number(postalCode)
-          this.entity.city = postalCodes.find(entry => entry.pc === numberPostalCode)?.c
-        }
-      },
     }
   }
 }
