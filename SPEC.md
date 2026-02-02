@@ -81,7 +81,6 @@ Probedaten:
 ## Future features
 
 features v1.2:
-- change pathogen service request; must store pathogen in observation, adapt all usages
 - elm report: ensure only LOINC, SNOMED, FOPH systems selectable.
 - login using EntraID/LDAP
 - show number of next probe when creating probe
