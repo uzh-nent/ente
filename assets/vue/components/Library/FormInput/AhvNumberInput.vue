@@ -79,7 +79,7 @@ export default {
       if (!value) {
         return null
       }
-      
+
       const digits = String(value).replace(/\D+/g, '')
       const parts = [
         digits.slice(0, 3),

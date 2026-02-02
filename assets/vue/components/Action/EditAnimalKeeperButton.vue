@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     canConfirm: function () {
-      return !!this.patch
+      return this.patch && Object.keys(this.patch).length > 0
     },
   },
   methods: {
