@@ -8,7 +8,7 @@
     </form-field>
     <template v-if="entity.laboratoryFunction === 'PRIMARY'">
       <form-field for-id="analysisTypes" :label="$t('service.ecoli_identification')" :field="fields.analysisTypes">
-        <checkboxes id="analysisTypes" :choices="primaryAnalysisTypes" :field="fields.analysisTypes"
+        <checkboxes id="analysisTypes" :choices="escherichiaColiAnalysisTypes" :field="fields.analysisTypes"
                     v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
       </form-field>
     </template>
@@ -30,7 +30,7 @@
                         v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
           </template>
           <template v-if="choice.value === 'ESCHERICHIA_COLI' && choice.value === entity.pathogen">
-            <checkboxes id="analysisTypes" class="mb-2" :choices="referenceEscherichiaColiAnalysisTypes" :field="fields.analysisTypes"
+            <checkboxes id="analysisTypes" class="mb-2" :choices="escherichiaColiAnalysisTypes" :field="fields.analysisTypes"
                         v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
           </template>
         </div>
@@ -65,7 +65,7 @@ const createReferencePathogens = function (translator) {
       .concat({label: translator('probe._pathogen.OTHER'), value: null})
 }
 
-const createPrimaryAnalysisTypes = function (translator) {
+const createEscherichiaColiAnalysisTypes = function (translator) {
   const values = ['EC_STEC', 'EC_EPEC', 'EC_ETEC', 'EC_EIEC', 'EC_EAEC']
   return values.map(value => ({label: translator(`probe._analysis_type.${value}`), value}))
 }
@@ -75,10 +75,6 @@ const createReferenceVibrioCholeraeAnalysisTypes = function (translator) {
   return values.map(value => ({label: translator(`probe._analysis_type.${value}`), value}))
 }
 
-const createReferenceEscherichiaColiAnalysisTypes = function (translator) {
-  const values = ['EC_STEC', 'EC_EPEC', 'EC_ETEC', 'EC_EIEC']
-  return values.map(value => ({label: translator(`probe._analysis_type.${value}`), value}))
-}
 export default {
   emits: ['update'],
   components: {
@@ -122,14 +118,11 @@ export default {
     referencePathogens: function () {
       return createReferencePathogens(this.$t)
     },
-    primaryAnalysisTypes: function () {
-      return createPrimaryAnalysisTypes(this.$t)
+    escherichiaColiAnalysisTypes: function () {
+      return createEscherichiaColiAnalysisTypes(this.$t)
     },
     referenceVibrioCholeraeAnalysisTypes: function () {
       return createReferenceVibrioCholeraeAnalysisTypes(this.$t)
-    },
-    referenceEscherichiaColiAnalysisTypes: function () {
-      return createReferenceEscherichiaColiAnalysisTypes(this.$t)
     },
   },
   watch: {
