@@ -30,7 +30,7 @@ export const componentForm = {
   },
   computed: {
     updatePayload: function () {
-      return updatePayloadFromComponentEntity(this.components, this.componentEntity, this.template)
+      return updatePayloadFromComponentEntity(this.components, this.componentEntity)
     },
   },
 }
@@ -213,7 +213,7 @@ const updatePayload = function (fields, values, template = null) {
         return null
       }
 
-      if (template && template[fieldName] === values[fieldName]) {
+      if (template && fieldName in template && template[fieldName] === values[fieldName]) {
         continue
       }
 
@@ -245,7 +245,7 @@ const createComponentTemplateFromTemplate = function (components, template = nul
   return componentEntity
 }
 
-const updatePayloadFromComponentEntity = function (components, componentEntity, template = null) {
+const updatePayloadFromComponentEntity = function (components, componentEntity) {
   const result = {}
   for (const componentName in components) {
     if (Object.prototype.hasOwnProperty.call(components, componentName)) {
@@ -254,11 +254,9 @@ const updatePayloadFromComponentEntity = function (components, componentEntity, 
       }
 
       for (const fieldName of components[componentName]) {
-        if (template && fieldName in template && template[fieldName] === componentEntity[componentName][fieldName]) {
-          continue
+        if (fieldName in componentEntity[componentName]) {
+          result[fieldName] = componentEntity[componentName][fieldName]
         }
-
-        result[fieldName] = componentEntity[componentName][fieldName]
       }
     }
   }
