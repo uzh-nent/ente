@@ -7,7 +7,7 @@
     <test-shared-form :template="sharedTemplate" @update="sharedPatch = $event"/>
     <identification-form
         v-if="observation.analysisType === 'IDENTIFICATION'"
-        :organisms="organisms" :pathogen="probe.pathogen" :template="identificationTemplate"
+        :organisms="organisms" :pathogen="observation.pathogen" :template="identificationTemplate"
         @update="identificationPatch = $event"/>
     <test-form
         v-else

@@ -28,6 +28,7 @@ use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
 use App\Enum\AnalysisType;
 use App\Enum\Interpretation;
+use App\Enum\Pathogen;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -52,6 +53,14 @@ class Observation
     use TimeTrait;
     use AttributionTrait;
     use CommentTrait;
+
+    #[ORM\Column(type: Types::STRING, enumType: Pathogen::class, nullable: true)]
+    #[Groups(['observation:read', 'observation:write'])]
+    private ?Pathogen $pathogen = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['observation:read', 'observation:write'])]
+    private ?string $pathogenName = null;
 
     #[ORM\Column(type: Types::STRING, enumType: AnalysisType::class)]
     #[Groups(['observation:read', 'observation:write'])]
@@ -82,6 +91,26 @@ class Observation
     #[ApiProperty(readableLink: false, writableLink: false)]
     #[Groups(['observation:read', 'observation:write'])]
     private ?Probe $probe = null;
+
+    public function getPathogen(): ?Pathogen
+    {
+        return $this->pathogen;
+    }
+
+    public function setPathogen(?Pathogen $pathogen): void
+    {
+        $this->pathogen = $pathogen;
+    }
+
+    public function getPathogenName(): ?string
+    {
+        return $this->pathogenName;
+    }
+
+    public function setPathogenName(?string $pathogenName): void
+    {
+        $this->pathogenName = $pathogenName;
+    }
 
     public function getAnalysisType(): AnalysisType
     {

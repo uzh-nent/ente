@@ -8,38 +8,40 @@
   <actionable-preview v-if="entity.observation">
     <identification-view v-if="entity.observation.analysisType === 'IDENTIFICATION'"
                          :organisms="organisms" :observation="entity.observation"/>
-    <test-view v-else :observation="entity.observation" />
+    <test-view v-else :observation="entity.observation"/>
   </actionable-preview>
 
-  <hr/>
+  <template v-if="leadingCodeChoices">
+    <hr/>
 
-  <p class="alert alert-warning" v-if="leadingCodeChoices.length === 0">
-    {{ $t('_form.elm_report.no_leading_choices_for_pathogen') }}
-  </p>
-  <form-field v-else for-id="leadingCode" :label="$t('leading_code._name')" :field="fields.leadingCode">
-    <custom-select id="leadingCode" :choices="leadingCodeChoices" :field="fields.leadingCode"
-                   v-model="entity.leadingCode" @update:model-value="validateField('leadingCode')"/>
-  </form-field>
-
-  <template v-if="entity.leadingCode">
-    <form-field for-id="organism" :label="$t('organism._name')" :field="fields.organism">
-      <searchable-select v-if="entity.leadingCode?.interpretationGroup !== 'TEXT'"
-                         id="organism" :choices="organismChoices" :field="fields.organism"
-                         v-model="entity.organism" @update:model-value="validateField('organism')"/>
-      <text-input v-else
-                  id="organismText" :field="fields.organismText" v-model="entity.organismText"
-                  @blur="blurField('organismText')" @update:modelValue="validateField('organismText')"/>
+    <p class="alert alert-warning" v-if="leadingCodeChoices.length === 0">
+      {{ $t('_form.elm_report.no_leading_choices_for_pathogen') }}
+    </p>
+    <form-field v-else for-id="leadingCode" :label="$t('leading_code._name')" :field="fields.leadingCode">
+      <custom-select id="leadingCode" :choices="leadingCodeChoices" :field="fields.leadingCode"
+                     v-model="entity.leadingCode" @update:model-value="validateField('leadingCode')"/>
     </form-field>
 
-    <form-field for-id="specimen" :label="$t('specimen._name')" :field="fields.specimen">
-      <custom-select id="specimen" :choices="specimenChoices" :field="fields.specimen"
-                     v-model="entity.specimen" @update:model-value="validateField('specimen')"/>
-    </form-field>
+    <template v-if="entity.leadingCode">
+      <form-field for-id="organism" :label="$t('organism._name')" :field="fields.organism">
+        <searchable-select v-if="entity.leadingCode?.interpretationGroup !== 'TEXT'"
+                           id="organism" :choices="organismChoices" :field="fields.organism"
+                           v-model="entity.organism" @update:model-value="validateField('organism')"/>
+        <text-input v-else
+                    id="organismText" :field="fields.organismText" v-model="entity.organismText"
+                    @blur="blurField('organismText')" @update:modelValue="validateField('organismText')"/>
+      </form-field>
 
-    <form-field for-id="interpretation" :label="$t('observation.interpretation')" :field="fields.interpretation">
-      <custom-select id="interpretation" :choices="interpretationChoices" :field="fields.interpretation"
-                     v-model="entity.interpretation" @update:model-value="validateField('interpretation')"/>
-    </form-field>
+      <form-field for-id="specimen" :label="$t('specimen._name')" :field="fields.specimen">
+        <custom-select id="specimen" :choices="specimenChoices" :field="fields.specimen"
+                       v-model="entity.specimen" @update:model-value="validateField('specimen')"/>
+      </form-field>
+
+      <form-field for-id="interpretation" :label="$t('observation.interpretation')" :field="fields.interpretation">
+        <custom-select id="interpretation" :choices="interpretationChoices" :field="fields.interpretation"
+                       v-model="entity.interpretation" @update:model-value="validateField('interpretation')"/>
+      </form-field>
+    </template>
   </template>
 </template>
 
@@ -123,7 +125,11 @@ export default {
       return this.observations.map(o => ({label: formatObservation(o, this.organisms, this.$t), value: o}))
     },
     leadingCodeChoices: function () {
-      const filtered = this.leadingCodes.filter(lc => lc.pathogen === this.probe.pathogen)
+      if (!this.entity.observation) {
+        return null
+      }
+
+      const filtered = this.leadingCodes.filter(lc => lc.pathogen === this.entity.observation.pathogen)
       return filtered.map(organism => ({label: organism.displayName, value: organism}))
     },
     organismChoices: function () {
