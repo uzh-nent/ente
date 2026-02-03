@@ -75,16 +75,19 @@
         />
         <observation-table
             v-if="observations.length > 0" class="mt-2"
-            :users="users" :observations="observations" :probe="probe" :organisms="organisms" />
+            :users="users" :observations="observations" :probe="probe" :organisms="organisms"/>
 
-        <div class="mt-5" v-if="probe.patient && observations.length > 0 && (!probe.finishedAt || elmReports.length > 0)">
+        <div class="mt-5"
+             v-if="probe.patient && observations.length > 0 && (!probe.finishedAt || elmReports.length > 0)">
           <h3>{{ $t('elm_report._name') }}</h3>
-          <add-elm-report-button
-              v-if="!probe.finishedAt"
-              :probe="probe" :observations="observations"
-              :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
-              @added="elmReports.push($event)"
-          />
+          <tooltip-wrap :title="$t('_view.no_medical_validation')" :show="!hasMedicalValidation">
+            <add-elm-report-button
+                v-if="!probe.finishedAt" :disabled="!hasMedicalValidation"
+                :probe="probe" :observations="observations"
+                :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
+                @added="elmReports.push($event)"
+            />
+          </tooltip-wrap>
           <elm-report-table
               class="mt-2"
               v-if="elmReports.length > 0" :reports="elmReports"
@@ -93,14 +96,16 @@
 
         <div class="mt-5" v-if="observations.length > 0 && (!probe.finishedAt || reports.length > 0)">
           <h3>{{ $t('report._name') }}</h3>
-          <add-report-button
-              v-if="!probe.finishedAt"
-              :probe="probe" :observations="observations" :reports="reports"
-              :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
-              :standard-texts="standardTexts"
-              @added="addedReport($event)"
-          />
-          <report-table class="mt-2" :users="users" :probe="probe" :reports="reports" />
+          <tooltip-wrap :title="$t('_view.no_medical_validation')" :show="!hasMedicalValidation">
+            <add-report-button
+                v-if="!probe.finishedAt" :disabled="!hasMedicalValidation"
+                :probe="probe" :observations="observations" :reports="reports"
+                :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
+                :standard-texts="standardTexts"
+                @added="addedReport($event)"
+            />
+          </tooltip-wrap>
+          <report-table class="mt-2" :users="users" :probe="probe" :reports="reports"/>
         </div>
 
         <div class="mt-5" v-if="missingObservations.length === 0">
@@ -140,10 +145,12 @@ import ReportTable from "./components/View/ReportTable.vue";
 import AddObservationsButton from "./components/Action/AddObservationsButton.vue";
 import ObservationTableRow from "./components/View/ObservationTableRow.vue";
 import ObservationTable from "./components/View/ObservationTable.vue";
+import TooltipWrap from "./components/Library/View/TooltipWrap.vue";
 
 export default {
   emits: ['added'],
   components: {
+    TooltipWrap,
     ObservationTable,
     ObservationTableRow,
     AddObservationsButton,
@@ -193,6 +200,12 @@ export default {
           !this.observations.some(o => this.probe.pathogen === o.pathogen && this.probe.pathogenName === o.pathogenName && o.analysisType === at)
       )
     },
+    hasMedicalValidation: function () {
+      const shortname = document.getElementById("shortname").textContent
+      const user = this.users.find(u => u.name === shortname)
+
+      return user?.medicalValidation
+    }
   },
   mounted() {
     const {
@@ -228,7 +241,7 @@ export default {
   methods: {
     addedReport: function (report) {
       this.reports.push(report)
-      this.$nextTick(() =>  {
+      this.$nextTick(() => {
         document.getElementById('download-report-' + report['@id'])?.click()
       })
     }

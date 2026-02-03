@@ -1,6 +1,7 @@
 <template>
   <button-confirm-modal
       :title="$t('_action.add_report.title')" icon="fas fa-plus"
+      :disabled="disabled"
       :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm"
       @showing="focusAddressAdd">
     <report-meta-form :template="reportMetaTemplate" :probe="probe" @update="reportMeta = $event"/>
@@ -97,6 +98,10 @@ export default {
       type: Array,
       required: true
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     canConfirm: function () {
