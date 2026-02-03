@@ -120,8 +120,8 @@ const router = {
   navigateToActiveProbe: function (probe) {
     this.navigateTo(this.linkToActiveProbe(probe))
   },
-  navigateToProbe: function (probe) {
-    this.navigateTo('/probes/all/' + iriToId(probe['@id']) + '/view')
+  linkToProbe: function (probe) {
+    return '/probes/all/' + iriToId(probe['@id']) + '/view'
   },
   linkToActiveProbe: function (probe) {
     return '/probes/active/' + iriToId(probe['@id']) + '/view'
