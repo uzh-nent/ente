@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Probe;
 use App\Entity\Report;
+use App\Enum\LaboratoryFunction;
 use App\Helper\DoctrineHelper;
 use App\Services\Interfaces\FileServiceInterface;
 use App\Services\Interfaces\PdfServiceInterface;
@@ -16,9 +17,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProbeController extends AbstractController
 {
     #[Route('/probe/new', name: 'probe_new')]
-    public function new(): Response
+    public function new(ManagerRegistry $registry): Response
     {
-        return $this->render('probe/new.html.twig');
+        $probeRepository = $registry->getManager()->getRepository(Probe::class);
+        $nextPrimaryIdentifier = $probeRepository->getNextIdentifier(LaboratoryFunction::PRIMARY);
+        $nextReferenceIdentifier = $probeRepository->getNextIdentifier(LaboratoryFunction::REFERENCE);
+
+        return $this->render('probe/new.html.twig', ['nextPrimaryIdentifier' => $nextPrimaryIdentifier, 'nextReferenceIdentifier' => $nextReferenceIdentifier]);
     }
 
     #[Route('/probe/new.js', name: 'probe_new_js')]

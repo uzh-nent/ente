@@ -7,7 +7,11 @@
 {% import "macros/components.html.twig" as components %}
 
 {% block content %}
-    <h1>{{ "new.title"|trans({}, "probe") }}</h1>
+    <h1>
+        {{ "new.title"|trans({}, "probe") }}:
+        <span id="next-reference-identifier">{{ nextReferenceIdentifier }}</span>
+        <span class="d-none" id="next-primary-identifier">{{ nextPrimaryIdentifier }}</span>
+    </h1>
 
     <script src="{{ url('probe_new_js') }}"></script>
     {{ components.vue_entry_point('vue-probe-new') }}

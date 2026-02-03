@@ -105,8 +105,6 @@ features v1.2:
 - Improve AllProbes view: filter by service, entity; add compact view of observation
 - open source it
 
-- show number of next probe when creating probe
-
 
 features v1.3:
 - wait feedback users

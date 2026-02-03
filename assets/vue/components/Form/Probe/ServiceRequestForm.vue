@@ -132,12 +132,18 @@ export default {
           this.entity.pathogen = 'SALMONELLA'
           this.entity.pathogenName = null
           this.entity.analysisTypes = ['IDENTIFICATION']
+
+          document.getElementById("next-reference-identifier").classList.remove("d-none")
+          document.getElementById("next-primary-identifier").classList.add("d-none")
         }
 
         if (laboratoryFunction === 'PRIMARY') {
           this.entity.pathogen = 'ESCHERICHIA_COLI'
           this.entity.pathogenName = null
           this.entity.analysisTypes = []
+
+          document.getElementById("next-primary-identifier").classList.remove("d-none")
+          document.getElementById("next-reference-identifier").classList.add("d-none")
         }
       },
     },
