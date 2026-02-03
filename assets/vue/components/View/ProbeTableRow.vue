@@ -11,10 +11,10 @@
       {{ probe.observations?.length }}
     </td>
     <td>
-      <button class="btn btn-outline-secondary" @click="navigateToProbe(probe)">
+      <a class="btn btn-outline-secondary" :href="viewProbeLink">
         <i v-if="this.probe.finishedAt" class="fas fa-eye"></i>
         <i v-else class="fas fa-edit"></i>
-      </button>
+      </a>
     </td>
   </tr>
 </template>
@@ -45,17 +45,13 @@ export default {
     },
     service: function () {
       return formatProbeService(this.probe, this.$t)
+    },
+    viewProbeLink: function () {
+      return this.probe.finishedAt ? router.linkToProbe(this.probe) : router.linkToActiveProbe(this.probe)
     }
   },
   methods: {
     formatDateTime,
-    navigateToProbe: function () {
-      if (this.probe.finishedAt) {
-        router.navigateToProbe(this.probe)
-      } else {
-        router.navigateToActiveProbe(this.probe)
-      }
-    }
   }
 }
 
