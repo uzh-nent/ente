@@ -96,7 +96,7 @@ export default {
       return formatProbeService(probe, this.$t)
     },
     probeHref: function (probe) {
-      return router.linkToActiveProbe(probe)
+      return router.probeActiveView(probe)
     }
   },
   watch: {

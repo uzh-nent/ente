@@ -47,7 +47,7 @@ export default {
       return formatProbeService(this.probe, this.$t)
     },
     viewProbeLink: function () {
-      return this.probe.finishedAt ? router.linkToProbe(this.probe) : router.linkToActiveProbe(this.probe)
+      return this.probe.finishedAt ? router.probeView(this.probe) : router.probeActiveView(this.probe)
     }
   },
   methods: {

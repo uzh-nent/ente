@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     link: function () {
-      return router.linkProbeWorksheetPdf(this.probe)
+      return router.probeWorksheetPdf(this.probe)
     }
   },
 }
