@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     pdfLink: function () {
-      return router.linkReportPdf(this.report)
+      return router.reportPdf(this.report)
     },
     receivers: function () {
       const receivers = []

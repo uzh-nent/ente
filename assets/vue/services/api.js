@@ -118,18 +118,18 @@ const router = {
     window.location.href = route
   },
   navigateToActiveProbe: function (probe) {
-    this.navigateTo(this.linkToActiveProbe(probe))
+    this.navigateTo(this.probeActiveView(probe))
   },
-  linkToProbe: function (probe) {
+  probeView: function (probe) {
     return '/probes/all/' + iriToId(probe['@id']) + '/view'
   },
-  linkToActiveProbe: function (probe) {
+  probeActiveView: function (probe) {
     return '/probes/active/' + iriToId(probe['@id']) + '/view'
   },
-  linkProbeWorksheetPdf: function (probe) {
+  probeWorksheetPdf: function (probe) {
     return '/probes/active/' + iriToId(probe['@id']) + '/worksheet.pdf'
   },
-  linkReportPdf: function (report) {
+  reportPdf: function (report) {
     return '/reports/' + iriToId(report['@id']) + '/download/' + report.filename
   }
 }
