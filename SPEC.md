@@ -42,9 +42,11 @@ analysis:
 - identification tests look at different dimensions (e.g. which gas the organisms produces). some dimensions are less relevant, and only lead to variants of the organisms (but not their own independently tracked organism).
 
 NENT analysis:
-- E. coli (primary): STEC, EPEC, ETEC and EIEC are all done using the same PCR. EAEC (=EAggEC) needs a dedicated PCR. EIEC E. coli are very close to Shigella, hence a positive EIEC could also mean a Shigella infection. 
+- E. coli (primary) STEC, EPEC, ETEC and EIEC are all done using the same multi-PCR. This detects stx 1 (Shigatoxin 1), stx 2 (Shigatoxin 2), eaeA (Intimin-Gen), estA (hitze-stabiles Enterotoxin), eltA (hitze-labiles Enterotoxin) and ipaH (invasives Plasmid-Antigen H). If stx 1 or stx 2 are positive, then it is STEC (independent of eaeA). If eaeA is positive, then it is EPEC. If estA or eltA are positive, then it is ETEC. If ipaH is positive, then it is EIEC/Shigella (as ipaH is very close to Shigella, could also mean that it is actually Shigella).
+- E. coli (primary) EAEC (=EAggEC) needs a dedicated PCR. The PCR checks for pCVD432 Plasmides (EAEC I) and agg3C (EAEC II); either of these is positive, means EAEC.
 - E. coli (reference): Isolates strain, applies tests to each strain. Only the positive strain(s) are tracked in NENT. Tested is the multi-PCR (STEC, EPEC, ETEC and EIEC), no dedicated identification processus. Only those results of the multi-PCR are evaluated that were positive in the primary probe.
-- Listeria are first only checked for their group, and this is what is on the initial reports. Afterwards, a precise gen sequencing is done, and a dedicated report is written. This dedicated report is outside the scope of ENTE.
+- Listeria are first only checked for their group, and this is what is on the initial reports. Afterward, a precise gen sequencing is done, and a dedicated report is written. This dedicated report is outside the scope of ENTE.
+- Some Shigella types may also contain stx1 or stx2, and therefore these toxin checks may also be done.
 - Vibrio: Cholera-toxin is checked for, and if it is negative, then tdh and trh are checked, too. Usually, all three tests are initiated at the same time, as in practice the probes that reach NENT are all toxin-negative. If toxin is positive, then an initial report is sent to BAG & customer, and identification is initiated. If tdh or trx is positive, then organism must be Vibrio parahömolythicus (and hence no identification necessary).
 
 ELM:
@@ -61,6 +63,8 @@ ELM leading code per pathogen:
 - Pandemic case: Use FOPH leading codes `https://fhir.ch/ig/ch-elm/CodeSystem-ch-elm-foph-code-reserve.html`
 - note that leading codes are not 100% accurate at the moment, and organism sets are not complete, but both are subject to improvement.
 
+ENTE design decisions:
+- probe is for a single strain under a single function. So when shifting from primary to reference laboratory function, or when multiple strains are contained in a single probe, then multiple entries for the same probe is created.
 
 ## Datenverwaltung
 
@@ -85,32 +89,46 @@ features v1.2:
 - login using EntraID/LDAP
 - allow proben to select mediziner:in, verify mediziner:in is shown. check that appears as expected on PDF/ELM report
 - hide unused leading codes (or in general, stammdaten)
-- reason for "identification not possible": "kein wachstum", "mischkultur", "andere". check if other default texts useful
-- refactor address / contact partial forms
-	-	add department, webpage to organization
-	-	add structured contact info (email, tel) to animal keeper / practitioner / organization / patient
-	-	add GLN to practitioner
-	-	add BER to organization
-	-	add UID to animal keeper
-	-	ensure address shown completely everywhere
-	-	report tel number of patient
 - refactor linking entities:
-  - improve "0 Ergebnisse", "1 Ergebnisse" display; show more than 10
-  - "link" entity in search, copy inside entity
-  - only edit copied data, not stammdaten itself
-  - propose to sync into master data if edited
-  - propose to sync from master data if not edited
-  - (also ensures the entity is always shown)
-- Find probes from stammdaten
-- Improve AllProbes view: filter by service, entity; add compact view of observation
+    - improve "0 Ergebnisse", "1 Ergebnisse" display; show more than 10 (e.g., for subspecies search)
+    - "link" entity in search, copy inside entity
+    - only edit copied data, not stammdaten itself
+    - propose to sync into master data if edited
+    - propose to sync from master data if not edited
+    - (also ensures the entity is always shown)
+- Find probes from stammdaten (e.g., patient by name)
+- improve AllProbes view: filter by service, entity; add compact view of observation
+- freitextfeld probe aufenthalt/reiseland
 - open source it
-
+- improve report:
+  - datum/attribution auf selbe zeile wie "schlussbericht"
+  - name/ vorname patient trennen
+  - bericht spacing improve
+- session timeout increase
+- methodik: 
+  - listerien: rtPCR default, MLST, WGS, GDS fakultativ
+  - bei anderen WGS anwählbar
+- bug: auftraggeber arbeitsblatt auch organisation anzeigen
 
 features v1.3:
-- wait feedback users
-- Rechnungen
-- Statistik (bis 2025)
-- Statistik (ab 2025)
+- reason for "identification not possible": "kein wachstum", "mischkultur", "andere". check if other default texts useful
+- refactor address / contact partial forms
+    -	add department, webpage to organization
+    -	add structured contact info (email, tel) to animal keeper / practitioner / organization / patient
+    -	add GLN to practitioner
+    -	add BER to organization
+    -	add UID to animal keeper
+    -	ensure address shown completely everywhere
+    -	report tel number of patient
+- interne textbausteine OR separate analysis & diagnosis
+- add monocytogenes to primary probes
+- Statistik (until 2025) -> separate P/N probes, allow to choose date
+- Statistik (from 2025) -> allow to export csv from table search result, with observation results inline
+- invoicing:
+  - for all primary probes, track whether "ambulant" or "stationär"; when "ambulant" invoice patient, else invoice customer
+  - cost is 119.7 per PCF; 47.7 for multi-pcr additional results
+  - need to be able to correct price to any price
+  - for ambulant, need to be able to generate rückforderungsbeleg
 
 features v?:
 - improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc)
