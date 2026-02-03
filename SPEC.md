@@ -106,7 +106,6 @@ features v1.2:
 - open source it
 
 - show number of next probe when creating probe
-- nur mit medizinischer validierung dürfen berichte erstellt werden
 
 
 features v1.3:

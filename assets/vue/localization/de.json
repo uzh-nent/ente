@@ -156,6 +156,7 @@
     "filter_by_birth_date": "Geburtsdatum",
     "search_by_identifier": "Suche nach Probe",
     "search_by_requisition_identifier": "Suche nach Probe-Referenz",
+    "no_medical_validation": "Keine medizinische Validierung.",
     "probe_navigation": {
       "no_probes": "Keine Proben gefunden."
     }

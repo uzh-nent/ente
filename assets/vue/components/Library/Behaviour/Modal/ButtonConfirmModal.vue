@@ -1,14 +1,15 @@
 <template>
-  <button class="btn" :class="active ? 'btn-' + color : 'btn-outline-' + color" @click="tryShow" ref="button">
+  <button class="btn" :class="active ? 'btn-' + color : 'btn-outline-' + color" @click="tryShow" ref="button"
+          :disabled="disabled">
     <i v-if="icon" :class="icon"></i>
     <template v-if="buttonSize !== 'sm' || !icon">&nbsp;{{ title }}</template>
 
     <confirm-modal
-      :title="title" :size="modalSize" :show="show" @hide="tryHide" :color="color"
-      :can-confirm="canConfirm" :confirm="confirm" :confirm-label="confirmLabel"
-      :disable-loading-animation="disableLoadingAnimation"
-      :can-abort="canAbort" :abort="abort" :abort-label="abortLabel">
-      <slot />
+        :title="title" :size="modalSize" :show="show" @hide="tryHide" :color="color"
+        :can-confirm="canConfirm" :confirm="confirm" :confirm-label="confirmLabel"
+        :disable-loading-animation="disableLoadingAnimation"
+        :can-abort="canAbort" :abort="abort" :abort-label="abortLabel">
+      <slot/>
     </confirm-modal>
   </button>
 </template>
@@ -17,7 +18,7 @@
 import ConfirmModal from './ConfirmModal.vue'
 
 export default {
-  components: { ConfirmModal },
+  components: {ConfirmModal},
   emits: ['hiding', 'showing'],
   props: {
     title: {
@@ -29,6 +30,10 @@ export default {
       default: null
     },
     active: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
       type: Boolean,
       default: false
     },
@@ -75,7 +80,7 @@ export default {
       default: null
     }
   },
-  data () {
+  data() {
     return {
       show: false
     }
