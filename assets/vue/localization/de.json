@@ -16,9 +16,6 @@
       "from": "Von",
       "until": "Bis"
     },
-    "patient": {
-      "use_ch_address": "Bitte die (Aufenthalts-)Adresse aus der Schweiz angeben."
-    },
     "elm_report": {
       "no_leading_choices_for_pathogen": "Für dieses Pathogen sind keine Leading Codes definiert."
     },

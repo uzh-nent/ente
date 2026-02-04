@@ -5,9 +5,6 @@
   <gender-component :template="componentTemplate.gender" @update="componentEntity.gender = $event"/>
   <hr/>
   <address-component :template="componentTemplate.address" @update="componentEntity.address = $event"/>
-  <p class="alert alert-warning" v-if="updatePayload?.countryCode && updatePayload.countryCode !== 'CH'">
-    {{$t('_form.patient.use_ch_address')}}
-  </p>
 </template>
 
 <script>
