@@ -83,7 +83,7 @@ Probedaten:
 
 
 features v1.2:
-- login using EntraID/LDAP
+- login using EntraID/LDAP, session timeout increase
 - allow proben to select mediziner:in, verify mediziner:in is shown. check that appears as expected on PDF/ELM report
 - hide unused leading codes (or in general, stammdaten)
 - refactor linking entities:
@@ -95,14 +95,13 @@ features v1.2:
     - (also ensures the entity is always shown)
 - Find probes from stammdaten (e.g., patient by name)
 - improve AllProbes view: filter by service, entity; add compact view of observation
-- freitextfeld probe aufenthalt/reiseland
 - open source it
 - improve report:
   - datum/attribution auf selbe zeile wie "schlussbericht"
   - name/ vorname patient trennen
   - bericht spacing improve
-- session timeout increase
-- methodik: 
+- add freitextfeld aufenthalt/reiseland
+- add methodik: 
   - listerien: rtPCR default, MLST, WGS, GDS fakultativ
   - bei anderen WGS anwählbar
 - bug: auftraggeber arbeitsblatt auch organisation anzeigen
