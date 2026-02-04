@@ -51,20 +51,17 @@ NENT analysis:
 
 ELM:
 - documentation by the BAG at https://elm.wiki.bagapps.ch/, with the formal spec at https://fhir.ch/ig/ch-elm/
-- before sending a new pathogen, ask BAG for content-tests
-- report corrections are to be sent over E-Mail to infreport@hin.ch
-
-ELM leading code per pathogen:
-- Salmonella: `Salmonella sp serovar [Type] in Isolate`. This requires an organism from [`sal_org_complete`](https://fhir.ch/ig/ch-elm/ValueSet-ch-elm-results-sal-org-complete.html). If the organism is instead in [`sal_org`](https://fhir.ch/ig/ch-elm/ValueSet-ch-elm-results-sal-org.html), choose a leading code depending on specimen. If it is in neither set, choose leading code `Salmonella sp antigenic formula [Identifier] in Isolate by Agglutination (TEXT)` and submit as text.
+- Salmonella: `Salmonella sp serovar [Type] in Isolate`. This requires an organism from [`sal_org_complete`](https://fhir.ch/ig/ch-elm/ValueSet-ch-elm-results-sal-org-complete.html). If it is not in this set, choose leading code `Salmonella sp antigenic formula [Identifier] in Isolate by Agglutination (TEXT)` and submit as text, and contact the [BAG](mailto:infreport@bag.admin.ch) to ask for an extension of `sal_org_complete`.
 - Shigella: `Shigella sp [Presence] in Specimen by Organism specific culture`. This requires an organism from `shi_org`. For Shigella that are not yet in `shi_org`: Submit more coarse-grained variant that is inside that set.
 - Listeria: `Listeria sp identified in Specimen by Organism specific culture`. This requires an organism from `lis_org`. ENTE only submits the high-level group 1-4.
 - Vibrio: `Vibrio sp identified in Specimen by Organism specific culture`. This requires an organism from `chol_org`, and this list is expected to be complete. If the Cholera-toxin is positive, *additionally* report it using `Vibrio cholerae toxin Ag [Presence] in Isolate`.
-- STEC: `Escherichia coli Stx1 toxin stx1 gene [Presence] in Stool by NAA with probe detection` or `Escherichia coli Stx2 toxin stx2 gene [Presence] in Stool by NAA with probe detection`. Note that STEC may have both genes positive, in that case leading code `Escherichia coli shiga-like toxin DNA` is submitted.
+- STEC: `Escherichia coli Stx1 toxin stx1 gene [Presence] in Stool by NAA with probe detection` or `Escherichia coli Stx2 toxin stx2 gene [Presence] in Stool by NAA with probe detection`. Note that STEC may have both genes positive, in that both leading codes are submitted (hence two reports).
 - Pandemic case: Use FOPH leading codes `https://fhir.ch/ig/ch-elm/CodeSystem-ch-elm-foph-code-reserve.html`
-- note that leading codes are not 100% accurate at the moment, and organism sets are not complete, but both are subject to improvement.
+- In case submission over ELM fails, need to submit over https://web.em.bag.admin.ch/. In case submission was wrong and needs to be corrected, can contact BAG over [HIN E-Mail](mailto:infreport@hin.ch).
 
 ENTE design decisions:
 - probe is for a single strain under a single function. So when shifting from primary to reference laboratory function, or when multiple strains are contained in a single probe, then multiple entries for the same probe is created.
+
 
 ## Datenverwaltung
 
