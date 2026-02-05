@@ -30,7 +30,7 @@ export default {
   props: {
     template: {
       type: Object,
-      default: {}
+      required: false
     },
   },
   computed: {

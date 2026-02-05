@@ -10,7 +10,7 @@ export const componentForm = {
   props: {
     template: {
       type: Object,
-      default: {}
+      required: false
     }
   },
   watch: {
@@ -46,7 +46,7 @@ export const templatedForm = {
   props: {
     template: {
       type: Object,
-      default: {}
+      required: false
     }
   },
   watch: {
