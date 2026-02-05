@@ -1,8 +1,8 @@
 <template>
     <span class="badge" :class="{
           'bg-warning': !observation.interpretation,
-          'bg-danger': observation.interpretation === 'POS' ,
-          'bg-success': observation.interpretation === 'NEG'
+          'bg-success': observation.interpretation === 'POS' ,
+          'bg-danger': observation.interpretation === 'NEG'
         }">
       {{ $t(`observation._interpretation.${observation.interpretation ?? 'NONE'}`) }}
     </span>
