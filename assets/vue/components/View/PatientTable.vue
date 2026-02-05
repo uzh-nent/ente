@@ -26,6 +26,7 @@
           </order-table-head>
           <th>{{ $t('address._name') }}</th>
           <th class="w-minimal"></th>
+          <th class="w-minimal"></th>
         </tr>
         </thead>
         <tbody>

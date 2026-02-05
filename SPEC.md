@@ -91,9 +91,9 @@ features v1.2:
     - propose to sync into master data if edited
     - propose to sync from master data if not edited
     - (also ensures the entity is always shown)
-- Find probes from stammdaten (e.g., patient by name)
-- improve AllProbes view: filter by service, entity; add compact view of observation
-- open source it
+- improve AllProbes view: 
+  - filter by service
+  - add compact view of observation
 - improve report:
   - datum/attribution auf selbe zeile wie "schlussbericht"
   - name/ vorname patient trennen
@@ -103,6 +103,7 @@ features v1.2:
   - listerien: rtPCR default, MLST, WGS, GDS fakultativ
   - bei anderen WGS anwählbar
 - bug: auftraggeber arbeitsblatt auch organisation anzeigen
+- open source it
 
 features v1.3:
 - reason for "identification not possible": "kein wachstum", "mischkultur", "andere". check if other default texts useful

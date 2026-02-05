@@ -15,6 +15,9 @@
       {{ practitioner.contact }}
     </td>
     <td class="w-minimal text-end">
+      <add-probe-filter-button :query="{'practitioner': this.practitioner['@id']}" />
+    </td>
+    <td class="w-minimal text-end">
       <edit-practitioner-button :practitioner="practitioner" />
     </td>
   </tr>
@@ -23,9 +26,10 @@
 <script>
 import {formatAddressCity} from "../../services/domain/formatter";
 import EditPractitionerButton from "../Action/EditPractitionerButton.vue";
+import AddProbeFilterButton from "./Probe/AddProbeFilterButton.vue";
 
 export default {
-  components: {EditPractitionerButton},
+  components: {AddProbeFilterButton, EditPractitionerButton},
   props: {
     practitioner: {
       type: Object,
