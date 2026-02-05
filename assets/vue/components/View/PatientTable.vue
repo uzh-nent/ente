@@ -6,6 +6,7 @@
         <tr class="bg-light">
           <th colspan="100">
             <div class="d-flex flex-row reset-table-styles gap-2">
+              <filter-patient-button :template="this.filter" @filtered="filter = $event"/>
               <date-time-input
                   class="mw-10" id="birthDateFilter" format="date"
                   :placeholder="$t('_view.filter_by_birth_date')"
@@ -47,15 +48,17 @@ import {order, paginatedQuery} from "./utils/table";
 import Pagination from "../Library/Behaviour/Pagination.vue";
 import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
 import PatientTableRow from "./PatientTableRow.vue";
-import {createQuery} from "../../services/query";
+import {orderFilter, sanitizeSearchFilter} from "../../services/query";
 import {localStoragePersisted} from "./utils/state";
 import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
 import FormField from "../Library/FormLayout/FormField.vue";
 import DateTimeInput from "../Library/FormInput/DateTimeInput.vue";
+import FilterPatientButton from "../Action/FilterPatientButton.vue";
 
 export default {
   components: {
+    FilterPatientButton,
     DateTimeInput, FormField,
     LoadingIndicatorOverlay,
     PatientTableRow,
@@ -78,15 +81,9 @@ export default {
   },
   computed: {
     query: function () {
-      const filter = {...this.filter, birthDate: this.filterBirthDate, ahvNumber: this.searchAhvNumber}
-      return createQuery(
-          {},
-          [],
-          ['birthDate', 'ahvNumber'],
-          [],
-          filter,
-          this.orders
-      )
+      const search = sanitizeSearchFilter({birthDate: this.filterBirthDate, ahvNumber: this.searchAhvNumber})
+      const order = orderFilter(this.orders)
+      return {...this.filter, ...search, ...order}
     },
     orderOfName: function () {
       return this.getOrder('familyName')

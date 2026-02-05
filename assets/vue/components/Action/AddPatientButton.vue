@@ -55,7 +55,7 @@ export default {
       displaySuccess(successMessage)
     },
     focusPatient: function () {
-      document.getElementById('givenName')?.focus()
+      document.getElementById('familyName')?.focus()
     }
   }
 }

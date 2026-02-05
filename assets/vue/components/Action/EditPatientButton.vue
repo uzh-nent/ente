@@ -48,7 +48,7 @@ export default {
       this.$emit('edited')
     },
     focusPatient: function () {
-      document.getElementById('givenName')?.focus()
+      document.getElementById('familyName')?.focus()
     }
   }
 }
