@@ -92,7 +92,7 @@ export default {
   },
   computed: {
     organismChoices: function () {
-      const organisms = (this.pathogen ? this.organisms.filter(o => o.pathogen === this.pathogen) : this.organisms.filter(o => !o.pathogen))
+      const organisms = this.organisms.filter(o => o.pathogen == this.pathogen)
           .filter(organism => !organism.isHidden || this.template.organism === organism)
 
       sortOrganisms(organisms)

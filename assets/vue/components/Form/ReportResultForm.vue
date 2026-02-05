@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     filteredStandardTexts: function () {
-      return this.standardTexts.filter(s => !s.pathogen || s.pathogen === this.pathogen)
+      return this.standardTexts.filter(s => !s.pathogen || s.pathogen == this.pathogen)
     }
   }
 }
