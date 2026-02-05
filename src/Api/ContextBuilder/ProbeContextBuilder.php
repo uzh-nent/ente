@@ -24,6 +24,7 @@ final readonly class ProbeContextBuilder implements SerializerContextBuilderInte
         $request = $this->requestStack->getCurrentRequest();
         if ($resourceClass === Probe::class && $request->query->has('collections') && true === $normalization) {
             $context['groups'][] = 'probe:collections';
+            $context['groups'][] = 'observation:read';
         }
 
         return $context;

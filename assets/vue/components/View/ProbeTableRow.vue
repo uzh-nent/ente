@@ -25,12 +25,14 @@
         </template>
       </span>
       <span v-else class="d-block">
-        <b>{{ probe.animalKeeperName }}</b>
+        <b v-if="probe.animalKeeper">{{ probe.animalKeeperName }}<br/></b>
         {{ formatSpecimenSourceText(probe, $t) }}
       </span>
     </td>
     <td>
-      {{ probe.observations?.length }}
+      <short-observation-badge class="d-inline-block me-2"
+                               v-for="observation in probe.observations" :key="observation['@id']"
+                               :observation="observation" :organisms="organisms"/>
     </td>
     <td>
       <a class="btn btn-outline-secondary" :href="viewProbeLink">
@@ -52,9 +54,10 @@ import {
 } from "../../services/domain/formatter";
 import {router} from "../../services/api";
 import LabeledValue from "../Library/View/LabeledValue.vue";
+import ShortObservationBadge from "./Observation/ShortObservationBadge.vue";
 
 export default {
-  components: {LabeledValue},
+  components: {ShortObservationBadge, LabeledValue},
   props: {
     probe: {
       type: Object,
