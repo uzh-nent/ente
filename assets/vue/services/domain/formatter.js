@@ -199,7 +199,7 @@ export const formatPatientShort = function (value) {
 
 export const formatProbeService = (probe, t) => {
   if (probe.laboratoryFunction === 'PRIMARY') {
-    const identification = t('service.ecoli_identification');
+    const identification = t('probe._analysis_type_short.EC');
     const types = probe.analysisTypes
       .map(tKey => t(`probe._analysis_type_short.${tKey}`))
       .join(', ');
@@ -208,7 +208,7 @@ export const formatProbeService = (probe, t) => {
   }
 
   if (probe.laboratoryFunction === 'REFERENCE') {
-    const identification = t('service.identification_typing');
+    const identification = t('probe._analysis_type_short.IDENTIFICATION');
     const pathogenLabel = probe.pathogen
       ? t(`probe._pathogen.${probe.pathogen}`)
       : (probe.pathogenName || '');
@@ -218,3 +218,29 @@ export const formatProbeService = (probe, t) => {
 
   return '';
 };
+
+
+/**
+ * Returns the specimen source label as plain text (no HTML).
+ *
+ * @param {object} probe
+ * @param {(key: string) => string} t i18n translate function (e.g. this.$t)
+ * @returns {string}
+ */
+export function formatSpecimenSourceText(probe, t) {
+  if (!probe?.specimenSource) {
+    return probe?.specimenSourceText ?? ''
+  }
+
+  const parts = [t(`probe._specimen_source.${probe.specimenSource}`)]
+
+  if (probe.specimenSource === 'FOOD' && probe.specimenFoodType) {
+    parts.push(t(`probe._specimen_food_type.${probe.specimenFoodType}`))
+  } else if (probe.specimenSource === 'ANIMAL' && probe.specimenAnimalType) {
+    parts.push(t(`probe._specimen_animal_type.${probe.specimenAnimalType}`))
+  }
+
+  parts.push(probe.specimenTypeText)
+
+  return parts.filter(p => p).join(' ')
+}

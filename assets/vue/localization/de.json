@@ -255,6 +255,7 @@
     },
     "_analysis_type_short": {
       "IDENTIFICATION": "Ident.",
+      "EC": "E.coli",
       "EC_STEC": "STEC",
       "EC_EPEC": "EPEC",
       "EC_ETEC": "ETEC",

@@ -20,13 +20,15 @@
             {{ $t('probe.identifier') }}
           </order-table-head>
           <th>{{ $t('probe.service_request') }}</th>
+          <th>{{ $t('probe.orderer') }}</th>
+          <th>{{ $t('probe.specimen_source') }}</th>
           <th>{{ $t('observation._name') }}</th>
           <th class="w-minimal"></th>
         </tr>
         </thead>
         <tbody>
         <probe-table-row v-for="probe in items" :key="probe['@id']"
-                                :probe="probe" :organisms="organisms" />
+                                :probe="probe" :organisms="organisms" :specimens="specimens" />
         <tr v-if="totalItems === 0">
           <td colspan="200">{{ $t('_view.filter_yields_no_entries') }}</td>
         </tr>
@@ -64,6 +66,10 @@ export default {
     localStoragePersisted('probe-table', ['filter', 'orders', 'searchIdentifier', 'searchRequisitionIdentifier']),
   ],
   props: {
+    specimens: {
+      type: Array,
+      required: true
+    },
     organisms: {
       type: Array,
       required: true
