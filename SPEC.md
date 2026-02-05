@@ -94,6 +94,7 @@ features v1.2:
 - improve AllProbes view: 
   - filter by service
   - add compact view of observation
+  - extend table entries
 - improve report:
   - datum/attribution auf selbe zeile wie "schlussbericht"
   - name/ vorname patient trennen
@@ -115,7 +116,7 @@ features v1.3:
     -	add UID to animal keeper
     -	ensure address shown completely everywhere
     -	report tel number of patient
-- interne textbausteine OR separate analysis & diagnosis
+- interne textbausteine
 - add monocytogenes to primary probes
 - Statistik (until 2025) -> separate P/N probes, allow to choose date
 - Statistik (from 2025) -> allow to export csv from table search result, with observation results inline

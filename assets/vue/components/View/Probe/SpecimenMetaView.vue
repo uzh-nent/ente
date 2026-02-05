@@ -5,31 +5,7 @@
     </labeled-value>
 
     <labeled-value :label="$t('probe.specimen_source')">
-      <template v-if="!probe.specimenSource">
-        {{ probe.specimenSourceText }}
-      </template>
-      <template v-else>
-        {{ $t(`probe._specimen_source.${probe.specimenSource}`) }}
-        <template v-if="probe.specimenSource === 'FOOD'">
-          <template v-if="probe.specimenFoodType">
-            {{ $t(`probe._specimen_food_type.${probe.specimenFoodType}`) }}
-          </template>
-          <template v-else>
-            {{ probe.specimenTypeText }}
-          </template>
-        </template>
-        <template v-else-if="probe.specimenSource === 'ANIMAL'">
-          <template v-if="probe.specimenAnimalType">
-            {{ $t(`probe._specimen_animal_type.${probe.specimenAnimalType}`) }}
-          </template>
-          <template v-else>
-            {{ probe.specimenTypeText }}
-          </template>
-        </template>
-        <template v-else-if="probe.specimenSource !== 'HUMAN'">
-          {{ probe.specimenTypeText }}
-        </template>
-      </template>
+      {{formatSpecimenSourceText(probe, $t)}}
     </labeled-value>
 
     <labeled-value v-if="probe.specimenSource === 'HUMAN'" :label="$t('specimen._name')">
@@ -56,10 +32,10 @@
 
 <script>
 import LabeledValue from "../../Library/View/LabeledValue.vue";
-import {formatDate} from "../../../services/domain/formatter";
+import {formatDate, formatSpecimenSourceText} from "../../../services/domain/formatter";
 
 export default {
-  methods: {formatDate},
+  methods: {formatSpecimenSourceText, formatDate},
   components: {LabeledValue},
   props: {
     probe: {

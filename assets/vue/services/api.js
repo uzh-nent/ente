@@ -145,6 +145,7 @@ const preloadApi = {
   getAllProbes: function () {
     return {
       organisms: window.organisms.member,
+      specimens: window.specimens.member,
     }
   },
   getViewActiveProbe: function () {
