@@ -196,7 +196,10 @@ export default {
       return createSpecimenAnimalTypes(this.$t)
     },
     specimenChoices: function () {
-      return this.specimens.map(specimen => ({label: specimen.displayName, value: specimen}))
+      console.log(this.template.specimen, this.specimens)
+      return this.specimens
+          .filter(specimen => !specimen.isHidden || this.template.specimen === specimen)
+          .map(specimen => ({label: specimen.displayName, value: specimen}))
     },
   },
   watch: {

@@ -17,7 +17,7 @@
     <table class="table table-striped table-hover datatable border">
         <thead>
         <tr>
-            <th>{{ "Specimen group"|trans({}, "entity_specimen") }}</th>
+            <th class="w-minimal">{{ "Specimen group"|trans({}, "entity_specimen") }}</th>
             <th>{{ "entity.title"|trans({}, "entity_specimen") }}</th>
             <th class="w-minimal" data-orderable="false"></th>
         </tr>
@@ -25,8 +25,17 @@
         <tbody>
         {% for specimen in specimens %}
             <tr>
-                <td>{{ specimen.specimenGroup }}</td>
-                <td>{{ components.render_code(specimen) }}</td>
+                <td>
+                    {% if specimen.specimenGroup %}
+                        <span class="badge bg-purple">
+                            {{ specimen.specimenGroup }}
+                        </span>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ components.render_code(specimen) }}
+                    {{ components.render_hideable(specimen) }}
+                </td>
                 <td class="w-minimal">
                     <a class="btn btn-outline-secondary"
                        href="{{ path("reference_data_specimen_edit", {"specimen" : specimen.id}) }}">

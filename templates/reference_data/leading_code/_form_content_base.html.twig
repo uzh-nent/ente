@@ -42,8 +42,11 @@
             </div>
         </div>
 
-        <div class="mt-5">
+        <div class="d-flex mt-5">
             {{ form_row(form.submit) }}
+            <div class="ms-4 mt-2">
+                {{ form_row(form.hideable.isHidden) }}
+            </div>
         </div>
 
         {{ form_end(form) }}

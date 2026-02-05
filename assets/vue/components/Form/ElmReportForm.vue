@@ -133,8 +133,10 @@ export default {
         return null
       }
 
-      let filtered = this.leadingCodes.filter(lc => isElmRecognisedSystem(lc.system))
-      filtered = filtered.filter(lc => lc.pathogen === this.entity.observation.pathogen)
+      const filtered = this.leadingCodes.filter(lc => isElmRecognisedSystem(lc.system))
+          .filter(lc => lc.pathogen === this.entity.observation.pathogen)
+          .filter(lc => !lc.isHidden || this.template.leadingCode === lc)
+
       return filtered.map(organism => ({label: organism.displayName, value: organism}))
     },
     organismChoices: function () {
