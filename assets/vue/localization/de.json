@@ -133,6 +133,9 @@
       "open": "Öffnen",
       "opened": "Probe wieder geöffnet."
     },
+    "filter_patient": {
+      "title": "Patienten filtern"
+    },
     "add": "hinzufügen",
     "edit": "speichern",
     "remove": "entfernen",
