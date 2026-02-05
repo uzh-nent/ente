@@ -83,7 +83,6 @@ Probedaten:
 
 
 features v1.2:
-- login using EntraID/LDAP, session timeout increase
 - allow proben to select mediziner:in, verify mediziner:in is shown. check that appears as expected on PDF/ELM report
 - hide unused leading codes (or in general, stammdaten)
 - refactor linking entities:

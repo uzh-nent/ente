@@ -1,17 +1,11 @@
 login:
   title: 'Bitte einloggen.'
-  description: 'Benutzen Sie Ihr UZH Kürzel.'
+  description: 'Über das UZH SSO einloggen.'
   submit: Einloggen
   form:
-    shortname: "Kürzel"
-    password: "Passwort"
-    submit: "Login"
+    submit: "UZH Login"
   error:
-    login_failed: 'Login fehlgeschlagen.'
-    bad_credentials: 'Das Passwort ist nicht korrekt.'
-  forgot_password_help: 'Passwort vergessen? Es kann im Admin-Bereich zurückgesetzt werden.'
-  setup:
-    add_initial_user: 'Initialer Nutzer erstellt'
+    login_failed: 'Login fehlgeschlagen: %error%'
 
 logout:
   title: Logout

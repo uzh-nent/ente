@@ -26,7 +26,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[Get]
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: ['isEnabled' => SearchFilterInterface::STRATEGY_EXACT])]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface
 {
     use IdTrait;
     use TimeTrait;
@@ -43,9 +43,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::STRING, unique: true)]
     private ?string $shortname;
-
-    #[ORM\Column(type: Types::STRING, nullable: true)]
-    private ?string $password = null;
 
     #[ORM\Column(type: Types::BOOLEAN)]
     #[Groups(['user:read'])]
@@ -88,16 +85,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return $this->shortname;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
     }
 
     public function isMedicalValidation(): bool
