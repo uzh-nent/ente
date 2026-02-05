@@ -43,7 +43,7 @@ const restClient = {
     )
   },
   _normalizePayload: function (payload) {
-    // null values are not delivered in response, hence take them from patch
+    // undefined values would not be serialized, hence transform to null
     const instance = { ...payload}
     for (const prop in payload) {
       if (Object.prototype.hasOwnProperty.call(payload, prop) && payload[prop] === undefined) {
@@ -56,7 +56,7 @@ const restClient = {
     // null values are not delivered in response, hence take them from patch
     for (const prop in patch) {
       if (Object.prototype.hasOwnProperty.call(patch, prop) && patch[prop] === null) {
-        instance[prop] = null
+        instance[prop] = undefined
       }
     }
 

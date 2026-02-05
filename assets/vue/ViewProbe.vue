@@ -197,7 +197,7 @@ export default {
   computed: {
     missingObservations: function () {
       return this.probe.analysisTypes.filter(at =>
-          !this.observations.some(o => this.probe.pathogen === o.pathogen && this.probe.pathogenName === o.pathogenName && o.analysisType === at)
+          !this.observations.some(o => this.probe.pathogen == o.pathogen && this.probe.pathogenName == o.pathogenName && o.analysisType === at)
       )
     },
     hasMedicalValidation: function () {

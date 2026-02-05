@@ -35,7 +35,7 @@
           </template>
         </div>
       </form-field>
-      <template v-if="entity.pathogen === null">
+      <template v-if="entity.pathogen == null">
         <text-input id="pathogenName" type="text" class="shift-input-up" :field="fields.pathogenName"
                     v-model="entity.pathogenName"
                     @blur="blurField('pathogenName')" @update:modelValue="validateField('pathogenName')"/>
