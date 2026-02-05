@@ -19,13 +19,15 @@
             @update="updateTestObservation(missingAnalysisTypes[0], $event)"/>
       </template>
       <template v-else>
-        <div v-for="analysisType in missingAnalysisTypes" :key="analysisType" class="mt-3 p-2 bg-light">
-          <checkbox
-              :id="'toggle-' + analysisType" :label="$t('probe._analysis_type.' + analysisType)"
-              :model-value="observationEnabled(analysisType)"
-              @update:modelValue="toggleObservation(analysisType, $event)"
-          />
-          <div class="mt-3" v-if="observationEnabled(analysisType)">
+        <div v-for="analysisType in missingAnalysisTypes" :key="analysisType" class="mt-3">
+          <div class="p-2 bg-light border">
+            <checkbox
+                :id="'toggle-' + analysisType" :label="$t('probe._analysis_type.' + analysisType)"
+                :model-value="observationEnabled(analysisType)"
+                @update:modelValue="toggleObservation(analysisType, $event)"
+            />
+          </div>
+          <div class="p-2 bg-light-subtle border border-top-0" v-if="observationEnabled(analysisType)">
             <identification-form
                 v-if="analysisType === 'IDENTIFICATION'" :pathogen="probe.pathogen" :organisms="organisms"
                 :template="identificationTemplate" @update="updateIdentificationObservation($event)"/>
