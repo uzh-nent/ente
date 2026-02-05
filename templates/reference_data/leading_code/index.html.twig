@@ -31,14 +31,25 @@
         <tbody>
         {% for leadingCode in leadingCodes %}
             <tr>
-                <td>{{ components.render_code(leadingCode) }}</td>
+                <td>
+                    {{ components.render_code(leadingCode) }}
+                    {{ components.render_hideable(leadingCode) }}
+                </td>
                 <td>{{ leadingCode.pathogen|trans }}</td>
-                <td>{{ leadingCode.organismGroup }}</td>
+                <td>
+                    {% if leadingCode.organismGroup %}
+                        <span class="badge bg-cyan">
+                            {{ leadingCode.organismGroup }}
+                        </span>
+                    {% endif %}
+                </td>
                 <td>
                     {% if leadingCode.specimen %}
                         {{ components.render_code(leadingCode.specimen) }}
-                    {% else %}
-                        {{ leadingCode.specimenGroup }}
+                    {% elseif leadingCode.specimenGroup %}
+                        <span class="badge bg-purple">
+                            {{ leadingCode.specimenGroup }}
+                        </span>
                     {% endif %}
                 </td>
                 <td>{{ leadingCode.interpretationGroup|trans }}</td>

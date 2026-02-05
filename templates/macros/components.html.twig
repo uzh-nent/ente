@@ -10,3 +10,11 @@
     {{ entity.displayName }} <br/>
     {{ entity.system|trans }} <b>{{ entity.code }}</b>
 {% endmacro %}
+
+{% macro render_hideable(entity) %}
+    {% if entity.isHidden %}
+        <small>
+            <span class="mx-2 badge bg-secondary">{{ "Is hidden"|trans({}, "trait_hideable") }}</span>
+        </small>
+    {% endif %}
+{% endmacro %}

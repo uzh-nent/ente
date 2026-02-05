@@ -84,7 +84,6 @@ Probedaten:
 
 features v1.2:
 - allow proben to select mediziner:in, verify mediziner:in is shown. check that appears as expected on PDF/ELM report
-- hide unused leading codes (or in general, stammdaten)
 - refactor linking entities:
     - improve "0 Ergebnisse", "1 Ergebnisse" display; show more than 10 (e.g., for subspecies search)
     - "link" entity in search, copy inside entity

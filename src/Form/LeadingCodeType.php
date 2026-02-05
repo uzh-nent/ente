@@ -7,6 +7,7 @@ use App\Entity\Specimen;
 use App\Enum\InterpretationGroup;
 use App\Enum\Pathogen;
 use App\Form\Traits\CodedIdentifierType;
+use App\Form\Traits\HideableType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -23,6 +24,7 @@ class LeadingCodeType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $builder->add('hideable', HideableType::class, ['inherit_data' => true, 'label' => false]);
         $builder->add('codedIdentifier', CodedIdentifierType::class, ['inherit_data' => true, 'label' => false]);
         $builder->add('pathogen', EnumType::class, ['class' => Pathogen::class, 'required' => false]);
         $builder->add('organismGroup', TextType::class, ['required' => false]);

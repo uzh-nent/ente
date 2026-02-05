@@ -19,6 +19,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use App\Entity\Traits\CodedIdentifierTrait;
+use App\Entity\Traits\HideableTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
 use App\Enum\Pathogen;
@@ -29,7 +30,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    normalizationContext: ['groups' => ['coded-identifier:read', 'organism:read']],
+    normalizationContext: ['groups' => ['coded-identifier:read', 'hideable:read', 'organism:read']],
     paginationEnabled: false
 )]
 #[Get]
@@ -41,6 +42,7 @@ class Organism
     use IdTrait;
     use TimeTrait;
     use CodedIdentifierTrait;
+    use HideableTrait;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['organism:read'])]
