@@ -30,9 +30,17 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    Symfony\Component\Ldap\LdapInterface:
+        factory: ['Symfony\Component\Ldap\Ldap', 'create']
+        arguments:
+            $adapter: 'ext_ldap'
+            $config:
+                connection_string: '%env(LDAP_DSN)%'
+        tags:
+            - ldap
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-
     'App\Api\ContextBuilder\ProbeContextBuilder':
         decorates: "api_platform.serializer.context_builder"
         arguments: ['@App\Api\ContextBuilder\ProbeContextBuilder.inner']
