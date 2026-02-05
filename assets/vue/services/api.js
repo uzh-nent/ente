@@ -114,11 +114,6 @@ restClient.setupErrorNotifications()
 
 
 const router = {
-  navigateTo: function (route) {
-    window.location.href = route
-  },
-  navigateToActiveProbe: function (probe) {
-    this.navigateTo(this.probeActiveView(probe))
   },
   probeView: function (probe) {
     return '/probes/all/' + iriToId(probe['@id']) + '/view'

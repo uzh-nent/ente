@@ -166,7 +166,7 @@ export default {
         const successMessage = this.$t('_action.add_probe.added')
         displaySuccess(successMessage)
 
-        router.navigateToActiveProbe(probe)
+        window.location.href = router.probeActiveView(probe)
       } finally {
         this.isConfirming = false
       }
