@@ -93,8 +93,6 @@ features v1.2:
     - (also ensures the entity is always shown)
 - improve AllProbes view: 
   - filter by service
-  - add compact view of observation
-  - extend table entries
 - improve report:
   - datum/attribution auf selbe zeile wie "schlussbericht"
   - name/ vorname patient trennen
@@ -128,6 +126,7 @@ features v1.3:
 
 features v?:
 - improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc)
+- improve reference data: allow single reference to be in multiple collections, then prevent double storage
 - add practitioner orderer in reference lab scenario
 - let customer create service request online
 - more structured result tracking (e.g. STEC E. coli Stx1, Stx2 separate tracking) / digitize additional data from laborblatt

@@ -22,7 +22,7 @@
           <th>{{ $t('probe.service_request') }}</th>
           <th>{{ $t('probe.orderer') }}</th>
           <th>{{ $t('probe.specimen_source') }}</th>
-          <th>{{ $t('observation._name') }}</th>
+          <th class="w-observations">{{ $t('observation._name') }}</th>
           <th class="w-minimal"></th>
         </tr>
         </thead>
@@ -104,5 +104,8 @@ export default {
 }
 .mw-20 {
   max-width: 20em;
+}
+.w-observations {
+  width: 15em;
 }
 </style>
