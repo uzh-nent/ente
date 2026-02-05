@@ -1,7 +1,7 @@
 <template>
   <div>
     <form-field for-id="laboratoryFunction" :label="$t('probe.laboratory_function')"
-                :field="fields.requisitionIdentifier">
+                :field="fields.laboratoryFunction">
       <radio id="laboratoryFunction" :choices="laboratoryFunctions" :field="fields.laboratoryFunction"
              :disabled="editMode"
              v-model="entity.laboratoryFunction" @update:model-value="validateField('laboratoryFunction')"/>
@@ -100,9 +100,6 @@ export default {
         pathogenName: null,
         analysisTypes: null,
       },
-
-      searchName: "",
-      searchPostalCode: "",
     }
   },
   props: {

@@ -12,6 +12,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Doctrine\Common\Filter\SearchFilterInterface;
+use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Doctrine\Orm\Filter\ExistsFilter;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
@@ -49,9 +50,10 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: [
     'identifier' => SearchFilterInterface::STRATEGY_IPARTIAL, 'requisitionIdentifier' => SearchFilterInterface::STRATEGY_IPARTIAL,
-    'pathogen' => SearchFilterInterface::STRATEGY_EXACT,
-    'orderer' => SearchFilterInterface::STRATEGY_EXACT, 'patient' => SearchFilterInterface::STRATEGY_EXACT, 'animalKeeper' => SearchFilterInterface::STRATEGY_EXACT, 'practitioner' => SearchFilterInterface::STRATEGY_EXACT,
+    'pathogen' => SearchFilterInterface::STRATEGY_EXACT, 'pathogenName' => SearchFilterInterface::STRATEGY_IPARTIAL, 'laboratoryFunction' => SearchFilterInterface::STRATEGY_EXACT,
+    'ordererOrg' => SearchFilterInterface::STRATEGY_EXACT, 'ordererPrac' => SearchFilterInterface::STRATEGY_EXACT, 'patient' => SearchFilterInterface::STRATEGY_EXACT, 'animalKeeper' => SearchFilterInterface::STRATEGY_EXACT, 'practitioner' => SearchFilterInterface::STRATEGY_EXACT,
 ])]
+#[ApiFilter(DateFilter::class, properties: ['analysisStartDate'])]
 #[ApiFilter(ExistsFilter::class, properties: ['finishedAt'])]
 #[ApiFilter(OrderFilter::class, properties: ['identifier'])]
 class Probe

@@ -145,6 +145,9 @@
     "filter_practitioner": {
       "title": "Mediziner:innen filtern"
     },
+    "filter_probe": {
+      "title": "Proben filtern"
+    },
     "add": "hinzufügen",
     "edit": "speichern",
     "remove": "entfernen",
@@ -168,6 +171,8 @@
     "search_by_identifier": "Suche nach Probe",
     "search_by_requisition_identifier": "Suche nach Probe-Referenz",
     "no_medical_validation": "Keine medizinische Validierung.",
+    "from": "Von",
+    "until": "Bis",
     "probe_navigation": {
       "no_probes": "Keine Proben gefunden."
     }
@@ -227,6 +232,7 @@
     "finished_at": "Abgeschlossen am",
     "requisition_identifier": "Probe-Referenz",
     "analysis_start_date": "Ansatzdatum",
+    "analysis_start_date_short": "Ansatz",
     "orderer": "Auftraggeber",
     "identifier": "Identifikation",
     "_pathogen": {
