@@ -6,6 +6,7 @@
         <tr class="bg-light">
           <th colspan="100">
             <div class="d-flex flex-row reset-table-styles gap-2">
+              <filter-organization-button :template="this.filter" @filtered="filter = $event"/>
               <input type="text" class="form-control mw-5" autofocus
                      :placeholder="$t('address.postal_code')"
                      v-model="searchPostalCode">
@@ -49,9 +50,13 @@ import {orderFilter, sanitizeSearchFilter} from "../../services/query";
 import {localStoragePersisted} from "./utils/state";
 import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
+import FilterPractitionerButton from "../Action/FilterPractitionerButton.vue";
+import FilterOrganizationButton from "../Action/FilterOrganizationButton.vue";
 
 export default {
   components: {
+    FilterOrganizationButton,
+    FilterPractitionerButton,
     LoadingIndicatorOverlay,
     OrganizationTableRow,
     OrderTableHead,

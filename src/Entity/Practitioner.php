@@ -42,7 +42,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[Patch]
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: [
-    'postalCode' => SearchFilterInterface::STRATEGY_START, 'familyName' => SearchFilterInterface::STRATEGY_IPARTIAL,
+    'title' => SearchFilterInterface::STRATEGY_IPARTIAL,
+    'givenName' => SearchFilterInterface::STRATEGY_IPARTIAL, 'familyName' => SearchFilterInterface::STRATEGY_IPARTIAL,
+    'city' => SearchFilterInterface::STRATEGY_IPARTIAL, 'postalCode' => SearchFilterInterface::STRATEGY_START, 'countryCode' => SearchFilterInterface::STRATEGY_IPARTIAL,
 ])]
 #[ApiFilter(OrderFilter::class, properties: ['postalCode', 'familyName'])]
 class Practitioner
