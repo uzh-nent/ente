@@ -114,6 +114,8 @@ restClient.setupErrorNotifications()
 
 
 const router = {
+  probesView: function (query = {}) {
+    return restClient._getFullUrl('/probes/all', query)
   },
   probeView: function (probe) {
     return '/probes/all/' + iriToId(probe['@id']) + '/view'

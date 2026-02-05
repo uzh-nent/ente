@@ -24,6 +24,7 @@
           <th>{{ $t('address.city') }}</th>
           <th>{{ $t('contact.contact') }}</th>
           <th class="w-minimal"></th>
+          <th class="w-minimal"></th>
         </tr>
         </thead>
         <tbody>

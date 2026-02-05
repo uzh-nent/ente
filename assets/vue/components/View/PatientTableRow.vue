@@ -13,6 +13,9 @@
       {{ city }}
     </td>
     <td class="w-minimal text-end">
+      <add-probe-filter-button :query="{'patient': this.patient['@id']}" />
+    </td>
+    <td class="w-minimal text-end">
       <edit-patient-button :patient="patient" />
     </td>
   </tr>
@@ -21,9 +24,10 @@
 <script>
 import {formatAddressCity, formatDate, formatPatientName,} from "../../services/domain/formatter";
 import EditPatientButton from "../Action/EditPatientButton.vue";
+import AddProbeFilterButton from "./Probe/AddProbeFilterButton.vue";
 
 export default {
-  components: {EditPatientButton},
+  components: {AddProbeFilterButton, EditPatientButton},
   props: {
     patient: {
       type: Object,

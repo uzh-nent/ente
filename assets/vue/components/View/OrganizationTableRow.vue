@@ -11,6 +11,9 @@
       {{ organization.contact }}
     </td>
     <td class="w-minimal text-end">
+      <add-probe-filter-button :query="{'organization': this.organization['@id']}" />
+    </td>
+    <td class="w-minimal text-end">
       <edit-organization-button :organization="organization" />
     </td>
   </tr>
@@ -19,9 +22,10 @@
 <script>
 import {formatAddressCity} from "../../services/domain/formatter";
 import EditOrganizationButton from "../Action/EditOrganizationButton.vue";
+import AddProbeFilterButton from "./Probe/AddProbeFilterButton.vue";
 
 export default {
-  components: {EditOrganizationButton},
+  components: {AddProbeFilterButton, EditOrganizationButton},
   props: {
     organization: {
       type: Object,
