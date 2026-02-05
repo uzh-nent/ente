@@ -32,7 +32,7 @@ readonly class AzureResourceOwner implements ResourceOwnerInterface
 
     public function getShortName(): string
     {
-        return $this->data['shortname'];
+        return $this->data['onPremisesSamAccountName'];
     }
 
     public function getEmail(): string
