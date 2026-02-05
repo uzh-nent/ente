@@ -36,7 +36,7 @@ import FormField from '../../Library/FormLayout/FormField.vue'
 import Radio from "../../Library/FormInput/Radio.vue";
 import {paginatedQuery} from "../../View/utils/table";
 import {api} from "../../../services/api";
-import {createQuery} from "../../../services/query";
+import {orderFilter, sanitizeSearchFilter} from "../../../services/query";
 import {formatPractitionerAddress, formatPractitionerShort} from "../../../services/domain/formatter";
 import AddPractitionerButton from "../../Action/AddPractitionerButton.vue";
 import PractitionerView from "../../View/PractitionerView.vue";
@@ -76,9 +76,9 @@ export default {
         return null
       }
 
-      const filter = {postalCode: this.searchPostalCode, familyName: this.searchFamilyName}
-      const order = [{property: 'postalCode', order: 'asc'}, {property: 'familyName', order: 'asc'}]
-      return createQuery({}, [], ['familyName', 'postalCode'], [], filter, order)
+      const filter = sanitizeSearchFilter({postalCode: this.searchPostalCode, familyName: this.searchFamilyName})
+      const order = orderFilter([{property: 'postalCode', order: 'asc'}, {property: 'familyName', order: 'asc'}])
+      return {...filter, ...order}
     },
     practitioners: function () {
       return this.items.map(item => ({label: formatPractitionerShort(item), value: item}))

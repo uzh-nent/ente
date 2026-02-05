@@ -3,7 +3,7 @@
     <div class="form-check" :class="{'form-check-inline': inline}" v-for="choice in choices" :key="choice.value">
       <input class="form-check-input" type="checkbox" :disabled="checkDisabled(choice.value)"
              :name="id" :id="id + '_' + choice.value" :value="choice.value"
-             :checked="modelValue.includes(choice.value)"
+             :checked="modelValue?.includes(choice.value)"
              @change="toggle(choice.value, $event.target.checked)">
       <label class="form-check-label clickable" :for="id + '_' + choice.value">{{ choice.label }}</label>
     </div>
@@ -58,7 +58,7 @@ export default {
 
     },
     toggle: function (value, checked) {
-      const nextValue = this.modelValue.filter(v => v !== value)
+      const nextValue = this.modelValue?.filter(v => v !== value) ?? []
       if (checked) {
         nextValue.push(value)
       }

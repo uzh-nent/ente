@@ -45,7 +45,7 @@ import {order, paginatedQuery} from "./utils/table";
 import Pagination from "../Library/Behaviour/Pagination.vue";
 import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
 import PractitionerTableRow from "./PractitionerTableRow.vue";
-import {createQuery} from "../../services/query";
+import {orderFilter, sanitizeSearchFilter} from "../../services/query";
 import {localStoragePersisted} from "./utils/state";
 import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
@@ -73,15 +73,9 @@ export default {
   },
   computed: {
     query: function () {
-      const filter = {...this.filter, familyName: this.searchFamilyName, postalCode: this.searchPostalCode}
-      return createQuery(
-          {},
-          [],
-          ['familyName', 'postalCode'],
-          [],
-          filter,
-          this.orders
-      )
+      const search = sanitizeSearchFilter({familyName: this.searchFamilyName, postalCode: this.searchPostalCode})
+      const order = orderFilter(this.orders)
+      return {...this.filter, ...search, ...order}
     },
     orderOfFamilyName: function () {
       return this.getOrder('familyName')

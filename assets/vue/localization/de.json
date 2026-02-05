@@ -136,6 +136,8 @@
     "add": "hinzufügen",
     "edit": "speichern",
     "remove": "entfernen",
+    "set_filter": "Filter setzen",
+    "reset_filter": "Filter zurücksetzen",
     "hits": "{hits} Ergebnisse"
   },
   "_validation": {

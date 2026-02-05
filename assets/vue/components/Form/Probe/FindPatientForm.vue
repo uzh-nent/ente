@@ -37,7 +37,7 @@ import FormField from '../../Library/FormLayout/FormField.vue'
 import Radio from "../../Library/FormInput/Radio.vue";
 import {paginatedQuery} from "../../View/utils/table";
 import {api} from "../../../services/api";
-import {createQuery} from "../../../services/query";
+import { orderFilter, sanitizeSearchFilter} from "../../../services/query";
 import {formatPatientShort} from "../../../services/domain/formatter";
 import AddPatientButton from "../../Action/AddPatientButton.vue";
 import PatientView from "../../View/PatientView.vue";
@@ -90,9 +90,9 @@ export default {
         return null
       }
 
-      const filter = {birthDate: this.filterBirthDate, ahvNumber: this.searchAhvNumber}
-      const order = [{property: 'familyName', order: 'asc'}, {property: 'postalCode', order: 'asc'}]
-      return createQuery({}, [], ['birthDate', 'ahvNumber'], [], filter, order)
+      const filter = sanitizeSearchFilter({birthDate: this.filterBirthDate, ahvNumber: this.searchAhvNumber})
+      const order = orderFilter([{property: 'familyName', order: 'asc'}, {property: 'postalCode', order: 'asc'}])
+      return {...filter, ...order}
     },
     patients: function () {
       return this.items.map(item => ({label: formatPatientShort(item), value: item}))

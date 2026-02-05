@@ -46,7 +46,7 @@ import FormField from '../../Library/FormLayout/FormField.vue'
 import Radio from "../../Library/FormInput/Radio.vue";
 import {paginatedQuery} from "../../View/utils/table";
 import {api} from "../../../services/api";
-import {createQuery} from "../../../services/query";
+import {orderFilter, sanitizeSearchFilter} from "../../../services/query";
 import {formatAnimalKeeperShort} from "../../../services/domain/formatter";
 import AddAnimalKeeperButton from "../../Action/AddAnimalKeeperButton.vue";
 import AnimalKeeperView from "../../View/AnimalKeeperView.vue";
@@ -103,9 +103,9 @@ export default {
         return null
       }
 
-      const filter = {postalCode: this.searchPostalCode, name: this.searchName}
-      const order = [{property: 'postalCode', order: 'asc'}, {property: 'name', order: 'asc'}]
-      return createQuery({}, [], ['name', 'postalCode'], [], filter, order)
+      const filter = sanitizeSearchFilter({postalCode: this.searchPostalCode, name: this.searchName})
+      const order = orderFilter([{property: 'postalCode', order: 'asc'}, {property: 'name', order: 'asc'}])
+      return {...filter, ...order}
     },
     animalKeepers: function () {
       return this.items.map(item => ({label: formatAnimalKeeperShort(item), value: item}))

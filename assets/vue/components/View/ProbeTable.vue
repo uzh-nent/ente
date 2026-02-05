@@ -44,7 +44,7 @@ import {order, paginatedQuery} from "./utils/table";
 import Pagination from "../Library/Behaviour/Pagination.vue";
 import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
 import OrganizationTableRow from "./OrganizationTableRow.vue";
-import {createQuery} from "../../services/query";
+import {orderFilter, sanitizeSearchFilter} from "../../services/query";
 import {localStoragePersisted} from "./utils/state";
 import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
@@ -80,15 +80,9 @@ export default {
   },
   computed: {
     query: function () {
-      const filter = {...this.filter, identifier: this.searchIdentifier, requisitionIdentifier: this.searchRequisitionIdentifier}
-      return createQuery(
-          {},
-          [],
-          ['identifier', 'requisitionIdentifier'],
-          [],
-          filter,
-          this.orders
-      )
+      const search = sanitizeSearchFilter({identifier: this.searchIdentifier, requisitionIdentifier: this.searchRequisitionIdentifier})
+      const order = orderFilter(this.orders)
+      return {...this.filter, ...search, ...order}
     },
     orderOfIdentifier: function () {
       return this.getOrder('identifier')

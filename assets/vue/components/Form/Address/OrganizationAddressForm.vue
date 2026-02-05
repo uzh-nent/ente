@@ -36,7 +36,7 @@ import FormField from '../../Library/FormLayout/FormField.vue'
 import Radio from "../../Library/FormInput/Radio.vue";
 import {paginatedQuery} from "../../View/utils/table";
 import {api} from "../../../services/api";
-import {createQuery} from "../../../services/query";
+import {orderFilter, sanitizeSearchFilter} from "../../../services/query";
 import {formatOrganizationAddress, formatOrganizationShort} from "../../../services/domain/formatter";
 import AddOrganizationButton from "../../Action/AddOrganizationButton.vue";
 import OrganizationView from "../../View/OrganizationView.vue";
@@ -76,9 +76,9 @@ export default {
         return null
       }
 
-      const filter = {postalCode: this.searchPostalCode, name: this.searchName}
-      const order = [{property: 'postalCode', order: 'asc'}, {property: 'name', order: 'asc'}]
-      return createQuery({}, [], ['name', 'postalCode'], [], filter, order)
+      const filter = sanitizeSearchFilter({postalCode: this.searchPostalCode, name: this.searchName})
+      const order = orderFilter([{property: 'postalCode', order: 'asc'}, {property: 'name', order: 'asc'}])
+      return {...filter, ...order}
     },
     organizations: function () {
       return this.items.map(item => ({label: formatOrganizationShort(item), value: item}))

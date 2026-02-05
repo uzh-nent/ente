@@ -1,34 +1,35 @@
-import {dateStringToISOTimestamp} from "./date";
+export const sanitizeSearchFilter = function (filter) {
+  let query = {}
 
-export const createQuery = function (queryTemplate, numericProps, textProps, dateTimeProps, filter, order) {
-  let query = createFilteredQuery(queryTemplate, numericProps, textProps, dateTimeProps, filter)
-  return createOrderedQuery(query, order)
-}
-
-export const createFilteredQuery = function (queryTemplate, numericProps, textProps, dateTimeProps, filter) {
-  let query = {...queryTemplate}
-
-  numericProps.concat(...textProps).filter(p => filter[p])
-    .forEach(p => {
-      query[p] = filter[p]
-    })
-
-  dateTimeProps.forEach(prop => {
-    if (filter[prop + '[before]']) {
-      let dateString = filter[prop + '[before]'];
-      query[prop + '[before]'] = dateStringToISOTimestamp(dateString, 23, 59, 59)
+  for (const [key, value] of Object.entries(filter)) {
+    if (value !== null && value !== undefined && value !== '') {
+      query[key] = value
     }
-    if (filter[prop + '[after]']) {
-      let dateString = filter[prop + '[after]'];
-      query[prop + '[after]'] = dateStringToISOTimestamp(dateString, 0, 0, 0)
-    }
-  })
+  }
 
   return query
 }
 
-export const createOrderedQuery = function (queryTemplate, order) {
-  let query = {...queryTemplate}
+export const sanitizeFilter = function (filter) {
+  let query = {}
+
+  for (const [key, value] of Object.entries(filter)) {
+    if (Array.isArray(value) && value.length === 0) {
+      continue;
+    }
+
+    if (value === null || value === undefined || value === '') {
+      continue;
+    }
+
+    query[key] = value
+  }
+
+  return query
+}
+
+export const orderFilter = function (order) {
+  let query = {}
 
   order.forEach(order => {
     query['order[' + order.property + ']'] = order.order
