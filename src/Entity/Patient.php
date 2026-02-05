@@ -46,7 +46,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     'gender' => SearchFilterInterface::STRATEGY_EXACT,
     'givenName' => SearchFilterInterface::STRATEGY_IPARTIAL, 'familyName' => SearchFilterInterface::STRATEGY_IPARTIAL,
     'addressLines' => SearchFilterInterface::STRATEGY_IPARTIAL,
-    'city' => SearchFilterInterface::STRATEGY_IPARTIAL, 'postalCode' => SearchFilterInterface::STRATEGY_IPARTIAL, 'countryCode' => SearchFilterInterface::STRATEGY_IPARTIAL,
+    'city' => SearchFilterInterface::STRATEGY_IPARTIAL, 'postalCode' => SearchFilterInterface::STRATEGY_START, 'countryCode' => SearchFilterInterface::STRATEGY_IPARTIAL,
 ])]
 #[ApiFilter(OrderFilter::class, properties: ['givenName', 'familyName', 'birthDate'])]
 class Patient

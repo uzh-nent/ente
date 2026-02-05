@@ -133,8 +133,17 @@
       "open": "Öffnen",
       "opened": "Probe wieder geöffnet."
     },
+    "filter_animal_keeper": {
+      "title": "Tierhalter:innen filtern"
+    },
+    "filter_organization": {
+      "title": "Organisation filtern"
+    },
     "filter_patient": {
       "title": "Patienten filtern"
+    },
+    "filter_practitioner": {
+      "title": "Mediziner:innen filtern"
     },
     "add": "hinzufügen",
     "edit": "speichern",

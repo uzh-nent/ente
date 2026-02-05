@@ -39,7 +39,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[Patch]
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: [
-    'postalCode' => SearchFilterInterface::STRATEGY_START, 'name' => SearchFilterInterface::STRATEGY_IPARTIAL,
+    'name' => SearchFilterInterface::STRATEGY_IPARTIAL,
+    'addressLines' => SearchFilterInterface::STRATEGY_IPARTIAL,
+    'city' => SearchFilterInterface::STRATEGY_IPARTIAL, 'postalCode' => SearchFilterInterface::STRATEGY_START, 'countryCode' => SearchFilterInterface::STRATEGY_IPARTIAL,
 ])]
 #[ApiFilter(OrderFilter::class, properties: ['name'])]
 class AnimalKeeper
