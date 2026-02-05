@@ -91,8 +91,6 @@ features v1.2:
     - propose to sync into master data if edited
     - propose to sync from master data if not edited
     - (also ensures the entity is always shown)
-- improve AllProbes view: 
-  - filter by service
 - improve report:
   - datum/attribution auf selbe zeile wie "schlussbericht"
   - name/ vorname patient trennen

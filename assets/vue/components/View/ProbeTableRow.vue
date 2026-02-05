@@ -30,9 +30,13 @@
       </span>
     </td>
     <td>
-      <short-observation-badge class="d-inline-block me-2"
-                               v-for="observation in probe.observations" :key="observation['@id']"
-                               :observation="observation" :organisms="organisms"/>
+      {{ formatDate(probe.analysisStartDate) }}
+    </td>
+    <td>
+      <short-observation-badge
+          class="d-inline-block me-1"
+          v-for="observation in probe.observations" :key="observation['@id']"
+          :observation="observation" :organisms="organisms"/>
     </td>
     <td>
       <a class="btn btn-outline-secondary" :href="viewProbeLink">

@@ -6,6 +6,7 @@
         <tr class="bg-light">
           <th colspan="100">
             <div class="d-flex flex-row reset-table-styles gap-2">
+              <filter-probe-button :template="filter" @filtered="filter = $event"/>
               <input type="text" class="form-control mw-15" autofocus
                      :placeholder="$t('_view.search_by_identifier')"
                      v-model="searchIdentifier">
@@ -22,6 +23,7 @@
           <th>{{ $t('probe.service_request') }}</th>
           <th>{{ $t('probe.orderer') }}</th>
           <th>{{ $t('probe.specimen_source') }}</th>
+          <th class="w-minimal">{{ $t('probe.analysis_start_date_short') }}</th>
           <th class="w-observations">{{ $t('observation._name') }}</th>
           <th class="w-minimal"></th>
         </tr>
@@ -51,9 +53,11 @@ import {localStoragePersisted} from "./utils/state";
 import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
 import ProbeTableRow from "./ProbeTableRow.vue";
+import FilterProbeButton from "../Action/FilterProbeButton.vue";
 
 export default {
   components: {
+    FilterProbeButton,
     ProbeTableRow,
     LoadingIndicatorOverlay,
     OrganizationTableRow,
