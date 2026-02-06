@@ -174,18 +174,12 @@ trait PatientCopy
         $target->setFamilyName($this->patientFamilyName);
     }
 
-    public function getPatientFullAddress(?callable $genderTranslator): string
+    public function getPatientAddress(): string
     {
-        $fullName = trim($this->getPatientGivenName() . " " . $this->getPatientFamilyName());
-        if ($genderTranslator && $this->getPatientGender()) {
-            $fullName .= " (" . $genderTranslator($this->getPatientGender()) . ")";
-        }
-
         $countryPrefix = $this->getPatientCountryCode() === 'CH' ? "" : $this->getPatientCountryCode() . " ";
         $city = trim($this->getPatientPostalCode() . " " . $this->getPatientCity());
 
         return join("\n", array_filter([
-            $fullName,
             $this->getPatientAddressLines(),
             $countryPrefix . $city
         ]));

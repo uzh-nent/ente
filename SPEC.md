@@ -92,8 +92,7 @@ features v1.2:
     - propose to sync from master data if not edited
     - (also ensures the entity is always shown)
 - improve report:
-  - name/ vorname patient trennen
-  - bericht spacing improve
+  - bericht not A7 but A4
 - add freitextfeld aufenthalt/reiseland
 - add methodik: 
   - listerien: rtPCR default, MLST, WGS, GDS fakultativ

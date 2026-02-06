@@ -1,7 +1,7 @@
 export const createResults = function (probe, observations, organisms, translator) {
   const observationResults = observations.map(o => {
     if (o.analysisType === 'IDENTIFICATION') {
-      const pathogenLabel = translator('probe._pathogen.' + o.pathogen);
+      const pathogenLabel = o.pathogen ? translator('probe._pathogen.' + o.pathogen) : o.pathogenName;
 
       let result = translator('report._interpretation.NONE')
       if (o.interpretation) {
@@ -36,7 +36,7 @@ export const createResults = function (probe, observations, organisms, translato
       const result = translator('report._interpretation.PENDING')
 
       if (analysisType === 'IDENTIFICATION') {
-        const pathogenLabel = translator('probe._pathogen.' + probe.pathogen);
+        const pathogenLabel = probe.pathogen ? translator('probe._pathogen.' + probe.pathogen) : probe.pathogenName;
         return {
           analysis: translator('report.service.identification_of') + " " + pathogenLabel,
           method: mapToIdentificationMethodCode(probe.pathogen),
@@ -86,6 +86,4 @@ const mapToIdentificationMethodCode = function (pathogen) {
     default:
       return null
   }
-
-  // TODO no E.Coli
 }
