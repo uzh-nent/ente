@@ -51,7 +51,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ApiFilter(SearchFilter::class, properties: [
     'identifier' => SearchFilterInterface::STRATEGY_IPARTIAL, 'requisitionIdentifier' => SearchFilterInterface::STRATEGY_IPARTIAL,
     'pathogen' => SearchFilterInterface::STRATEGY_EXACT, 'pathogenName' => SearchFilterInterface::STRATEGY_IPARTIAL, 'laboratoryFunction' => SearchFilterInterface::STRATEGY_EXACT,
-    'ordererOrg' => SearchFilterInterface::STRATEGY_EXACT, 'ordererPrac' => SearchFilterInterface::STRATEGY_EXACT, 'patient' => SearchFilterInterface::STRATEGY_EXACT, 'animalKeeper' => SearchFilterInterface::STRATEGY_EXACT, 'practitioner' => SearchFilterInterface::STRATEGY_EXACT,
+    'ordererOrg' => SearchFilterInterface::STRATEGY_EXACT, 'ordererPrac' => SearchFilterInterface::STRATEGY_EXACT, 'patient' => SearchFilterInterface::STRATEGY_EXACT, 'animalKeeper' => SearchFilterInterface::STRATEGY_EXACT,
 ])]
 #[ApiFilter(DateFilter::class, properties: ['analysisStartDate'])]
 #[ApiFilter(ExistsFilter::class, properties: ['finishedAt'])]

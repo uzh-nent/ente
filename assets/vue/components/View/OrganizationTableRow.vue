@@ -11,7 +11,7 @@
       {{ organization.contact }}
     </td>
     <td class="w-minimal text-end">
-      <add-probe-filter-button :query="{'organization': this.organization['@id']}" />
+      <add-probe-filter-button :query="{'ordererOrg': this.organization['@id']}" />
     </td>
     <td class="w-minimal text-end">
       <edit-organization-button :organization="organization" />
