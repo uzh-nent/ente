@@ -26,12 +26,21 @@ use Famoser\PdfGenerator\Frontend\Resource\Font;
 use Famoser\PdfGenerator\Frontend\Resource\Image;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+function mm2p(mixed $mm): mixed
+{
+    if (is_array($mm)) {
+        return array_map(__FUNCTION__, $mm);
+    }
+
+    return $mm * 2.83464646465;
+}
+
 class PdfService implements PdfServiceInterface
 {
-    private float $fontSize = 4;
-    private float $smallFontSize = 4 / 1.3;
-    private float $tinyFontSize = 4 / 1.6;
-    private float $spacer = 6;
+    private float $fontSize = 4 * 2.83464646465;
+    private float $smallFontSize = 4 * 2.83464646465 / 1.3;
+    private float $tinyFontSize = 4 * 2.83464646465 / 1.6;
+    private float $spacer = 6 * 2.83464646465;
     private TextStyle $textStyle;
     private TextStyle $emphasisTextStyle;
     private TextStyle $secondaryTextStyle;
@@ -60,8 +69,8 @@ class PdfService implements PdfServiceInterface
 
     public function generateWorksheet(Probe $probe): string
     {
-        $document = new Document(pageSize: [210, 297], margin: 15);
-        $contentWidth = 210 - 2 * 15;
+        $document = new Document(pageSize: mm2p([210, 297]), margin: mm2p(15));
+        $contentWidth = mm2p(210 - 2 * 15);
 
         $flow = new Flow(FlowDirection::COLUMN);
 
@@ -81,7 +90,7 @@ class PdfService implements PdfServiceInterface
         $document->add($flow);
 
         for ($i = 0; $i < $document->getPageCount(); $i++) {
-            $printer = $document->createPrinter(-5, $i);
+            $printer = $document->createPrinter(mm2p(-5), $i);
             $printer->printText($this->organizationName, $this->textStyle, $this->smallFontSize);
         }
 
@@ -90,8 +99,8 @@ class PdfService implements PdfServiceInterface
 
     public function generateReport(Report $report): string
     {
-        $document = new Document(pageSize: [210, 297], margin: [32, 80, 22, 38]);
-        $contentWidth = 210 - (32 + 22);
+        $document = new Document(pageSize: mm2p([210, 297]), margin: mm2p([32, 80, 22, 38]));
+        $contentWidth = mm2p(210 - (32 + 22));
 
         $layoutJson = file_get_contents($this->reportResourcesDir . "/layout.json");
         $layout = json_decode($layoutJson, true);
@@ -140,7 +149,7 @@ class PdfService implements PdfServiceInterface
         }
 
         for ($i = 0; $i < $document->getPageCount(); $i++) {
-            $this->printReportLayout($document, $i, $report, $layout, $contentWidth);
+            $this->printReportLayout($document, $i, $layout, $contentWidth);
         }
 
         return $document->save();
@@ -165,7 +174,7 @@ class PdfService implements PdfServiceInterface
         $innerFlow = new Flow(FlowDirection::ROW, $gap);
 
         $specimenMetaElement = $this->createSpecimenMetaElement($report->getProbe());
-        $specimenMetaColumnWidth = 66;
+        $specimenMetaColumnWidth = mm2p(66);
         $specimenMetaElement->setWidth($specimenMetaColumnWidth);
         $innerFlow->add($specimenMetaElement);
 
@@ -194,35 +203,36 @@ class PdfService implements PdfServiceInterface
         $text->addSpan($layout['greeting'] . "\n", $this->textStyle, $this->fontSize);
         $text->addSpan($report->getCreatedBy()->getName(), $this->textStyle, $this->fontSize);
         $block = new Block($text);
-        $block->setWidth($contentWidth - 20);
+        $block->setWidth($contentWidth - mm2p(20));
         $document->add($text);
 
         if ($report->getClaimCertification()) {
             $printer = $document->createPrinter();
-            $certificationPrinter = $printer->position(left: $contentWidth - 15, top: -15 + $this->spacer / 2);
+            $imgSize = mm2p(15);
+            $certificationPrinter = $printer->position(left: $contentWidth - $imgSize, top: -$imgSize + $this->spacer / 2);
             $certificationImagePath = $this->reportResourcesDir . "/certification.png";
-            $certificationPrinter->printImage(15, 15, $certificationImagePath);
+            $certificationPrinter->printImage($imgSize, $imgSize, $certificationImagePath);
         }
     }
 
     /**
      * @param mixed[] $layout
      */
-    private function printReportLayout(Document $document, int $pageIndex, Report $report, array $layout, float $contentWidth): void
+    private function printReportLayout(Document $document, int $pageIndex, array $layout, float $contentWidth): void
     {
         $printer = $document->setPosition(0, $pageIndex)->createPrinter();
-        $noMarginPrinter = $printer->position(-32, -80); // minus the left / top margins
+        $noMarginPrinter = $printer->position(mm2p(-32), mm2p(-80)); // minus the left / top margins
 
         // UZH logo
         $path = $this->reportResourcesDir . '/logo.png';
-        $imagePlacement = $this->createImagePlacement($path, 50);
-        $logoPrinter = $noMarginPrinter->position(12.2, 4);
+        $imagePlacement = $this->createImagePlacement($path, mm2p(50));
+        $logoPrinter = $noMarginPrinter->position(mm2p(12.2), mm2p(4));
         $logoPrinter->print($imagePlacement);
 
         // vetsuisse logo
         $path = $this->reportResourcesDir . '/logo_faculty.png';
-        $imagePlacement = $this->createImagePlacement($path, 15);
-        $facultyLogoPrinter = $noMarginPrinter->position(9, 165);
+        $imagePlacement = $this->createImagePlacement($path, mm2p(15));
+        $facultyLogoPrinter = $noMarginPrinter->position(mm2p(9), mm2p(165));
         $facultyLogoPrinter->print($imagePlacement);
 
         // department
@@ -263,9 +273,9 @@ class PdfService implements PdfServiceInterface
         $flow->add($text);
 
         // size & print
-        $allocationVisitor = new AllocationVisitor(89 - 22, 270);
+        $allocationVisitor = new AllocationVisitor(mm2p(89 - 22), mm2p(270));
         $allocation = $flow->accept($allocationVisitor);
-        $logoPrinter = $noMarginPrinter->position(121, 8); // 121 + 89 = 210 = A4 width
+        $logoPrinter = $noMarginPrinter->position(mm2p(121), mm2p(8)); // 121 + 89 = 210 = A4 width
         $logoPrinter->place($allocation);
 
         // footer
@@ -278,9 +288,9 @@ class PdfService implements PdfServiceInterface
         $flow->add($text);
 
         // size & print footer
-        $allocationVisitor = new AllocationVisitor($contentWidth, 270);
+        $allocationVisitor = new AllocationVisitor($contentWidth, mm2p(270));
         $allocation = $flow->accept($allocationVisitor);
-        $footerPrinter = $printer->position(top: 179 + $this->spacer); // 297 - 80 - 38 (the two vertical margins)
+        $footerPrinter = $printer->position(top: mm2p(179) + $this->spacer); // 297 - 80 - 38 (the two vertical margins)
         $footerPrinter->place($allocation);
     }
 
@@ -297,17 +307,17 @@ class PdfService implements PdfServiceInterface
         $flow->add($text);
 
         $this->addSpace($flow, $this->spacer / 4);
-        $this->addDivider($flow, 74);
+        $this->addDivider($flow, mm2p(74));
         $this->addSpace($flow, $this->spacer / 2);
 
         $text = new Text();
         $text->addSpan($address, $this->textStyle, $this->fontSize, 1);
         $addressBlock = new Block($text);
-        $addressBlock->setWidth(74);
+        $addressBlock->setWidth(mm2p(74));
         $flow->add($addressBlock);
 
         // hardcoded address position
-        $document->setPosition(-33); // 80-33 = 47; 47 is where the address should start
+        $document->setPosition(-mm2p(33)); // 80-33 = 47; 47 is where the address should start
         $document->add($flow);
     }
 
@@ -378,7 +388,7 @@ class PdfService implements PdfServiceInterface
 
             if ($analysisType === AnalysisType::IDENTIFICATION && in_array($probe->getPathogen(), [Pathogen::SHIGELLA, Pathogen::YERSINIA, Pathogen::LISTERIA_MONOCYTOGENES])) {
                 $path = $this->worksheetResourcesDir . '/' . $probe->getPathogen()->name . '.png';
-                $imagePlacement = $this->createImagePlacement($path, 210 - 2 * 15);
+                $imagePlacement = $this->createImagePlacement($path, mm2p(210 - 2 * 15));
 
                 $block = new ContentBlock($imagePlacement);
                 $block->setMargin([0, $this->spacer / 2, 0, 0]);
@@ -409,7 +419,7 @@ class PdfService implements PdfServiceInterface
         return new ImagePlacement($targetWidth, $targetHeight, $image);
     }
 
-    private function addSpace(Flow $flow, float $height = 10): void
+    private function addSpace(Flow $flow, float $height): void
     {
         $block = new ContentBlock();
         $block->setMargin([0, $height, 0, 0]);
@@ -418,7 +428,7 @@ class PdfService implements PdfServiceInterface
 
     private function addDivider(Flow $flow, float $width): void
     {
-        $dividerStyle = new DrawingStyle(0.2);
+        $dividerStyle = new DrawingStyle(mm2p(0.2));
         $divider = new Rectangle($width, 0, $dividerStyle);
         $flow->add(new ContentBlock($divider));
     }
@@ -435,14 +445,15 @@ class PdfService implements PdfServiceInterface
             $analysisTypes = array_map(fn(AnalysisType $v) => $v->trans($this->translator), $probe->getAnalysisTypes());
             $value = Pathogen::ESCHERICHIA_COLI->trans($this->translator) . " " . join(", ", $analysisTypes);
         }
-        $flow->add($this->createLabeledValue($label, $value, primary: true, labelWidth: 25));
+        $labelWidth = mm2p(25);
+        $flow->add($this->createLabeledValue($label, $value, primary: true, labelWidth: $labelWidth));
 
         $label = $this->translator->trans("Orderer", [], "entity_probe");
         $value = $probe->getOrdererOrg() ? $probe->getOrdererOrgShortAddress() : $probe->getOrdererPracShortAddress();
-        $flow->add($this->createLabeledValue($label, $value, primary: true, labelWidth: 25));
+        $flow->add($this->createLabeledValue($label, $value, primary: true, labelWidth: $labelWidth));
 
         $label = $this->translator->trans("Requisition identifier", [], "trait_probe_service_request");
-        $flow->add($this->createLabeledValue($label, $probe->getRequisitionIdentifier(), primary: true, boldValue: true, labelWidth: 25));
+        $flow->add($this->createLabeledValue($label, $probe->getRequisitionIdentifier(), primary: true, boldValue: true, labelWidth: $labelWidth));
 
         if ($copyToAddresses) {
             $shortAddresses = [];
@@ -452,20 +463,20 @@ class PdfService implements PdfServiceInterface
             }
 
             $label = $this->translator->trans("report.copy_to", [], "report");
-            $flow->add($this->createLabeledValue($label, implode("; ", $shortAddresses), primary: true, labelWidth: 25));
+            $flow->add($this->createLabeledValue($label, implode("; ", $shortAddresses), primary: true, labelWidth: $labelWidth));
         }
     }
 
     private function createSpecimenMetaElement(Probe $probe): AbstractElement
     {
-        $flow = new Flow(FlowDirection::COLUMN, 0.2);
+        $flow = new Flow(FlowDirection::COLUMN, mm2p(0.2));
 
         $label = $this->translator->trans("entity.title", [], "entity_probe");
         $text = $this->createLabel($label);
         $flow->add($text);
-        $this->addSpace($flow, $this->spacer / 2 - 0.2);
+        $this->addSpace($flow, $this->spacer / 2 - mm2p(0.2));
 
-        $labelWidth = 26;
+        $labelWidth = mm2p(26);
         $label = $this->translator->trans("Specimen collection date", [], "trait_probe_specimen_meta");
         $value = $probe->getSpecimenCollectionDate()?->format("d.m.Y") ?? "";
         $flow->add($this->createLabeledValue($label, $value, labelWidth: $labelWidth));
@@ -512,7 +523,7 @@ class PdfService implements PdfServiceInterface
     {
         $ordererFlow = new Flow(FlowDirection::COLUMN);
         if ($probe->getSpecimenSource() === SpecimenSource::HUMAN) {
-            $labelWidth = 23;
+            $labelWidth = mm2p(23);
 
             $label = $this->translator->trans("entity.title", [], "entity_patient");
             $ordererFlow->add($this->createLabel($label));
@@ -533,7 +544,7 @@ class PdfService implements PdfServiceInterface
             if ($probe->getPatientGender()) {
                 $label = $this->translator->trans("enum.title", [], "enum_administrative_gender");
                 $value = $probe->getPatientGender()->trans($this->translator);
-                $block = $this->createLabeledValue($label, $value, labelWidth: 18);
+                $block = $this->createLabeledValue($label, $value, labelWidth: mm2p(18));
                 $block->setMargin([$this->spacer / 2, 0, 0, 0]);
                 $innerFlow->add($block);
             }
@@ -572,7 +583,7 @@ class PdfService implements PdfServiceInterface
 
     private function addReportServiceTimeElement(Report $report, Flow $flow): void
     {
-        $innerFlow = new Flow(FlowDirection::ROW, 4);
+        $innerFlow = new Flow(FlowDirection::ROW, mm2p(4));
 
         $label = $this->translator->trans("Received date", [], "trait_probe_service_time");
         $value = $report->getProbe()->getReceivedDate()?->format("d.m.Y") ?? "";
