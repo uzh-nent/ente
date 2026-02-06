@@ -174,13 +174,13 @@ class PdfService implements PdfServiceInterface
         $innerFlow = new Flow(FlowDirection::ROW, $gap);
 
         $specimenMetaElement = $this->createSpecimenMetaElement($report->getProbe());
-        $specimenMetaColumnWidth = mm2p(66);
+        $specimenMetaColumnWidth = mm2p(62);
         $specimenMetaElement->setWidth($specimenMetaColumnWidth);
         $innerFlow->add($specimenMetaElement);
 
         $specimenSourceElement = $this->createSpecimenSourceElement($report->getProbe());
         if ($specimenSourceElement) {
-            $specimenSourceElement->setWidth($width - $specimenMetaColumnWidth - $gap);
+            $specimenSourceElement->setWidth($width - $specimenMetaColumnWidth - $gap - 1);
             $innerFlow->add($specimenSourceElement);
         }
 
@@ -341,7 +341,7 @@ class PdfService implements PdfServiceInterface
         $specimenMetaElement->setWidth($width / 3);
         $innerFlow->add($specimenMetaElement);
 
-        $specimenSourceElement = $this->createSpecimenSourceElement($probe);
+        $specimenSourceElement = $this->createSpecimenSourceElement($probe, true);
         if ($specimenSourceElement) {
             $specimenSourceElement->setWidth($width / 3 - $gap);
             $innerFlow->add($specimenSourceElement);
@@ -396,7 +396,7 @@ class PdfService implements PdfServiceInterface
             } else {
                 $text = new Text();
                 $result = $this->translator->trans("content.result", [], "report");
-                $text->addSpan($result . ":", $this->textStyle);
+                $text->addSpan($result . ":", $this->textStyle, $this->smallFontSize);
 
                 $block = new Block($text);
                 $block->setMargin([$this->spacer, $this->spacer / 2, 0, 0]);
@@ -519,7 +519,7 @@ class PdfService implements PdfServiceInterface
         return $flow;
     }
 
-    private function createSpecimenSourceElement(Probe $probe): ?AbstractElement
+    private function createSpecimenSourceElement(Probe $probe, bool $singleColumn = false): ?AbstractElement
     {
         $ordererFlow = new Flow(FlowDirection::COLUMN);
         if ($probe->getSpecimenSource() === SpecimenSource::HUMAN) {
@@ -537,23 +537,25 @@ class PdfService implements PdfServiceInterface
                 $ordererFlow->add($this->createLabeledValue($label, $probe->getPatientAhvNumberFormatted(), labelWidth: $labelWidth));
             }
 
-            $innerFlow = new Flow(FlowDirection::ROW);
+            $innerFlow = new Flow($singleColumn ? FlowDirection::COLUMN : FlowDirection::ROW);
             $label = $this->translator->trans("Birth date", [], "entity_patient");
-            $innerFlow->add($this->createLabeledValue($label, $probe->getPatientBirthDate()?->format('d.m.Y'), labelWidth: $labelWidth));
+            $birthDateBlock = $this->createLabeledValue($label, $probe->getPatientBirthDate()?->format('d.m.Y'), labelWidth: $labelWidth);
+            $innerFlow->add($birthDateBlock);
 
             if ($probe->getPatientGender()) {
+                $birthDateBlock->setMargin([0, 0, $this->spacer, 0]);
+
                 $label = $this->translator->trans("enum.title", [], "enum_administrative_gender");
                 $value = $probe->getPatientGender()->trans($this->translator);
-                $block = $this->createLabeledValue($label, $value, labelWidth: mm2p(18));
-                $block->setMargin([$this->spacer / 2, 0, 0, 0]);
+                $block = $this->createLabeledValue($label, $value, labelWidth: $singleColumn ? $labelWidth : mm2p(18));
                 $innerFlow->add($block);
             }
             $ordererFlow->add($innerFlow);
 
-            $label = $this->translator->trans("Given name", [], "trait_person");
-            $ordererFlow->add($this->createLabeledValue($label, $probe->getPatientGivenName(), labelWidth: $labelWidth));
             $label = $this->translator->trans("Family name", [], "trait_person");
             $ordererFlow->add($this->createLabeledValue($label, $probe->getPatientFamilyName(), labelWidth: $labelWidth));
+            $label = $this->translator->trans("Given name", [], "trait_person");
+            $ordererFlow->add($this->createLabeledValue($label, $probe->getPatientGivenName(), labelWidth: $labelWidth));
 
             $ordererFlow->add($this->createValue($probe->getPatientAddress()));
         } elseif ($probe->getSpecimenSource() === SpecimenSource::ANIMAL) {

@@ -91,8 +91,6 @@ features v1.2:
     - propose to sync into master data if edited
     - propose to sync from master data if not edited
     - (also ensures the entity is always shown)
-- improve report:
-  - bericht not A7 but A4
 - add freitextfeld aufenthalt/reiseland
 - add methodik: 
   - listerien: rtPCR default, MLST, WGS, GDS fakultativ
