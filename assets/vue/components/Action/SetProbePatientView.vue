@@ -3,7 +3,7 @@
       <actionable-preview class="mb-2" v-if="patient">
         <patient-view :patient="patient"/>
         <template #actions>
-          <edit-linked-patient-button :entity="patient" @update="patientOverride = $event" />
+          <edit-linked-patient-button class="m-2" :entity="patient" @update="patientOverride = $event" />
         </template>
       </actionable-preview>
 
@@ -44,10 +44,12 @@ import EditPatientButton from "./EditPatientButton.vue";
 import {probeConverter} from "../../services/domain/converters";
 import EditLinkedPatientButton from "./EditLinkedPatientButton.vue";
 import DateTimeInput from "../Library/FormInput/DateTimeInput.vue";
+import EditLinkedAnimalKeeperButton from "./EditLinkedAnimalKeeperButton.vue";
 
 export default {
   emits: ['update'],
   components: {
+    EditLinkedAnimalKeeperButton,
     DateTimeInput,
     EditLinkedPatientButton,
     ActionablePreview, EditPatientButton,

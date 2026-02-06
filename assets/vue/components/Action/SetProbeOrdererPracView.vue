@@ -3,7 +3,7 @@
       <actionable-preview class="mb-2" v-if="practitioner">
         <practitioner-view :practitioner="practitioner"/>
         <template #actions>
-          <edit-linked-practitioner-button :entity="practitioner" @update="practitionerOverride = $event" />
+          <edit-linked-practitioner-button class="m-2" :entity="practitioner" @update="practitionerOverride = $event" />
         </template>
       </actionable-preview>
 
@@ -44,10 +44,12 @@ import PatientView from "../View/PatientView.vue";
 import EditPractitionerButton from "./EditPractitionerButton.vue";
 import {probeConverter} from "../../services/domain/converters";
 import EditLinkedPractitionerButton from "./EditLinkedPractitionerButton.vue";
+import EditLinkedAnimalKeeperButton from "./EditLinkedAnimalKeeperButton.vue";
 
 export default {
   emits: ['update'],
   components: {
+    EditLinkedAnimalKeeperButton,
     EditLinkedPractitionerButton,
     EditPractitionerButton,
     PatientView, ActionablePreview, EditPatientButton,

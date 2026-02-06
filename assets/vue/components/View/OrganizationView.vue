@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex gap-2 flex-column">
+  <div class="d-flex gap-2 flex-column bg-light p-2">
     <span v-if="organization.name" class="d-block">
       <b>{{ organization.name }}</b>
     </span>

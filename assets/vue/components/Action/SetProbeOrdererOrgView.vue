@@ -3,7 +3,7 @@
       <actionable-preview class="mb-2" v-if="organization">
         <organization-view :organization="organization"/>
         <template #actions>
-          <edit-linked-organization-button :entity="organization" @update="organizationOverride = $event" />
+          <edit-linked-organization-button class="m-2" :entity="organization" @update="organizationOverride = $event" />
         </template>
       </actionable-preview>
 
