@@ -3,7 +3,7 @@
       <actionable-preview class="mb-2" v-if="animalKeeper">
         <animal-keeper-view :animal-keeper="animalKeeper"/>
         <template #actions>
-          <edit-linked-animal-keeper-button :entity="animalKeeper" @update="animalKeeperOverride = $event" />
+          <edit-linked-animal-keeper-button class="m-2" :entity="animalKeeper" @update="animalKeeperOverride = $event" />
         </template>
       </actionable-preview>
 

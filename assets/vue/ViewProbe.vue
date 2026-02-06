@@ -2,59 +2,59 @@
   <div class="row" v-if="probe">
     <div class="col-lg-4">
       <h3>{{ $t('probe.service_request') }}</h3>
-      <actionable-view>
+      <actionable-card>
         <service-request-view :probe="probe"/>
         <template v-slot:actions v-if="!probe.finishedAt">
           <edit-probe-service-request-button :probe="probe"/>
         </template>
-      </actionable-view>
+      </actionable-card>
 
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
       <template v-if="probe.ordererOrg">
-        <actionable-view>
+        <actionable-card>
           <orderer-view :probe="probe"/>
           <template v-slot:actions v-if="!probe.finishedAt">
             <edit-probe-orderer-button :probe="probe"/>
           </template>
-        </actionable-view>
+        </actionable-card>
       </template>
 
       <h3 class="mt-5">{{ $t('probe._name') }}</h3>
-      <actionable-view>
+      <actionable-card>
         <specimen-meta-view :probe="probe" :specimens="specimens"/>
         <template v-slot:actions v-if="!probe.finishedAt">
           <edit-probe-specimen-meta-button :specimens="specimens" :probe="probe"/>
         </template>
-      </actionable-view>
+      </actionable-card>
 
       <template v-if="probe.specimenSource === 'HUMAN'">
         <h3 class="mt-5">{{ $t('patient._name') }}</h3>
-        <actionable-view>
+        <actionable-card>
           <patient-view :probe="probe"/>
           <template v-slot:actions v-if="!probe.finishedAt">
             <edit-probe-patient-button :probe="probe"/>
           </template>
-        </actionable-view>
+        </actionable-card>
       </template>
 
       <template v-if="probe.specimenSource === 'ANIMAL'">
         <h3 class="mt-5">{{ $t('animal_keeper._name') }}</h3>
-        <actionable-view>
+        <actionable-card>
           <animal-view :probe="probe"/>
           <template v-slot:actions v-if="!probe.finishedAt">
             <edit-probe-animal-button :probe="probe"/>
           </template>
-        </actionable-view>
+        </actionable-card>
       </template>
     </div>
     <div class="col-lg-8">
       <h3>{{ $t('probe.progress') }}</h3>
-      <actionable-view class="w-50">
+      <actionable-card class="w-50">
         <service-time-view :probe="probe" :users="users"/>
         <template v-slot:actions v-if="!probe.finishedAt">
           <edit-probe-service-time-button :probe="probe"/>
         </template>
-      </actionable-view>
+      </actionable-card>
 
       <download-probe-worksheet-button class="mt-5" :probe="probe" :has-observations="observations.length > 0"/>
 
@@ -114,7 +114,6 @@ import {preloadApi} from './services/api'
 import ServiceRequestView from "./components/View/Probe/ServiceRequestView.vue";
 import PatientView from "./components/View/Probe/PatientView.vue";
 import AnimalView from "./components/View/Probe/AnimalView.vue";
-import ActionableView from "./components/Library/View/ActionableView.vue";
 import EditProbeServiceRequestButton from "./components/Action/EditProbeServiceRequestButton.vue";
 import EditProbePatientButton from "./components/Action/EditProbePatientButton.vue";
 import EditProbeAnimalButton from "./components/Action/EditProbeAnimalButton.vue";
@@ -137,10 +136,12 @@ import ObservationTableRow from "./components/View/ObservationTableRow.vue";
 import ObservationTable from "./components/View/ObservationTable.vue";
 import TooltipWrap from "./components/Library/View/TooltipWrap.vue";
 import OrdererView from "./components/View/Probe/OrdererView.vue";
+import ActionableCard from "./components/Library/View/ActionableCard.vue";
 
 export default {
   emits: ['added'],
   components: {
+    ActionableCard,
     AnimalView,
     OrdererView,
     TooltipWrap,
@@ -164,7 +165,6 @@ export default {
     SpecimenMetaView,
     EditProbePatientButton,
     EditProbeServiceRequestButton,
-    ActionableView,
     PatientView,
     ServiceRequestView,
   },

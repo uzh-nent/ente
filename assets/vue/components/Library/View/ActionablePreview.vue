@@ -1,17 +1,26 @@
 <template>
-  <div class="text-bg-light p-2 d-flex">
-    <div class="flex-grow-1">
-      <slot />
-    </div>
-    <div>
-    <slot name="actions"/>
+  <div class="preview">
+    <slot/>
+    <div class="actions">
+      <slot name="actions"/>
     </div>
   </div>
 </template>
 
 <script>
 
-export default {
-}
+export default {}
 
 </script>
+
+<style scoped>
+.preview {
+  position: relative;
+}
+
+.actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+</style>
