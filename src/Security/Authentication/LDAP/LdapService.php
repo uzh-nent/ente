@@ -9,7 +9,7 @@ use Symfony\Component\Ldap\Entry;
 use Symfony\Component\Ldap\Exception\LdapException;
 use Symfony\Component\Ldap\LdapInterface;
 
-readonly class LDAPService
+readonly class LdapService implements LdapServiceInterface
 {
     private const DC = 'DC=d,DC=uzh,DC=ch';
     private const DN_USERS = 'OU=Users,OU=Users UZH,' . self::DC;
