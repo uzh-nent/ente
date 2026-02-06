@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Security\Authentication;
 
 use App\Helper\DoctrineHelper;
-use App\Security\Authentication\LDAP\LDAPService;
+use App\Security\Authentication\LDAP\LdapServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use League\OAuth2\Client\Token\AccessToken;
@@ -36,14 +36,13 @@ class Authenticator extends AbstractAuthenticator
     private const SESSION_KEY_REDIRECT_AFTER_LOGIN = 'redirect_after_login';
 
     public function __construct(
-        private readonly AzureProvider         $azureProvider,
-        private readonly LDAPService           $LDAPService,
+        private readonly AzureProvider $azureProvider,
+        private readonly LdapServiceInterface $LDAPService,
         #[Autowire(env: 'LDAP_USER_WHITELIST_GROUP')]
-        private readonly string                $ldapUserWhitelistGroup,
+        private readonly string $ldapUserWhitelistGroup,
         private readonly UrlGeneratorInterface $urlGenerator,
-        private readonly ManagerRegistry       $managerRegistry,
-    )
-    {
+        private readonly ManagerRegistry $managerRegistry,
+    ) {
     }
 
     public function supports(Request $request): ?bool
@@ -122,8 +121,7 @@ class Authenticator extends AbstractAuthenticator
     public function redirectToAuthentication(
         Request $request,
         ?string $redirectAfterSuccessfulLogin = null,
-    ): RedirectResponse
-    {
+    ): RedirectResponse {
         $authorizationUrl = $this->azureProvider->getAuthorizationUrl();
         $request->getSession()->set(self::SESSION_KEY_OAUTH_STATE, $this->azureProvider->getState());
         $request->getSession()->set(self::SESSION_KEY_REDIRECT_AFTER_LOGIN, $redirectAfterSuccessfulLogin);
