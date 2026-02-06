@@ -149,15 +149,15 @@ class PdfService implements PdfServiceInterface
 
     private function addReportHeader(Report $report, Flow $flow): void
     {
+        $innerFlow = new Flow(FlowDirection::ROW);
+
         $text = new Text();
+        $text->addSpan($report->getProbe()->getIdentifier() . " - " . $report->getTitle() . "  ", $this->boldTextStyle, $this->fontSize * 1.6);
         $text->addSpan($report->getDate()->format("d.m.Y") . " / " . $report->getCreatedBy()->getAbbreviation(), $this->textStyle, $this->fontSize);
-        $flow->add($text);
 
-        $this->addSpace($flow, $this->spacer);
+        $innerFlow->add($text);
 
-        $text = new Text();
-        $text->addSpan($report->getProbe()->getIdentifier() . " - " . $report->getTitle(), $this->boldTextStyle, $this->fontSize * 1.6);
-        $flow->add($text);
+        $flow->add($innerFlow);
     }
 
     private function addReportProbeMeta(Report $report, Flow $flow, float $width): void
