@@ -6,6 +6,7 @@
         <button v-if="abort" type="submit" :disabled="!canAbort" @click="tryAbort" class="btn btn-light me-auto">
           {{ abortLabel ?? $t('_action.abort') }}
         </button>
+        <slot name="footer-center" />
         <button type="submit" :disabled="!canConfirm || isConfirming || !show" @click="tryConfirm"
                 :class="'btn btn-' + color">
           <span class="d-flex gap-3 align-items-center">

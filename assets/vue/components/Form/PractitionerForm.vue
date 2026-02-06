@@ -42,4 +42,6 @@ export default {
     }
   }
 }
+
+export const practitionerFields = [...titleFields, ...personFields, ...addressFields, ...contactFields]
 </script>

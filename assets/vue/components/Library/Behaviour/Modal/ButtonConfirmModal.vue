@@ -10,6 +10,9 @@
         :disable-loading-animation="disableLoadingAnimation"
         :can-abort="canAbort" :abort="abort" :abort-label="abortLabel">
       <slot/>
+      <template #footer-center>
+        <slot name="footer-center" />
+      </template>
     </confirm-modal>
   </button>
 </template>

@@ -12,17 +12,9 @@
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
       <template v-if="probe.ordererOrg">
         <actionable-view>
-          <orderer-org-view :probe="probe"/>
+          <orderer-view :probe="probe"/>
           <template v-slot:actions v-if="!probe.finishedAt">
-            <edit-probe-orderer-org-button :probe="probe"/>
-          </template>
-        </actionable-view>
-      </template>
-      <template v-if="probe.ordererPrac">
-        <actionable-view>
-          <orderer-prac-view :probe="probe"/>
-          <template v-slot:actions v-if="!probe.finishedAt">
-            <edit-probe-orderer-prac-button :probe="probe"/>
+            <edit-probe-orderer-button :probe="probe"/>
           </template>
         </actionable-view>
       </template>
@@ -48,9 +40,9 @@
       <template v-if="probe.specimenSource === 'ANIMAL'">
         <h3 class="mt-5">{{ $t('animal_keeper._name') }}</h3>
         <actionable-view>
-          <owner-view :probe="probe"/>
+          <animal-view :probe="probe"/>
           <template v-slot:actions v-if="!probe.finishedAt">
-            <edit-probe-owner-button :probe="probe"/>
+            <edit-probe-animal-button :probe="probe"/>
           </template>
         </actionable-view>
       </template>
@@ -121,20 +113,18 @@
 import {preloadApi} from './services/api'
 import ServiceRequestView from "./components/View/Probe/ServiceRequestView.vue";
 import PatientView from "./components/View/Probe/PatientView.vue";
-import OwnerView from "./components/View/Probe/OwnerView.vue";
+import AnimalView from "./components/View/Probe/AnimalView.vue";
 import ActionableView from "./components/Library/View/ActionableView.vue";
 import EditProbeServiceRequestButton from "./components/Action/EditProbeServiceRequestButton.vue";
 import EditProbePatientButton from "./components/Action/EditProbePatientButton.vue";
-import EditProbeOwnerButton from "./components/Action/EditProbeOwnerButton.vue";
+import EditProbeAnimalButton from "./components/Action/EditProbeAnimalButton.vue";
 import SpecimenMetaView from "./components/View/Probe/SpecimenMetaView.vue";
 import EditProbeSpecimenMetaButton from "./components/Action/EditProbeSpecimenMetaButton.vue";
 import ServiceTimeForm from "./components/Form/Probe/ServiceTimeForm.vue";
 import ServiceTimeView from "./components/View/Probe/ServiceTimeView.vue";
 import EditProbeServiceTimeButton from "./components/Action/EditProbeServiceTimeButton.vue";
-import OrdererOrgView from "./components/View/Probe/OrdererOrgView.vue";
-import EditProbeOrdererOrgButton from "./components/Action/EditProbeOrdererOrgButton.vue";
 import OrdererPracView from "./components/View/Probe/OrdererPracView.vue";
-import EditProbeOrdererPracButton from "./components/Action/EditProbeOrdererPracButton.vue";
+import EditProbeOrdererButton from "./components/Action/EditProbeOrdererButton.vue";
 import AddElmReportButton from "./components/Action/AddElmReportButton.vue";
 import AttributionView from "./components/View/AttributionView.vue";
 import ElmReportTable from "./components/View/ElmReportTable.vue";
@@ -146,10 +136,13 @@ import AddObservationsButton from "./components/Action/AddObservationsButton.vue
 import ObservationTableRow from "./components/View/ObservationTableRow.vue";
 import ObservationTable from "./components/View/ObservationTable.vue";
 import TooltipWrap from "./components/Library/View/TooltipWrap.vue";
+import OrdererView from "./components/View/Probe/OrdererView.vue";
 
 export default {
   emits: ['added'],
   components: {
+    AnimalView,
+    OrdererView,
     TooltipWrap,
     ObservationTable,
     ObservationTableRow,
@@ -157,24 +150,21 @@ export default {
     ReportTable,
     AddReportButton,
     DownloadProbeWorksheetButton,
+    EditProbeAnimalButton,
     ToggleFinishedButton,
     ElmReportTable,
     AttributionView,
     AddElmReportButton,
-    EditProbeOrdererPracButton,
+    EditProbeOrdererButton,
     OrdererPracView,
-    EditProbeOrdererOrgButton,
-    OrdererOrgView,
     EditProbeServiceTimeButton,
     ServiceTimeView,
     ServiceTimeForm,
     EditProbeSpecimenMetaButton,
     SpecimenMetaView,
-    EditProbeOwnerButton,
     EditProbePatientButton,
     EditProbeServiceRequestButton,
     ActionableView,
-    OwnerView,
     PatientView,
     ServiceRequestView,
   },

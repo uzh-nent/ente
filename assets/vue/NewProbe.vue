@@ -5,10 +5,9 @@
       <service-request-form :template="serviceRequestTemplate" @update="serviceRequest = $event"/>
 
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
-      <orderer-org-form @update="ordererOrg = $event"/>
-      <!--
-        <orderer-prac-form @update="ordererPrac = $event"/>
-        -->
+      <requisition-identifier-form class="mw-20" @update="requisitionIdentifier = $event"/>
+      <set-probe-orderer-org-view @update="ordererOrg = $event"/>
+      <set-probe-orderer-prac-view @update="ordererPrac = $event"/>
     </div>
     <div class="col-lg-4 col-md-6">
       <h3>{{ $t('probe._name') }}</h3>
@@ -16,18 +15,18 @@
 
       <template v-if="payload?.specimenSource === 'HUMAN'">
         <h3 class="mt-5">{{ $t('patient._name') }}</h3>
-        <find-patient-form @update="patient = $event"/>
+        <set-probe-patient-view @update="patient = $event"/>
       </template>
 
       <template v-if="payload?.specimenSource === 'ANIMAL'">
         <h3 class="mt-5">{{ $t('animal_keeper._name') }}</h3>
-        <owner-form @update="owner = $event"/>
+        <animal-name-form class="mw-20" @update="animalName = $event"/>
+        <set-probe-animal-keeper-view @update="animalKeeper = $event"/>
       </template>
     </div>
     <div class="col-lg-4 col-md-6">
       <h3>{{ $t('probe.progress') }}</h3>
       <service-time-form :template="serviceTimeTemplate" @update="serviceTime = $event"/>
-
       <button class="btn btn-primary mt-5" :disabled="!canConfirm || isConfirming" @click="confirm">
         {{ $t('_action.add_probe.title') }}
       </button>
@@ -44,21 +43,24 @@ import ButtonConfirmModal from './components/Library/Behaviour/Modal/ButtonConfi
 import ServiceRequestForm from "./components/Form/Probe/ServiceRequestForm.vue";
 import moment from "moment";
 import SpecimenMetaForm from "./components/Form/Probe/SpecimenMetaForm.vue";
-import OwnerForm from "./components/Form/Probe/OwnerForm.vue";
-import FindPatientForm from "./components/Form/Probe/FindPatientForm.vue";
 import ServiceTimeForm from "./components/Form/Probe/ServiceTimeForm.vue";
-import {probeConverter} from "./services/domain/converters";
-import OrdererOrgForm from "./components/Form/Probe/OrdererOrgForm.vue";
-import OrdererPracForm from "./components/Form/Probe/OrdererPracForm.vue";
+import RequisitionIdentifierForm from "./components/Form/Probe/RequisitionIdentifierForm.vue";
+import SetProbeOrdererOrgView from "./components/Action/SetProbeOrdererOrgView.vue";
+import SetProbeOrdererPracView from "./components/Action/SetProbeOrdererPracView.vue";
+import SetProbePatientView from "./components/Action/SetProbePatientView.vue";
+import SetProbeAnimalKeeperView from "./components/Action/SetProbeAnimalKeeperView.vue";
+import AnimalNameForm from "./components/Form/Probe/AnimalNameForm.vue";
 
 export default {
   emits: ['added'],
   components: {
-    OrdererPracForm,
-    OrdererOrgForm,
+    AnimalNameForm,
+    SetProbeAnimalKeeperView,
+    SetProbePatientView,
+    SetProbeOrdererPracView,
+    SetProbeOrdererOrgView,
+    RequisitionIdentifierForm,
     ServiceTimeForm,
-    OwnerForm,
-    FindPatientForm,
     SpecimenMetaForm,
     ServiceRequestForm,
     ButtonConfirmModal,
@@ -69,12 +71,15 @@ export default {
       specimens: undefined,
 
       serviceRequest: null,
+
+      requisitionIdentifier: null,
       ordererOrg: null,
       ordererPrac: null,
 
       specimenMeta: null,
       patient: null,
-      owner: null,
+      animalName: null,
+      animalKeeper: null,
 
       serviceTime: null,
 
@@ -84,7 +89,7 @@ export default {
   computed: {
     canConfirm: function () {
       return this.serviceRequest && this.specimenMeta && this.serviceTime &&
-          (this.ordererOrg || this.ordererPrac) &&
+          this.requisitionIdentifier && (this.ordererOrg || this.ordererPrac) &&
           (this.payload.specimenSource !== 'HUMAN' || this.patient)
       // note: allowed to add animal without reference to animal keeper
     },
@@ -126,30 +131,33 @@ export default {
         base = {...base, ...this.serviceTimeTemplate, ...this.serviceTime}
       }
 
+      if (this.requisitionIdentifier) {
+        base = {...base, ...this.requisitionIdentifier}
+      }
+
       if (this.ordererOrg) {
-        base.requisitionIdentifier = this.ordererOrg.requisitionIdentifier
-        if (this.ordererOrg.ordererOrg) {
-          base = {...base, ...probeConverter.writeOrdererOrg(this.ordererOrg.ordererOrg)}
-        }
+        base = {...base, ...this.ordererOrg}
       }
 
-      // TODO only include if enabled in UI
       if (this.ordererPrac) {
-        base.requisitionIdentifier = this.ordererPrac.requisitionIdentifier
-        if (this.ordererPrac.ordererPrac) {
-          base = {...base, ...probeConverter.writeOrdererPrac(this.ordererPrac.ordererPrac)}
-        }
+        base = {...base, ...this.ordererPrac}
       }
 
-      if (base.specimenSource === 'ANIMAL' && this.owner) {
-        base.animalName = this.owner.animalName
-        if (this.owner.animalKeeper) {
-          base = {...base, ...probeConverter.writeAnimalKeeper(this.owner.animalKeeper)}
+      if (this.patient) {
+        base = {...base, ...this.patient}
+      }
+
+      if (base.specimenSource === 'ANIMAL') {
+        if (this.animalName) {
+          base = {...base, ...this.animalName}
+        }
+        if (this.animalKeeper) {
+          base = {...base, ...this.animalKeeper}
         }
       }
 
       if (base.specimenSource === 'HUMAN' && this.patient) {
-        base = {...base, ...probeConverter.writePatient(this.patient.patient)}
+        base = {...base, ...this.patient}
       }
 
       return base;
@@ -183,3 +191,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.mw-20 {
+  max-width: 20em;
+}
+</style>

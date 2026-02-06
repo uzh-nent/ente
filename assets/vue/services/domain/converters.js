@@ -1,7 +1,11 @@
 import {formatAddressLines, formatCityLine, formatPractitionerName} from "./formatter";
 
 export const probeConverter = {
-  writeOrdererOrg: function (organization) {
+  copyFromOrganization: function (organization) {
+    if (!organization) {
+      return {}
+    }
+
     return {
       ordererOrg: organization['@id'],
       ordererOrgName: organization.name,
@@ -12,20 +16,24 @@ export const probeConverter = {
       ordererOrgContact: organization.contact,
     }
   },
-  writeOrdererPrac: function (pracitioner) {
+  copyFromPractitioner: function (practitioner) {
+    if (!practitioner) {
+      return {}
+    }
+
     return {
-      ordererPrac: pracitioner['@id'],
-      ordererPracTitle: pracitioner.title,
-      ordererPracGivenName: pracitioner.givenName,
-      ordererPracFamilyName: pracitioner.familyName,
-      ordererPracAddressLines: pracitioner.addressLines,
-      ordererPracCity: pracitioner.city,
-      ordererPracPostalCode: pracitioner.postalCode,
-      ordererPracCountryCode: pracitioner.countryCode,
-      ordererPracContact: pracitioner.contact,
+      ordererPrac: practitioner['@id'],
+      ordererPracTitle: practitioner.title,
+      ordererPracGivenName: practitioner.givenName,
+      ordererPracFamilyName: practitioner.familyName,
+      ordererPracAddressLines: practitioner.addressLines,
+      ordererPracCity: practitioner.city,
+      ordererPracPostalCode: practitioner.postalCode,
+      ordererPracCountryCode: practitioner.countryCode,
+      ordererPracContact: practitioner.contact,
     }
   },
-  writeAnimalKeeper: function (animalKeeper) {
+  copyFromAnimalKeeper: function (animalKeeper) {
     return {
       animalKeeper: animalKeeper['@id'],
       animalKeeperName: animalKeeper.name,
@@ -35,7 +43,7 @@ export const probeConverter = {
       animalKeeperCountryCode: animalKeeper.countryCode,
     }
   },
-  writePatient: function (patient) {
+  copyFromPatient: function (patient) {
     return {
       patient: patient['@id'],
       patientBirthDate: patient.birthDate,
@@ -49,8 +57,13 @@ export const probeConverter = {
       patientCountryCode: patient.countryCode,
     }
   },
-  reconstructOrdererOrgOrganization: function (probe) {
+  reconstructOrdererOrg: function (probe) {
+    if (!probe.ordererOrg) {
+      return null
+    }
+
     return {
+      '@id': probe.ordererOrg,
       name: probe.ordererOrgName,
       addressLines: probe.ordererOrgAddressLines,
       city: probe.ordererOrgCity,
@@ -59,7 +72,11 @@ export const probeConverter = {
       contact: probe.ordererOrgContact,
     }
   },
-  reconstructOrdererPracPractitioner: function (probe) {
+  reconstructOrdererPrac: function (probe) {
+    if (!probe.ordererPrac) {
+      return null
+    }
+
     return {
       title: probe.ordererPracTitle,
       givenName: probe.ordererPracGivenName,

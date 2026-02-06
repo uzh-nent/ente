@@ -12,6 +12,9 @@
     "other_or_unknown": "Anderes/Unbekannt",
     "other": "Anderes",
     "search": "Suchen",
+    "reference_is_different": "Die Stammdaten sind anders wie hier erfasst.",
+    "use_reference": "Stammdaten übertragen",
+    "store_reference": "Stammdaten aktualisieren",
     "timeFilter": {
       "from": "Von",
       "until": "Bis"
@@ -70,6 +73,9 @@
       "edited": "Patient:in gespeichert.",
       "title": "Patient:in bearbeiten"
     },
+    "edit_reference": {
+      "edited": "Stammdaten gespeichert."
+    },
     "add_animal_keeper": {
       "added": "Tierhalter:in hinzugefügt.",
       "title": "Tierhalter:in hinzufügen"
@@ -96,13 +102,9 @@
       "add_copy_to": "Kopie an",
       "title": "Bericht erstellen"
     },
-    "edit_probe_orderer_org": {
-      "edited": "Organisation gespeichert.",
-      "title": "Organisation bearbeiten"
-    },
-    "edit_probe_orderer_prac": {
-      "edited": "Mediziner:in gespeichert.",
-      "title": "Mediziner:in bearbeiten"
+    "edit_probe_orderer": {
+      "edited": "Auftraggeber gespeichert.",
+      "title": "Auftraggeber bearbeiten"
     },
     "edit_probe_service_request": {
       "edited": "Auftrag gespeichert.",

@@ -123,12 +123,12 @@ export default {
     predefinedAddresses: function () {
       const addresses = [];
       if (this.probe.ordererOrg) {
-        const organization = probeConverter.reconstructOrdererOrgOrganization(this.probe)
+        const organization = probeConverter.reconstructOrdererOrg(this.probe)
         addresses.push(formatOrganizationAddress(organization))
       }
 
       if (this.probe.ordererPrac) {
-        const practitioner = probeConverter.reconstructOrdererPracPractitioner(this.probe)
+        const practitioner = probeConverter.reconstructOrdererPrac(this.probe)
         addresses.push(formatPractitionerAddress(practitioner))
       }
 

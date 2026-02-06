@@ -10,7 +10,7 @@
 <script>
 import {componentForm} from './utils/form'
 import AddressComponent, {addressFields} from "./Shared/AddressComponent.vue";
-import PatientComponent, {patientFields} from "./Shared/PatientComponent.vue";
+import PatientComponent, {patientFields as patientFieldsD} from "./Shared/PatientComponent.vue";
 import GenderComponent, {genderFields} from "./Shared/GenderComponent.vue";
 import PersonComponent, {personFields} from "./Shared/PersonComponent.vue";
 
@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       components: {
-        patient: patientFields,
+        patient: patientFieldsD,
         person: personFields,
         gender: genderFields,
         address: addressFields
@@ -35,4 +35,6 @@ export default {
     }
   }
 }
+
+export const patientFields = [...patientFieldsD, ...personFields, ...genderFields, ...addressFields]
 </script>
