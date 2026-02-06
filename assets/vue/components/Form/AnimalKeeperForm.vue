@@ -31,4 +31,6 @@ export default {
     }
   }
 }
+
+export const animalKeeperFields = [...thingFields, ...addressFields, ...contactFields]
 </script>

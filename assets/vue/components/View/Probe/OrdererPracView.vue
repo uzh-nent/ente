@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     practitioner: function () {
-      return probeConverter.reconstructOrdererPracPractitioner(this.probe)
+      return probeConverter.reconstructOrdererPrac(this.probe)
     },
   },
 }

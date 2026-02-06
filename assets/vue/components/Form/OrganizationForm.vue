@@ -31,4 +31,5 @@ export default {
     }
   }
 }
+export const organizationFields = [...thingFields, ...addressFields, ...contactFields]
 </script>
