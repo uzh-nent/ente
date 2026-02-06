@@ -99,7 +99,6 @@ features v1.2:
 - add methodik: 
   - listerien: rtPCR default, MLST, WGS, GDS fakultativ
   - bei anderen WGS anwählbar
-- bug: auftraggeber arbeitsblatt auch organisation anzeigen
 - open source it
 
 features v1.3:
