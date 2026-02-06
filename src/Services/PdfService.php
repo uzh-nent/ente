@@ -593,7 +593,7 @@ class PdfService implements PdfServiceInterface
     private function createOrdererElement(Probe $probe): AbstractElement
     {
         $ordererFlow = new Flow(FlowDirection::COLUMN);
-        if ($probe->getLaboratoryFunction() === LaboratoryFunction::REFERENCE) {
+        if ($probe->getOrdererOrg()) {
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("meta.orderer_organization", [], "report"),
                 $probe->getOrdererOrgFullAddress(),
