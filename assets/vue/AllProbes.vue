@@ -1,5 +1,5 @@
 <template>
-  <probe-table :organisms="organisms" :specimens="specimens" />
+  <probe-table :organisms="organisms" :specimens="specimens" :url-filter="filter" />
 </template>
 
 <script>
@@ -29,12 +29,16 @@ export default {
     return {
       organisms: undefined,
       specimens: undefined,
+      filter: undefined
     }
   },
   beforeMount() {
     const {organisms,specimens} = preloadApi.getAllProbes()
     this.organisms = organisms
     this.specimens = specimens
+
+    const params = new URLSearchParams(window.location.search);
+    this.filter = Object.fromEntries(params.entries());
   }
 }
 </script>

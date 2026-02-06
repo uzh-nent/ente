@@ -15,7 +15,7 @@
       {{ practitioner.contact }}
     </td>
     <td class="w-minimal text-end">
-      <add-probe-filter-button :query="{'practitioner': this.practitioner['@id']}" />
+      <add-probe-filter-button :query="{'ordererPrac': this.practitioner['@id']}" />
     </td>
     <td class="w-minimal text-end">
       <edit-practitioner-button :practitioner="practitioner" />

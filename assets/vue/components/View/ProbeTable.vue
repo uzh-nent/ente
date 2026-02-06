@@ -13,6 +13,7 @@
               <input type="text" class="form-control mw-20"
                      :placeholder="$t('_view.search_by_requisition_identifier')"
                      v-model="searchRequisitionIdentifier">
+              <url-filter-probe-view :url-filter="urlFilter" />
             </div>
           </th>
         </tr>
@@ -54,9 +55,11 @@ import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
 import ProbeTableRow from "./ProbeTableRow.vue";
 import FilterProbeButton from "../Action/FilterProbeButton.vue";
+import UrlFilterProbeView from "./Probe/UrlFilterProbeView.vue";
 
 export default {
   components: {
+    UrlFilterProbeView,
     FilterProbeButton,
     ProbeTableRow,
     LoadingIndicatorOverlay,
@@ -77,6 +80,10 @@ export default {
     organisms: {
       type: Array,
       required: true
+    },
+    urlFilter: {
+      type: Object,
+      default: {}
     }
   },
   data() {
@@ -92,7 +99,7 @@ export default {
     query: function () {
       const search = sanitizeSearchFilter({identifier: this.searchIdentifier, requisitionIdentifier: this.searchRequisitionIdentifier})
       const order = orderFilter(this.orders)
-      return {...this.filter, ...search, ...order}
+      return {...this.filter, ...search, ...this.urlFilter, ...order}
     },
     orderOfIdentifier: function () {
       return this.getOrder('identifier')
@@ -111,5 +118,10 @@ export default {
 }
 .w-observations {
   width: 15em;
+}
+
+.reset-table-styles {
+  text-align: left;
+  font-weight: normal;
 }
 </style>
