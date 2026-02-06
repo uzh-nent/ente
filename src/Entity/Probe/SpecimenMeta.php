@@ -82,6 +82,10 @@ trait SpecimenMeta
     #[Groups(['probe:read', 'probe:write'])]
     private ?bool $specimenIsolate = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['probe:read', 'probe:write'])]
+    private ?string $anamnesisTravels = null;
+
     public function getSpecimenCollectionDate(): ?\DateTimeImmutable
     {
         return $this->specimenCollectionDate;
@@ -210,5 +214,15 @@ trait SpecimenMeta
     public function setSpecimenIsolate(?bool $specimenIsolate): void
     {
         $this->specimenIsolate = $specimenIsolate;
+    }
+
+    public function getAnamnesisTravels(): ?string
+    {
+        return $this->anamnesisTravels;
+    }
+
+    public function setAnamnesisTravels(?string $anamnesisTravels): void
+    {
+        $this->anamnesisTravels = $anamnesisTravels;
     }
 }

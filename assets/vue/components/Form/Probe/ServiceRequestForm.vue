@@ -25,12 +25,14 @@
             <label class="form-check-label clickable" :for="'pathogen_' + choice.value">{{ choice.label }}</label>
           </div>
           <template v-if="choice.value === 'VIBRIO_CHOLERAE' && choice.value === entity.pathogen">
-            <checkboxes id="analysisTypes" class="mb-2" :choices="referenceVibrioCholeraeAnalysisTypes" :field="fields.analysisTypes"
+            <checkboxes id="analysisTypes" class="mb-2" :choices="referenceVibrioCholeraeAnalysisTypes"
+                        :field="fields.analysisTypes"
                         :disabled="value => value === 'IDENTIFICATION'"
                         v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
           </template>
           <template v-if="choice.value === 'ESCHERICHIA_COLI' && choice.value === entity.pathogen">
-            <checkboxes id="analysisTypes" class="mb-2" :choices="escherichiaColiAnalysisTypes" :field="fields.analysisTypes"
+            <checkboxes id="analysisTypes" class="mb-2" :choices="escherichiaColiAnalysisTypes"
+                        :field="fields.analysisTypes"
                         v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
           </template>
         </div>
@@ -41,6 +43,12 @@
                     @blur="blurField('pathogenName')" @update:modelValue="validateField('pathogenName')"/>
       </template>
     </template>
+
+    <form-field for-id="methodTypes" :label="$t('probe.method_types')" :field="fields.methodTypes">
+      <checkboxes inline id="methodTypes" :choices="methodTypes"
+                  :field="fields.methodTypes" v-model="entity.methodTypes"
+                  @update:model-value="validateField('methodTypes')"/>
+    </form-field>
   </div>
 </template>
 
@@ -56,6 +64,11 @@ import Checkboxes from "../../Library/FormInput/Checkboxes.vue";
 const createLaboratoryFunctions = function (translator) {
   const values = ['REFERENCE', 'PRIMARY']
   return values.map(value => ({label: translator(`probe._laboratory_function.${value}`), value}))
+}
+
+const createMethodTypes = function (translator) {
+  const values = ['SOP', 'RTPCR', 'MLST', "WGS", "GDS"]
+  return values.map(value => ({label: translator(`probe._method_type.${value}`), value}))
 }
 
 const createReferencePathogens = function (translator) {
@@ -93,12 +106,14 @@ export default {
         pathogen: createField(),
         pathogenName: createField(),
         analysisTypes: createField(requiredRule),
+        methodTypes: createField(),
       },
       entity: {
         laboratoryFunction: null,
         pathogen: null,
         pathogenName: null,
         analysisTypes: null,
+        methodTypes: null,
       },
     }
   },
@@ -120,6 +135,9 @@ export default {
     },
     referenceVibrioCholeraeAnalysisTypes: function () {
       return createReferenceVibrioCholeraeAnalysisTypes(this.$t)
+    },
+    methodTypes: function () {
+      return createMethodTypes(this.$t)
     },
   },
   watch: {

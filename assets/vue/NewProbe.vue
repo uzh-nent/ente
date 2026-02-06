@@ -93,7 +93,7 @@ export default {
         laboratoryFunction: 'REFERENCE',
         pathogen: 'SALMONELLA',
         analysisTypes: ['IDENTIFICATION'],
-        receivedDate: moment().format('YYYY-MM-DD'),
+        methodTypes: ['SOP'],
       }
     },
     specimenMetaTemplate: function () {

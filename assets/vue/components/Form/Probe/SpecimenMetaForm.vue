@@ -1,15 +1,20 @@
 <template>
   <div>
-    <form-field for-id="specimenCollectionDate" :label="$t('probe.specimen_collection_date')" :field="fields.specimenCollectionDate">
-      <date-time-input id="specimenCollectionDate" :field="fields.specimenCollectionDate" v-model="entity.specimenCollectionDate" format="date"
-                       @blur="blurField('specimenCollectionDate')" @update:modelValue="validateField('specimenCollectionDate')"/>
+    <form-field for-id="specimenCollectionDate" :label="$t('probe.specimen_collection_date')"
+                :field="fields.specimenCollectionDate">
+      <date-time-input id="specimenCollectionDate" :field="fields.specimenCollectionDate"
+                       v-model="entity.specimenCollectionDate" format="date"
+                       @blur="blurField('specimenCollectionDate')"
+                       @update:modelValue="validateField('specimenCollectionDate')"/>
     </form-field>
 
     <!-- select specimen source -->
     <div class="row">
       <div class="col-md-12">
-        <form-field for-id="specimenSource" :label="$t('probe.specimen_source')" :field="fields.specimenSource" :fake-required="true">
-          <custom-select id="specimenSource" :choices="specimenSources" :field="fields.specimenSource" :disabled="editMode"
+        <form-field for-id="specimenSource" :label="$t('probe.specimen_source')" :field="fields.specimenSource"
+                    :fake-required="true">
+          <custom-select id="specimenSource" :choices="specimenSources" :field="fields.specimenSource"
+                         :disabled="editMode"
                          v-model="entity.specimenSource" @update:model-value="validateField('specimenSource')"/>
           <text-input v-if="!entity.specimenSource" class="mt-1"
                       id="specimenSourceText" type="text" :field="fields.specimenSourceText"
@@ -17,7 +22,8 @@
                       @blur="blurField('specimenSourceText')" @update:modelValue="validateField('specimenSourceText')"/>
 
           <template v-else-if="entity.specimenSource === 'FOOD'">
-            <custom-select id="specimenFoodType" class="mt-1" :choices="specimenFoodTypes" :field="fields.specimenFoodType"
+            <custom-select id="specimenFoodType" class="mt-1" :choices="specimenFoodTypes"
+                           :field="fields.specimenFoodType"
                            v-model="entity.specimenFoodType" @update:model-value="validateField('specimenFoodType')"/>
             <text-input v-if="!entity.specimenFoodType" class="mt-1"
                         id="specimenTypeText" type="text" :field="fields.specimenTypeText"
@@ -25,8 +31,10 @@
                         @blur="blurField('specimenTypeText')" @update:modelValue="validateField('specimenTypeText')"/>
           </template>
           <template v-else-if="entity.specimenSource === 'ANIMAL'">
-            <custom-select id="specimenAnimalType" class="mt-1" :choices="specimenAnimalTypes" :field="fields.specimenAnimalType"
-                           v-model="entity.specimenAnimalType" @update:model-value="validateField('specimenAnimalType')"/>
+            <custom-select id="specimenAnimalType" class="mt-1" :choices="specimenAnimalTypes"
+                           :field="fields.specimenAnimalType"
+                           v-model="entity.specimenAnimalType"
+                           @update:model-value="validateField('specimenAnimalType')"/>
             <text-input v-if="!entity.specimenAnimalType" class="mt-1"
                         id="specimenTypeText" type="text" :field="fields.specimenTypeText"
                         v-model="entity.specimenTypeText"
@@ -59,13 +67,20 @@
           <form-field
               for-id="specimenIsolate" :label="$t('probe.specimen_isolate')" :field="fields.specimenIsolate">
             <checkbox id="specimenIsolate" :field="fields.specimenIsolate"
-                           v-model="entity.specimenIsolate" @update:model-value="validateField('specimenIsolate')"/>
+                      v-model="entity.specimenIsolate" @update:model-value="validateField('specimenIsolate')"/>
           </form-field>
         </div>
         <div class="col-md-9 shift-input-up" v-if="!entity.specimen">
           <text-input id="specimenText" type="text" :field="fields.specimenText"
                       v-model="entity.specimenText"
                       @blur="blurField('specimenText')" @update:modelValue="validateField('specimenText')"/>
+        </div>
+        <div class="col-md-12">
+          <form-field for-id="anamnesisTravels" :label="$t('probe.anamnesis_travels')" :field="fields.anamnesisTravels">
+            <text-input id="anamnesisTravels" type="text" :field="fields.anamnesisTravels"
+                        v-model="entity.anamnesisTravels"
+                        @blur="blurField('anamnesisTravels')" @update:modelValue="validateField('anamnesisTravels')"/>
+          </form-field>
         </div>
       </div>
     </template>
@@ -80,8 +95,8 @@
     <form-field v-if="entity.specimenSource !== 'HUMAN' && entity.specimenSource !== 'ANIMAL'"
                 for-id="specimenLocation" :label="$t('probe.specimen_location')" :field="fields.specimenLocation">
       <text-area id="specimenLocation" type="text" :field="fields.specimenLocation"
-                  v-model="entity.specimenLocation"
-                  @blur="blurField('specimenLocation')" @update:modelValue="validateField('specimenLocation')"/>
+                 v-model="entity.specimenLocation"
+                 @blur="blurField('specimenLocation')" @update:modelValue="validateField('specimenLocation')"/>
     </form-field>
   </div>
 </template>
@@ -167,6 +182,7 @@ export default {
         patient: createField(),
         specimen: createField(),
         specimenIsolate: createField(),
+        anamnesisTravels: createField(),
       },
       entity: {
         specimenCollectionDate: null,
@@ -180,8 +196,10 @@ export default {
         specimenFoodType: null,
         specimenAnimalType: null,
 
+        patient: null,
         specimen: null,
         specimenIsolate: null,
+        anamnesisTravels: null,
       },
     }
   },
@@ -196,7 +214,6 @@ export default {
       return createSpecimenAnimalTypes(this.$t)
     },
     specimenChoices: function () {
-      console.log(this.template.specimen, this.specimens)
       return this.specimens
           .filter(specimen => !specimen.isHidden || this.template.specimen === specimen)
           .map(specimen => ({label: specimen.displayName, value: specimen}))

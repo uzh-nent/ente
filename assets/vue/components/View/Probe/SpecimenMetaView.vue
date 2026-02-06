@@ -19,6 +19,11 @@
         <span class="badge bg-secondary ms-2">{{ $t('probe.specimen_isolate') }}</span>
       </template>
     </labeled-value>
+
+    <labeled-value v-if="probe.specimenSource === 'HUMAN' && probe.anamnesisTravels" :label="$t('probe.anamnesis_travels')">
+      {{ probe.anamnesisTravels }}
+    </labeled-value>
+
     <labeled-value v-if="probe.specimenSource !== 'HUMAN'" :label="$t('probe.specimen_text')">
       {{ probe.specimenText }}
     </labeled-value>

@@ -5,7 +5,8 @@
       {{ probe.requisitionIdentifier }}
     </td>
     <td>
-      {{ service }}
+      {{ service }}<br/>
+      {{ probe.methodTypes.map(t => $t(`probe._method_type.${t}`)).join(', ') }}
     </td>
     <td>
       <span class="whitespace-preserve-newlines">

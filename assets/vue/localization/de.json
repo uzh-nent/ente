@@ -235,6 +235,8 @@
     "analysis_start_date_short": "Ansatz",
     "orderer": "Auftraggeber",
     "identifier": "Identifikation",
+    "method_types": "Methoden",
+    "anamnesis_travels": "Reiseländer",
     "_pathogen": {
       "SALMONELLA": "Salmonella",
       "SHIGELLA": "Shigella",
@@ -258,6 +260,13 @@
       "EC_EIEC": "Enteroinvasive (EIEC) / Shigella",
       "EC_EAEC": "Enteroaggregative (EAEC)",
       "VB_TOXIN": "Cholera-Toxin (CTX)"
+    },
+    "_method_type": {
+      "SOP": "SOP",
+      "RTPCR": "rtPCR",
+      "MLST": "MLST",
+      "WGS": "WGS",
+      "GDS": "GDS"
     },
     "_analysis_type_short": {
       "IDENTIFICATION": "Ident.",

@@ -7,6 +7,7 @@ use App\Entity\Organization;
 use App\Entity\Practitioner;
 use App\Enum\AnalysisType;
 use App\Enum\LaboratoryFunction;
+use App\Enum\MethodType;
 use App\Enum\Pathogen;
 use App\Extension\SerializerExtension;
 use Doctrine\DBAL\Types\Types;
@@ -36,6 +37,13 @@ trait ServiceRequest
     #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: AnalysisType::class, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
     private array $analysisTypes = [];
+
+    /**
+     * @var MethodType[]
+     */
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, enumType: MethodType::class, nullable: true, options: ['default' => 'SOP'])]
+    #[Groups(['probe:read', 'probe:write'])]
+    private array $methodTypes = [];
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
@@ -95,6 +103,19 @@ trait ServiceRequest
     public function setAnalysisTypes(array $analysisTypes): void
     {
         $this->analysisTypes = SerializerExtension::unserializeEnumArray(AnalysisType::class, $analysisTypes);
+    }
+
+    public function getMethodTypes(): array
+    {
+        return $this->methodTypes;
+    }
+
+    /**
+     * @param MethodType[] $methodTypes
+     */
+    public function setMethodTypes(array $methodTypes): void
+    {
+        $this->methodTypes = SerializerExtension::unserializeEnumArray(MethodType::class, $methodTypes);
     }
 
     public function getRequisitionIdentifier(): ?string

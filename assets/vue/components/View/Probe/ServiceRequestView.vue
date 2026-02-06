@@ -19,6 +19,10 @@
         {{ probe.pathogenName }}
       </template>
     </labeled-value>
+
+    <labeled-value :label="$t('probe.method_types')">
+      {{ probe.methodTypes.map(t => $t(`probe._method_type.${t}`)).join(', ') }}
+    </labeled-value>
   </div>
 </template>
 
