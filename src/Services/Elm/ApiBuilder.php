@@ -71,7 +71,7 @@ readonly class ApiBuilder
             if ($elmReport->getLeadingCode()->getSpecimen() === $elmReport->getSpecimen()) {
                 // specimen already defined by the leading code, hence do not send it
                 // if we send it anyways, leads to a warning by the API
-                // TODO: ask BAG to instead remove warning from API, and validate themselves. this seems unsafe; what it the leading code is wrongly configured?
+                // TODO: ask BAG to instead remove warning from API, and validate themselves. this seems unsafe; what if the leading code is wrongly configured?
             } else {
                 $specimenResource['resource']["type"] = [
                     "coding" => [$this->formatter->codedIdentifier($elmReport->getSpecimen())]
@@ -144,32 +144,27 @@ readonly class ApiBuilder
         return $this->formatter->normalizeNullableArray($organizationOrdererResource);
     }
 
-    private function createOrganizationPractitionerRoleResource(Probe $probe, array $orderOrganizationResource): array
+    private function createPractitionerRoleResource(Probe $probe, ?array $orderOrganizationResource, ?array $orderPractitionerResource): array
     {
-        $reference = new ResourceReference('PractitionerRole', $probe->getOrdererOrg()->getId());
+        $id = $probe->getOrdererOrg()?->getId() ?? $probe->getOrdererPrac()?->getId() ?? $probe->getId();
+        $reference = new ResourceReference('PractitionerRole', $id);
 
-        return [
+        $resource = [
             "fullUrl" => $reference->fullUrl(),
             "resource" => [
                 "resourceType" => $reference->type(),
                 "id" => $reference->id(),
-                "organization" => $this->formatter->reference($orderOrganizationResource["resource"]),
             ]
         ];
-    }
 
-    private function createPractitionerPractitionerRoleResource(Probe $probe, array $orderPractitionerResource): array
-    {
-        $reference = new ResourceReference('PractitionerRole', $probe->getOrdererPrac()->getId());
+        if ($orderOrganizationResource) {
+            $resource['resource']['organization'] = $this->formatter->reference($orderOrganizationResource["resource"]);
+        }
+        if ($orderPractitionerResource) {
+            $resource['resource']['practitioner'] = $this->formatter->reference($orderPractitionerResource["resource"]);
+        }
 
-        return [
-            "fullUrl" => $reference->fullUrl(),
-            "resource" => [
-                "resourceType" => $reference->type(),
-                "id" => $reference->id(),
-                "practitioner" => $this->formatter->reference($orderPractitionerResource["resource"]),
-            ]
-        ];
+        return $resource;
     }
 
     private function createObservationResource(ElmReport $elmReport, array $patientResource, array $organizationResource, array $specimenResource): array
@@ -369,21 +364,12 @@ readonly class ApiBuilder
         // this order laboratory however is only able to do course-grained checks (tests many pathogens at the same time, but with low certainty)
         // hence if something is positive, it sends it to more specialized laboratories (such as NENT). this test is however again to be seen as a primary test
 
-        if ($probe->getOrdererOrg()) {
-            $organizationOrdererResource = $this->createOrganizationOrdererResource($probe);
-            $ordererPractitionerRoleResource = $this->createOrganizationPractitionerRoleResource($probe, $organizationOrdererResource);
+        $organizationOrdererResource = $probe->getOrdererOrg() ? $this->createOrganizationOrdererResource($probe) : null;
+        $practitionerOrdererResource = $probe->getOrdererPrac() ? $this->createPractitionerOrdererResource($probe) : null;
+        $ordererPractitionerRoleResource = $this->createPractitionerRoleResource($probe, $organizationOrdererResource, $practitionerOrdererResource);
 
-            // the (primary) practitioner might also be set
-            // we do not report it so far
-
-            return [$ordererPractitionerRoleResource, $organizationOrdererResource];
-        }
-
-
-        $practitionerOrdererResource = $this->createPractitionerOrdererResource($probe);
-        $ordererPractitionerRoleResource = $this->createPractitionerPractitionerRoleResource($probe, $practitionerOrdererResource);
-
-        return [$ordererPractitionerRoleResource, $practitionerOrdererResource];
+        $ordererResources = array_filter([$organizationOrdererResource, $practitionerOrdererResource]);
+        return [$ordererPractitionerRoleResource, $ordererResources];
     }
 
     public function build(Probe $probe, ElmReport $elmReport): array
@@ -392,14 +378,14 @@ readonly class ApiBuilder
         $specimenResource = $this->createSpecimenResource($probe, $elmReport, $patientResource);
         $organizationResource = $this->createNENTOrganizationResource();
 
-        [$ordererPractitionerRoleResource, $ordererResource] = $this->createPractitionerRole($probe);
+        [$ordererPractitionerRoleResource, $ordererResources] = $this->createPractitionerRole($probe);
         $observationResource = $this->createObservationResource($elmReport, $patientResource, $organizationResource, $specimenResource);
         $serviceRequestResource = $this->createServiceRequestResource($probe, $patientResource, $specimenResource, $ordererPractitionerRoleResource, $observationResource);
         $rawCompositionResource = $this->createRawCompositionResource($elmReport);
         $diagnosticReportResource = $this->createDiagnosticReportResource($elmReport, $patientResource, $organizationResource, $specimenResource, $observationResource, $serviceRequestResource, $rawCompositionResource);
         $compositionResource = $this->createFullCompositionResource($rawCompositionResource, $diagnosticReportResource, $patientResource, $organizationResource, $observationResource);
 
-        $entries = [$compositionResource, $diagnosticReportResource, $patientResource, $observationResource, $specimenResource, $serviceRequestResource, $ordererPractitionerRoleResource, $organizationResource, $ordererResource];
+        $entries = [$compositionResource, $diagnosticReportResource, $patientResource, $observationResource, $specimenResource, $serviceRequestResource, $ordererPractitionerRoleResource, $organizationResource, ...$ordererResources];
         $bundleResource = $this->createBundleResource($elmReport, $compositionResource, $entries);
 
         return $this->createDocumentReferenceResource($elmReport, $bundleResource);
