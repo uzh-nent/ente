@@ -40,6 +40,8 @@ scripts:
       - php bin/console cache:warmup -n
       - php bin/console doctrine:migrations:migrate -n
       - sudo chown -R www-data:www-data .
+      - sudo chmod 0640 .env.local
+      - sudo chmod 0640 .cert/*
 
   rollback:
     hook: rollback
