@@ -626,25 +626,27 @@ class PdfService implements PdfServiceInterface
 
     private function createOrdererElement(Probe $probe): AbstractElement
     {
-        $ordererFlow = new Flow(FlowDirection::COLUMN);
+        $ordererFlow = new Flow(FlowDirection::COLUMN, gap: $this->spacer / 2);
+        $label = $this->translator->trans("Requisition identifier", [], "entity_probe");
+        $ordererFlow->add($this->createLabeledValue($label, $probe->getRequisitionIdentifier()));
+
         if ($probe->getOrdererOrg()) {
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("meta.orderer_organization", [], "report"),
                 $probe->getOrdererOrgFullAddress(),
                 $probe->getOrdererOrgContact()
             );
-        } else {
+            $ordererFlow->add($recipient);
+        }
+
+        if ($probe->getOrdererPrac()) {
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("meta.orderer_practitioner", [], "report"),
                 $probe->getOrdererPracFullAddress(),
                 $probe->getOrdererPracContact()
             );
+            $ordererFlow->add($recipient);
         }
-        $ordererFlow->add($recipient);
-
-        $this->addSpace($ordererFlow, $this->spacer / 2);
-        $label = $this->translator->trans("Requisition identifier", [], "entity_probe");
-        $ordererFlow->add($this->createLabeledValue($label, $probe->getRequisitionIdentifier()));
 
         return $ordererFlow;
     }
