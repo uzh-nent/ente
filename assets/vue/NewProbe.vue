@@ -6,8 +6,8 @@
 
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
       <requisition-identifier-form class="mw-20" @update="requisitionIdentifier = $event"/>
-      <set-probe-orderer-org-view @update="ordererOrg = $event"/>
-      <set-probe-orderer-prac-view @update="ordererPrac = $event"/>
+      <set-probe-orderer-org-view :can-unlink="true" @update="ordererOrg = $event"/>
+      <set-probe-orderer-prac-view :can-unlink="true" @update="ordererPrac = $event"/>
     </div>
     <div class="col-lg-4 col-md-6">
       <h3>{{ $t('probe._name') }}</h3>
@@ -27,9 +27,13 @@
     <div class="col-lg-4 col-md-6">
       <h3>{{ $t('probe.progress') }}</h3>
       <service-time-form :template="serviceTimeTemplate" @update="serviceTime = $event"/>
-      <button class="btn btn-primary mt-5" :disabled="!canConfirm || isConfirming" @click="confirm">
-        {{ $t('_action.add_probe.title') }}
-      </button>
+      <div class="mt-5">
+        <tooltip-wrap :title="nextError">
+          <button class="btn btn-primary" :disabled="!canConfirm || isConfirming" @click="confirm">
+            {{ $t('_action.add_probe.title') }}
+          </button>
+        </tooltip-wrap>
+      </div>
     </div>
   </div>
 </template>
@@ -50,10 +54,12 @@ import SetProbeOrdererPracView from "./components/Action/SetProbeOrdererPracView
 import SetProbePatientView from "./components/Action/SetProbePatientView.vue";
 import SetProbeAnimalKeeperView from "./components/Action/SetProbeAnimalKeeperView.vue";
 import AnimalNameForm from "./components/Form/Probe/AnimalNameForm.vue";
+import TooltipWrap from "./components/Library/View/TooltipWrap.vue";
 
 export default {
   emits: ['added'],
   components: {
+    TooltipWrap,
     AnimalNameForm,
     SetProbeAnimalKeeperView,
     SetProbePatientView,
@@ -92,6 +98,21 @@ export default {
           this.requisitionIdentifier && (this.ordererOrg || this.ordererPrac) &&
           (this.payload.specimenSource !== 'HUMAN' || this.patient)
       // note: allowed to add animal without reference to animal keeper
+    },
+    nextError: function () {
+      if (!this.requisitionIdentifier) {
+        return this.$t('_form.new_probe.requisition_identifier_required')
+      }
+
+      if (!this.ordererOrg && !this.ordererPrac) {
+        return this.$t('_form.new_probe.orderer_required')
+      }
+
+      if (this.payload.specimenSource === 'HUMAN' && !this.patient) {
+        return this.$t('_form.new_probe.patient_required')
+      }
+
+      return null
     },
     serviceRequestTemplate: function () {
       return {

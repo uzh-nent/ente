@@ -1,5 +1,5 @@
 <template>
-    <form-field for-id="ordererOrg" :label="$t('patient._name')">
+    <form-field for-id="patient" :label="$t('patient._name')">
       <actionable-preview class="mb-2" v-if="patient">
         <patient-view :patient="patient"/>
         <template #actions>
@@ -21,7 +21,7 @@
       </div>
 
       <div class="mb-2">
-        <radio id="ordererOrg" :choices="patients" :value-string="value => value['@id']"
+        <radio id="patient" :choices="patients" :value-string="value => value['@id']"
                v-model="selectedPatient" />
         <span class="form-text">{{ itemHits }}</span>
       </div>
@@ -45,6 +45,7 @@ import {probeConverter} from "../../services/domain/converters";
 import EditLinkedPatientButton from "./EditLinkedPatientButton.vue";
 import DateTimeInput from "../Library/FormInput/DateTimeInput.vue";
 import EditLinkedAnimalKeeperButton from "./EditLinkedAnimalKeeperButton.vue";
+import {createCleanPatch} from "./utils/linkedEntity";
 
 export default {
   emits: ['update'],
@@ -65,7 +66,7 @@ export default {
   data() {
     return {
       selectedPatient: null,
-      patientOverride: null,
+      patientOverride: undefined,
 
       searchAhvNumber: "",
       filterBirthDate: "",
@@ -79,7 +80,7 @@ export default {
   },
   computed: {
     patient: function () {
-      if (this.patientOverride) {
+      if (this.patientOverride !== undefined) {
         return this.patientOverride
       }
 
@@ -121,26 +122,27 @@ export default {
   watch: {
     items: {
       handler: function (items) {
-        if (items.length === 1 && !this.probe?.ordererOrg) {
+        if (items.length === 1 && !this.probe?.patient) {
           this.selectedPatient = items[0]
         }
       }
     },
     selectedPatient: {
       handler: function () {
-        this.patientOverride = null
+        this.patientOverride = undefined
+      }
+    },
+    patientOverride: {
+      handler: function () {
+        if (this.patientOverride === null) {
+          this.selectedPatient = null
+        }
       }
     },
     patient: {
       handler: function (patient) {
-        const orderOrg = probeConverter.copyFromPatient(patient)
-        const patch = {}
-        for (const key in orderOrg) {
-          if (orderOrg.hasOwnProperty(key) && (!this.probe || orderOrg[key] !== this.probe[key])) {
-            patch[key] = orderOrg[key]
-          }
-        }
-
+        const copy = probeConverter.copyFromPatient(patient ?? {})
+        const patch = createCleanPatch(this.probe, copy)
         this.$emit("update", patch)
       }
     }

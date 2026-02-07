@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     canConfirm: function () {
-      return !!this.patient
+      return Object.keys(this.payload).length > 0
     },
     payload: function () {
       let payload = {}

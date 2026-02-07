@@ -5,8 +5,8 @@
       :confirm-label="$t('_action.edit')" :can-confirm="canConfirm" :confirm="confirm"
       @showing="focusOrderer">
     <requisition-identifier-form class="mw-20" :template="probe" @update="requisitionIdentifier = $event"/>
-    <set-probe-orderer-org-view :probe="probe" @update="ordererOrg = $event"/>
-    <set-probe-orderer-prac-view :probe="probe" @update="ordererPrac = $event"/>
+    <set-probe-orderer-org-view :probe="probe" :can-unlink="hasOrdererPrac" @update="ordererOrg = $event"/>
+    <set-probe-orderer-prac-view :probe="probe" :can-unlink="hasOrdererOrg" @update="ordererPrac = $event"/>
   </button-confirm-modal>
 </template>
 
@@ -44,7 +44,13 @@ export default {
   },
   computed: {
     canConfirm: function () {
-      return !!this.requisitionIdentifier || !!this.ordererOrg || !!this.ordererPrac
+      return Object.keys(this.payload).length > 0
+    },
+    hasOrdererOrg: function () {
+      return !!(this.ordererOrg ? this.ordererOrg.ordererOrg : this.probe.ordererOrg)
+    },
+    hasOrdererPrac: function () {
+      return !!(this.ordererPrac ? this.ordererPrac.ordererPrac : this.probe.ordererPrac)
     },
     payload: function () {
       let payload = {}

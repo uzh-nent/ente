@@ -3,7 +3,8 @@
       <actionable-preview class="mb-2" v-if="organization">
         <organization-view :organization="organization"/>
         <template #actions>
-          <edit-linked-organization-button class="m-2" :entity="organization" @update="organizationOverride = $event" />
+          <edit-linked-organization-button
+              class="m-2" :can-unlink="canUnlink" :entity="organization" @update="organizationOverride = $event" />
         </template>
       </actionable-preview>
 
@@ -44,6 +45,7 @@ import PatientView from "../View/PatientView.vue";
 import EditOrganizationButton from "./EditOrganizationButton.vue";
 import {probeConverter} from "../../services/domain/converters";
 import EditLinkedOrganizationButton from "./EditLinkedOrganizationButton.vue";
+import {createCleanPatch} from "./utils/linkedEntity";
 
 export default {
   emits: ['update'],
@@ -63,7 +65,7 @@ export default {
   data() {
     return {
       selectedOrganization: null,
-      organizationOverride: null,
+      organizationOverride: undefined,
 
       searchName: "",
       searchPostalCode: "",
@@ -73,11 +75,15 @@ export default {
     probe: {
       type: Object,
       default: null
-    }
+    },
+    canUnlink: {
+      type: Boolean,
+      default: false
+    },
   },
   computed: {
     organization: function () {
-      if (this.organizationOverride) {
+      if (this.organizationOverride !== undefined) {
         return this.organizationOverride
       }
 
@@ -126,19 +132,20 @@ export default {
     },
     selectedOrganization: {
       handler: function () {
-        this.organizationOverride = null
+        this.organizationOverride = undefined
+      }
+    },
+    organizationOverride: {
+      handler: function () {
+        if (this.organizationOverride === null) {
+          this.selectedOrganization = null
+        }
       }
     },
     organization: {
       handler: function (organization) {
-        const orderOrg = probeConverter.copyFromOrganization(organization)
-        const patch = {}
-        for (const key in orderOrg) {
-          if (orderOrg.hasOwnProperty(key) && (!this.probe || orderOrg[key] !== this.probe[key])) {
-            patch[key] = orderOrg[key]
-          }
-        }
-
+        const copy = probeConverter.copyFromOrganization(organization ?? {})
+        const patch = createCleanPatch(this.probe, copy)
         this.$emit("update", patch)
       }
     }

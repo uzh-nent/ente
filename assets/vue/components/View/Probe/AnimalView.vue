@@ -1,7 +1,7 @@
 <template>
   <div>
     <labeled-value class="mb-3" :label="$t('probe.animal_name')">{{ probe.animalName }}</labeled-value>
-    <animal-keeper-view :animal-keeper="owner"/>
+    <animal-keeper-view v-if="animalKeeper" :animal-keeper="animalKeeper"/>
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
     },
   },
   computed: {
-    owner: function () {
+    animalKeeper: function () {
       return probeConverter.reconstructAnimalKeeper(this.probe)
     },
   },

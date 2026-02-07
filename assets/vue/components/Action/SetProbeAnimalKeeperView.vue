@@ -1,9 +1,9 @@
 <template>
-    <form-field for-id="ordererOrg" :label="$t('animal_keeper._name')">
+    <form-field for-id="animalKeeper" :label="$t('animal_keeper._name')">
       <actionable-preview class="mb-2" v-if="animalKeeper">
         <animal-keeper-view :animal-keeper="animalKeeper"/>
         <template #actions>
-          <edit-linked-animal-keeper-button class="m-2" :entity="animalKeeper" @update="animalKeeperOverride = $event" />
+          <edit-linked-animal-keeper-button class="m-2" can-unlink :entity="animalKeeper" @update="animalKeeperOverride = $event" />
         </template>
       </actionable-preview>
 
@@ -20,7 +20,7 @@
       </div>
 
       <div class="mb-2">
-        <radio id="ordererOrg" :choices="animalKeepers" :value-string="value => value['@id']"
+        <radio id="animalKeeper" :choices="animalKeepers" :value-string="value => value['@id']"
                v-model="selectedAnimalKeeper" />
         <span class="form-text">{{ itemHits }}</span>
       </div>
@@ -44,6 +44,7 @@ import PatientView from "../View/PatientView.vue";
 import EditAnimalKeeperButton from "./EditAnimalKeeperButton.vue";
 import {probeConverter} from "../../services/domain/converters";
 import EditLinkedAnimalKeeperButton from "./EditLinkedAnimalKeeperButton.vue";
+import {createCleanPatch} from "./utils/linkedEntity";
 
 export default {
   emits: ['update'],
@@ -63,7 +64,7 @@ export default {
   data() {
     return {
       selectedAnimalKeeper: null,
-      animalKeeperOverride: null,
+      animalKeeperOverride: undefined,
 
       searchName: "",
       searchPostalCode: "",
@@ -77,7 +78,7 @@ export default {
   },
   computed: {
     animalKeeper: function () {
-      if (this.animalKeeperOverride) {
+      if (this.animalKeeperOverride !== undefined) {
         return this.animalKeeperOverride
       }
 
@@ -119,26 +120,27 @@ export default {
   watch: {
     items: {
       handler: function (items) {
-        if (items.length === 1 && !this.probe?.ordererOrg) {
+        if (items.length === 1 && !this.probe?.animalKeeper) {
           this.selectedAnimalKeeper = items[0]
         }
       }
     },
     selectedAnimalKeeper: {
       handler: function () {
-        this.animalKeeperOverride = null
+        this.animalKeeperOverride = undefined
+      }
+    },
+    animalKeeperOverride: {
+      handler: function () {
+        if (this.animalKeeperOverride === null) {
+          this.selectedAnimalKeeper = null
+        }
       }
     },
     animalKeeper: {
       handler: function (animalKeeper) {
-        const orderOrg = probeConverter.copyFromAnimalKeeper(animalKeeper)
-        const patch = {}
-        for (const key in orderOrg) {
-          if (orderOrg.hasOwnProperty(key) && (!this.probe || orderOrg[key] !== this.probe[key])) {
-            patch[key] = orderOrg[key]
-          }
-        }
-
+        const copy = probeConverter.copyFromAnimalKeeper(animalKeeper ?? {})
+        const patch = createCleanPatch(this.probe, copy)
         this.$emit("update", patch)
       }
     }

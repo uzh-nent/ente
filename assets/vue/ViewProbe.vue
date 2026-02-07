@@ -10,14 +10,12 @@
       </actionable-card>
 
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
-      <template v-if="probe.ordererOrg">
-        <actionable-card>
-          <orderer-view :probe="probe"/>
-          <template v-slot:actions v-if="!probe.finishedAt">
-            <edit-probe-orderer-button :probe="probe"/>
-          </template>
-        </actionable-card>
-      </template>
+      <actionable-card>
+        <orderer-view :probe="probe"/>
+        <template v-slot:actions v-if="!probe.finishedAt">
+          <edit-probe-orderer-button :probe="probe"/>
+        </template>
+      </actionable-card>
 
       <h3 class="mt-5">{{ $t('probe._name') }}</h3>
       <actionable-card>
