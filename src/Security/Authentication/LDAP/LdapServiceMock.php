@@ -6,7 +6,7 @@ namespace App\Security\Authentication\LDAP;
 
 use App\Entity\User;
 
-class LdapServiceMock implements LDAPServiceInterface
+class LdapServiceMock implements LdapServiceInterface
 {
     public function loadMemberOf(string $shortname): ?array
     {

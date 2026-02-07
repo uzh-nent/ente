@@ -105,6 +105,9 @@ trait ServiceRequest
         $this->analysisTypes = SerializerExtension::unserializeEnumArray(AnalysisType::class, $analysisTypes);
     }
 
+    /**
+     * @return MethodType[]
+     */
     public function getMethodTypes(): array
     {
         return $this->methodTypes;

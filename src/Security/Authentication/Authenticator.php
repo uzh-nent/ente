@@ -66,6 +66,7 @@ class Authenticator extends AbstractAuthenticator
             throw new AuthenticationException($azureError);
         }
 
+        /** @var AccessToken $accessToken */
         $accessToken = $this->azureProvider->getAccessToken('authorization_code', [
             'code' => $request->query->get('code'),
         ]);
