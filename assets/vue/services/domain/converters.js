@@ -78,6 +78,7 @@ export const probeConverter = {
     }
 
     return {
+      '@id': probe.ordererPrac,
       title: probe.ordererPracTitle,
       givenName: probe.ordererPracGivenName,
       familyName: probe.ordererPracFamilyName,
@@ -89,7 +90,12 @@ export const probeConverter = {
     }
   },
   reconstructAnimalKeeper: function (probe) {
+    if (!probe.animalKeeper) {
+      return null
+    }
+
     return {
+      '@id': probe.animalKeeper,
       name: probe.animalKeeperName,
       addressLines: probe.animalKeeperAddressLines,
       city: probe.animalKeeperCity,
@@ -98,7 +104,12 @@ export const probeConverter = {
     }
   },
   reconstructPatient: function (probe) {
+    if (!probe.patient) {
+      return null
+    }
+
     return {
+      '@id': probe.patient,
       birthDate: probe.patientBirthDate,
       ahvNumber: probe.patientAhvNumber,
       gender: probe.patientGender,

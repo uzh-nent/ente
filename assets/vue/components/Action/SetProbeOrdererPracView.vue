@@ -1,9 +1,10 @@
 <template>
-    <form-field for-id="ordererOrg" :label="$t('practitioner._name')">
+    <form-field for-id="ordererPrac" :label="$t('practitioner._name')">
       <actionable-preview class="mb-2" v-if="practitioner">
         <practitioner-view :practitioner="practitioner"/>
         <template #actions>
-          <edit-linked-practitioner-button class="m-2" :entity="practitioner" @update="practitionerOverride = $event" />
+          <edit-linked-practitioner-button
+              class="m-2"  :can-unlink="canUnlink" :entity="practitioner" @update="practitionerOverride = $event" />
         </template>
       </actionable-preview>
 
@@ -20,7 +21,7 @@
       </div>
 
       <div class="mb-2">
-        <radio id="ordererOrg" :choices="practitioners" :value-string="value => value['@id']"
+        <radio id="ordererPrac" :choices="practitioners" :value-string="value => value['@id']"
                v-model="selectedPractitioner" />
         <span class="form-text">{{ itemHits }}</span>
       </div>
@@ -45,10 +46,13 @@ import EditPractitionerButton from "./EditPractitionerButton.vue";
 import {probeConverter} from "../../services/domain/converters";
 import EditLinkedPractitionerButton from "./EditLinkedPractitionerButton.vue";
 import EditLinkedAnimalKeeperButton from "./EditLinkedAnimalKeeperButton.vue";
+import EditLinkedOrganizationButton from "./EditLinkedOrganizationButton.vue";
+import {createCleanPatch} from "./utils/linkedEntity";
 
 export default {
   emits: ['update'],
   components: {
+    EditLinkedOrganizationButton,
     EditLinkedAnimalKeeperButton,
     EditLinkedPractitionerButton,
     EditPractitionerButton,
@@ -65,7 +69,7 @@ export default {
   data() {
     return {
       selectedPractitioner: null,
-      practitionerOverride: null,
+      practitionerOverride: undefined,
 
       searchFamilyName: "",
       searchPostalCode: "",
@@ -75,11 +79,15 @@ export default {
     probe: {
       type: Object,
       default: null
-    }
+    },
+    canUnlink: {
+      type: Boolean,
+      default: false
+    },
   },
   computed: {
     practitioner: function () {
-      if (this.practitionerOverride) {
+      if (this.practitionerOverride !== undefined) {
         return this.practitionerOverride
       }
 
@@ -121,26 +129,27 @@ export default {
   watch: {
     items: {
       handler: function (items) {
-        if (items.length === 1 && !this.probe?.ordererOrg) {
+        if (items.length === 1 && !this.probe?.ordererPrac) {
           this.selectedPractitioner = items[0]
         }
       }
     },
     selectedPractitioner: {
       handler: function () {
-        this.practitionerOverride = null
+        this.practitionerOverride = undefined
+      }
+    },
+    practitionerOverride: {
+      handler: function () {
+        if (this.practitionerOverride === null) {
+          this.selectedPractitioner = null
+        }
       }
     },
     practitioner: {
       handler: function (practitioner) {
-        const orderOrg = probeConverter.copyFromPractitioner(practitioner)
-        const patch = {}
-        for (const key in orderOrg) {
-          if (orderOrg.hasOwnProperty(key) && (!this.probe || orderOrg[key] !== this.probe[key])) {
-            patch[key] = orderOrg[key]
-          }
-        }
-
+        const copy = probeConverter.copyFromPractitioner(practitioner ?? {})
+        const patch = createCleanPatch(this.probe, copy)
         this.$emit("update", patch)
       }
     }

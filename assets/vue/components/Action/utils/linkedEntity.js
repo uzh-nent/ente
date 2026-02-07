@@ -15,7 +15,11 @@ export const linkedEntityEditAction = {
   props: {
     entity: {
       type: Object,
-        required: true
+      required: true
+    },
+    canUnlink: {
+      type: Boolean,
+      default: false
     },
   },
   computed: {
@@ -47,7 +51,14 @@ export const linkedEntityEditAction = {
       }
 
       return false
-    }
+    },
+    abort: function () {
+      if (!this.canUnlink) {
+        return null
+      }
+
+      return this.unlink
+    },
   },
   methods: {
     confirm: async function () {
@@ -61,8 +72,35 @@ export const linkedEntityEditAction = {
       this.$emit('update', this.payload)
       this.useReference = this.storeReference = false
     },
+    unlink: async function () {
+      this.$emit('update', null)
+      this.useReference = this.storeReference = false
+    },
     reloadReference: async function () {
       this.reference = await api.get(this.entity['@id'])
     },
   }
+}
+
+export const createCleanPatch = function (probe, uncleanPatch) {
+  const patch = {}
+  for (const key in uncleanPatch) {
+    if (!uncleanPatch.hasOwnProperty(key)) {
+      continue
+    }
+
+    if (probe && uncleanPatch[key] === probe[key]) {
+      continue
+    }
+
+    if (!probe && !uncleanPatch[key]) {
+      continue
+    }
+
+    patch[key] = uncleanPatch[key]
+  }
+
+  console.log("created patch", patch)
+
+  return (Object.keys(patch).length === 0) ? null : patch
 }

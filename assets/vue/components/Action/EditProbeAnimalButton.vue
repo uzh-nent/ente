@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     canConfirm: function () {
-      return !!this.animalName || !!this.animalKeeper
+      return Object.keys(this.payload).length > 0
     },
     payload: function () {
       let payload = {}

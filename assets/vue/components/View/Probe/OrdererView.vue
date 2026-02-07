@@ -3,8 +3,8 @@
     <labeled-value :label="$t('probe.requisition_identifier')">
       {{ probe.requisitionIdentifier }}
     </labeled-value>
-    <organization-view :organization="organization"/>
-    <practitioner-view :practitioner="practitioner"/>
+    <organization-view v-if="organization" :organization="organization"/>
+    <practitioner-view v-if="practitioner" :practitioner="practitioner"/>
   </div>
 </template>
 
