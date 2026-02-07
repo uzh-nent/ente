@@ -163,11 +163,11 @@ trait OrdererPracCopy
 
     public function getOrdererPracShortAddress(): string
     {
-        $fullName = trim($this->getOrdererPracGivenName() . " " . $this->getOrdererPracFamilyName());
+        $fullName = trim($this->getOrdererPracTitle() . " " . $this->getOrdererPracGivenName() . " " . $this->getOrdererPracFamilyName());
         $countryPrefix = $this->getOrdererPracCountryCode() === 'CH' ? "" : $this->getOrdererPracCountryCode() . " ";
         $city = trim($this->getOrdererPracPostalCode() . " " . $this->getOrdererPracCity());
 
-        return join("\n", array_filter([
+        return join(", ", array_filter([
             $fullName,
             $countryPrefix . $city
         ]));

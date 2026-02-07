@@ -448,9 +448,10 @@ class PdfService implements PdfServiceInterface
         $labelWidth = mm2p(25);
         $flow->add($this->createLabeledValue($label, $value, primary: true, labelWidth: $labelWidth));
 
-        $label = $this->translator->trans("Orderer", [], "entity_probe");
-        $value = $probe->getOrdererOrg() ? $probe->getOrdererOrgShortAddress() : $probe->getOrdererPracShortAddress();
-        $flow->add($this->createLabeledValue($label, $value, primary: true, labelWidth: $labelWidth));
+        foreach ([$probe->getOrdererOrgShortAddress(), $probe->getOrdererPracShortAddress()] as $ordererAddress) {
+            $label = $this->translator->trans("Orderer", [], "entity_probe");
+            $flow->add($this->createLabeledValue($label, $ordererAddress, primary: true, labelWidth: $labelWidth));
+        }
 
         $label = $this->translator->trans("Requisition identifier", [], "trait_probe_service_request");
         $flow->add($this->createLabeledValue($label, $probe->getRequisitionIdentifier(), primary: true, boldValue: true, labelWidth: $labelWidth));
