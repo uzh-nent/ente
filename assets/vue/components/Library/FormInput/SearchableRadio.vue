@@ -3,7 +3,7 @@
     <text-input v-if="searchEnabled" class="mb-2" id="searchChoice"
                 type="text" :placeholder="$t('_form.search')"
                 v-model="searchChoice" />
-    <div>
+    <div class="mh-30em overflow-y-scroll">
       <div class="form-check" :class="{'form-check-inline': inline}" v-for="choice in shownChoices" :key="choice.value">
         <input class="form-check-input" type="radio" :required="required" :disabled="disabled"
                :name="id" :id="id + '_' + valueString(choice.value)" :value="choice.value"
@@ -68,5 +68,8 @@ export default {
 <style scoped>
 .clickable {
   cursor: pointer;
+}
+.mh-30em {
+  max-height: 30em;
 }
 </style>

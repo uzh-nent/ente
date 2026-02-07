@@ -1,6 +1,6 @@
 import debounce from "lodash.debounce";
 
-const SEARCH_CUTOFF = 10
+const SEARCH_CUTOFF = 50
 
 export const searchableChoices = {
   emits: ['update'],
@@ -21,6 +21,10 @@ export const searchableChoices = {
       return source?.slice(0, SEARCH_CUTOFF) ?? [];
     },
     itemHits: function () {
+      if (!this.searchChoice) {
+        return null
+      }
+
       let hits = this.shownChoices.length;
       if (this.shownChoices.length < this.filteredChoices?.length) {
         hits += `+`
