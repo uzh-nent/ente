@@ -81,13 +81,6 @@ Probedaten:
 
 ## Future features
 
-
-features v1.2:
-- allow proben to select mediziner:in, verify mediziner:in is shown. check that appears as expected on PDF/ELM report
-- refactor linking entities:
-    - improve "0 Ergebnisse", "1 Ergebnisse" display; show more than 10 (e.g., for subspecies search)
-- open source it
-
 features v1.3:
 - reason for "identification not possible": "kein wachstum", "mischkultur", "andere". check if other default texts useful
 - refactor address / contact partial forms
