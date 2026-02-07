@@ -131,14 +131,17 @@ export default {
       }
     },
     selectedOrganization: {
-      handler: function () {
-        this.organizationOverride = undefined
+      handler: function (selectedOrganization) {
+        if (selectedOrganization) {
+          this.organizationOverride = undefined
+        }
       }
     },
     organizationOverride: {
       handler: function () {
-        if (this.organizationOverride === null) {
-          this.selectedOrganization = null
+        if (this.organizationOverride !== undefined) {
+          this.selectedOrganization = undefined
+          this.reload()
         }
       }
     },

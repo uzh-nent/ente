@@ -135,14 +135,17 @@ export default {
       }
     },
     selectedPractitioner: {
-      handler: function () {
-        this.practitionerOverride = undefined
+      handler: function (selectedPractitioner) {
+        if (selectedPractitioner) {
+          this.practitionerOverride = undefined
+        }
       }
     },
     practitionerOverride: {
       handler: function () {
-        if (this.practitionerOverride === null) {
-          this.selectedPractitioner = null
+        if (this.practitionerOverride !== undefined) {
+          this.selectedPractitioner = undefined
+          this.reload()
         }
       }
     },

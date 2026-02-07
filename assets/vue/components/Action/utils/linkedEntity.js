@@ -34,7 +34,7 @@ export const linkedEntityEditAction = {
       return (this.patch && Object.keys(this.patch).length > 0)
     },
     canConfirm: function () {
-      return this.hasPatch || this.useReference
+      return (this.hasPatch || this.useReference) || (this.referenceIsDifferent && this.storeReference)
     },
     payload: function () {
       return {...this.template, ...this.patch}
