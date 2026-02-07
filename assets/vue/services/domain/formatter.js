@@ -110,23 +110,15 @@ export const formatCityLine = function (value) {
   return cityLineValues.filter(e => e).join(" ")
 }
 
-export const formatPersonName = function (value) {
-  if (!value) {
-    return '-'
-  }
-
-  return [value.givenName, value.familyName].filter(e => e).join(" ")
-}
-
 export const formatPatientName = function (value, translator) {
   if (!value) {
     return '-'
   }
 
   const genderSuffix = value.gender ?
-    " (" + translator('patient._gender_short.' + value.gender) + ")" : null;
+    "(" + translator('patient._gender_short.' + value.gender) + ")" : null;
 
-  return formatPersonName(value) + genderSuffix
+  return [value.familyName, value.givenName, genderSuffix].filter(e => e).join(" ")
 }
 
 export const formatAhvNumber = function (value, translator) {
@@ -194,7 +186,7 @@ export const formatPatientShort = function (value) {
     return '-'
   }
 
-  return [value.ahvNumber, value.givenName, value.familyName, value.postalCode, value.city].filter(e => e).join(" ")
+  return [value.ahvNumber, value.familyName, value.givenName, value.postalCode, value.city].filter(e => e).join(" ")
 }
 
 export const formatProbeService = (probe, t) => {

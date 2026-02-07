@@ -55,7 +55,7 @@ export default {
         } else if (filterKey === 'patient') {
           const key = this.$t(filterKey + "._name")
           api.get(this.urlFilter[filterKey]).then(response => {
-            const value = [response.familyName, response.givenName].filter(v => v).join(" ");
+            const value = [response.givenName, response.familyName].filter(v => v).join(" ");
             this.labels.push(key + ": " + value)
           })
         } else if (filterKey === 'animalKeeper') {

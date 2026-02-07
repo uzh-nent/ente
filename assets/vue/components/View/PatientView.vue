@@ -8,7 +8,7 @@
       </span>
     </span>
     <span class="d-block">
-      {{ patient.givenName }} <b>{{ patient.familyName }}</b>
+      <b>{{ patient.familyName }}</b> {{ patient.givenName }}
       <span v-if="patient.gender" class="ms-1">{{ $t('patient._gender_short.' + patient.gender)}}</span>
     </span>
     <span v-if="address" class="whitespace-preserve-newlines">

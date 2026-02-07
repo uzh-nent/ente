@@ -15,7 +15,7 @@
     </td>
     <td>
       <span v-if="probe.specimenSource === 'HUMAN'" class="d-block">
-        {{ probe.patientGivenName }} <b>{{ probe.patientFamilyName }}</b>
+        <b>{{ probe.patientFamilyName }}</b> {{ probe.patientGivenName }}
         <span v-if="probe.patientGender" class="ms-1">{{ $t('patient._gender_short.' + probe.patientGender) }}</span>
         {{ formatDate(probe.patientBirthDate) }}
         <br/>
@@ -92,7 +92,7 @@ export default {
     },
     sourceLines: function () {
       return [
-        [this.probe.patientGivenName, this.probe.patientFamilyName].filter(e => e).join(" "),
+        [this.probe.patientFamilyName, this.probe.patientGivenName].filter(e => e).join(" "),
         this.probe.animalKeeperName,
       ].filter(e => e)
     },

@@ -5,7 +5,8 @@
       {{ patient.ahvNumber }}
     </td>
     <td>
-      {{ patient.givenName }} {{ patient.familyName }}
+      <b>{{ patient.familyName }}</b>
+      {{ patient.givenName }}
       <span v-if="patient.gender">{{ $t('patient._gender_short.' + patient.gender)}}</span>
     </td>
     <td class="whitespace-preserve-newlines">
