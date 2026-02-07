@@ -126,14 +126,17 @@ export default {
       }
     },
     selectedAnimalKeeper: {
-      handler: function () {
-        this.animalKeeperOverride = undefined
+      handler: function (selectedAnimalKeeper) {
+        if (selectedAnimalKeeper) {
+          this.animalKeeperOverride = undefined
+        }
       }
     },
     animalKeeperOverride: {
       handler: function () {
-        if (this.animalKeeperOverride === null) {
-          this.selectedAnimalKeeper = null
+        if (this.animalKeeperOverride !== undefined) {
+          this.selectedAnimalKeeper = undefined
+          this.reload()
         }
       }
     },

@@ -128,14 +128,17 @@ export default {
       }
     },
     selectedPatient: {
-      handler: function () {
-        this.patientOverride = undefined
+      handler: function (selectedPatient) {
+        if (selectedPatient) {
+          this.patientOverride = undefined
+        }
       }
     },
     patientOverride: {
       handler: function () {
-        if (this.patientOverride === null) {
-          this.selectedPatient = null
+        if (this.patientOverride !== undefined) {
+          this.selectedPatient = undefined
+          this.reload()
         }
       }
     },
