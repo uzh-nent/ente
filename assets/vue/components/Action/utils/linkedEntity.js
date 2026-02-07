@@ -100,7 +100,5 @@ export const createCleanPatch = function (probe, uncleanPatch) {
     patch[key] = uncleanPatch[key]
   }
 
-  console.log("created patch", patch)
-
   return (Object.keys(patch).length === 0) ? null : patch
 }
