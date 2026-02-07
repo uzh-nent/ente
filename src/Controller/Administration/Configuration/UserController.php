@@ -27,7 +27,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/new', name: 'configuration_user_new')]
-    public function userNew(Request $request, TranslatorInterface $translator, ManagerRegistry $registry, UserPasswordHasherInterface $hasher): Response
+    public function userNew(Request $request, TranslatorInterface $translator, ManagerRegistry $registry): Response
     {
         $user = new User();
 
@@ -37,7 +37,6 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->trySetPassword($form, $user, $hasher);
             DoctrineHelper::persistAndFlush($registry, $user);
 
             $message = $translator->trans('user_new.success.created', [], 'configuration');
@@ -50,7 +49,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/{user}/edit', name: 'configuration_user_edit')]
-    public function userEdit(Request $request, User $user, TranslatorInterface $translator, ManagerRegistry $registry, UserPasswordHasherInterface $hasher): Response
+    public function userEdit(Request $request, User $user, TranslatorInterface $translator, ManagerRegistry $registry): Response
     {
         $label = $translator->trans('form.buttons.store');
         $form = $this->createForm(UserType::class, $user)
@@ -58,7 +57,6 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->trySetPassword($form, $user, $hasher);
             DoctrineHelper::persistAndFlush($registry, $user);
 
             $message = $translator->trans('user_edit.success.stored', [], 'configuration');
@@ -68,14 +66,5 @@ class UserController extends AbstractController
         }
 
         return $this->render('configuration/user/edit.html.twig', ['form' => $form->createView()]);
-    }
-
-    private function trySetPassword(FormInterface $form, User $user, UserPasswordHasherInterface $hasher): void
-    {
-        $plainPassword = $form->get(UserType::PLAIN_PASSWORD)->getData();
-        if ($plainPassword) {
-            $hashedPassword = $hasher->hashPassword($user, $plainPassword);
-            $user->setPassword($hashedPassword);
-        }
     }
 }

@@ -19,8 +19,6 @@ class UserType extends AbstractType
         $builder->add('abbreviation', TextType::class, ['help' => 'help.abbreviation']);
         $builder->add('shortname', TextType::class, ['help' => 'help.shortname']);
         $builder->add('isEnabled', CheckboxType::class, ['required' => false, 'help' => 'help.is_enabled']);
-        ;
-        $builder->add(self::PLAIN_PASSWORD, PasswordType::class, ['required' => false, 'mapped' => false, 'help' => 'help.override_plain_password']);
         $builder->add('medicalValidation', CheckboxType::class, ['required' => false, 'help' => 'help.medical_validation']);
     }
 
