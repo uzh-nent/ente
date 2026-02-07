@@ -87,8 +87,7 @@ features v1.3:
     -	add department, webpage to organization
     -	add structured contact info (email, tel) to animal keeper / practitioner / organization / patient
     -	add GLN to practitioner
-    -	add BER to organization
-    -	add UID to animal keeper
+    -	add UID/BER to organization / animal keeper
     -	ensure address shown completely everywhere
     -	report tel number of patient
 - interne textbausteine
