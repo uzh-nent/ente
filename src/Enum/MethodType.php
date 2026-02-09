@@ -5,7 +5,7 @@ namespace App\Enum;
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-enum MethodType: string
+enum MethodType: string implements TranslatableInterface
 {
     case SOP = "SOP"; // SOP is the Standard Operating Procedure
 
@@ -17,4 +17,9 @@ enum MethodType: string
     case MLST = "MLST";
     case WGS = "WGS";
     case GDS = "GDS";
+
+    public function trans(TranslatorInterface $translator, ?string $locale = null): string
+    {
+        return $translator->trans($this->value, [], 'enum_method_type');
+    }
 }

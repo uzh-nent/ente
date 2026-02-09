@@ -83,7 +83,7 @@ class PdfService implements PdfServiceInterface
         $this->addSpace($flow, $this->spacer / 8);
         $this->addDivider($flow, $contentWidth);
         $this->addSpace($flow, $this->spacer / 8);
-        $this->addWorksheetServiceTimeMeta($probe, $flow);
+        $this->addWorksheetServiceMeta($probe, $flow);
 
         $this->addWorksheetAnalysisContent($probe, $flow);
 
@@ -350,17 +350,23 @@ class PdfService implements PdfServiceInterface
         $flow->add($innerFlow);
     }
 
-    private function addWorksheetServiceTimeMeta(Probe $probe, Flow $flow): void
+    private function addWorksheetServiceMeta(Probe $probe, Flow $flow): void
     {
         $innerFlow = new Flow(FlowDirection::ROW);
 
+        $translatedMethods = [];
+        foreach ($probe->getMethodTypes() as $methodType) {
+            $translatedMethods[] = $methodType->trans($this->translator);
+        }
+
         $content = [
-            [$this->translator->trans("Received date", [], "trait_probe_service_time"), $probe->getReceivedDate()],
-            [$this->translator->trans("Analysis start date", [], "trait_probe_service_time"), $probe->getAnalysisStartDate()]
+            [$this->translator->trans("Received date", [], "trait_probe_service_time"), $probe->getReceivedDate()?->format("d.m.Y") ?? ""],
+            [$this->translator->trans("Analysis start date", [], "trait_probe_service_time"), $probe->getAnalysisStartDate()?->format("d.m.Y") ?? ""],
+            [$this->translator->trans("enum.plural", [], "enum_method_type"), join(", ", $translatedMethods)]
         ];
 
-        foreach ($content as [$label, $date]) {
-            $element = $this->createLabeledValue($label, $date?->format("d.m.Y") ?? "");
+        foreach ($content as [$label, $value]) {
+            $element = $this->createLabeledValue($label, $value);
             $element->setMargin([0, 0, $this->spacer, 0]);
             $innerFlow->add($element);
         }
@@ -516,6 +522,12 @@ class PdfService implements PdfServiceInterface
             $value = $probe->getSpecimenText() ?? "";
         }
         $flow->add($this->createLabeledValue($label, $value, labelWidth: $labelWidth));
+
+        // amnesis
+        if ($probe->getSpecimenSource() === SpecimenSource::HUMAN && $probe->getAnamnesisTravels()) {
+            $label = $this->translator->trans("Anamnesis travels", [], "trait_probe_specimen_meta");
+            $flow->add($this->createLabeledValue($label, $probe->getAnamnesisTravels(), labelWidth: $labelWidth));
+        }
 
         return $flow;
     }
