@@ -91,7 +91,7 @@ features v1.3:
     -	ensure address shown completely everywhere
     -	report tel number of patient
 - interne textbausteine
-- add monocytogenes to primary probes
+- add monocytogenes to primary probes, add stx1 stx2 as separate pos/neg, polish custom pathogen case
 - Statistik (until 2025) -> separate P/N probes, allow to choose date
 - Statistik (from 2025) -> allow to export csv from table search result, with observation results inline
 - invoicing:
