@@ -190,7 +190,7 @@ export default {
     },
     hasMedicalValidation: function () {
       const shortname = document.getElementById("shortname").textContent
-      const user = this.users.find(u => u.name === shortname)
+      const user = this.users.find(u => u.shortname === shortname)
 
       return user?.medicalValidation
     }

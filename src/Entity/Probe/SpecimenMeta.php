@@ -26,7 +26,7 @@ trait SpecimenMeta
     // laboratory_strain, feed, environment => use specimenText, specimenTypeText, specimenLocation
     // food => use specimenText, specimenFoodType, specimenTypeText, specimenLocation
     // animal => use specimenText, use specimenAnimalType, specimenTypeText, link animalKeeper, use animalName
-    // human => link specimen, use specimenText, use specimenIsolate, link patient
+    // human => link specimen, use specimenText, use specimenIsolate, link patient; use anamnesisTravels
     //
     // shared logic: there is often structured options that can be selected (e.g. specimenAnimalType),
     // but there always needs to be a fallback freetext field (i.e. specimenText)

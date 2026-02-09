@@ -42,6 +42,7 @@ class User implements UserInterface
     private ?string $abbreviation;
 
     #[ORM\Column(type: Types::STRING, unique: true)]
+    #[Groups(['user:read'])]
     private ?string $shortname;
 
     #[ORM\Column(type: Types::BOOLEAN)]

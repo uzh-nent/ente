@@ -1,0 +1,12 @@
+enum:
+  title: "Methodik"
+  plural: "Methodik"
+
+SOP: SOP
+AGGLUTINATION: Agglutination
+BIOCHEMISTRY: Biochemisch
+PCR: PCR
+RTPCR: rtPCR
+MLST: MLST
+WGS: WGS
+GDS: GDS
