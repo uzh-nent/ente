@@ -104,6 +104,13 @@ export default {
     orderOfIdentifier: function () {
       return this.getOrder('identifier')
     },
+  },
+  mounted() {
+    if (Object.keys(this.urlFilter).length > 0) {
+      this.filter = {}
+      this.searchIdentifier = ""
+      this.searchRequisitionIdentifier = ""
+    }
   }
 }
 

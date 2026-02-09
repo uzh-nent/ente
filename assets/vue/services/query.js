@@ -3,7 +3,7 @@ export const sanitizeSearchFilter = function (filter) {
 
   for (const [key, value] of Object.entries(filter)) {
     if (value !== null && value !== undefined && value !== '') {
-      query[key] = value
+      query[key] = value.trim()
     }
   }
 
