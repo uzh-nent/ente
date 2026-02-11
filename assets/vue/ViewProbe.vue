@@ -54,7 +54,9 @@
         </template>
       </actionable-card>
 
-      <download-probe-worksheet-button class="mt-5" :probe="probe" :has-observations="observations.length > 0"/>
+      <download-probe-worksheet-button
+          class="mt-5" ref="downloadWorksheetButton"
+          :probe="probe" :has-observations="observations.length > 0"/>
 
       <div class="mt-5">
         <h3>{{ $t('observation._name') }}</h3>
@@ -220,7 +222,13 @@ export default {
     this.users = users
     this.standardTexts = standardTexts
 
-    if (this.missingObservations.length > 0) {
+    const createdAtMs = new Date(this.probe.createdAt).getTime()
+    const twoHoursAgoMs = Date.now() - 2 * 60 * 60 * 1000
+    if (createdAtMs > twoHoursAgoMs) {
+      this.$nextTick(() => {
+        this.$refs.downloadWorksheetButton.$el?.focus()
+      })
+    } else if (this.missingObservations.length > 0) {
       this.$nextTick(() => {
         this.$refs.addObservationsButton.$el?.focus()
       })
