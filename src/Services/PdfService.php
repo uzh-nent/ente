@@ -574,8 +574,8 @@ class PdfService implements PdfServiceInterface
             $ordererFlow->add($this->createLabeledValue($label, $probe->getPatientFamilyName(), labelWidth: $labelWidth));
             $label = $this->translator->trans("Given name", [], "trait_person");
             $ordererFlow->add($this->createLabeledValue($label, $probe->getPatientGivenName(), labelWidth: $labelWidth));
-
-            $ordererFlow->add($this->createValue($probe->getPatientAddress()));
+            $label = $this->translator->trans("Address", [], "entity_patient");
+            $ordererFlow->add($this->createLabeledValue($label, $probe->getPatientAddress(), labelWidth: $labelWidth));
         } elseif ($probe->getSpecimenSource() === SpecimenSource::ANIMAL) {
             $recipient = $this->createRecipientElement(
                 $this->translator->trans("entity.title", [], "animal_keeper"),
