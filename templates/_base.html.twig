@@ -15,20 +15,22 @@
 </head>
 <body>
 
-{% set flashes = app.session.flashbag.all() %}
-{% if flashes|length > 0 %}
-    <div class="flash-wrapper d-flex gap-2">
-        {% for type, messages in flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ type }} alert-dismissible fade show mb-0 w-100" role="alert">
-                    <div class="container text-center">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+{% if shows_flashes is not defined %}
+    {% set flashes = app.session.flashbag.all() %}
+    {% if flashes|length > 0 %}
+        <div class="flash-wrapper d-flex gap-2">
+            {% for type, messages in flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }} alert-dismissible fade show mb-0 w-100" role="alert">
+                        <div class="container text-center">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-    </div>
+        </div>
+    {% endif %}
 {% endif %}
 
 {% if is_granted('IS_IMPERSONATOR') %}
