@@ -5,3 +5,4 @@ entity:
 Requisition identifier: "Probe-Referenz"
 Service: 'Auftrag'
 Orderer: 'Auftraggeber'
+Orderer prac: 'Mediziner:in'
