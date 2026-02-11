@@ -10,6 +10,8 @@
 {% endmacro %}
 {% import _self as own_macros %}
 
+{% set shows_flashes = true %}
+
 {% block body %}
     <div class="container-fluid p-0">
         <div class="d-flex flex-row vh-100">
@@ -83,6 +85,22 @@
             </div>
             <div class="divider ms-2"></div>
             <div class="content flex-grow-1 px-2 pt-2 pb-4 overflow-y-scroll">
+                {% set flashes = app.session.flashbag.all() %}
+                {% if flashes|length > 0 %}
+                    <div class="flash-wrapper d-flex gap-2 mb-4">
+                        {% for type, messages in flashes %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ type }} alert-dismissible fade show mb-0 w-100" role="alert">
+                                    <div class="container text-center">
+                                        {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
                 <div>
                     {% if breadcrumbs is defined and breadcrumbs|length > 0 %}
                         <nav aria-label="breadcrumb">
