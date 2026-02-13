@@ -32,6 +32,10 @@ class SecurityController extends AbstractController
     #[Route('/login', name: 'login')]
     public function login(Request $request, FormFactoryInterface $factory, AuthenticationUtils $authenticationUtils, TranslatorInterface $translator, AuthenticationEntryPoint $authenticationEntryPoint): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('index');
+        }
+
         $form = $factory->createBuilder(EmptyForm::class)
             ->add('submit', SubmitType::class, ['label' => 'login.form.submit', 'translation_domain' => 'security'])
             ->getForm();
@@ -46,8 +50,6 @@ class SecurityController extends AbstractController
             $message = $translator->trans('login.error.login_failed', ['%error%' => $lastError->getMessage()], 'security');
             $this->addFlash('danger', $message);
         }
-
-        dump($lastError);
 
         return $this->render('security/login.html.twig', ['form' => $form->createView()]);
     }
