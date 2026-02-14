@@ -84,11 +84,9 @@ Probedaten:
 features v1.3:
 - reason for "identification not possible": "kein wachstum", "mischkultur", "andere". check if other default texts useful
 - refactor address / contact partial forms
-    -	add department, webpage to organization
     -	add structured contact info (email, tel) to animal keeper / practitioner / organization / patient
     -	add GLN to practitioner
     -	add UID/BER to organization / animal keeper
-    -	ensure address shown completely everywhere
     -	report tel number of patient
 - interne textbausteine
 - add monocytogenes to primary probes, add stx1 stx2 as separate pos/neg, polish custom pathogen case
