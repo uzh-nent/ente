@@ -51,6 +51,12 @@ class SecurityController extends AbstractController
             $this->addFlash('danger', $message);
         }
 
-        return $this->render('security/login.html.twig', ['form' => $form->createView()]);
+        return $this->render('security/login.html.twig', ['form' => $form->createView(), 'lastError' => $lastError]);
+    }
+
+    #[Route('/login/end_session', name: 'login_end_session')]
+    public function endSession(Authenticator $authenticator): Response
+    {
+        return $authenticator->redirectToEndSession();
     }
 }

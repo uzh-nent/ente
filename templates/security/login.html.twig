@@ -11,5 +11,11 @@
         <input type="hidden" name="_csrf_token" data-controller="csrf-protection"
                value="{{ csrf_token('authenticate') }}">
         {{ form_end(form) }}
+
+        {% if lastError %}
+            <a href="{{ path('login_end_session') }}" class="btn btn-outline-secondary">
+                {{ "login.end_session"|trans }}
+            </a>
+        {% endif %}
     </div>
 {% endblock %}

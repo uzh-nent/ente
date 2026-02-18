@@ -81,7 +81,7 @@ class Authenticator extends AbstractAuthenticator
         $shortname = $owner->getShortName();
         $memberOf = $this->LDAPService->loadMemberOf($shortname);
         if (!$memberOf || !in_array($this->ldapUserWhitelistGroup, $memberOf, true)) {
-            throw new AuthenticationException('User is not in the LDAP group ' . $this->ldapUserWhitelistGroup);
+            throw new AuthenticationException('User ' . $shortname. ' is not in the LDAP group ' . $this->ldapUserWhitelistGroup);
         }
 
         // register the super shortname on demand
