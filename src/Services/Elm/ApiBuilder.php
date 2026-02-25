@@ -70,8 +70,8 @@ readonly class ApiBuilder
         if ($elmReport->getSpecimen()) {
             if ($elmReport->getLeadingCode()->getSpecimen() === $elmReport->getSpecimen()) {
                 // specimen already defined by the leading code, hence do not send it
-                // if we send it anyways, leads to a warning by the API
-                // TODO: ask BAG to instead remove warning from API, and validate themselves. this seems unsafe; what if the leading code is wrongly configured?
+                // if we send it anyway, leads to a warning by the API
+                // BAG responded that they cannot remove this warning from the API
             } else {
                 $specimenResource['resource']["type"] = [
                     "coding" => [$this->formatter->codedIdentifier($elmReport->getSpecimen())]
