@@ -28,8 +28,10 @@
     <div class="col-md-12">
       <form-field for-id="interpretationText" :label="$t('observation.interpretation_text')"
                   :field="fields.interpretationText">
-        <text-area id="interpretationText" :field="fields.interpretationText" v-model="entity.interpretationText"
-                   @blur="blurField('interpretationText')" @update:modelValue="validateField('interpretationText')"/>
+        <text-area-with-standard-text
+            id="interpretationText" :field="fields.interpretationText" v-model="entity.interpretationText"
+            :standard-texts="filteredInterpretationTexts"
+            @blur="blurField('interpretationText')" @update:modelValue="validateField('interpretationText')"/>
       </form-field>
     </div>
   </div>
@@ -48,10 +50,12 @@ import debounce from "lodash.debounce";
 import {sortOrganisms} from "../../../services/domain/sorters";
 import {formatOrganism} from "../../../services/domain/formatter";
 import SearchableRadio from "../../Library/FormInput/SearchableRadio.vue";
+import TextAreaWithStandardText from "../../Library/FormInput/TextAreaWithStandardText.vue";
 
 export default {
   emits: ['update'],
   components: {
+    TextAreaWithStandardText,
     SearchableRadio,
     Checkbox,
     CustomSelect,
@@ -89,6 +93,10 @@ export default {
       type: Array,
       required: true
     },
+    interpretationTexts: {
+      type: Array,
+      required: true
+    },
   },
   computed: {
     organismChoices: function () {
@@ -98,6 +106,9 @@ export default {
       sortOrganisms(organisms)
 
       return organisms.map(o => ({label: formatOrganism(o), value: o}))
+    },
+    filteredInterpretationTexts: function () {
+      return this.interpretationTexts.filter(s => !s.pathogen || s.pathogen == this.pathogen)
     }
   },
   watch: {

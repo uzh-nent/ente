@@ -8,22 +8,24 @@
           {{ $t(`observation.identification_failed`) }}
         </span>
         <span class="d-block" v-if="observation.cgMLST">
-          {{ $t(`observation.cgMLST`) }}: {{observation.cgMLST}}
+          {{ $t(`observation.cgMLST`) }}: {{ observation.cgMLST }}
         </span>
       </template>
       <template v-else>
-        <test-interpretation-badge :observation="observation" />
+        <test-interpretation-badge :observation="observation"/>
       </template>
       <span class="d-block whitespace-preserve-newlines" v-if="observation.interpretationText">
-        {{observation.interpretationText}}
+        {{ observation.interpretationText }}
       </span>
     </td>
     <td>{{ formatDateTime(observation.effectiveAt) }}</td>
     <td>
-      <attribution-view :users="users" :entity="observation" />
+      <attribution-view :users="users" :entity="observation"/>
     </td>
     <td>
-      <edit-observation-button :probe="probe" :organisms="organisms" :observation="observation"/>
+      <edit-observation-button
+          :probe="probe" :organisms="organisms" :observation="observation"
+          :interpretation-texts="interpretationTexts"/>
     </td>
   </tr>
 </template>
@@ -52,6 +54,10 @@ export default {
       required: true
     },
     organisms: {
+      type: Array,
+      required: true
+    },
+    interpretationTexts: {
       type: Array,
       required: true
     },

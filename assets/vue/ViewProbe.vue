@@ -63,11 +63,13 @@
         <add-observations-button
             v-if="missingObservations.length > 0" class="mt-2" ref="addObservationsButton"
             :probe="probe" :organisms="organisms" :missing-analysis-types="missingObservations"
+            :interpretation-texts="interpretationTexts"
             @added="observations.push($event)"
         />
         <observation-table
             v-if="observations.length > 0" class="mt-2"
-            :users="users" :observations="observations" :probe="probe" :organisms="organisms"/>
+            :users="users" :observations="observations" :probe="probe" :organisms="organisms"
+        :interpretation-texts="interpretationTexts"/>
 
         <div class="mt-5"
              v-if="probe.patient && observations.length > 0 && (!probe.finishedAt || elmReports.length > 0)">
@@ -93,7 +95,7 @@
                 v-if="!probe.finishedAt" :disabled="!hasMedicalValidation"
                 :probe="probe" :observations="observations" :reports="reports"
                 :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
-                :standard-texts="standardTexts"
+                :report-texts="reportTexts"
                 @added="addedReport($event)"
             />
           </tooltip-wrap>
@@ -132,7 +134,6 @@ import DownloadProbeWorksheetButton from "./components/Action/DownloadProbeWorks
 import AddReportButton from "./components/Action/AddReportButton.vue";
 import ReportTable from "./components/View/ReportTable.vue";
 import AddObservationsButton from "./components/Action/AddObservationsButton.vue";
-import ObservationTableRow from "./components/View/ObservationTableRow.vue";
 import ObservationTable from "./components/View/ObservationTable.vue";
 import TooltipWrap from "./components/Library/View/TooltipWrap.vue";
 import OrdererView from "./components/View/Probe/OrdererView.vue";
@@ -146,7 +147,6 @@ export default {
     OrdererView,
     TooltipWrap,
     ObservationTable,
-    ObservationTableRow,
     AddObservationsButton,
     ReportTable,
     AddReportButton,
@@ -181,7 +181,8 @@ export default {
       organisms: undefined,
 
       users: undefined,
-      standardTexts: undefined,
+      interpretationTexts: undefined,
+      reportTexts: undefined,
     }
   },
   computed: {
@@ -207,7 +208,8 @@ export default {
       leadingCodes,
       organisms,
       users,
-      standardTexts,
+      interpretationTexts,
+      reportTexts,
     } = preloadApi.getViewActiveProbe()
     this.probe = probe
 
@@ -220,7 +222,8 @@ export default {
     this.organisms = organisms
 
     this.users = users
-    this.standardTexts = standardTexts
+    this.interpretationTexts = interpretationTexts
+    this.reportTexts = reportTexts
 
     const createdAtMs = new Date(this.probe.createdAt).getTime()
     const twoHoursAgoMs = Date.now() - 2 * 60 * 60 * 1000
