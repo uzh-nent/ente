@@ -18,17 +18,33 @@ user_edit:
     stored: 'Benutzer:in erfolgreich gespeichert.'
 
 report_texts:
-  title: "Textbausteine"
+  title: "Textbausteine Bericht"
   description: "Alle Textbausteine"
 
 report_text_new:
-  title: "Neuer Textbaustein"
+  title: "Neuer Textbaustein Bericht"
   description: "Neuer Textbaustein"
   success:
     created: "Textbaustein erfolgreich hinzugefügt."
 
 report_text_edit:
-  title: "Textbaustein bearbeiten"
+  title: "Textbaustein Bericht bearbeiten"
+  description: "Textbaustein bearbeiten"
+  success:
+    stored: 'Textbaustein erfolgreich gespeichert.'
+
+interpretation_texts:
+  title: "Textbausteine Resultat"
+  description: "Alle Textbausteine"
+
+interpretation_text_new:
+  title: "Neuer Textbaustein Resultat"
+  description: "Neuer Textbaustein"
+  success:
+    created: "Textbaustein erfolgreich hinzugefügt."
+
+interpretation_text_edit:
+  title: "Textbaustein Resultat bearbeiten"
   description: "Textbaustein bearbeiten"
   success:
     stored: 'Textbaustein erfolgreich gespeichert.'
