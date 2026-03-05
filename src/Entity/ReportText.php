@@ -27,23 +27,23 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    normalizationContext: ['groups' => ['standard-text:read']],
+    normalizationContext: ['groups' => ['report-text:read']],
     paginationEnabled: false
 )]
 #[Get]
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: ['pathogen' => SearchFilterInterface::STRATEGY_EXACT])]
-class StandardText
+class ReportText
 {
     use IdTrait;
     use TimeTrait;
 
     #[ORM\Column(type: Types::STRING, enumType: Pathogen::class, nullable: true)]
-    #[Groups(['standard-text:read'])]
+    #[Groups(['report-text:read'])]
     private ?Pathogen $pathogen = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    #[Groups(['standard-text:read'])]
+    #[Groups(['report-text:read'])]
     private ?string $text = null;
 
     public function getPathogen(): ?Pathogen

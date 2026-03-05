@@ -17,17 +17,17 @@ user_edit:
   success:
     stored: 'Benutzer:in erfolgreich gespeichert.'
 
-standard_texts:
+report_texts:
   title: "Textbausteine"
   description: "Alle Textbausteine"
 
-standard_text_new:
+report_text_new:
   title: "Neuer Textbaustein"
   description: "Neuer Textbaustein"
   success:
     created: "Textbaustein erfolgreich hinzugefügt."
 
-standard_text_edit:
+report_text_edit:
   title: "Textbaustein bearbeiten"
   description: "Textbaustein bearbeiten"
   success:
