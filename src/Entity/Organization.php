@@ -22,7 +22,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\AddressTrait;
 use App\Entity\Traits\ContactTrait;
-use App\Entity\Traits\GLNIdentifiedTrait;
+use App\Entity\Traits\BusinessIdentifierTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\ThingTrait;
 use App\Entity\Traits\TimeTrait;
@@ -33,14 +33,15 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    normalizationContext: ['groups' => ['thing:read', 'gln-identified:read', 'address:read', 'contact:read']],
-    denormalizationContext: ['groups' => ['thing:write', 'gln-identified:write', 'address:write', 'contact:write']]
+    normalizationContext: ['groups' => ['business-identifier:read' ,'thing:read', 'address:read', 'contact:read']],
+    denormalizationContext: ['groups' => ['business-identifier:write' ,'thing:write', 'address:write', 'contact:write']]
 )]
 #[Get]
 #[Post]
 #[Patch]
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: [
+    'ber' => SearchFilterInterface::STRATEGY_IPARTIAL, 'uid' => SearchFilterInterface::STRATEGY_IPARTIAL,
     'name' => SearchFilterInterface::STRATEGY_IPARTIAL,
     'addressLines' => SearchFilterInterface::STRATEGY_IPARTIAL,
     'city' => SearchFilterInterface::STRATEGY_IPARTIAL, 'postalCode' => SearchFilterInterface::STRATEGY_START, 'countryCode' => SearchFilterInterface::STRATEGY_IPARTIAL,
@@ -50,8 +51,8 @@ class Organization
 {
     use IdTrait;
     use TimeTrait;
+    use BusinessIdentifierTrait;
     use ThingTrait;
-    use GLNIdentifiedTrait;
     use AddressTrait;
     use ContactTrait;
 

@@ -21,24 +21,29 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\AddressTrait;
+use App\Entity\Traits\ContactTrait;
+use App\Entity\Traits\BusinessIdentifierTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\ThingTrait;
 use App\Entity\Traits\TimeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    normalizationContext: ['groups' => ['thing:read', 'address:read']],
-    denormalizationContext: ['groups' => ['thing:write', 'address:write']]
+    normalizationContext: ['groups' => ['business-identifier:read' ,'thing:read', 'address:read', 'contact:read']],
+    denormalizationContext: ['groups' => ['business-identifier:write', 'thing:write', 'address:write', 'contact:write']]
 )]
 #[Get]
 #[Post]
 #[Patch]
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: [
+    'ber' => SearchFilterInterface::STRATEGY_IPARTIAL, 'uid' => SearchFilterInterface::STRATEGY_IPARTIAL,
     'name' => SearchFilterInterface::STRATEGY_IPARTIAL,
     'addressLines' => SearchFilterInterface::STRATEGY_IPARTIAL,
     'city' => SearchFilterInterface::STRATEGY_IPARTIAL, 'postalCode' => SearchFilterInterface::STRATEGY_START, 'countryCode' => SearchFilterInterface::STRATEGY_IPARTIAL,
@@ -48,8 +53,10 @@ class AnimalKeeper
 {
     use IdTrait;
     use TimeTrait;
+    use BusinessIdentifierTrait;
     use ThingTrait;
     use AddressTrait;
+    use ContactTrait;
 
     /**
      * @var Collection<int, Probe>
