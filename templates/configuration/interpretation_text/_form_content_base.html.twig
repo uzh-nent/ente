@@ -1,0 +1,24 @@
+{% extends "_content.html.twig" %}
+
+{% block inner_content %}
+    <div class="container-text">
+        {{ form_start(form) }}
+
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.pathogen) }}
+            </div>
+        </div>
+
+        {{ form_row(form.text) }}
+
+        <div class="mt-5">
+            {{ form_row(form.submit) }}
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+
+{% form_theme form _self %}
