@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\LeadingCode;
 use App\Entity\Specimen;
-use App\Entity\StandardText;
+use App\Entity\ReportText;
 use App\Enum\InterpretationGroup;
 use App\Enum\Pathogen;
 use App\Form\Traits\CodedIdentifierType;
@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class StandardTextType extends AbstractType
+class ReportTextType extends AbstractType
 {
     public function __construct()
     {
@@ -32,8 +32,8 @@ class StandardTextType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'translation_domain' => 'entity_standard_text',
-            'data_class' => StandardText::class,
+            'translation_domain' => 'entity_report_text',
+            'data_class' => ReportText::class,
         ]);
         parent::configureOptions($resolver);
     }
