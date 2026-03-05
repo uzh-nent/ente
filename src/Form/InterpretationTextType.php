@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\InterpretationText;
 use App\Entity\LeadingCode;
 use App\Entity\Specimen;
 use App\Entity\ReportText;
@@ -33,7 +34,7 @@ class InterpretationTextType extends AbstractType
     {
         $resolver->setDefaults([
             'translation_domain' => 'entity_interpretation_text',
-            'data_class' => ReportText::class,
+            'data_class' => InterpretationText::class,
         ]);
         parent::configureOptions($resolver);
     }

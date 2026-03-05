@@ -161,7 +161,8 @@ const preloadApi = {
       organisms: window.organisms.member,
 
       users: window.users.member,
-      standardTexts: window.standardTexts.member,
+      interpretationTexts: window.interpretationTexts.member,
+      reportTexts: window.reportTexts.member,
     }
   },
 }

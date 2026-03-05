@@ -12,7 +12,8 @@
     <tbody>
     <observation-table-row
         v-for="observation in observations" :key="observation['@id']"
-        :observation="observation" :users="users" :probe="probe" :organisms="organisms" />
+        :observation="observation" :users="users" :probe="probe" :organisms="organisms"
+        :interpretation-texts="interpretationTexts"/>
     </tbody>
   </table>
 </template>
@@ -39,6 +40,10 @@ export default {
       required: true
     },
     organisms: {
+      type: Array,
+      required: true
+    },
+    interpretationTexts: {
       type: Array,
       required: true
     },

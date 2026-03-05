@@ -36,7 +36,7 @@
             :model-value="shownResults.includes(i)" @update:modelValue="toggleShownResults(i, $event)"
         />
         <report-result-form class="mt-2" v-if="shownResults.includes(i)"
-                            :standard-texts="standardTexts" :pathogen="observations[i].pathogen"
+                            :report-texts="reportTexts" :pathogen="observations[i].pathogen"
                             :template="resultTemplate"
                             @update="results[i] = $event"/>
       </div>
@@ -94,7 +94,7 @@ export default {
       type: Array,
       required: true
     },
-    standardTexts: {
+    reportTexts: {
       type: Array,
       required: true
     },

@@ -10,7 +10,7 @@
       <form-field for-id="comment" :label="$t('report.comment')" :field="fields.comment">
         <text-area-with-standard-text
             id="comment" type="text"
-            :field="fields.comment" v-model="entity.comment" :standard-texts="filteredStandardTexts"
+            :field="fields.comment" v-model="entity.comment" :standard-texts="filteredReportTexts"
             @blur="blurField('comment')" @update:modelValue="validateField('comment')"/>
       </form-field>
     </div>
@@ -52,7 +52,7 @@ export default {
   },
   mixins: [templatedForm],
   props: {
-    standardTexts: {
+    reportTexts: {
       type: Array,
       required: true,
     },
@@ -74,8 +74,8 @@ export default {
     }
   },
   computed: {
-    filteredStandardTexts: function () {
-      return this.standardTexts.filter(s => !s.pathogen || s.pathogen == this.pathogen)
+    filteredReportTexts: function () {
+      return this.reportTexts.filter(s => !s.pathogen || s.pathogen == this.pathogen)
     }
   }
 }

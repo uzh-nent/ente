@@ -8,10 +8,14 @@
     <identification-form
         v-if="observation.analysisType === 'IDENTIFICATION'"
         :organisms="organisms" :pathogen="observation.pathogen" :template="identificationTemplate"
+        :interpretation-texts="interpretationTexts"
         @update="identificationPatch = $event"/>
     <test-form
         v-else
-        :id="observation.analysisType" :template="observation" @update="testPatch = $event"/>
+        :id="observation.analysisType" :template="observation"
+        :interpretation-texts="interpretationTexts" :pathogen="probe.pathogen"
+        @update="testPatch = $event"
+    />
   </button-confirm-modal>
 </template>
 
@@ -50,6 +54,10 @@ export default {
       required: true
     },
     organisms: {
+      type: Array,
+      required: true
+    },
+    interpretationTexts: {
       type: Array,
       required: true
     },

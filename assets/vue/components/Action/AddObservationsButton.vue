@@ -13,9 +13,11 @@
         <h3 class="mt-3">{{ $t('probe._analysis_type.' + missingAnalysisTypes[0]) }}</h3>
         <identification-form
             v-if="missingAnalysisTypes[0] === 'IDENTIFICATION'" :pathogen="probe.pathogen" :organisms="organisms"
+            :interpretation-texts="interpretationTexts"
             :template="identificationTemplate" @update="updateIdentificationObservation($event)"/>
         <test-form
             v-else :id="missingAnalysisTypes[0]" :template="testTemplate"
+            :interpretation-texts="interpretationTexts" :pathogen="probe.pathogen"
             @update="updateTestObservation(missingAnalysisTypes[0], $event)"/>
       </template>
       <template v-else>
@@ -30,9 +32,11 @@
           <div class="p-2 bg-light-subtle border border-top-0" v-if="observationEnabled(analysisType)">
             <identification-form
                 v-if="analysisType === 'IDENTIFICATION'" :pathogen="probe.pathogen" :organisms="organisms"
+                :interpretation-texts="interpretationTexts"
                 :template="identificationTemplate" @update="updateIdentificationObservation($event)"/>
             <test-form
                 v-else :id="analysisType" :template="testTemplate"
+                :interpretation-texts="interpretationTexts" :pathogen="probe.pathogen"
                 @update="updateTestObservation(analysisType, $event)"/>
           </div>
         </div>
@@ -78,6 +82,10 @@ export default {
       required: true
     },
     organisms: {
+      type: Array,
+      required: true
+    },
+    interpretationTexts: {
       type: Array,
       required: true
     },
