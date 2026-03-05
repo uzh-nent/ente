@@ -17,9 +17,37 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 trait ContactTrait
 {
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['contact:read', 'contact:write'])]
+    private ?string $email = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['contact:read', 'contact:write'])]
+    private ?string $phone = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['contact:read', 'contact:write'])]
     private ?string $contact = null;
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): void
+    {
+        $this->phone = $phone;
+    }
 
     public function getContact(): ?string
     {

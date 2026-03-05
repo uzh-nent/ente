@@ -42,6 +42,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[Patch]
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: [
+    'gln' => SearchFilterInterface::STRATEGY_IPARTIAL,
     'title' => SearchFilterInterface::STRATEGY_IPARTIAL,
     'givenName' => SearchFilterInterface::STRATEGY_IPARTIAL, 'familyName' => SearchFilterInterface::STRATEGY_IPARTIAL,
     'city' => SearchFilterInterface::STRATEGY_IPARTIAL, 'postalCode' => SearchFilterInterface::STRATEGY_START, 'countryCode' => SearchFilterInterface::STRATEGY_IPARTIAL,
@@ -57,6 +58,10 @@ class Practitioner
 
     #[ORM\Column(type: Types::STRING)]
     #[Groups(['practitioner:read', 'practitioner:write'])]
+    private ?string $gln = '';
+
+    #[ORM\Column(type: Types::STRING)]
+    #[Groups(['practitioner:read', 'practitioner:write'])]
     private ?string $title = '';
 
     /**
@@ -68,6 +73,16 @@ class Practitioner
     public function __construct()
     {
         $this->probes = new ArrayCollection();
+    }
+
+    public function getGln(): ?string
+    {
+        return $this->gln;
+    }
+
+    public function setGln(?string $gln): void
+    {
+        $this->gln = $gln;
     }
 
     public function getTitle(): ?string

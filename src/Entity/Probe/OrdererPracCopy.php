@@ -39,6 +39,14 @@ trait OrdererPracCopy
     #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererPracCountryCode = null;
 
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $ordererPracEmail = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $ordererPracPhone = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererPracContact = null;
@@ -113,6 +121,26 @@ trait OrdererPracCopy
         $this->ordererPracCountryCode = $ordererPracCountryCode;
     }
 
+    public function getOrdererPracEmail(): ?string
+    {
+        return $this->ordererPracEmail;
+    }
+
+    public function setOrdererPracEmail(?string $ordererPracEmail): void
+    {
+        $this->ordererPracEmail = $ordererPracEmail;
+    }
+
+    public function getOrdererPracPhone(): ?string
+    {
+        return $this->ordererPracPhone;
+    }
+
+    public function setOrdererPracPhone(?string $ordererPracPhone): void
+    {
+        $this->ordererPracPhone = $ordererPracPhone;
+    }
+
     public function getOrdererPracContact(): ?string
     {
         return $this->ordererPracContact;
@@ -131,6 +159,8 @@ trait OrdererPracCopy
         $this->ordererPracCountryCode = $practitioner->getCountryCode();
         $this->ordererPracCity = $practitioner->getCity();
         $this->ordererPracPostalCode = $practitioner->getPostalCode();
+        $this->ordererPracEmail = $practitioner->getEmail();
+        $this->ordererPracPhone = $practitioner->getPhone();
         $this->ordererPracContact = $practitioner->getContact();
     }
 

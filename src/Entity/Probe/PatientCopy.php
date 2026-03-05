@@ -48,6 +48,18 @@ trait PatientCopy
     #[Groups(['patient:read', 'patient:write'])]
     private ?string $patientCountryCode = null;
 
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $patientEmail = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $patientPhone = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $patientContact = null;
+
     public function getPatientBirthDate(): ?\DateTimeImmutable
     {
         return $this->patientBirthDate;
@@ -147,6 +159,36 @@ trait PatientCopy
         $this->patientCountryCode = $patientCountryCode;
     }
 
+    public function getPatientEmail(): ?string
+    {
+        return $this->patientEmail;
+    }
+
+    public function setPatientEmail(?string $patientEmail): void
+    {
+        $this->patientEmail = $patientEmail;
+    }
+
+    public function getPatientPhone(): ?string
+    {
+        return $this->patientPhone;
+    }
+
+    public function setPatientPhone(?string $patientPhone): void
+    {
+        $this->patientPhone = $patientPhone;
+    }
+
+    public function getPatientContact(): ?string
+    {
+        return $this->patientContact;
+    }
+
+    public function setPatientContact(?string $patientContact): void
+    {
+        $this->patientContact = $patientContact;
+    }
+
     public function copyPatientFrom(Patient $patient): void
     {
         $this->patientBirthDate = $patient->getBirthDate();
@@ -158,6 +200,9 @@ trait PatientCopy
         $this->patientCountryCode = $patient->getCountryCode();
         $this->patientCity = $patient->getCity();
         $this->patientPostalCode = $patient->getPostalCode();
+        $this->patientEmail = $patient->getEmail();
+        $this->patientPhone = $patient->getPhone();
+        $this->patientContact = $patient->getContact();
     }
 
     public function writePatientAddressTo(AddressDto $target): void

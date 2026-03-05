@@ -30,6 +30,14 @@ trait OrdererOrgCopy
     #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererOrgCountryCode = null;
 
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $ordererOrgEmail = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $ordererOrgPhone = null;
+
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererOrgContact = null;
@@ -84,6 +92,26 @@ trait OrdererOrgCopy
         $this->ordererOrgCountryCode = $ordererOrgCountryCode;
     }
 
+    public function getOrdererOrgEmail(): ?string
+    {
+        return $this->ordererOrgEmail;
+    }
+
+    public function setOrdererOrgEmail(?string $ordererOrgEmail): void
+    {
+        $this->ordererOrgEmail = $ordererOrgEmail;
+    }
+
+    public function getOrdererOrgPhone(): ?string
+    {
+        return $this->ordererOrgPhone;
+    }
+
+    public function setOrdererOrgPhone(?string $ordererOrgPhone): void
+    {
+        $this->ordererOrgPhone = $ordererOrgPhone;
+    }
+
     public function getOrdererOrgContact(): ?string
     {
         return $this->ordererOrgContact;
@@ -101,6 +129,8 @@ trait OrdererOrgCopy
         $this->ordererOrgCountryCode = $organization->getCountryCode();
         $this->ordererOrgCity = $organization->getCity();
         $this->ordererOrgPostalCode = $organization->getPostalCode();
+        $this->ordererOrgEmail = $organization->getEmail();
+        $this->ordererOrgPhone = $organization->getPhone();
         $this->ordererOrgContact = $organization->getContact();
     }
 

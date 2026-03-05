@@ -28,6 +28,18 @@ trait AnimalKeeperCopy
     #[Groups(['animal-keeper:read', 'animal-keeper:write'])]
     private ?string $animalKeeperCountryCode = null;
 
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $animalKeeperEmail = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $animalKeeperPhone = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $animalKeeperContact = null;
+
     public function getAnimalKeeperName(): ?string
     {
         return $this->animalKeeperName;
@@ -76,6 +88,36 @@ trait AnimalKeeperCopy
     public function setAnimalKeeperCountryCode(?string $animalKeeperCountryCode): void
     {
         $this->animalKeeperCountryCode = $animalKeeperCountryCode;
+    }
+
+    public function getAnimalKeeperEmail(): ?string
+    {
+        return $this->animalKeeperEmail;
+    }
+
+    public function setAnimalKeeperEmail(?string $animalKeeperEmail): void
+    {
+        $this->animalKeeperEmail = $animalKeeperEmail;
+    }
+
+    public function getAnimalKeeperPhone(): ?string
+    {
+        return $this->animalKeeperPhone;
+    }
+
+    public function setAnimalKeeperPhone(?string $animalKeeperPhone): void
+    {
+        $this->animalKeeperPhone = $animalKeeperPhone;
+    }
+
+    public function getAnimalKeeperContact(): ?string
+    {
+        return $this->animalKeeperContact;
+    }
+
+    public function setAnimalKeeperContact(?string $animalKeeperContact): void
+    {
+        $this->animalKeeperContact = $animalKeeperContact;
     }
 
     public function getAnimalKeeperFullAddress(): string

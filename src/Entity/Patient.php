@@ -21,6 +21,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Entity\Traits\AddressTrait;
+use App\Entity\Traits\ContactTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\PersonTrait;
 use App\Entity\Traits\TimeTrait;
@@ -55,6 +56,7 @@ class Patient
     use TimeTrait;
     use PersonTrait;
     use AddressTrait;
+    use ContactTrait;
 
     #[ORM\Column(type: Types::TEXT, enumType: AdministrativeGender::class, nullable: true)]
     #[Groups(['patient:read', 'patient:write'])]
