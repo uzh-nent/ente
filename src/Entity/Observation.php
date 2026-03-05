@@ -28,6 +28,7 @@ use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
 use App\Enum\AnalysisType;
 use App\Enum\Interpretation;
+use App\Enum\InterpretationMeta;
 use App\Enum\Pathogen;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -73,6 +74,10 @@ class Observation
     #[ORM\Column(type: Types::STRING, enumType: Interpretation::class, nullable: true)]
     #[Groups(['observation:read', 'observation:write'])]
     private ?Interpretation $interpretation = null;
+
+    #[ORM\Column(type: Types::STRING, enumType: InterpretationMeta::class, nullable: true)]
+    #[Groups(['observation:read', 'observation:write'])]
+    private ?InterpretationMeta $interpretationMeta = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['observation:read', 'observation:write'])]
@@ -140,6 +145,16 @@ class Observation
     public function setInterpretation(?Interpretation $interpretation): void
     {
         $this->interpretation = $interpretation;
+    }
+
+    public function getInterpretationMeta(): ?InterpretationMeta
+    {
+        return $this->interpretationMeta;
+    }
+
+    public function setInterpretationMeta(?InterpretationMeta $interpretationMeta): void
+    {
+        $this->interpretationMeta = $interpretationMeta;
     }
 
     public function getInterpretationText(): ?string
