@@ -13,6 +13,10 @@ use App\Services\Elm\ApiBuilder\PredefinedCodes;
 
 readonly class ApiBuilder
 {
+    private const string GLN_SYSTEM = 'urn:oid:2.51.1.3';
+    private const string BER_SYSTEM = 'urn:oid:2.16.756.5.45';
+    private const string UID_SYSTEM = 'urn:oid:2.16.756.5.35';
+
     public function __construct(private Formatter $formatter, private string $organizationId, private string $organizationGLN, private string $organizationName)
     {
     }
@@ -93,7 +97,7 @@ readonly class ApiBuilder
                 "id" => $reference->id(),
                 "identifier" => [
                     [
-                        "system" => "urn:oid:2.51.1.3", // system: GLN-Number
+                        "system" => self::GLN_SYSTEM, // system: GLN-Number
                         "value" => $this->organizationGLN
                     ]
                 ],
@@ -115,9 +119,28 @@ readonly class ApiBuilder
                 "resourceType" => $reference->type(),
                 "id" => $reference->id(),
                 "name" => $probe->getOrdererOrgName(),
-                "address" => [$this->formatter->address($address)]
+                "address" => [$this->formatter->address($address)],
+                "identifier" => []
             ]
         ];
+
+        $identifiers = [];
+        if ($probe->getOrdererOrgBer()) {
+            $identifiers[] = [
+                "system" => self::BER_SYSTEM,
+                "value" => $probe->getOrdererOrgBer()
+            ];
+        }
+        if ($probe->getOrdererOrgUid()) {
+            $identifiers[] = [
+                "system" => self::UID_SYSTEM,
+                "value" => $probe->getOrdererOrgUid()
+            ];
+        }
+
+        if (count($identifiers) > 0) {
+            $organizationOrdererResource['resource']["identifier"] = $identifiers;
+        }
 
         return $this->formatter->normalizeNullableArray($organizationOrdererResource);
     }
@@ -131,17 +154,26 @@ readonly class ApiBuilder
         $probe->writeOrdererPracPersonTo($person);
 
         $reference = new ResourceReference('Practitioner', $probe->getOrdererPrac()->getId());
-        $organizationOrdererResource = [
+        $practitionerOrdererResource = [
             "fullUrl" => $reference->fullUrl(),
             "resource" => [
                 "resourceType" => $reference->type(),
                 "id" => $reference->id(),
                 "name" => [$this->formatter->name($person)],
-                "address" => [$this->formatter->address($address)]
+                "address" => [$this->formatter->address($address)],
             ]
         ];
 
-        return $this->formatter->normalizeNullableArray($organizationOrdererResource);
+        if ($probe->getOrdererPracGln()) {
+            $practitionerOrdererResource['resource']["identifier"] = [
+                [
+                    "system" => self::GLN_SYSTEM, // system: GLN-Number
+                    "value" => $probe->getOrdererPracGln()
+                ]
+            ];
+        }
+
+        return $this->formatter->normalizeNullableArray($practitionerOrdererResource);
     }
 
     private function createPractitionerRoleResource(Probe $probe, ?array $orderOrganizationResource, ?array $orderPractitionerResource): array
