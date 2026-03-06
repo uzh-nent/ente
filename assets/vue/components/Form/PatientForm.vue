@@ -5,6 +5,8 @@
   <gender-component :template="componentTemplate.gender" @update="componentEntity.gender = $event"/>
   <hr/>
   <address-component :template="componentTemplate.address" @update="componentEntity.address = $event"/>
+  <hr/>
+  <contact-component :template="componentTemplate.contact" @update="componentEntity.contact = $event"/>
 </template>
 
 <script>
@@ -13,11 +15,13 @@ import AddressComponent, {addressFields} from "./Shared/AddressComponent.vue";
 import PatientComponent, {patientFields as patientFieldsD} from "./Shared/PatientComponent.vue";
 import GenderComponent, {genderFields} from "./Shared/GenderComponent.vue";
 import PersonComponent, {personFields} from "./Shared/PersonComponent.vue";
+import ContactComponent, {contactFields} from "./Shared/ContactComponent.vue";
 
 
 export default {
   emits: ['update'],
   components: {
+    ContactComponent,
     PersonComponent,
     GenderComponent,
     PatientComponent,
@@ -30,11 +34,12 @@ export default {
         patient: patientFieldsD,
         person: personFields,
         gender: genderFields,
-        address: addressFields
+        address: addressFields,
+        contact: contactFields
       }
     }
   }
 }
 
-export const patientFields = [...patientFieldsD, ...personFields, ...genderFields, ...addressFields]
+export const patientFields = [...patientFieldsD, ...personFields, ...genderFields, ...addressFields, ...contactFields]
 </script>

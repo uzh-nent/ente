@@ -35,8 +35,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    normalizationContext: ['groups' => ['person:read', 'address:read', 'patient:read']],
-    denormalizationContext: ['groups' => ['person:write', 'address:write', 'patient:write']]
+    normalizationContext: ['groups' => ['person:read', 'address:read', 'contact:read', 'patient:read']],
+    denormalizationContext: ['groups' => ['person:write', 'address:write', 'contact:write','patient:write']]
 )]
 #[Get]
 #[Post]
