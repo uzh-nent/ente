@@ -8,7 +8,7 @@
       {{ city }}
     </td>
     <td class="whitespace-preserve-newlines">
-      {{ animalKeeper.contact }}
+      {{ contact }}
     </td>
     <td class="w-minimal text-end">
       <add-probe-filter-button :query="{'animalKeeper': this.animalKeeper['@id']}" />
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {formatAddressCity} from "../../services/domain/formatter";
+import {formatAddressCity, formatContact} from "../../services/domain/formatter";
 import EditAnimalKeeperButton from "../Action/EditAnimalKeeperButton.vue";
 import {router} from "../../services/api";
 import AddProbeFilterButton from "./Probe/AddProbeFilterButton.vue";
@@ -39,6 +39,9 @@ export default {
     },
     filterProbesUrl: function () {
       return router.probesView({"animalKeeper": this.animalKeeper['@id']})
+    },
+    contact: function () {
+      return formatContact(this.animalKeeper)
     }
   }
 }

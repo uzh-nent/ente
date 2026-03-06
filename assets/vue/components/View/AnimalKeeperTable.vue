@@ -22,7 +22,7 @@
           </order-table-head>
           <th>{{ $t('address.address_lines') }}</th>
           <th>{{ $t('address.city') }}</th>
-          <th>{{ $t('contact.contact') }}</th>
+          <th>{{ $t('contact._name') }}</th>
           <th class="w-minimal"></th>
           <th class="w-minimal"></th>
         </tr>

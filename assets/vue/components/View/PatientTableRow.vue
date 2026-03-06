@@ -13,6 +13,9 @@
       {{ patient.addressLines }}
       {{ city }}
     </td>
+    <td class="whitespace-preserve-newlines">
+      {{ contact }}
+    </td>
     <td class="w-minimal text-end">
       <add-probe-filter-button :query="{'patient': this.patient['@id']}" />
     </td>
@@ -23,7 +26,7 @@
 </template>
 
 <script>
-import {formatAddressCity, formatDate, formatPatientName,} from "../../services/domain/formatter";
+import {formatAddressCity, formatContact, formatDate, formatPatientName,} from "../../services/domain/formatter";
 import EditPatientButton from "../Action/EditPatientButton.vue";
 import AddProbeFilterButton from "./Probe/AddProbeFilterButton.vue";
 
@@ -42,6 +45,9 @@ export default {
     birthDate: function () {
       return formatDate(this.patient.birthDate)
     },
+    contact: function () {
+      return formatContact(this.patient)
+    }
   }
 }
 
