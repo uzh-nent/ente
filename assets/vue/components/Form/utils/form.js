@@ -113,8 +113,7 @@ export const ahvNumberLengthRule = {
       return true
     }
 
-    const digits = value.split('').map(d => parseInt(d, 10));
-    return digits.length === 13
+    return /^\d{13}$/.test(value)
   },
   errorMessage: '_validation.invalid_ahv_length'
 }
@@ -142,6 +141,100 @@ export const ahvNumberCheckRule = {
     return (sum + checksum) % 10 === 0;
   },
   errorMessage: '_validation.invalid_ahv_checksum'
+}
+
+export const glnNumberLengthRule = {
+  isValid: function (value) {
+    if (!value) {
+      return true
+    }
+
+    return /^\d{13}$/.test(value)
+  },
+  errorMessage: '_validation.invalid_gln_length'
+}
+
+export const glnNumberCheckRule = {
+  isValid: function (value) {
+    if (!value) {
+      return true
+    }
+
+    if (!/^\d{13}$/.test(value)) {
+      return true
+    }
+
+    const digits = value.split('').map(d => parseInt(d, 10))
+
+    const checksum = digits[12]
+
+    let sum = 0
+    let multiplier = 3
+
+    for (let i = 11; i >= 0; i--) {
+      sum += digits[i] * multiplier
+      multiplier = multiplier === 3 ? 1 : 3
+    }
+
+    return (sum + checksum) % 10 === 0
+  },
+  errorMessage: '_validation.invalid_gln_checksum'
+}
+
+export const berNumberLengthRule = {
+  isValid: function (value) {
+    if (!value) {
+      return true
+    }
+
+    return /^[A-B][1-9][0-9]{7}$/.test(value)
+  },
+  errorMessage: '_validation.invalid_ber_length'
+}
+
+export const uidNumberLengthRule = {
+  isValid: function (value) {
+    if (!value) {
+      return true
+    }
+
+    return /^CHE[1-9][0-9]{8}$/.test(value)
+  },
+  errorMessage: '_validation.invalid_uid_length'
+}
+
+export const uidNumberCheckRule = {
+  isValid: function (value) {
+    if (!value) {
+      return true
+    }
+
+    if (!/^CHE\d{9}$/.test(value)) {
+      return true
+    }
+
+    const digits = value
+      .substring(3)
+      .split('')
+      .map(d => parseInt(d, 10))
+
+    const checksum = digits[8]
+
+    const weights = [5,4,3,2,7,6,5,4]
+
+    let sum = 0
+    for (let i = 0; i < 8; i++) {
+      sum += digits[i] * weights[i]
+    }
+
+    let checkDigit = 11 - (sum % 11)
+
+    if (checkDigit === 11) checkDigit = 0
+    if (checkDigit === 10) return false
+
+    return checkDigit === checksum
+  },
+  errorMessage: '_validation.invalid_uid_checksum'
 }
 
 const emailRegex = /^\S+@\S+\.\S+$/

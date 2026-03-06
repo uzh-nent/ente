@@ -1,4 +1,5 @@
 <template>
+  <gln-component :template="componentTemplate.gln" @update="componentEntity.gln = $event"/>
   <div class="row">
     <div class="col-md-3">
       <title-component :template="componentTemplate.title" @update="componentEntity.title = $event"/>
@@ -20,11 +21,13 @@ import AddressComponent, {addressFields} from "./Shared/AddressComponent.vue";
 import PersonComponent, {personFields} from "./Shared/PersonComponent.vue";
 import ContactComponent, {contactFields} from "./Shared/ContactComponent.vue";
 import TitleComponent, {titleFields} from "./Shared/TitleComponent.vue";
+import GlnComponent, {glnFields} from "./Shared/GlnComponent.vue";
 
 
 export default {
   emits: ['update'],
   components: {
+    GlnComponent,
     TitleComponent,
     ContactComponent,
     PersonComponent,
@@ -34,14 +37,15 @@ export default {
   data() {
     return {
       components: {
+        gln: glnFields,
         title: titleFields,
         person: personFields,
         address: addressFields,
-        contact: contactFields
+        contact: contactFields,
       }
     }
   }
 }
 
-export const practitionerFields = [...titleFields, ...personFields, ...addressFields, ...contactFields]
+export const practitionerFields = [...glnFields, ...titleFields, ...personFields, ...addressFields, ...contactFields]
 </script>

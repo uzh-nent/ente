@@ -3,7 +3,7 @@
     :id="id" class="form-control" type="text" :required="required"
     :class="{'is-valid': field?.valid, 'is-invalid': field?.invalid }"
     :value="internalModelValue" :disabled="disabled"
-    @focus="onAhvNumberFocus" @blur="onAhvNumberBlur"
+    @focus="onUidNumberFocus" @blur="onUidNumberBlur"
     @input="internalModelValue = $event.target.value">
 </template>
 
@@ -46,47 +46,53 @@ export default {
     },
     internalModelValue: {
       get() {
-        return this.formatAhvForInput(this.modelValue)
+        return this.formatUidForInput(this.modelValue)
       },
       set(value) {
-        const newValue = this.normalizeAhvInput(value)
+        const newValue = this.normalizeUidInput(value)
         this.$emit('update:modelValue', newValue)
       }
     }
   },
   methods: {
-    onAhvNumberFocus() {
+    onUidNumberFocus() {
       if (!this.internalModelValue) {
-        this.internalModelValue = '756'
+        this.internalModelValue = 'CHE'
       }
     },
-    onAhvNumberBlur() {
-      if (this.internalModelValue === '756') {
+    onUidNumberBlur() {
+      if (this.internalModelValue === 'CHE') {
         this.internalModelValue = null
       }
 
       this.$emit('blur')
     },
-    normalizeAhvInput(value) {
+    normalizeUidInput(value) {
       if (value === null || value === undefined) {
         return null
       }
 
-      const digitsOnly = String(value).replace(/\D+/g, '')
-      return digitsOnly === '' ? null : digitsOnly
+      const noSeparators = String(value).replace(/[^\dCHE]/g, '')
+      return noSeparators === '' ? null : noSeparators
     },
-    formatAhvForInput(value) {
+    formatUidForInput(value) {
       if (!value) {
         return null
       }
 
-      const digits = this.normalizeAhvInput(value) ?? ""
+      const digits = this.normalizeUidInput(value) ?? ""
       const parts = [
         digits.slice(0, 3),
-        digits.slice(3, 7),
-        digits.slice(7, 11),
-        digits.slice(11, 13),
+        digits.slice(3, 6),
+        digits.slice(6, 9),
+        digits.slice(9, 12),
       ].filter(p => p.length > 0)
+
+      if (parts.length > 1) {
+        const first = parts.shift()
+        parts[0] = first + '-' + parts[0]
+      }
+      console.log(digits, parts)
 
       return parts.join('.')
     },
