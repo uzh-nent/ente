@@ -1,5 +1,8 @@
 <template>
   <div class="d-flex gap-2 flex-column bg-light p-2">
+    <span v-if="businessIdentifiers" class="whitespace-preserve-newlines">
+      {{ businessIdentifiers }}
+    </span>
     <span v-if="animalKeeper.name" class="d-block">
       <b>{{ animalKeeper.name }}</b>
     </span>
@@ -13,7 +16,7 @@
 </template>
 
 <script>
-import {formatAddress, formatContact} from "../../services/domain/formatter";
+import {formatAddress, formatBusinessIdentifiers, formatContact} from "../../services/domain/formatter";
 
 export default {
   props: {
@@ -23,6 +26,9 @@ export default {
     },
   },
   computed: {
+    businessIdentifiers: function () {
+      return formatBusinessIdentifiers(this.animalKeeper)
+    },
     address: function () {
       return formatAddress(this.animalKeeper)
     },

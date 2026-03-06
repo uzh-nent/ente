@@ -12,6 +12,14 @@ trait OrdererOrgCopy
 {
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $ordererOrgBer = '';
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $ordererOrgUid = '';
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererOrgName = '';
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -41,6 +49,26 @@ trait OrdererOrgCopy
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererOrgContact = null;
+
+    public function getOrdererOrgBer(): ?string
+    {
+        return $this->ordererOrgBer;
+    }
+
+    public function setOrdererOrgBer(?string $ordererOrgBer): void
+    {
+        $this->ordererOrgBer = $ordererOrgBer;
+    }
+
+    public function getOrdererOrgUid(): ?string
+    {
+        return $this->ordererOrgUid;
+    }
+
+    public function setOrdererOrgUid(?string $ordererOrgUid): void
+    {
+        $this->ordererOrgUid = $ordererOrgUid;
+    }
 
     public function getOrdererOrgName(): ?string
     {
