@@ -338,11 +338,16 @@
     "identification_successful": "Identifizierung erfolgreich",
     "identification_failed": "Identifizierung fehlgeschlagen",
     "interpretation_text": "Kommentar",
+    "interpretation_meta": "Grund",
     "cgMLST": "cgMLST",
     "_interpretation": {
       "POS": "Nachweis (Positiv)",
       "NEG": "Kein Nachweis (Negativ)",
       "NONE": "Keine Aussage möglich"
+    },
+    "_interpretation_meta": {
+      "NO_GROWTH": "Kein Wachstum",
+      "MIXED_CULTURE": "Mischkultur"
     }
   },
   "elm_report": {

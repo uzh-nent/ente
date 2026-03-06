@@ -8,6 +8,11 @@ export const createResults = function (probe, observations, organisms, translato
         const organism = o.organism ? organisms.find(org => org['@id'] === o.organism) : null
         const resultPrefix = translator('report._interpretation.' + o.interpretation)
         result = resultPrefix + " " + (organism ? organism.displayName.replace(" (organism)", "") : pathogenLabel)
+
+        if (o.interpretationMeta) {
+          result += " (" + translator('observation._interpretation_meta.' + o.interpretationMeta) + ")"
+
+        }
       }
       return {
         analysis: translator('report.service.identification_of') + " " + pathogenLabel,
