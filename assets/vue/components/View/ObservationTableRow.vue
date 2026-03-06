@@ -5,7 +5,12 @@
       <template v-if="observation.analysisType === 'IDENTIFICATION'">
         {{ organism }}
         <span v-if="observation.interpretation === 'NEG'" class="badge bg-danger">
-          {{ $t(`observation.identification_failed`) }}
+          <template v-if="observation.interpretationMeta">
+            {{  $t(`observation._interpretation_meta.${this.observation.interpretationMeta}`) }}
+          </template>
+          <template v-else>
+            {{ $t(`observation.identification_failed`) }}
+          </template>
         </span>
         <span class="d-block" v-if="observation.cgMLST">
           {{ $t(`observation.cgMLST`) }}: {{ observation.cgMLST }}

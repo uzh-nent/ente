@@ -25,6 +25,13 @@
         </form-field>
       </div>
     </template>
+    <template v-else>
+      <form-field for-id="interpretationMeta" :label="$t('observation.interpretation_meta')"
+                  :field="fields.interpretationMeta">
+        <custom-select id="interpretationMeta" :choices="interpretationMetas" :field="fields.interpretationMeta"
+                       v-model="entity.interpretationMeta" @update:model-value="validateField('interpretationMeta')" />
+      </form-field>
+    </template>
     <div class="col-md-12">
       <form-field for-id="interpretationText" :label="$t('observation.interpretation_text')"
                   :field="fields.interpretationText">
@@ -52,6 +59,12 @@ import {formatOrganism} from "../../../services/domain/formatter";
 import SearchableRadio from "../../Library/FormInput/SearchableRadio.vue";
 import TextAreaWithStandardText from "../../Library/FormInput/TextAreaWithStandardText.vue";
 
+const createInterpretationMetas = function (translator) {
+  const values = ['NO_GROWTH', 'MIXED_CULTURE']
+  return values.map(value => ({label: translator(`observation._interpretation_meta.${value}`), value}))
+      .concat({label: translator('_form.other'), value: null})
+}
+
 export default {
   emits: ['update'],
   components: {
@@ -73,6 +86,8 @@ export default {
 
         organism: createField(),
         cgMLST: createField(),
+
+        interpretationMeta: createField(),
         interpretationText: createField(),
       },
       entity: {
@@ -80,6 +95,8 @@ export default {
 
         organism: null,
         cgMLST: null,
+
+        interpretationMeta: null,
         interpretationText: null,
       },
     }
@@ -99,6 +116,9 @@ export default {
     },
   },
   computed: {
+    interpretationMetas: function () {
+      return createInterpretationMetas(this.$t)
+    },
     organismChoices: function () {
       const organisms = this.organisms.filter(o => o.pathogen == this.pathogen)
           .filter(organism => !organism.isHidden || this.template.organism === organism)
@@ -116,7 +136,9 @@ export default {
       handler: function (identificationSuccessful) {
         if (identificationSuccessful) {
           this.fields.organism.rules = [requiredRule]
+          this.entity.interpretationMeta = null
         } else {
+          this.entity.interpretationMeta = 'MIXED_CULTURE'
           this.searchOrganism = ''
           this.entity.organism = null
           this.fields.organism.rules = []
