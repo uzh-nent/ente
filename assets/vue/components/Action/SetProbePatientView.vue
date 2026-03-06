@@ -122,7 +122,7 @@ export default {
   watch: {
     items: {
       handler: function (items) {
-        if (items.length === 1 && !this.probe?.patient) {
+        if (items.length === 1 && !this.probe?.patient && !this.patientOverride) {
           this.selectedPatient = items[0]
         }
       }

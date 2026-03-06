@@ -125,7 +125,7 @@ export default {
   watch: {
     items: {
       handler: function (items) {
-        if (items.length === 1 && !this.probe?.ordererOrg) {
+        if (items.length === 1 && !this.probe?.ordererOrg && !this.organizationOverride) {
           this.selectedOrganization = items[0]
         }
       }

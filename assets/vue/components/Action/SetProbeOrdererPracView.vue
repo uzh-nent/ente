@@ -129,7 +129,7 @@ export default {
   watch: {
     items: {
       handler: function (items) {
-        if (items.length === 1 && !this.probe?.ordererPrac) {
+        if (items.length === 1 && !this.probe?.ordererPrac && !this.practitionerOverride) {
           this.selectedPractitioner = items[0]
         }
       }

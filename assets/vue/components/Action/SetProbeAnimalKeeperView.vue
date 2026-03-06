@@ -120,7 +120,7 @@ export default {
   watch: {
     items: {
       handler: function (items) {
-        if (items.length === 1 && !this.probe?.animalKeeper) {
+        if (items.length === 1 && !this.probe?.animalKeeper && !this.animalKeeperOverride) {
           this.selectedAnimalKeeper = items[0]
         }
       }
