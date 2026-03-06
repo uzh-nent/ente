@@ -320,7 +320,9 @@
     "comment": "Kommentar"
   },
   "contact": {
-    "contact": "Kontaktinformationen"
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "contact": "Weitere Kontaktinformationen"
   },
   "person": {
     "name": "Name",
