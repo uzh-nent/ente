@@ -13,6 +13,8 @@ export const probeConverter = {
       ordererOrgCity: organization.city,
       ordererOrgPostalCode: organization.postalCode,
       ordererOrgCountryCode: organization.countryCode,
+      ordererOrgEmail: organization.email,
+      ordererOrgPhone: organization.phone,
       ordererOrgContact: organization.contact,
     }
   },
@@ -30,6 +32,8 @@ export const probeConverter = {
       ordererPracCity: practitioner.city,
       ordererPracPostalCode: practitioner.postalCode,
       ordererPracCountryCode: practitioner.countryCode,
+      ordererPracEmail: practitioner.email,
+      ordererPracPhone: practitioner.phone,
       ordererPracContact: practitioner.contact,
     }
   },
@@ -41,6 +45,9 @@ export const probeConverter = {
       animalKeeperCity: animalKeeper.city,
       animalKeeperPostalCode: animalKeeper.postalCode,
       animalKeeperCountryCode: animalKeeper.countryCode,
+      animalKeeperEmail: animalKeeper.email,
+      animalKeeperPhone: animalKeeper.phone,
+      animalKeeperContact: animalKeeper.contact,
     }
   },
   copyFromPatient: function (patient) {
@@ -55,6 +62,9 @@ export const probeConverter = {
       patientCity: patient.city,
       patientPostalCode: patient.postalCode,
       patientCountryCode: patient.countryCode,
+      patientEmail: patient.email,
+      patientPhone: patient.phone,
+      patientContact: patient.contact,
     }
   },
   reconstructOrdererOrg: function (probe) {
@@ -69,6 +79,8 @@ export const probeConverter = {
       city: probe.ordererOrgCity,
       postalCode: probe.ordererOrgPostalCode,
       countryCode: probe.ordererOrgCountryCode,
+      email: probe.ordererOrgEmail,
+      phone: probe.ordererOrgPhone,
       contact: probe.ordererOrgContact,
     }
   },
@@ -86,6 +98,8 @@ export const probeConverter = {
       city: probe.ordererPracCity,
       postalCode: probe.ordererPracPostalCode,
       countryCode: probe.ordererPracCountryCode,
+      email: probe.ordererPracEmail,
+      phone: probe.ordererPracPhone,
       contact: probe.ordererPracContact,
     }
   },
@@ -101,6 +115,9 @@ export const probeConverter = {
       city: probe.animalKeeperCity,
       postalCode: probe.animalKeeperPostalCode,
       countryCode: probe.animalKeeperCountryCode,
+      email: probe.animalKeeperEmail,
+      phone: probe.animalKeeperPhone,
+      contact: probe.animalKeeperContact,
     }
   },
   reconstructPatient: function (probe) {
@@ -119,6 +136,9 @@ export const probeConverter = {
       city: probe.patientCity,
       postalCode: probe.patientPostalCode,
       countryCode: probe.patientCountryCode,
+      email: probe.patientEmail,
+      phone: probe.patientPhone,
+      contact: probe.patientContact,
     }
   },
 }

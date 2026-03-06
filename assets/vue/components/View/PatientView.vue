@@ -14,11 +14,14 @@
     <span v-if="address" class="whitespace-preserve-newlines">
       {{ address }}
     </span>
+    <span v-if="contact" class="whitespace-preserve-newlines">
+      {{ contact }}
+    </span>
   </div>
 </template>
 
 <script>
-import {formatAddress, formatAhvNumber, formatDate} from "../../services/domain/formatter";
+import {formatAddress, formatAhvNumber, formatContact, formatDate} from "../../services/domain/formatter";
 
 export default {
   methods: {formatAhvNumber, formatDate},
@@ -32,6 +35,9 @@ export default {
     address: function () {
       return formatAddress(this.patient)
     },
+    contact: function () {
+      return formatContact(this.patient)
+    }
   }
 }
 

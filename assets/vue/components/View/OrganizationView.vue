@@ -6,14 +6,14 @@
     <span v-if="address" class="whitespace-preserve-newlines">
       {{ address }}
     </span>
-    <span v-if="organization.contact" class="whitespace-preserve-newlines">
-      {{ organization.contact }}
+    <span v-if="contact" class="whitespace-preserve-newlines">
+      {{ contact }}
     </span>
   </div>
 </template>
 
 <script>
-import {formatAddress} from "../../services/domain/formatter";
+import {formatAddress, formatContact} from "../../services/domain/formatter";
 
 export default {
   props: {
@@ -25,6 +25,9 @@ export default {
   computed: {
     address: function () {
       return formatAddress(this.organization)
+    },
+    contact: function () {
+      return formatContact(this.organization)
     }
   }
 }
