@@ -168,6 +168,11 @@
     "not_a_country_code": "Kein Längercode (eins bis dreistellig, Grossbuchstaben)",
     "invalid_ahv_length": "Keine gültige AHV-Nummer (nicht 13 Ziffern lang).",
     "invalid_ahv_checksum": "Keine gültige AHV-Nummer (Prüfziffer inkorrekt).",
+    "invalid_ber_length": "Keine gültige BER-Nummer (nicht A/B + 8 Ziffern lang).",
+    "invalid_uid_length": "Keine gültige UID-Nummer (nicht CHE/ADM + 9 Ziffern lang).",
+    "invalid_uid_checksum": "Keine gültige UID-Nummer (Prüfziffer inkorrekt).",
+    "invalid_gln_length": "Keine gültige GLN-Nummer (nicht 13 Ziffern lang).",
+    "invalid_gln_checksum": "Keine gültige GLN-Nummer (Prüfziffer inkorrekt).",
     "not_an_email": "Dies ist keine valide E-Mail."
   },
   "_view": {
@@ -195,7 +200,8 @@
     "_name": "Mediziner:in",
     "_plural": "Mediziner:innen",
     "title": "Titel",
-    "name": "Name"
+    "name": "Name",
+    "gln": "GLN-Nummer"
   },
   "patient": {
     "_name": "Patient:in",
@@ -380,6 +386,10 @@
   },
   "standard_text": {
     "_name": "Textbaustein"
+  },
+  "business_identifier": {
+    "ber": "BER-Nummer",
+    "uid": "UID-Nummer"
   },
   "address": {
     "_name": "Adresse",
