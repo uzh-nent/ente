@@ -5,6 +5,7 @@ namespace App\Services\Elm;
 use App\Entity\ElmReport;
 use App\Entity\Probe;
 use App\Enum\LaboratoryFunction;
+use App\Enum\Pathogen;
 use App\Services\Elm\ApiBuilder\Dto\AddressDto;
 use App\Services\Elm\ApiBuilder\Dto\PersonDto;
 use App\Services\Elm\ApiBuilder\Dto\ResourceReference;
@@ -41,6 +42,15 @@ readonly class ApiBuilder
                 "address" => [$this->formatter->address($address, 'home')]
             ]
         ];
+
+        if ($probe->getPathogen() === Pathogen::VIBRIO_CHOLERAE && $probe->getPatientPhone()) {
+            $patientResource['resource']["telecom"] = [
+                [
+                    "system" => "phone",
+                    "value" => $probe->getPatientPhone()
+                ]
+            ];
+        }
 
         if ($probe->getPatientAhvNumber()) {
             $patientResource['resource']["identifier"] = [
