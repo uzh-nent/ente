@@ -7,21 +7,28 @@
           <th colspan="100">
             <div class="d-flex flex-row reset-table-styles gap-2">
               <filter-animal-keeper-button :template="this.filter" @filtered="filter = $event"/>
-              <input type="text" class="form-control mw-5"  autofocus
+              <input type="text" class="form-control mw-5" autofocus
                      :placeholder="$t('address.postal_code')"
                      v-model="searchPostalCode">
               <input type="text" class="form-control mw-30"
                      :placeholder="$t('_view.search_by_name')"
                      v-model="searchName">
+              <input type="text" class="form-control mw-30"
+                     :placeholder="$t('_view.search_by_ber')"
+                     v-model="searchBer">
+              <uid-number-input
+                  id="uidFilter" class="form-control mw-30"
+                  :placeholder="$t('_view.search_by_uid')"
+                  v-model="searchUid"/>
             </div>
           </th>
         </tr>
         <tr>
+          <th class="w-minimal">{{ $t('business_identifier._name') }}</th>
           <order-table-head :order="orderOfName" @ordered="setOrder($event, 'name')">
             {{ $t('animal_keeper._name') }}
           </order-table-head>
-          <th>{{ $t('address.address_lines') }}</th>
-          <th>{{ $t('address.city') }}</th>
+          <th>{{ $t('address._name') }}</th>
           <th>{{ $t('contact._name') }}</th>
           <th class="w-minimal"></th>
           <th class="w-minimal"></th>
@@ -29,13 +36,13 @@
         </thead>
         <tbody>
         <animal-keeper-table-row v-for="animalKeeper in items" :key="animalKeeper['@id']"
-                                :animalKeeper="animalKeeper"/>
+                                 :animalKeeper="animalKeeper"/>
         <tr v-if="totalItems === 0">
           <td colspan="200">{{ $t('_view.filter_yields_no_entries') }}</td>
         </tr>
         </tbody>
       </table>
-      <loading-indicator-overlay v-if="isLoading" />
+      <loading-indicator-overlay v-if="isLoading"/>
     </div>
     <pagination :items-per-page="itemsPerPage" :page="page" :total-items="totalItems"
                 @paginated="page = $event"/>
@@ -53,9 +60,11 @@ import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
 import FilterOrganizationButton from "../Action/FilterOrganizationButton.vue";
 import FilterAnimalKeeperButton from "../Action/FilterAnimalKeeperButton.vue";
+import UidNumberInput from "../Library/FormInput/UidNumberInput.vue";
 
 export default {
   components: {
+    UidNumberInput,
     FilterAnimalKeeperButton,
     FilterOrganizationButton,
     LoadingIndicatorOverlay,
@@ -66,7 +75,7 @@ export default {
   mixins: [
     order,
     paginatedQuery(50, api.getPaginatedAnimalKeepers),
-    localStoragePersisted('animal-keeper-table', ['filter', 'orders', 'searchName', 'searchPostalCode'])
+    localStoragePersisted('animal-keeper-table', ['filter', 'orders', 'searchName', 'searchPostalCode', 'searchBer', 'searchUid'])
   ],
   data() {
     return {
@@ -75,11 +84,18 @@ export default {
 
       searchName: "",
       searchPostalCode: "",
+      searchBer: "",
+      searchUid: "",
     }
   },
   computed: {
     query: function () {
-      const search = sanitizeSearchFilter({name: this.searchName, postalCode: this.searchPostalCode})
+      const search = sanitizeSearchFilter({
+        name: this.searchName,
+        postalCode: this.searchPostalCode,
+        ber: this.searchBer,
+        uid: this.searchUid
+      })
       const order = orderFilter(this.orders)
       return {...this.filter, ...search, ...order}
     },

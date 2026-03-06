@@ -129,9 +129,21 @@ export const formatPatientName = function (value, translator) {
   return [value.familyName, value.givenName, genderSuffix].filter(e => e).join(" ")
 }
 
-export const formatAhvNumber = function (value, translator) {
+export const formatUidNumber = function (value, placeholder = "-") {
   if (!value) {
-    return '-'
+    return placeholder
+  }
+
+  if (value.length !== 12) {
+    return value
+  }
+
+  return value.substring(0, 3) + "-" + value.substring(3, 6) + "." + value.substring(6, 9) + "." + value.substr(9)
+}
+
+export const formatAhvNumber = function (value, placeholder = "-") {
+  if (!value) {
+    return placeholder
   }
 
   if (value.length !== 13) {

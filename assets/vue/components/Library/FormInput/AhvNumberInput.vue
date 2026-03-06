@@ -85,7 +85,7 @@ export default {
         digits.slice(0, 3),
         digits.slice(3, 7),
         digits.slice(7, 11),
-        digits.slice(11, 13),
+        digits.slice(11),
       ].filter(p => p.length > 0)
 
       return parts.join('.')

@@ -13,15 +13,18 @@
               <input type="text" class="form-control mw-30"
                      :placeholder="$t('_view.search_by_family_name')"
                      v-model="searchFamilyName">
+              <input type="text" class="form-control mw-30"
+                     :placeholder="$t('_view.search_by_gln')"
+                     v-model="searchGln">
             </div>
           </th>
         </tr>
         <tr>
+          <th class="w-minimal">{{ $t('practitioner.gln') }}</th>
           <order-table-head :order="orderOfFamilyName" @ordered="setOrder($event, 'familyName')">
             {{ $t('practitioner._name') }}
           </order-table-head>
-          <th>{{ $t('address.address_lines') }}</th>
-          <th>{{ $t('address.city') }}</th>
+          <th>{{ $t('address._name') }}</th>
           <th>{{ $t('contact._name') }}</th>
           <th class="w-minimal"></th>
           <th class="w-minimal"></th>
@@ -66,7 +69,7 @@ export default {
   mixins: [
     order,
     paginatedQuery(50, api.getPaginatedPractitioners),
-    localStoragePersisted('practitioner-table', ['filter', 'orders', 'searchFamilyName', 'searchPostalCode'])
+    localStoragePersisted('practitioner-table', ['filter', 'orders', 'searchFamilyName', 'searchPostalCode', 'searchGln'])
   ],
   data() {
     return {
@@ -75,11 +78,12 @@ export default {
 
       searchFamilyName: "",
       searchPostalCode: "",
+      searchGln: "",
     }
   },
   computed: {
     query: function () {
-      const search = sanitizeSearchFilter({familyName: this.searchFamilyName, postalCode: this.searchPostalCode})
+      const search = sanitizeSearchFilter({familyName: this.searchFamilyName, postalCode: this.searchPostalCode, gln: this.searchGln})
       const order = orderFilter(this.orders)
       return {...this.filter, ...search, ...order}
     },

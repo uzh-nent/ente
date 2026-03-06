@@ -7,20 +7,26 @@
           <th colspan="100">
             <div class="d-flex flex-row reset-table-styles gap-2">
               <filter-patient-button :template="this.filter" @filtered="filter = $event"/>
-              <date-time-input
-                  class="mw-10" id="birthDateFilter" format="date"
-                  :placeholder="$t('_view.filter_by_birth_date')"
-                  v-model="filterBirthDate" />
+              <div class="mw-10">
+                <date-time-input
+                    id="birthDateFilter" format="date"
+                    :placeholder="$t('_view.filter_by_birth_date')"
+                    v-model="filterBirthDate"/>
+              </div>
               <input type="text" class="form-control mw-30"
-                     :placeholder="$t('_view.search_by_ahv_numer')"
-                     v-model="searchAhvNumber">
+                     :placeholder="$t('_view.search_by_family_name')"
+                     v-model="searchFamilyName">
+              <ahv-number-input class="form-control mw-30"
+                                id="ahvNumberFilter"
+                                :placeholder="$t('_view.search_by_ahv_numer')"
+                                v-model="searchAhvNumber" />
             </div>
           </th>
         </tr>
         <tr>
-          <order-table-head :order="orderOfIdentification" @ordered="setOrder($event, 'birthDate')">
-            {{ $t('patient._name') }}
-          </order-table-head>
+          <th>
+            {{ $t('patient.ahv_number') }}
+          </th>
           <order-table-head :order="orderOfName" @ordered="setOrder($event, 'familyName')">
             {{ $t('person.name') }}
           </order-table-head>
@@ -57,9 +63,11 @@ import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue
 import FormField from "../Library/FormLayout/FormField.vue";
 import DateTimeInput from "../Library/FormInput/DateTimeInput.vue";
 import FilterPatientButton from "../Action/FilterPatientButton.vue";
+import AhvNumberInput from "../Library/FormInput/AhvNumberInput.vue";
 
 export default {
   components: {
+    AhvNumberInput,
     FilterPatientButton,
     DateTimeInput, FormField,
     LoadingIndicatorOverlay,
@@ -70,7 +78,7 @@ export default {
   mixins: [
     order,
     paginatedQuery(50, api.getPaginatedPatients),
-    localStoragePersisted('patient-table', ['filter', 'orders', 'filterBirthDate', 'searchAhvNumber'])
+    localStoragePersisted('patient-table', ['filter', 'orders', 'filterBirthDate', 'searchAhvNumber', 'searchFamilyName'])
   ],
   data() {
     return {
@@ -79,11 +87,16 @@ export default {
 
       filterBirthDate: "",
       searchAhvNumber: "",
+      searchFamilyName: "",
     }
   },
   computed: {
     query: function () {
-      const search = sanitizeSearchFilter({birthDate: this.filterBirthDate, ahvNumber: this.searchAhvNumber})
+      const search = sanitizeSearchFilter({
+        birthDate: this.filterBirthDate,
+        ahvNumber: this.searchAhvNumber,
+        familyName: this.searchFamilyName
+      })
       const order = orderFilter(this.orders)
       return {...this.filter, ...search, ...order}
     },

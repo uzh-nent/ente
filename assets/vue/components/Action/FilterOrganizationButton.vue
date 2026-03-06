@@ -1,6 +1,6 @@
 <template>
   <button-confirm-modal
-    :title="$t('_action.filter_patient.title')" icon="fas fa-filter" button-size="sm"
+    :title="$t('_action.filter_organization.title')" icon="fas fa-filter" button-size="sm"
     :active="templateNonTrivial"
     :confirm-label="$t('_action.set_filter')" :can-confirm="payloadNonTrivial || templateNonTrivial" :confirm="confirm"
     :abort-label="$t('_action.reset_filter')" :can-abort="templateNonTrivial" :abort="reset"

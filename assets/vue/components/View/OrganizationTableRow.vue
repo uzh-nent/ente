@@ -1,11 +1,14 @@
 <template>
   <tr>
-    <td>{{ organization.name }}</td>
-    <td class="whitespace-preserve-newlines">
-      {{ organization.addressLines }}
+    <td>
+      {{ organization.ber }}<br/>
+      {{ formatUidNumber(organization.uid, "") }}<br/>
     </td>
     <td>
-      {{ city }}
+      {{ organization.name }}
+    </td>
+    <td class="whitespace-preserve-newlines">
+      {{ address }}
     </td>
     <td class="whitespace-preserve-newlines">
       {{ contact }}
@@ -20,11 +23,12 @@
 </template>
 
 <script>
-import {formatAddressCity, formatContact} from "../../services/domain/formatter";
+import {formatAddress, formatAddressCity, formatContact, formatUidNumber} from "../../services/domain/formatter";
 import EditOrganizationButton from "../Action/EditOrganizationButton.vue";
 import AddProbeFilterButton from "./Probe/AddProbeFilterButton.vue";
 
 export default {
+  methods: {formatUidNumber},
   components: {AddProbeFilterButton, EditOrganizationButton},
   props: {
     organization: {
@@ -33,8 +37,8 @@ export default {
     },
   },
   computed: {
-    city: function () {
-      return formatAddressCity(this.organization)
+    address: function () {
+      return formatAddress(this.organization)
     },
     contact: function () {
       return formatContact(this.organization)

@@ -181,6 +181,9 @@
     "search_by_text": "Suche nach Text",
     "search_by_family_name": "Suche nach Nachname",
     "search_by_ahv_numer": "Suche nach AHV-Nummer",
+    "search_by_gln": "Suche nach GLN-Nummer",
+    "search_by_ber": "Suche nach BER-Nummer",
+    "search_by_uid": "Suche nach UID-Nummer",
     "filter_by_birth_date": "Geburtsdatum",
     "search_by_identifier": "Suche nach Probe",
     "search_by_requisition_identifier": "Suche nach Probe-Referenz",
@@ -388,6 +391,7 @@
     "_name": "Textbaustein"
   },
   "business_identifier": {
+    "_name": "Identifikation",
     "ber": "BER-Nummer",
     "uid": "UID-Nummer"
   },
