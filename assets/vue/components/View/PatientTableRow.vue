@@ -1,17 +1,17 @@
 <template>
   <tr>
     <td>
-      {{ birthDate }}<br/>
-      {{ patient.ahvNumber }}
+      {{ formatAhvNumber(patient.ahvNumber, "") }}
     </td>
     <td>
       <b>{{ patient.familyName }}</b>
       {{ patient.givenName }}
       <span v-if="patient.gender">{{ $t('patient._gender_short.' + patient.gender)}}</span>
+      <br/>
+      {{ birthDate }}
     </td>
     <td class="whitespace-preserve-newlines">
-      {{ patient.addressLines }}
-      {{ city }}
+      {{ address }}
     </td>
     <td class="whitespace-preserve-newlines">
       {{ contact }}
@@ -26,11 +26,17 @@
 </template>
 
 <script>
-import {formatAddressCity, formatContact, formatDate, formatPatientName,} from "../../services/domain/formatter";
+import {
+  formatAddress,
+  formatAhvNumber,
+  formatContact,
+  formatDate,
+} from "../../services/domain/formatter";
 import EditPatientButton from "../Action/EditPatientButton.vue";
 import AddProbeFilterButton from "./Probe/AddProbeFilterButton.vue";
 
 export default {
+  methods: {formatAhvNumber},
   components: {AddProbeFilterButton, EditPatientButton},
   props: {
     patient: {
@@ -39,8 +45,8 @@ export default {
     },
   },
   computed: {
-    city: function () {
-      return formatAddressCity(this.patient)
+    address: function () {
+      return formatAddress(this.patient)
     },
     birthDate: function () {
       return formatDate(this.patient.birthDate)
