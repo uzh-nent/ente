@@ -11,7 +11,7 @@ perform analysis & report results:
 - generate worksheet for analysis
 - track result (pos/neg/failed, comment, organism in case of identification probes)
 - organisms structured by SNOMED code system, with custom NENT system if not available in SNOMED.
-- submit ELM-report Salmonella, Shingella, Listeria, Vibrio Cholerae and STEC (EHEC)
+- submit ELM-report Salmonella, Shingella, Listeria, Vibrio Cholerae and STEC (EHEC). 
 - generate PDF-report of results for customers
 
 manage data:
@@ -50,7 +50,7 @@ NENT analysis:
 - Vibrio: Cholera-toxin is checked for, and if it is negative, then tdh and trh are checked, too. Usually, all three tests are initiated at the same time, as in practice the probes that reach NENT are all toxin-negative. If toxin is positive, then an initial report is sent to BAG & customer, and identification is initiated. If tdh or trx is positive, then organism must be Vibrio parahömolythicus (and hence no identification necessary).
 
 ELM:
-- documentation by the BAG at https://elm.wiki.bagapps.ch/, with the formal spec at https://fhir.ch/ig/ch-elm/
+- documentation by the BAG at https://elm.wiki.bagapps.ch/, with the formal spec at https://fhir.ch/ig/ch-elm/. overall infos in the [Leitfaden](https://www.bag.admin.ch/dam/de/sd-web/MDjbgfEN6jEf/leitfaden-zur-meldepflicht.pdf).
 - Salmonella: `Salmonella sp serovar [Type] in Isolate`. This requires an organism from [`sal_org_complete`](https://fhir.ch/ig/ch-elm/ValueSet-ch-elm-results-sal-org-complete.html). If it is not in this set, choose leading code `Salmonella sp antigenic formula [Identifier] in Isolate by Agglutination (TEXT)` and submit as text, and contact the [BAG](mailto:infreport@bag.admin.ch) to ask for an extension of `sal_org_complete`.
 - Shigella: `Shigella sp [Presence] in Specimen by Organism specific culture`. This requires an organism from `shi_org`. For Shigella that are not yet in `shi_org`: Submit more coarse-grained variant that is inside that set.
 - Listeria: `Listeria sp identified in Specimen by Organism specific culture`. This requires an organism from `lis_org`. ENTE only submits the high-level group 1-4.
@@ -58,6 +58,7 @@ ELM:
 - STEC: `Escherichia coli Stx1 toxin stx1 gene [Presence] in Stool by NAA with probe detection` or `Escherichia coli Stx2 toxin stx2 gene [Presence] in Stool by NAA with probe detection`. Note that STEC may have both genes positive, in that both leading codes are submitted (hence two reports).
 - Pandemic case: Use FOPH leading codes `https://fhir.ch/ig/ch-elm/CodeSystem-ch-elm-foph-code-reserve.html`
 - In case submission over ELM fails, need to submit over https://web.em.bag.admin.ch/. In case submission was wrong and needs to be corrected, can contact BAG over [HIN E-Mail](mailto:infreport@hin.ch).
+- From the patient, reported are given name, family name, administrative gender, address, birthDate, ahv-number. For cholerae, additionally the phone is reported.
 
 ENTE design decisions:
 - probe is for a single strain under a single function. So when shifting from primary to reference laboratory function, or when multiple strains are contained in a single probe, then multiple entries for the same probe is created.
@@ -104,10 +105,9 @@ still TODO:
 features v?:
 - improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc)
 - improve reference data: allow single reference to be in multiple collections, then prevent double storage
-- add practitioner orderer in reference lab scenario
 - let customer create service request online
 - more structured result tracking (e.g. STEC E. coli Stx1, Stx2 separate tracking) / digitize additional data from laborblatt
-- improve ELM api integration (sync value sets, add patient reporting type such as anonymous to leading codes)
+- improve ELM api integration (sync value sets, add patient reporting type such as anonymous (for new pathogens) or initials (campylobacter) to leading codes, add current location of patient)
 - technical:
   - run integration test with API request
 
