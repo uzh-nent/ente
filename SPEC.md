@@ -86,11 +86,11 @@ new features v1.3:
 - reason for "identification not possible": "kein wachstum", "mischkultur", "andere". check if other default texts useful
 - refactor address / contact partial forms
   -	add structured contact info (email, tel) to animal keeper / practitioner / organization / patient
+  -	add GLN to practitioner
+  -	add UID/BER to organization / animal keeper
 
 still TODO:
 - refactor address / contact partial forms
-    -	add GLN to practitioner
-    -	add UID/BER to organization / animal keeper
     -	report tel number of patient
 - add monocytogenes to primary probes, add stx1 stx2 as separate pos/neg, polish custom pathogen case
 - Statistik (until 2025) -> separate P/N probes, allow to choose date
