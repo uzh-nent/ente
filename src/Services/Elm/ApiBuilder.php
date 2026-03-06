@@ -174,6 +174,23 @@ readonly class ApiBuilder
             ]
         ];
 
+        $telecom = [];
+        if ($probe->getOrdererPracPhone()) {
+            $telecom[] = [
+                "system" => "phone",
+                "value" => $probe->getOrdererPracPhone()
+            ];
+        }
+        if ($probe->getOrdererPracEmail()) {
+            $telecom[] = [
+                "system" => "email",
+                "value" => $probe->getOrdererPracEmail()
+            ];
+        }
+        if (count($telecom) > 0) {
+            $practitionerOrdererResource['resource']["telecom"] = $telecom;
+        }
+
         if ($probe->getOrdererPracGln()) {
             $practitionerOrdererResource['resource']["identifier"] = [
                 [
