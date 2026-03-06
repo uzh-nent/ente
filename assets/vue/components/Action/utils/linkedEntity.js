@@ -6,7 +6,7 @@ export const linkedEntityEditAction = {
   data() {
     return {
       useReference: false,
-      storeReference: false,
+      storeReference: true,
       reference: null,
 
       patch: null,
@@ -70,11 +70,13 @@ export const linkedEntityEditAction = {
       }
 
       this.$emit('update', this.payload)
-      this.useReference = this.storeReference = false
+      this.useReference = false
+      this.storeReference = true
     },
     unlink: async function () {
       this.$emit('update', null)
-      this.useReference = this.storeReference = false
+      this.useReference = false
+      this.storeReference = true
     },
     reloadReference: async function () {
       this.reference = await api.get(this.entity['@id'])
