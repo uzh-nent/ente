@@ -66,6 +66,14 @@ export const formatContact = function (value) {
   return [value.email, value.phone, value.contact].filter(e => e).join("\n")
 }
 
+export const formatBusinessIdentifiers = function (value, placeholder = "-") {
+  if (!value) {
+    return placeholder
+  }
+
+  return [value.ber, formatUidNumber(value.uid, "")].filter(e => e).join("\n")
+}
+
 
 export const formatOrganizationAddress = function (value) {
   if (!value) {

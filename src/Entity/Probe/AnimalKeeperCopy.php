@@ -9,6 +9,14 @@ use Symfony\Component\Serializer\Attribute\Groups;
 trait AnimalKeeperCopy
 {
     #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $animalKeeperBer = '';
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $animalKeeperUid = '';
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['animal-keeper:read', 'animal-keeper:write'])]
     private ?string $animalKeeperName = null;
 
@@ -39,6 +47,26 @@ trait AnimalKeeperCopy
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $animalKeeperContact = null;
+
+    public function getAnimalKeeperBer(): ?string
+    {
+        return $this->animalKeeperBer;
+    }
+
+    public function setAnimalKeeperBer(?string $animalKeeperBer): void
+    {
+        $this->animalKeeperBer = $animalKeeperBer;
+    }
+
+    public function getAnimalKeeperUid(): ?string
+    {
+        return $this->animalKeeperUid;
+    }
+
+    public function setAnimalKeeperUid(?string $animalKeeperUid): void
+    {
+        $this->animalKeeperUid = $animalKeeperUid;
+    }
 
     public function getAnimalKeeperName(): ?string
     {

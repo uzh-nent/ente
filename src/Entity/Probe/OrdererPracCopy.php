@@ -13,6 +13,10 @@ trait OrdererPracCopy
 {
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
+    private ?string $ordererPracGln = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererPracTitle = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
@@ -50,6 +54,16 @@ trait OrdererPracCopy
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['orderer:read', 'orderer:write'])]
     private ?string $ordererPracContact = null;
+
+    public function getOrdererPracGln(): ?string
+    {
+        return $this->ordererPracGln;
+    }
+
+    public function setOrdererPracGln(?string $ordererPracGln): void
+    {
+        $this->ordererPracGln = $ordererPracGln;
+    }
 
     public function getOrdererPracTitle(): ?string
     {

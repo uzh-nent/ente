@@ -1,5 +1,8 @@
 <template>
   <div class="d-flex gap-2 flex-column bg-light p-2">
+    <span class="d-block" v-if="practitioner.gln">
+      {{ practitioner.gln }}
+    </span>
     <span class="d-block">
       {{ practitioner.title }}
       {{ practitioner.givenName }}

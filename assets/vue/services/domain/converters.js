@@ -8,6 +8,8 @@ export const probeConverter = {
 
     return {
       ordererOrg: organization['@id'],
+      ordererOrgBer: organization.ber,
+      ordererOrgUid: organization.uid,
       ordererOrgName: organization.name,
       ordererOrgAddressLines: organization.addressLines,
       ordererOrgCity: organization.city,
@@ -25,6 +27,7 @@ export const probeConverter = {
 
     return {
       ordererPrac: practitioner['@id'],
+      ordererPracGln: practitioner.gln,
       ordererPracTitle: practitioner.title,
       ordererPracGivenName: practitioner.givenName,
       ordererPracFamilyName: practitioner.familyName,
@@ -40,6 +43,8 @@ export const probeConverter = {
   copyFromAnimalKeeper: function (animalKeeper) {
     return {
       animalKeeper: animalKeeper['@id'],
+      animalKeeperBer: animalKeeper.ber,
+      animalKeeperUid: animalKeeper.uid,
       animalKeeperName: animalKeeper.name,
       animalKeeperAddressLines: animalKeeper.addressLines,
       animalKeeperCity: animalKeeper.city,
@@ -53,8 +58,8 @@ export const probeConverter = {
   copyFromPatient: function (patient) {
     return {
       patient: patient['@id'],
-      patientBirthDate: patient.birthDate,
       patientAhvNumber: patient.ahvNumber,
+      patientBirthDate: patient.birthDate,
       patientGender: patient.gender,
       patientGivenName: patient.givenName,
       patientFamilyName: patient.familyName,
@@ -74,6 +79,8 @@ export const probeConverter = {
 
     return {
       '@id': probe.ordererOrg,
+      ber: probe.ordererOrgBer,
+      uid: probe.ordererOrgUid,
       name: probe.ordererOrgName,
       addressLines: probe.ordererOrgAddressLines,
       city: probe.ordererOrgCity,
@@ -91,6 +98,7 @@ export const probeConverter = {
 
     return {
       '@id': probe.ordererPrac,
+      gln: probe.ordererPracGln,
       title: probe.ordererPracTitle,
       givenName: probe.ordererPracGivenName,
       familyName: probe.ordererPracFamilyName,
@@ -110,6 +118,8 @@ export const probeConverter = {
 
     return {
       '@id': probe.animalKeeper,
+      ber: probe.animalKeeperBer,
+      uid: probe.animalKeeperUid,
       name: probe.animalKeeperName,
       addressLines: probe.animalKeeperAddressLines,
       city: probe.animalKeeperCity,
@@ -127,8 +137,8 @@ export const probeConverter = {
 
     return {
       '@id': probe.patient,
-      birthDate: probe.patientBirthDate,
       ahvNumber: probe.patientAhvNumber,
+      birthDate: probe.patientBirthDate,
       gender: probe.patientGender,
       givenName: probe.patientGivenName,
       familyName: probe.patientFamilyName,
