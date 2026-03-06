@@ -58,6 +58,14 @@ export const formatAddressCity = function (value) {
   return cityLine.join(" ")
 }
 
+export const formatContact = function (value) {
+  if (!value) {
+    return '-'
+  }
+
+  return [value.email, value.phone, value.contact].filter(e => e).join("\n")
+}
+
 
 export const formatOrganizationAddress = function (value) {
   if (!value) {

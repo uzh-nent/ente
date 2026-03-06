@@ -12,7 +12,7 @@
       {{ city }}
     </td>
     <td class="whitespace-preserve-newlines">
-      {{ practitioner.contact }}
+      {{ contact }}
     </td>
     <td class="w-minimal text-end">
       <add-probe-filter-button :query="{'ordererPrac': this.practitioner['@id']}" />
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {formatAddressCity} from "../../services/domain/formatter";
+import {formatAddressCity, formatContact} from "../../services/domain/formatter";
 import EditPractitionerButton from "../Action/EditPractitionerButton.vue";
 import AddProbeFilterButton from "./Probe/AddProbeFilterButton.vue";
 
@@ -39,6 +39,9 @@ export default {
   computed: {
     city: function () {
       return formatAddressCity(this.practitioner)
+    },
+    contact: function () {
+      return formatContact(this.practitioner)
     }
   }
 }
