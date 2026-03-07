@@ -4,6 +4,7 @@ namespace App\Tests\Api\Traits;
 
 use ApiPlatform\Symfony\Bundle\Test\Client;
 use App\Repository\UserRepository;
+use Exception;
 
 trait AuthenticationTrait
 {
