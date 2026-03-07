@@ -11,7 +11,6 @@
 
 namespace App\Entity\Traits;
 
-use App\Enum\CodeSystem;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;

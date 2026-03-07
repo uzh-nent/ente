@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Entity\Probe;
 use App\Entity\Report;
-use App\Enum\AdministrativeGender;
 use App\Enum\AnalysisType;
 use App\Enum\LaboratoryFunction;
 use App\Enum\Pathogen;

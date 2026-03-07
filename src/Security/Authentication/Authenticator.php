@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\Security\Authentication;
 
+use App\Entity\User;
 use App\Helper\DoctrineHelper;
 use App\Security\Authentication\LDAP\LdapServiceInterface;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Security\Authentication\OAuth2\AzureProvider;
+use App\Security\Authentication\OAuth2\AzureResourceOwner;
 use Doctrine\Persistence\ManagerRegistry;
 use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -21,12 +22,7 @@ use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
-use App\Entity\User;
-use App\Security\Authentication\OAuth2\AzureProvider;
-use App\Security\Authentication\OAuth2\AzureResourceOwner;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
-use Webmozart\Assert\Assert;
-
 use function rawurlencode;
 
 class Authenticator extends AbstractAuthenticator

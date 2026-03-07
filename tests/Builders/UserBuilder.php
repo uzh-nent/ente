@@ -2,13 +2,7 @@
 
 namespace App\Tests\Builders;
 
-use App\Entity\Probe;
-use App\Entity\Specimen;
 use App\Entity\User;
-use App\Enum\AnalysisType;
-use App\Enum\LaboratoryFunction;
-use App\Enum\Pathogen;
-use App\Enum\SpecimenSource;
 
 /**
  * @extends AbstractBuilder<User>

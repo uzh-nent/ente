@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Probe;
-use App\Entity\Report;
 use App\Enum\LaboratoryFunction;
-use App\Helper\DoctrineHelper;
 use App\Services\Interfaces\FileServiceInterface;
 use App\Services\Interfaces\PdfServiceInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -13,7 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProbeController extends AbstractController
 {

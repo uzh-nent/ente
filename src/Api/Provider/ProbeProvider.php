@@ -5,29 +5,19 @@ declare(strict_types=1);
 namespace App\Api\Provider;
 
 use ApiPlatform\Doctrine\Orm\Paginator;
-use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Entity\ElmReport;
 use App\Entity\Observation;
 use App\Entity\Probe;
 use App\Enum\AnalysisType;
-use App\Enum\ElmApiStatus;
 use App\Enum\MethodType;
 use App\Enum\Pathogen;
 use App\Enum\SpecimenSource;
-use App\Helper\DoctrineHelper;
-use App\Services\Interfaces\ElmServiceInterface;
 use App\Services\Interfaces\ExportServiceInterface;
-use Doctrine\Persistence\ManagerRegistry;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
