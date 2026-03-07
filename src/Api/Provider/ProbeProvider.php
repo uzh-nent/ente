@@ -171,10 +171,7 @@ readonly class ProbeProvider implements ProviderInterface
                 if ($observation->getPathogen()) {
                     $possibleObservations[$observation->getPathogen()->value][$observation->getAnalysisType()->value]++;
                 } else {
-                    if (!isset($nonstandardObservations[$observation->getPathogenName()])) {
-                        $nonstandardObservations[$observation->getPathogenName()] = 0;
-                    }
-                    $nonstandardObservations[$observation->getPathogenName()]++;
+                    $nonstandardObservations[$observation->getPathogenName()] = true;
                 }
             }
         }
@@ -190,11 +187,11 @@ readonly class ProbeProvider implements ProviderInterface
                 }
             }
         }
-        foreach ($nonstandardObservations as $nonstandardPathogenObservation) {
-            $header[] = $nonstandardPathogenObservation;
+        foreach ($nonstandardObservations as $key => $count) {
+            $header[] = $key;
         }
 
-        return [$header, $actualObservations, $nonstandardObservations];
+        return [$header, $actualObservations, array_keys($nonstandardObservations)];
     }
 
     /**
