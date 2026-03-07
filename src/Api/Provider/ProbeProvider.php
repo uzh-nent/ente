@@ -37,16 +37,22 @@ readonly class ProbeProvider implements ProviderInterface
 {
     public function __construct(
         /** @var ProviderInterface<Probe> */
+        #[Autowire(service: 'api_platform.doctrine.orm.state.item_provider')]
+        private ProviderInterface $itemProvider,
+        /** @var ProviderInterface<Probe> */
         #[Autowire(service: 'api_platform.doctrine.orm.state.collection_provider')]
-        private ProviderInterface      $collectionProvider,
+        private ProviderInterface $collectionProvider,
         private ExportServiceInterface $exportService,
-        private TranslatorInterface    $translator
-    )
-    {
+        private TranslatorInterface $translator
+    ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
+        if (!($operation instanceof GetCollection)) {
+            return $this->itemProvider->provide($operation, $uriVariables, $context);
+        }
+
         $probes = $this->collectionProvider->provide($operation, $uriVariables, $context);
 
         /** @var ?Request $request */
