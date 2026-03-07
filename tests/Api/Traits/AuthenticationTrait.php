@@ -1,6 +1,6 @@
 <?php
 
-namespace Api\Traits;
+namespace App\Tests\Api\Traits;
 
 use ApiPlatform\Symfony\Bundle\Test\Client;
 use App\Repository\UserRepository;
