@@ -226,8 +226,8 @@
     }
   },
   "service": {
-    "ecoli_identification": "E. Coli Identifizierung",
-    "identification_typing": "Identif-/Typisierung"
+    "primary": "Identifizierung",
+    "reference": "Identif-/Typisierung"
   },
   "specimen": {
     "_name": "Specimen (Material)"
@@ -431,7 +431,6 @@
       "PENDING": "Resultat folgt (Analyse in Bearbeitung)"
     },
     "service": {
-      "ecoli_identification": "E. Coli Identifizierung",
       "identification_of": "Identifizierung / Typisierung von"
     },
     "_predefined_title": {

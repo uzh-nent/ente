@@ -4,11 +4,7 @@
       {{ $t(`probe._laboratory_function.${probe.laboratoryFunction}`) }}
     </labeled-value>
 
-    <labeled-value v-if="probe.laboratoryFunction === 'PRIMARY'" :label="$t('service.ecoli_identification')">
-      {{ probe.analysisTypes.map(t => $t(`probe._analysis_type_short.${t}`)).join(', ') }}
-    </labeled-value>
-
-    <labeled-value v-if="probe.laboratoryFunction === 'REFERENCE'" :label="$t('service.identification_typing')">
+    <labeled-value :label="serviceTitle">
       <template v-if="probe.pathogen">
         {{ probe.analysisTypes
               .map(t => t === 'IDENTIFICATION' ? $t(`probe._pathogen.${probe.pathogen}`) : $t(`probe._analysis_type_short.${t}`))
@@ -37,6 +33,11 @@ export default {
       required: true
     },
   },
+  computed: {
+    serviceTitle: function () {
+      return this.probe.laboratoryFunction === 'PRIMARY' ? this.$t('service.primary') : this.$t('service.reference')
+    },
+  }
 }
 
 </script>

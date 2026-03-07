@@ -6,42 +6,33 @@
              :disabled="editMode"
              v-model="entity.laboratoryFunction" @update:model-value="validateField('laboratoryFunction')"/>
     </form-field>
-    <template v-if="entity.laboratoryFunction === 'PRIMARY'">
-      <form-field for-id="analysisTypes" :label="$t('service.ecoli_identification')" :field="fields.analysisTypes">
-        <checkboxes id="analysisTypes" :choices="escherichiaColiAnalysisTypes" :field="fields.analysisTypes"
-                    v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
-      </form-field>
-    </template>
-    <template v-if="entity.laboratoryFunction === 'REFERENCE'">
-      <form-field for-id="pathogen" :label="$t('service.identification_typing')" :field="fields.pathogen"
-                  :fake-required="true">
-
-        <div v-for="choice in referencePathogens" :key="choice.value">
-          <div class="form-check">
-            <input class="form-check-input" type="radio"
-                   name="pathogen" :id="'pathogen_' + choice.value" :value="choice.value"
-                   :checked="choice.value === entity.pathogen"
-                   @change="$event.target.checked ? entity.pathogen = choice.value : null">
-            <label class="form-check-label clickable" :for="'pathogen_' + choice.value">{{ choice.label }}</label>
-          </div>
-          <template v-if="choice.value === 'VIBRIO_CHOLERAE' && choice.value === entity.pathogen">
-            <checkboxes id="analysisTypes" class="mb-2" :choices="referenceVibrioCholeraeAnalysisTypes"
-                        :field="fields.analysisTypes"
-                        :disabled="value => value === 'IDENTIFICATION'"
-                        v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
-          </template>
-          <template v-if="choice.value === 'ESCHERICHIA_COLI' && choice.value === entity.pathogen">
-            <checkboxes id="analysisTypes" class="mb-2" :choices="escherichiaColiAnalysisTypes"
-                        :field="fields.analysisTypes"
-                        v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
-          </template>
+    <form-field for-id="pathogen" :label="serviceTitle" :field="fields.pathogen"
+                :fake-required="true">
+      <div v-for="choice in availablePathogens" :key="choice.value">
+        <div class="form-check">
+          <input class="form-check-input" type="radio"
+                 name="pathogen" :id="'pathogen_' + choice.value" :value="choice.value"
+                 :checked="choice.value === entity.pathogen"
+                 @change="$event.target.checked ? entity.pathogen = choice.value : null">
+          <label class="form-check-label clickable" :for="'pathogen_' + choice.value">{{ choice.label }}</label>
         </div>
-      </form-field>
-      <template v-if="entity.pathogen == null">
-        <text-input id="pathogenName" type="text" class="shift-input-up" :field="fields.pathogenName"
-                    v-model="entity.pathogenName"
-                    @blur="blurField('pathogenName')" @update:modelValue="validateField('pathogenName')"/>
-      </template>
+        <template v-if="choice.value === 'VIBRIO_CHOLERAE' && choice.value === entity.pathogen">
+          <checkboxes id="analysisTypes" class="mb-2" :choices="referenceVibrioCholeraeAnalysisTypes"
+                      :field="fields.analysisTypes"
+                      :disabled="value => value === 'IDENTIFICATION'"
+                      v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
+        </template>
+        <template v-if="choice.value === 'ESCHERICHIA_COLI' && choice.value === entity.pathogen">
+          <checkboxes id="analysisTypes" class="mb-2" :choices="escherichiaColiAnalysisTypes"
+                      :field="fields.analysisTypes"
+                      v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
+        </template>
+      </div>
+    </form-field>
+    <template v-if="entity.pathogen == null">
+      <text-input id="pathogenName" type="text" class="shift-input-up" :field="fields.pathogenName"
+                  v-model="entity.pathogenName"
+                  @blur="blurField('pathogenName')" @update:modelValue="validateField('pathogenName')"/>
     </template>
 
     <form-field for-id="methodTypes" :label="$t('probe.method_types')" :field="fields.methodTypes">
@@ -73,6 +64,13 @@ const createMethodTypes = function (translator) {
 
 const createReferencePathogens = function (translator) {
   const values = ['SALMONELLA', 'SHIGELLA', 'YERSINIA', 'LISTERIA_MONOCYTOGENES', 'VIBRIO_CHOLERAE', 'ESCHERICHIA_COLI', 'CAMPYLOBACTER']
+  return values
+      .map(value => ({label: translator(`probe._pathogen.${value}`), value}))
+      .concat({label: translator('probe._pathogen.OTHER'), value: null})
+}
+
+const createPrimaryPathogens = function (translator) {
+  const values = ['ESCHERICHIA_COLI', 'LISTERIA_MONOCYTOGENES']
   return values
       .map(value => ({label: translator(`probe._pathogen.${value}`), value}))
       .concat({label: translator('probe._pathogen.OTHER'), value: null})
@@ -124,11 +122,20 @@ export default {
     },
   },
   computed: {
+    serviceTitle: function () {
+      return this.entity.laboratoryFunction === 'PRIMARY' ? this.$t('service.primary') : this.$t('service.reference')
+    },
     laboratoryFunctions: function () {
       return createLaboratoryFunctions(this.$t)
     },
     referencePathogens: function () {
       return createReferencePathogens(this.$t)
+    },
+    primaryPathogens: function () {
+      return createPrimaryPathogens(this.$t)
+    },
+    availablePathogens: function () {
+      return this.entity.laboratoryFunction === 'PRIMARY' ? this.primaryPathogens : this.referencePathogens
     },
     escherichiaColiAnalysisTypes: function () {
       return createEscherichiaColiAnalysisTypes(this.$t)
