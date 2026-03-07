@@ -19,6 +19,8 @@ class ProbeBuilder extends AbstractBuilder
         $probe = new Probe();
         $probe->setReceivedDate(new \DateTimeImmutable());
         $probe->setAnalysisStartDate(new \DateTimeImmutable());
+        $user = (new UserBuilder())->build();
+        $probe->attribute($user);
 
         parent::__construct($probe);
     }

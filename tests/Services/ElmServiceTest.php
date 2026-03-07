@@ -26,6 +26,7 @@ final class ElmServiceTest extends KernelTestCase
         DoctrineHelper::persistAndFlush(
             $doctrine,
             $probe,
+            $probe->getCreatedBy(),
             $probe->getOrdererOrg(),
             $probe->getPatient(),
             $report,
