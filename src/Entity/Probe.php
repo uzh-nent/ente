@@ -23,6 +23,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Api\Processor\ProbeProcessor;
+use App\Api\Provider\ProbeProvider;
 use App\Entity\Probe\ServiceRequest;
 use App\Entity\Probe\ServiceTime;
 use App\Entity\Probe\SpecimenMeta;
@@ -41,6 +42,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     processor: ProbeProcessor::class,
+    provider: ProbeProvider::class,
+    outputFormats: ['jsonld', 'xlsx'],
     normalizationContext: ['groups' => ['time:read', 'attribution:read', 'orderer:read', 'animal-keeper:read', 'patient:read', 'comment:read', 'probe:read']],
     denormalizationContext: ['groups' => ['orderer:write', 'animal-keeper:write', 'patient:write', 'comment:write', 'probe:write']]
 )]
