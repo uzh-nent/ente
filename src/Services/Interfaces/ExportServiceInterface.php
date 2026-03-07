@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 interface ExportServiceInterface
 {
-    public const string MIME_EXCEL = 'application/vnd.ms-excel';
+    public const string MIME_EXCEL = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     /**
      * @param string[]   $header
      * @param string[][] $content

@@ -10,6 +10,7 @@ use App\Services\Interfaces\FileServiceInterface;
 use App\Services\Interfaces\PdfServiceInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -96,6 +97,16 @@ class ProbeController extends AbstractController
         }
 
         return $this->render('probe/all_view.html.twig', ['probe' => $probe]);
+    }
+
+    #[Route('/probes/export/pre2025', name: 'probe_export_all')]
+    public function exportOldView(Request $request, FileServiceInterface $fileService): Response
+    {
+        $rawLaboratoryFunction = $request->query->get('laboratoryFunction');
+        $laboratoryFunction = LaboratoryFunction::tryFrom($rawLaboratoryFunction ?? "") ?? LaboratoryFunction::REFERENCE;
+
+        $path = $fileService->getProbesExportPre2025($laboratoryFunction);
+        return $this->file($path);
     }
 
     private function sendJavascript(Response $response): Response
