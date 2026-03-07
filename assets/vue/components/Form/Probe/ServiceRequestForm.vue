@@ -171,14 +171,24 @@ export default {
     },
     'entity.pathogen': {
       handler: function (pathogen) {
-        if (this.entity.laboratoryFunction === 'REFERENCE') {
-          if (pathogen === 'VIBRIO_CHOLERAE') {
-            this.entity.analysisTypes = ['IDENTIFICATION', 'VB_TOXIN']
-          } else if (pathogen === 'ESCHERICHIA_COLI') {
-            this.entity.analysisTypes = ["EC_STEC", "EC_EPEC", "EC_ETEC", "EC_EIEC"]
+        if (pathogen === 'VIBRIO_CHOLERAE') {
+          this.entity.analysisTypes = ['IDENTIFICATION', 'VB_TOXIN']
+        } else if (pathogen === 'ESCHERICHIA_COLI') {
+          if (this.entity.laboratoryFunction === 'PRIMARY') {
+            this.entity.analysisTypes = []
           } else {
-            this.entity.analysisTypes = ["IDENTIFICATION"]
+            this.entity.analysisTypes = ["EC_STEC", "EC_EPEC", "EC_ETEC", "EC_EIEC"]
           }
+        } else {
+          this.entity.analysisTypes = ["IDENTIFICATION"]
+        }
+
+        if (pathogen === null) {
+          this.fields.pathogenName.rules = [requiredRule]
+          this.$nextTick(() => document.getElementById("pathogenName").focus())
+        } else {
+          this.fields.pathogenName.rules = []
+          this.entity.pathogenName = null
         }
       },
     }
