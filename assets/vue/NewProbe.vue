@@ -100,6 +100,10 @@ export default {
       // note: allowed to add animal without reference to animal keeper
     },
     nextError: function () {
+      if (!this.serviceRequest) {
+        return this.$t('_form.new_probe.pathogen_required')
+      }
+
       if (!this.requisitionIdentifier) {
         return this.$t('_form.new_probe.requisition_identifier_required')
       }

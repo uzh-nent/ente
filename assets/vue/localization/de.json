@@ -24,6 +24,7 @@
       "no_leading_choices_for_pathogen": "Für dieses Pathogen sind keine Leading Codes definiert."
     },
     "new_probe": {
+      "pathogen_required": "Pathogen ist erforderlich.",
       "orderer_required": "Auftraggeber (Organisation und/oder Mediziner:in) ist erforderlich.",
       "requisition_identifier_required": "Probe-Referenz ist erforderlich.",
       "patient_required": "Patient:in ist erforderlich."
