@@ -51,6 +51,8 @@ readonly class ProbeProvider implements ProviderInterface
             if ($probes instanceof Paginator) {
                 $probes = iterator_to_array($probes->getIterator());
             }
+
+            /** @phpstan-ignore-next-line */
             return $this->exportAsExcel($probes);
         }
 
@@ -97,9 +99,9 @@ readonly class ProbeProvider implements ProviderInterface
         foreach ($probes as $probe) {
             $specimenSource = $probe->getSpecimenSource()?->trans($this->translator) ?? $probe->getSpecimenSourceText();
             if ($probe->getSpecimenSource() === SpecimenSource::FEED) {
-                $specimenSource .= " " . $probe->getSpecimenFoodType()?->trans($this->translator) ?? $probe->getSpecimenTypeText();
+                $specimenSource .= " " . ($probe->getSpecimenFoodType()?->trans($this->translator) ?? $probe->getSpecimenTypeText());
             } elseif ($probe->getSpecimenSource() === SpecimenSource::ANIMAL) {
-                $specimenSource .= " " . $probe->getSpecimenAnimalType()?->trans($this->translator) ?? $probe->getSpecimenTypeText();
+                $specimenSource .= " " . ($probe->getSpecimenAnimalType()?->trans($this->translator) ?? $probe->getSpecimenTypeText());
             }
 
             $specimen = $probe->getSpecimen()?->getDisplayName() ?? $probe->getSpecimenText();
@@ -141,7 +143,7 @@ readonly class ProbeProvider implements ProviderInterface
 
     /**
      * @param Probe[] $probes
-     * @return void
+     * @return array{0: string[], 1: string[], 2: string[]}
      */
     private function initializeObservationColumns(array $probes): array
     {
@@ -188,6 +190,7 @@ readonly class ProbeProvider implements ProviderInterface
      * @param Observation[] $observations
      * @param string[] $actualObservations
      * @param string[] $nonstandardObservations
+     * @return string[]
      */
     private function getObservationColumns(array $observations, array $actualObservations, array $nonstandardObservations): array
     {
