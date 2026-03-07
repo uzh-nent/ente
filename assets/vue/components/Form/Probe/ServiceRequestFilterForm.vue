@@ -5,7 +5,7 @@
       <checkboxes inline id="laboratoryFunction" :choices="laboratoryFunctions" :field="fields.laboratoryFunction"
                   v-model="entity.laboratoryFunction" @update:model-value="validateField('laboratoryFunction')"/>
     </form-field>
-    <form-field for-id="pathogen" :label="$t('service.identification_typing')" :field="fields.pathogen">
+    <form-field for-id="pathogen" :label="$t('probe.pathogen')" :field="fields.pathogen">
       <checkboxes inline id="pathogen" :choices="pathogens" :field="fields.pathogen"
                   v-model="entity.pathogen" @update:model-value="validateField('pathogen')"/>
     </form-field>
