@@ -2,7 +2,6 @@
 
 namespace App\Tests\Builders;
 
-use App\Entity\Organization;
 use App\Entity\Patient;
 use App\Enum\AdministrativeGender;
 use App\Tests\Builders\Traits\AddressBuilder;

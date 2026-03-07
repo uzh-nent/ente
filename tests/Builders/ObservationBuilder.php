@@ -2,13 +2,9 @@
 
 namespace App\Tests\Builders;
 
-use App\Entity\ElmReport;
 use App\Entity\Observation;
 use App\Entity\Probe;
-use App\Enum\AnalysisType;
 use App\Enum\Interpretation;
-use App\Enum\Pathogen;
-use App\Tests\Helpers\CodeRepository;
 
 /**
  * @extends AbstractBuilder<Observation>

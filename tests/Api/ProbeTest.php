@@ -3,14 +3,11 @@
 namespace App\Tests\Api;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
-use ApiPlatform\Symfony\Bundle\Test\Client;
 use App\Helper\DoctrineHelper;
-use App\Repository\UserRepository;
 use App\Services\Interfaces\ExportServiceInterface;
 use App\Tests\Api\Traits\AuthenticationTrait;
 use App\Tests\Builders\ProbeBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Exception;
 use Zenstruck\Foundry\Test\ResetDatabase;
 
 class ProbeTest extends ApiTestCase

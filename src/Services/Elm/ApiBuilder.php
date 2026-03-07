@@ -4,7 +4,6 @@ namespace App\Services\Elm;
 
 use App\Entity\ElmReport;
 use App\Entity\Probe;
-use App\Enum\LaboratoryFunction;
 use App\Enum\Pathogen;
 use App\Services\Elm\ApiBuilder\Dto\AddressDto;
 use App\Services\Elm\ApiBuilder\Dto\PersonDto;
