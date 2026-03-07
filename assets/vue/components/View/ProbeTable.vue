@@ -14,6 +14,7 @@
                      :placeholder="$t('_view.search_by_requisition_identifier')"
                      v-model="searchRequisitionIdentifier">
               <url-filter-probe-view :url-filter="urlFilter" />
+              <export-probes-dropdown class="ms-auto" :filter="filter" />
             </div>
           </th>
         </tr>
@@ -56,9 +57,11 @@ import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue
 import ProbeTableRow from "./ProbeTableRow.vue";
 import FilterProbeButton from "../Action/FilterProbeButton.vue";
 import UrlFilterProbeView from "./Probe/UrlFilterProbeView.vue";
+import ExportProbesDropdown from "../Action/ExportProbesDropdown.vue";
 
 export default {
   components: {
+    ExportProbesDropdown,
     UrlFilterProbeView,
     FilterProbeButton,
     ProbeTableRow,

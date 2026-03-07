@@ -10,4 +10,4 @@ api_platform:
 
     formats:
         jsonld: ["application/ld+json"]
-        xlsx: ["application/vnd.ms-excel"]
+        xlsx: ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]

@@ -6,6 +6,7 @@ const iriToId = function (iri) {
   return iri.substr(iri.lastIndexOf('/') + 1)
 }
 
+const xlsxMimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 const restClient = {
   setupErrorNotifications: function () {
     axios.interceptors.response.use(
@@ -94,6 +95,10 @@ const restClient = {
     const response = await axios.get(url)
     return response.data
   },
+  getExcel: async function (url) {
+    const response = await axios.get(url, {responseType: 'blob', headers: {'Accept': xlsxMimeType}})
+    return response.data
+  },
   poll: async function (instance) {
     const response = await axios.get(instance['@id'] + "?poll=1")
     this._writeAllProperties(instance, {}, response.data)
@@ -128,6 +133,9 @@ const router = {
   },
   reportPdf: function (report) {
     return '/reports/' + iriToId(report['@id']) + '/download/' + report.filename
+  },
+  pre2025ProbesExport: function (laboratoryFunction) {
+    return '/probes/export/pre2025?laboratoryFunction=' + laboratoryFunction
   }
 }
 
@@ -170,6 +178,10 @@ const preloadApi = {
 const api = {
   get: function (id) {
     return restClient.get(id)
+  },
+  getProbesExcel: function (query) {
+    const url = restClient._getFullUrl('/api/probes', query)
+    return restClient.getExcel(url)
   },
   poll: function (entity) {
     return restClient.poll(entity)

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\LaboratoryFunction;
 use App\Services\Interfaces\FileServiceInterface;
 
 class FileService implements FileServiceInterface
@@ -47,6 +48,12 @@ class FileService implements FileServiceInterface
 
     public function getFolderPath(string $folder): string
     {
-        return  $this->persistentFilesDir . '/' . $folder;
+        return $this->persistentFilesDir . '/' . $folder;
+    }
+
+    public function getProbesExportPre2025(LaboratoryFunction $function): string
+    {
+        $filename = $function === LaboratoryFunction::PRIMARY ? 'primary' : 'reference';
+        return  $this->persistentFilesDir . '/pre2025/' . $filename . '.xlsx';
     }
 }

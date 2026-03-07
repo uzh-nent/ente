@@ -133,6 +133,12 @@
       "edited": "Patient:in gespeichert.",
       "title": "Patient:in bearbeiten"
     },
+    "export_probes": {
+      "export_all": "Alle",
+      "export_filtered": "Gefiltert",
+      "export_pre_2025_p": "P pre-2025",
+      "export_pre_2025_n": "N pre-2025"
+    },
     "download_probe_worksheet": {
       "download": "Arbeitsblatt herunterladen"
     },
