@@ -90,12 +90,13 @@ new features v1.3:
   -	add GLN to practitioner
   -	add UID/BER to organization / animal keeper
 - extend ELM API with new fields
+- add monocytogenes to primary probes, polish custom pathogen case
 
 questions:
 - for all primary probes, append (PCR) in PDF report, or only for E.coli?
+- stx1/2 not added, too much confusing UX (e.g., in invoicing)
 
 still TODO:
-- add monocytogenes to primary probes, add stx1 stx2 as separate pos/neg, polish custom pathogen case
 - Statistik (until 2025) -> separate P/N probes, allow to choose date
 - Statistik (from 2025) -> allow to export csv from table search result, with observation results inline
 - invoicing:
@@ -105,11 +106,9 @@ still TODO:
   - for ambulant, need to be able to generate rückforderungsbeleg
 
 features v?:
+- let customer create service request online
 - improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc)
 - improve reference data: allow single reference to be in multiple collections, then prevent double storage
-- let customer create service request online
-- more structured result tracking (e.g. STEC E. coli Stx1, Stx2 separate tracking) / digitize additional data from laborblatt
+- track analysis, not result (e.g., STEC E. coli Stx1, Stx2 separate tracking); possibly track more analysis results from the Laborblatt
 - improve ELM api integration (sync value sets, add patient reporting type such as anonymous (for new pathogens) or initials (campylobacter) to leading codes, add current location of patient)
-- technical:
-  - run integration test with API request
 
