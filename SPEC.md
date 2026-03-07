@@ -91,14 +91,15 @@ new features v1.3:
   -	add UID/BER to organization / animal keeper
 - extend ELM API with new fields
 - add monocytogenes to primary probes, polish custom pathogen case
+- Statistik (until 2025) -> separate P/N probes, allow to choose date
+- Statistik (from 2025) -> allow to export csv from table search result, with observation results inline
 
 questions:
 - for all primary probes, append (PCR) in PDF report, or only for E.coli?
 - stx1/2 not added, too much confusing UX (e.g., in invoicing)
+- export: patient address useful why?
 
 still TODO:
-- Statistik (until 2025) -> separate P/N probes, allow to choose date
-- Statistik (from 2025) -> allow to export csv from table search result, with observation results inline
 - invoicing:
   - for all primary probes, track whether "ambulant" or "stationär"; when "ambulant" invoice patient, else invoice customer
   - cost is 119.7 per PCF; 47.7 for multi-pcr additional results
