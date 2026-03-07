@@ -8,3 +8,13 @@ LISTERIA_MONOCYTOGENES: "Listeria Monocytogenes"
 VIBRIO_CHOLERAE: "Vibrio Cholerae"
 ESCHERICHIA_COLI: "Escherichia Coli"
 CAMPYLOBACTER: "Campylobacter"
+Unknown: "Unbekannt"
+
+short:
+  SALMONELLA: "Salmonella"
+  SHIGELLA: "Shigella"
+  YERSINIA: "Yersinia"
+  LISTERIA_MONOCYTOGENES: "Listeria"
+  VIBRIO_CHOLERAE: "Vibrio"
+  ESCHERICHIA_COLI: "E.coli"
+  CAMPYLOBACTER: "Campylobacter"

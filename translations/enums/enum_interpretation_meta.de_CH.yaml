@@ -1,0 +1,5 @@
+enum:
+  title: "Grund"
+
+NO_GROWTH: 'Kein Wachstum'
+MIXED_CULTURE: 'Mischkultur'

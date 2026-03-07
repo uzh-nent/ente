@@ -25,7 +25,7 @@ class ProbeTest extends ApiTestCase
         // prepare test data
         /** @var ManagerRegistry $doctrine */
         $doctrine = self::getContainer()->get(ManagerRegistry::class);
-        $probe = (new ProbeBuilder())->withReferenceLaboratoryOrder()->withHumanProbe()->build();
+        $probe = (new ProbeBuilder())->withReferenceLaboratoryOrder()->withHumanProbe()->withObservation()->build();
         DoctrineHelper::persistAndFlush($doctrine, $probe, $probe->getCreatedBy(), $probe->getOrdererOrg(), $probe->getPatient());
 
         $client = static::createClient();

@@ -78,7 +78,7 @@ class Probe
      * @var Collection<int, Observation>
      */
     #[Groups(['probe:collections'])]
-    #[ORM\OneToMany(targetEntity: Observation::class, mappedBy: 'probe')]
+    #[ORM\OneToMany(targetEntity: Observation::class, mappedBy: 'probe', cascade: ['persist'])]
     private Collection $observations;
 
     public function __construct()

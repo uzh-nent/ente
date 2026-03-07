@@ -1,5 +1,6 @@
 enum:
   title: "Analysetyp"
+  plural: "Analysen"
 
 
 IDENTIFICATION: Identifikation / Typisierung
@@ -8,3 +9,12 @@ EC_EPEC: Enteropathogene (EPEC)
 EC_ETEC: Enterotoxische (ETEC)
 EC_EIEC: Enteroinvasive (EIEC) / Shigella
 EC_EAEC: Enteroaggregative (EAEC)
+
+short:
+  IDENTIFICATION: Ident.
+  "EC_STEC": "STEC"
+  "EC_EPEC": "EPEC"
+  "EC_ETEC": "ETEC"
+  "EC_EIEC": "EIEC/Shig."
+  "EC_EAEC": "EAEC"
+  "VB_TOXIN": "CTX"
