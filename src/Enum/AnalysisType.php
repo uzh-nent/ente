@@ -29,4 +29,9 @@ enum AnalysisType: string implements TranslatableInterface
     {
         return $translator->trans($this->value, [], 'enum_analysis_type');
     }
+
+    public function transShort(TranslatorInterface $translator): string
+    {
+        return $translator->trans("short." . $this->value, [], 'enum_analysis_type');
+    }
 }

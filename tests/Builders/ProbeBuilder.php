@@ -52,4 +52,12 @@ class ProbeBuilder extends AbstractBuilder
 
         return $this;
     }
+
+    public function withObservation(): self
+    {
+        $observation = (new ObservationBuilder($this->entity))->build();
+        $this->entity->getObservations()->add($observation);
+
+        return $this;
+    }
 }

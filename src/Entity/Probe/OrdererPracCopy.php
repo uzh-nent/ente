@@ -192,9 +192,14 @@ trait OrdererPracCopy
         $target->setFamilyName($this->ordererPracFamilyName);
     }
 
+    public function getOrdererPracFullName(): string
+    {
+        return trim($this->getOrdererPracTitle() . " " . $this->getOrdererPracGivenName() . " " . $this->getOrdererPracFamilyName());
+    }
+
     public function getOrdererPracFullAddress(): string
     {
-        $fullName = trim($this->getOrdererPracGivenName() . " " . $this->getOrdererPracFamilyName());
+        $fullName = $this->getOrdererPracFullName();
         $countryPrefix = $this->getOrdererPracCountryCode() === 'CH' ? "" : $this->getOrdererPracCountryCode() . " ";
         $city = trim($this->getOrdererPracPostalCode() . " " . $this->getOrdererPracCity());
 
@@ -207,7 +212,7 @@ trait OrdererPracCopy
 
     public function getOrdererPracShortAddress(): string
     {
-        $fullName = trim($this->getOrdererPracTitle() . " " . $this->getOrdererPracGivenName() . " " . $this->getOrdererPracFamilyName());
+        $fullName = $this->getOrdererPracFullName();
         $countryPrefix = $this->getOrdererPracCountryCode() === 'CH' ? "" : $this->getOrdererPracCountryCode() . " ";
         $city = trim($this->getOrdererPracPostalCode() . " " . $this->getOrdererPracCity());
 

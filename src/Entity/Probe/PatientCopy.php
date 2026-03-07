@@ -219,6 +219,11 @@ trait PatientCopy
         $target->setFamilyName($this->patientFamilyName);
     }
 
+    public function getPatientFullName(): string
+    {
+        return trim($this->getPatientGivenName() . " " . $this->getPatientFamilyName());
+    }
+
     public function getPatientAddress(): string
     {
         $countryPrefix = $this->getPatientCountryCode() === 'CH' ? "" : $this->getPatientCountryCode() . " ";

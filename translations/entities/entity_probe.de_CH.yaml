@@ -2,7 +2,9 @@ entity:
     title: 'Probe'
     plural: 'Proben'
 
+Identifier: "Identifikation"
 Requisition identifier: "Probe-Referenz"
 Service: 'Auftrag'
 Orderer: 'Auftraggeber'
 Orderer prac: 'Mediziner:in'
+Analysis start date: 'Ansatzdatum'
