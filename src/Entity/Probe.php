@@ -31,6 +31,8 @@ use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
+use App\Enum\InvoiceStatus;
+use App\Enum\SpecimenFoodType;
 use App\Repository\ProbeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -57,7 +59,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     'ordererOrg' => SearchFilterInterface::STRATEGY_EXACT, 'ordererPrac' => SearchFilterInterface::STRATEGY_EXACT, 'patient' => SearchFilterInterface::STRATEGY_EXACT, 'animalKeeper' => SearchFilterInterface::STRATEGY_EXACT,
 ])]
 #[ApiFilter(DateFilter::class, properties: ['analysisStartDate'])]
-#[ApiFilter(ExistsFilter::class, properties: ['finishedAt'])]
+#[ApiFilter(ExistsFilter::class, properties: ['finishedAt', 'invoiceStatus'])]
 #[ApiFilter(OrderFilter::class, properties: ['identifier'])]
 class Probe
 {
@@ -73,6 +75,10 @@ class Probe
     #[ORM\Column(type: Types::STRING, unique: true)]
     #[Groups(['probe:read'])]
     private string $identifier = '';
+
+    #[ORM\Column(type: Types::STRING, enumType: InvoiceStatus::class, nullable: true)]
+    #[Groups(['probe:read', 'probe:write'])]
+    private ?InvoiceStatus $invoiceStatus = null;
 
     /**
      * @var Collection<int, Observation>
