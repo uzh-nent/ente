@@ -19,6 +19,7 @@ import ViewProbe from "./ViewProbe.vue";
 import Organizations from "./Organizations.vue";
 import Practitioners from "./Practitioners.vue";
 import Patients from "./Patients.vue";
+import NewInvoice from "./NewInvoice.vue";
 import AnimalKeepers from "./AnimalKeepers.vue";
 import ActiveProbes from "./ActiveProbes.vue";
 import AllProbes from "./AllProbes.vue";
@@ -79,5 +80,9 @@ $(document).ready(function () {
 
   if (document.getElementById('vue-all-probes') != null) {
     createVue(AllProbes).mount('#vue-all-probes')
+  }
+
+  if (document.getElementById('vue-invoice-new') != null) {
+    createVue(NewInvoice).mount('#vue-invoice-new')
   }
 })

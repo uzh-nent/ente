@@ -46,6 +46,11 @@
       "download_request": "Anfrage herunterladen",
       "download_response": "Antwort herunterladen"
     },
+    "add_invoice": {
+      "title": "Rechnung erstellen",
+      "added": "Rechnung erstellt.",
+      "total": "Total"
+    },
     "add_probe": {
       "added": "Probe hinzugefügt.",
       "title": "Probe hinzufügen"
@@ -184,6 +189,7 @@
   },
   "_view": {
     "filter_yields_no_entries": "Keine Einträge, die dem Filter entsprechen.",
+    "filter_yields_no_entries_invoicable_probes": "Keine zu verrechnende Proben, die dem Filter entsprechen.",
     "search_by_name": "Suche nach Name",
     "search_by_text": "Suche nach Text",
     "search_by_family_name": "Suche nach Nachname",
@@ -195,6 +201,7 @@
     "search_by_identifier": "Suche nach Probe",
     "search_by_requisition_identifier": "Suche nach Probe-Referenz",
     "no_medical_validation": "Keine medizinische Validierung.",
+    "invoice_created": "Rechnung erstellt.",
     "from": "Von",
     "until": "Bis",
     "probe_navigation": {
@@ -445,6 +452,20 @@
       "FINAL":  "Schlussbericht",
       "ADDENDUM": "Nachtrag",
       "CORRECTION": "Korrigierter Bericht"
+    }
+  },
+  "invoice": {
+    "_name": "Rechnung",
+    "date": "Rechnungsdatum",
+    "receiver": "Empfänger",
+    "line_item": {
+      "service": "Leistung",
+      "position": "Position",
+      "tp": "Taxpunkte"
+    },
+    "_receiver": {
+      "ORDERER": "Auftraggeber",
+      "PATIENT": "Patient"
     }
   }
 }

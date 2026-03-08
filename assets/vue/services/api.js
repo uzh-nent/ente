@@ -232,6 +232,9 @@ const api = {
   },
   postReport: function (payload) {
     return restClient.post('/api/reports', payload)
+  },
+  postInvoice: function (payload) {
+    return restClient.post('/api/invoices', payload)
   }
 }
 
