@@ -1,0 +1,81 @@
+{
+  "tarifCode": "317",
+  "tarifName": "Analyseliste (AL)",
+  "tpw": 1,
+  "entries": [
+    {
+      "precondition": ["3349.00", "3424.00", "3425.00"],
+      "pathogen": "ESCHERICHIA_COLI",
+      "analysisType": "EC_STEC",
+      "position": "3426.10",
+      "service": "Shigatoxin bildende E. coli (STEC)",
+      "tp": 47.7
+    },
+    {
+      "pathogen": "ESCHERICHIA_COLI",
+      "analysisType": "EC_STEC",
+      "position": "3426.00",
+      "service": "Shigatoxin bildende E. coli (STEC)",
+      "tp": 119.7
+    },
+    {
+      "precondition": ["3426.00", "3424.00", "3425.00"],
+      "pathogen": "ESCHERICHIA_COLI",
+      "analysisType": "EC_EPEC",
+      "position": "3349.10",
+      "service": "Enteropathogene E. coli (EPEC)",
+      "tp": 47.7
+    },
+    {
+      "pathogen": "ESCHERICHIA_COLI",
+      "analysisType": "EC_EPEC",
+      "position": "3349.00",
+      "service": "Enteropathogene E. coli (EPEC)",
+      "tp": 119.7
+    },
+    {
+      "precondition": ["3426.00", "3349.00", "3425.00"],
+      "pathogen": "ESCHERICHIA_COLI",
+      "analysisType": "EC_ETEC",
+      "position": "3424.10",
+      "service": "Enterotoxische E. coli (ETEC)",
+      "tp": 47.7
+    },
+    {
+      "pathogen": "ESCHERICHIA_COLI",
+      "analysisType": "EC_ETEC",
+      "position": "3424.00",
+      "service": "Enterotoxische E. coli (ETEC)",
+      "tp": 119.7
+    },
+    {
+      "precondition": ["3426.00", "3349.00", "3424.00"],
+      "pathogen": "ESCHERICHIA_COLI",
+      "analysisType": "EC_STEC",
+      "position": "3425.10",
+      "service": "Enteroinvasive E. coli (EIEC) / Shigella",
+      "tp": 47.7
+    },
+    {
+      "pathogen": "ESCHERICHIA_COLI",
+      "analysisType": "EC_STEC",
+      "position": "3425.00",
+      "service": "Enteroinvasive E. coli (EIEC) / Shigella",
+      "tp": 119.7
+    },
+    {
+      "pathogen": "ESCHERICHIA_COLI",
+      "analysisType": "EC_EAEC",
+      "position": "3428.00",
+      "service": "Enteroaggregative E. coli (EAEC)",
+      "tp": 119.7
+    },
+    {
+      "pathogen": "LISTERIA_MONOCYTOGENES",
+      "analysisType": "IDENTIFICATION",
+      "position": "3349.00",
+      "service": "Listeria",
+      "tp": 119.7
+    }
+  ]
+}

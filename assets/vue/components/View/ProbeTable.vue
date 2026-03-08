@@ -13,8 +13,8 @@
               <input type="text" class="form-control mw-20"
                      :placeholder="$t('_view.search_by_requisition_identifier')"
                      v-model="searchRequisitionIdentifier">
-              <url-filter-probe-view :url-filter="urlFilter" />
-              <export-probes-dropdown class="ms-auto" :filter="filter" />
+              <url-filter-probe-view :url-filter="urlFilter"/>
+              <export-probes-dropdown class="ms-auto" :filter="filter" v-if="view === 'result'"/>
             </div>
           </th>
         </tr>
@@ -26,19 +26,22 @@
           <th>{{ $t('probe.orderer') }}</th>
           <th>{{ $t('probe.specimen_source') }}</th>
           <th class="w-minimal">{{ $t('probe.analysis_start_date_short') }}</th>
-          <th class="w-observations">{{ $t('observation._name') }}</th>
+          <th class="w-observations" v-if="view === 'result'">{{ $t('observation._name') }}</th>
           <th class="w-minimal"></th>
         </tr>
         </thead>
         <tbody>
-        <probe-table-row v-for="probe in items" :key="probe['@id']"
-                                :probe="probe" :organisms="organisms" :specimens="specimens" />
+        <probe-table-row
+            v-for="probe in items" :key="probe['@id']"
+            :probe="probe" :organisms="organisms" :specimens="specimens"
+            :view="view"/>
         <tr v-if="totalItems === 0">
-          <td colspan="200">{{ $t('_view.filter_yields_no_entries') }}</td>
+          <td colspan="200" v-if="view === 'result'">{{ $t('_view.filter_yields_no_entries') }}</td>
+          <td colspan="200" v-if="view === 'invoice'">{{ $t('_view.filter_yields_no_entries_invoicable_probes') }}</td>
         </tr>
         </tbody>
       </table>
-      <loading-indicator-overlay v-if="isLoading" />
+      <loading-indicator-overlay v-if="isLoading"/>
     </div>
     <pagination :items-per-page="itemsPerPage" :page="page" :total-items="totalItems"
                 @paginated="page = $event"/>
@@ -87,6 +90,15 @@ export default {
     urlFilter: {
       type: Object,
       default: {}
+    },
+    hiddenFilter: {
+      type: Object,
+      default: {}
+    },
+    view: {
+      type: String,
+      default: 'result',
+      validator: value => ['invoice', 'result'].includes(value)
     }
   },
   data() {
@@ -100,9 +112,12 @@ export default {
   },
   computed: {
     query: function () {
-      const search = sanitizeSearchFilter({identifier: this.searchIdentifier, requisitionIdentifier: this.searchRequisitionIdentifier})
+      const search = sanitizeSearchFilter({
+        identifier: this.searchIdentifier,
+        requisitionIdentifier: this.searchRequisitionIdentifier
+      })
       const order = orderFilter(this.orders)
-      return {...this.filter, ...search, ...this.urlFilter, ...order}
+      return {...this.filter, ...search, ...this.urlFilter, ...this.hiddenFilter, ...order}
     },
     orderOfIdentifier: function () {
       return this.getOrder('identifier')
@@ -123,9 +138,11 @@ export default {
 .mw-15 {
   max-width: 15em;
 }
+
 .mw-20 {
   max-width: 20em;
 }
+
 .w-observations {
   width: 15em;
 }

@@ -33,17 +33,23 @@
     <td>
       {{ formatDate(probe.analysisStartDate) }}
     </td>
-    <td>
+    <td v-if="view === 'result'">
       <short-observation-badge
           class="d-inline-block me-1"
           v-for="observation in probe.observations" :key="observation['@id']"
           :observation="observation" :organisms="organisms"/>
     </td>
-    <td>
+    <td v-if="view === 'result'">
       <a class="btn btn-outline-secondary" :href="viewProbeLink">
         <i v-if="this.probe.finishedAt" class="fas fa-eye"></i>
         <i v-else class="fas fa-edit"></i>
       </a>
+    </td>
+    <td v-if="view === 'invoice'" class="whitespace-nowrap">
+      <invoice-probe-button v-if="!probe.invoiceStatus" :probe="probe" />
+      <p class="badge bg-success mb-0" v-if="probe.invoiceStatus === 'INVOICED'">
+        {{ $t("_view.invoice_created") }}
+      </p>
     </td>
   </tr>
 </template>
@@ -60,9 +66,10 @@ import {
 import {router} from "../../services/api";
 import LabeledValue from "../Library/View/LabeledValue.vue";
 import ShortObservationBadge from "./Observation/ShortObservationBadge.vue";
+import InvoiceProbeButton from "../Action/InvoiceProbeButton.vue";
 
 export default {
-  components: {ShortObservationBadge, LabeledValue},
+  components: {InvoiceProbeButton, ShortObservationBadge, LabeledValue},
   props: {
     probe: {
       type: Object,
@@ -76,6 +83,11 @@ export default {
       type: Array,
       required: true
     },
+    view: {
+      type: String,
+      default: 'result',
+      validator: value => ['invoice', 'result'].includes(value)
+    }
   },
   computed: {
     specimen: function () {
@@ -109,3 +121,9 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+</style>
