@@ -73,7 +73,11 @@ const restClient = {
       if (Array.isArray(query[key])) {
         query[key].forEach(value => fullUrl.searchParams.append(key + '[]', value))
       } else {
-        fullUrl.searchParams.append(key, query[key])
+        if (query[key] === null) {
+          fullUrl.searchParams.append("exists[" + key + "]", 0)
+        } else {
+          fullUrl.searchParams.append(key, query[key])
+        }
       }
     })
     return fullUrl.toString()
