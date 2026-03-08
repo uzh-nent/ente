@@ -56,6 +56,12 @@
                             {{ own_macros.nav_item(path('master_data_practitioners'), "practitioners.title"|trans({}, "master_data")) }}
                             {{ own_macros.nav_item(path('master_data_animal_keepers'), "animal_keepers.title"|trans({}, "master_data")) }}
                         </ul>
+
+                        <h4 class="mt-5">{{ "index.title"|trans({}, "invoice") }}</h4>
+                        <ul class="nav nav-pills flex-column">
+                            {{ own_macros.nav_item(path('invoice_new'), "new.title"|trans({}, "invoice")) }}
+                            {{ own_macros.nav_item(path('invoices'), "all.title"|trans({}, "invoice")) }}
+                        </ul>
                     </div>
 
                     <div id="admin-nav" {% if not is_admin %}class="d-none"{% endif %}>

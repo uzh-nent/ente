@@ -1,0 +1,10 @@
+index:
+  title: 'Rechnungen'
+
+new:
+    title: "Neue Rechnung"
+    description: "Neue Rechnung erstellen"
+
+all:
+  title: 'Alle Rechnungen'
+  description: 'Verzeichnis der erstellen Rechnungen'
