@@ -26,6 +26,7 @@ use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
+use App\Enum\InvoiceReceiver;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -34,7 +35,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     processor: InvoiceProcessor::class,
-    denormalizationContext: ['groups' => ['comment:write', 'report:write']],
+    denormalizationContext: ['groups' => ['comment:write', 'invoice:write']],
     normalizationContext: ['groups' => ['time:read', 'attribution:read', 'comment:read', 'invoice:read', 'probe:read']],
 )]
 #[Get]
@@ -59,12 +60,12 @@ class Invoice
     #[Groups(['invoice:read', 'invoice:write'])]
     private ?\DateTimeImmutable $date = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups(['invoice:read', 'invoice:write'])]
-    private ?string $address = "";
+    #[ORM\Column(type: Types::STRING, enumType: InvoiceReceiver::class, nullable: true)]
+    #[Groups(['probe:read', 'invoice:write'])]
+    private ?InvoiceReceiver $receiver = null;
 
     /**
-     * @var array<array{'tarif': ?string, 'alPosition'?: ?string, 'tp': ?float, 'tpw'?: ?float}>|null
+     * @var null|array<array{'service': ?string, 'tarif': ?string, 'position'?: ?string, 'tp': ?float, 'tpw'?: ?float}>
      */
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['invoice:read', 'invoice:write'])]
@@ -98,14 +99,14 @@ class Invoice
         $this->date = $date;
     }
 
-    public function getAddress(): ?string
+    public function getReceiver(): ?InvoiceReceiver
     {
-        return $this->address;
+        return $this->receiver;
     }
 
-    public function setAddress(?string $address): void
+    public function setReceiver(?InvoiceReceiver $receiver): void
     {
-        $this->address = $address;
+        $this->receiver = $receiver;
     }
 
     public function getLineItems(): ?array

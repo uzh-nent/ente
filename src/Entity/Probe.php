@@ -55,11 +55,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: [
     'identifier' => SearchFilterInterface::STRATEGY_IPARTIAL, 'requisitionIdentifier' => SearchFilterInterface::STRATEGY_IPARTIAL,
-    'pathogen' => SearchFilterInterface::STRATEGY_EXACT, 'pathogenName' => SearchFilterInterface::STRATEGY_IPARTIAL, 'laboratoryFunction' => SearchFilterInterface::STRATEGY_EXACT,
+    'pathogen' => SearchFilterInterface::STRATEGY_EXACT, 'pathogenName' => SearchFilterInterface::STRATEGY_IPARTIAL, 'laboratoryFunction' => SearchFilterInterface::STRATEGY_EXACT, 'specimenSource' => SearchFilterInterface::STRATEGY_EXACT,
     'ordererOrg' => SearchFilterInterface::STRATEGY_EXACT, 'ordererPrac' => SearchFilterInterface::STRATEGY_EXACT, 'patient' => SearchFilterInterface::STRATEGY_EXACT, 'animalKeeper' => SearchFilterInterface::STRATEGY_EXACT,
 ])]
 #[ApiFilter(DateFilter::class, properties: ['analysisStartDate'])]
-#[ApiFilter(ExistsFilter::class, properties: ['finishedAt', 'invoiceStatus'])]
+#[ApiFilter(ExistsFilter::class, properties: ['finishedAt', "specimenSource", 'invoiceStatus'])]
 #[ApiFilter(OrderFilter::class, properties: ['identifier'])]
 class Probe
 {
@@ -100,6 +100,16 @@ class Probe
     public function setIdentifier(string $identifier): void
     {
         $this->identifier = $identifier;
+    }
+
+    public function getInvoiceStatus(): ?InvoiceStatus
+    {
+        return $this->invoiceStatus;
+    }
+
+    public function setInvoiceStatus(?InvoiceStatus $invoiceStatus): void
+    {
+        $this->invoiceStatus = $invoiceStatus;
     }
 
     public function getReceivedDate(): ?\DateTimeImmutable
