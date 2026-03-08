@@ -87,9 +87,17 @@ class Probe
     #[ORM\OneToMany(targetEntity: Observation::class, mappedBy: 'probe', cascade: ['persist'])]
     private Collection $observations;
 
+    /**
+     * @var Collection<int, Invoice>
+     */
+    #[Groups(['probe:collections'])]
+    #[ORM\OneToMany(targetEntity: Invoice::class, mappedBy: 'probe', cascade: ['persist'])]
+    private Collection $invoices;
+
     public function __construct()
     {
         $this->observations = new ArrayCollection();
+        $this->invoices = new ArrayCollection();
     }
 
     public function getIdentifier(): string
@@ -138,5 +146,13 @@ class Probe
     public function getObservations(): Collection
     {
         return $this->observations;
+    }
+
+    /**
+     * @return Collection<int, Invoice>
+     */
+    public function getInvoices(): Collection
+    {
+        return $this->invoices;
     }
 }

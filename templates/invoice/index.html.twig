@@ -1,14 +1,14 @@
 {% extends '_layout.html.twig' %}
 
-{% block title %}{{ 'new.title'|trans }}{% endblock %}
-{% block description %}{{ 'new.description'|trans }}{% endblock %}
+{% block title %}{{ 'index.title'|trans }}{% endblock %}
+{% block description %}{{ 'index.description'|trans }}{% endblock %}
 
 {% trans_default_domain "invoice" %}
 {% import "macros/components.html.twig" as components %}
 
 {% block content %}
-    <h1>{{ 'new.title'|trans }}</h1>
+    <h1>{{ 'index.title'|trans }}</h1>
 
     <script src="{{ url('probe_all_js') }}"></script>
-    {{ components.vue_entry_point('vue-invoice-new') }}
+    {{ components.vue_entry_point('vue-invoice') }}
 {% endblock %}

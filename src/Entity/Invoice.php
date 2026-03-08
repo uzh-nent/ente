@@ -18,6 +18,7 @@ use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
@@ -40,6 +41,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 )]
 #[Get]
 #[Post]
+#[Delete]
 #[GetCollection]
 #[ApiFilter(SearchFilter::class, properties: ['probe' => SearchFilterInterface::STRATEGY_EXACT, 'date' => SearchFilterInterface::STRATEGY_EXACT])]
 #[ApiFilter(OrderFilter::class, properties: ['date'])]
@@ -51,7 +53,7 @@ class Invoice
     use AttributionTrait;
     use TimeTrait;
 
-    #[ORM\ManyToOne(targetEntity: Probe::class)]
+    #[ORM\ManyToOne(targetEntity: Probe::class, inversedBy: 'invoices')]
     #[ApiProperty(readableLink: false, writableLink: false)]
     #[Groups(['invoice:read', 'invoice:write'])]
     private ?Probe $probe = null;
@@ -61,7 +63,7 @@ class Invoice
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column(type: Types::STRING, enumType: InvoiceReceiver::class, nullable: true)]
-    #[Groups(['probe:read', 'invoice:write'])]
+    #[Groups(['invoice:read', 'invoice:write'])]
     private ?InvoiceReceiver $receiver = null;
 
     /**

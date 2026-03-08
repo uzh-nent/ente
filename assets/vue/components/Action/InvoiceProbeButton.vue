@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     canConfirm: function () {
-      return this.invoiceMeta && this.lineItems.length > 0
+      return this.invoiceMeta && this.lineItems.length > 0 && this.shownLineItems.every(index => !!this.lineItems[index])
     },
     invoiceMetaTemplate: function () {
       return {date: moment().format('YYYY-MM-DD')}

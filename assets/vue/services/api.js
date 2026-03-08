@@ -116,7 +116,10 @@ const restClient = {
     const normalizedPatch = this._normalizePayload(patch)
     const response = await axios.patch(instance['@id'], normalizedPatch, {headers: {'Content-Type': 'application/merge-patch+json'}})
     this._writeAllProperties(instance, normalizedPatch, response.data)
-  }
+  },
+  delete: async function (instance) {
+    await axios.delete(instance['@id'])
+  },
 }
 
 restClient.setupErrorNotifications()
@@ -192,6 +195,9 @@ const api = {
   },
   patch: function (instance, patch) {
     return restClient.patch(instance, patch)
+  },
+  delete: function (instance) {
+    return restClient.delete(instance)
   },
   getPaginatedProbes: function (query) {
     query['collections'] = 1

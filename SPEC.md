@@ -118,4 +118,4 @@ features v?:
 - improve reference data: allow single reference to be in multiple collections, then prevent double storage
 - track analysis, not result (e.g., STEC E. coli Stx1, Stx2 separate tracking); possibly track more analysis results from the Laborblatt
 - improve ELM api integration (sync value sets, add patient reporting type such as anonymous (for new pathogens) or initials (campylobacter) to leading codes, add current location of patient)
-
+- invoice runs for more safety during invoicing (e.g., no probe is forgotten to invoice), to safely invoice many probes

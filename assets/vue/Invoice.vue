@@ -1,5 +1,5 @@
 <template>
-  <probe-table :organisms="organisms" :specimens="specimens" :hidden-filter="invoicableProbesFilter" view="invoice" />
+  <probe-table :organisms="organisms" :specimens="specimens" view="invoice" />
 </template>
 
 <script>
@@ -17,13 +17,6 @@ export default {
       organisms: undefined,
       specimens: undefined,
     }
-  },
-  computed: {
-    invoicableProbesFilter: function () {
-      return {
-        invoiceStatus: null,
-      }
-    },
   },
   beforeMount() {
     const {organisms,specimens} = preloadApi.getAllProbes()

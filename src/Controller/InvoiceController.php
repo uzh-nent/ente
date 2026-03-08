@@ -14,15 +14,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class InvoiceController extends AbstractController
 {
-    #[Route('/invoice/new', name: 'invoice_new')]
+    #[Route('/invoices', name: 'invoice_index')]
     public function new(): Response
     {
-        return $this->render('invoice/new.html.twig');
-    }
-
-    #[Route('/invoices', name: 'invoices')]
-    public function all(): Response
-    {
-        return $this->render('invoice/all.html.twig');
+        return $this->render('invoice/index.html.twig');
     }
 }

@@ -59,8 +59,7 @@
 
                         <h4 class="mt-5">{{ "index.title"|trans({}, "invoice") }}</h4>
                         <ul class="nav nav-pills flex-column">
-                            {{ own_macros.nav_item(path('invoice_new'), "new.title"|trans({}, "invoice")) }}
-                            {{ own_macros.nav_item(path('invoices'), "all.title"|trans({}, "invoice")) }}
+                            {{ own_macros.nav_item(path('invoice_index'), "index.title"|trans({}, "invoice")) }}
                         </ul>
                     </div>
 
