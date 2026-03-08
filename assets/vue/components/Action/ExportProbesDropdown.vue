@@ -37,6 +37,7 @@ import LoopingRhombusSpinner from '../Library/View/Base/LoopingRhombusSpinner.vu
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import AnimalKeeperForm from "../Form/AnimalKeeperForm.vue";
 import moment from "moment/moment";
+import {downloadFile, excelMimeType} from "./utils/download";
 
 export default {
   props: {
@@ -64,16 +65,7 @@ export default {
       this.downloading = true;
 
       const response = await api.getProbesExcel(filter)
-      const blob = new Blob([response],  {
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      })
-
-      const downloadUrl = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = downloadUrl
-      link.download = 'worksheet.xlsx'
-      link.click()
-      window.URL.revokeObjectURL(downloadUrl)
+      await downloadFile(response, excelMimeType, 'export.xlsx')
 
       this.downloading = false;
     }
