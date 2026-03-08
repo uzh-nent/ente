@@ -60,9 +60,14 @@ ELM:
 - In case submission over ELM fails, need to submit over https://web.em.bag.admin.ch/. In case submission was wrong and needs to be corrected, can contact BAG over [HIN E-Mail](mailto:infreport@hin.ch).
 - From the patient, reported are given name, family name, administrative gender, address, birthDate, ahv-number. For cholerae, additionally the phone is reported.
 
-ENTE design decisions:
-- probe is for a single strain under a single function. So when shifting from primary to reference laboratory function, or when multiple strains are contained in a single probe, then multiple entries for the same probe is created.
+Invoicing:
+- Invoiced are only primary probes, according to the [BAG Tarif 317 (Analyseliste)](https://www.bag.admin.ch/de/analysenliste-al)
+- Invoice sending and payment cycles are managed externally, hence only an export with the invoice data is needed.
+- After payment, the application generates a Rückforderungsbeleg on request.
 
+ENTE design decisions:
+- Probe is for a single strain under a single function. So when shifting from primary to reference laboratory function, or when multiple strains are contained in a single probe, then multiple entries for the same probe is created.
+- Master data is stored inside the probe records, so that it can mutate independently. Utils are provided to help syncing this data, if the user chooses to do so.
 
 ## Datenverwaltung
 
@@ -98,6 +103,7 @@ questions:
 - for all primary probes, append (PCR) in PDF report, or only for E.coli?
 - stx1/2 not added, too much confusing UX (e.g., in invoicing)
 - export: patient address useful why?
+- tarif position with .10 if reduced rate, correct?
 
 still TODO:
 - invoicing:
