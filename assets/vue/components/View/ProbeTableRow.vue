@@ -46,9 +46,15 @@
       </a>
     </td>
     <td v-if="view === 'invoice'" class="whitespace-nowrap">
-      <invoice-probe-button v-if="!probe.invoiceStatus" :probe="probe" />
+      <span class="btn-group" v-if="!probe.invoiceStatus">
+        <invoice-probe-button :probe="probe"/>
+        <ignore-invociable-probe-button :probe="probe"/>
+      </span>
       <p class="badge bg-success mb-0" v-if="probe.invoiceStatus === 'INVOICED'">
         {{ $t("_view.invoice_created") }}
+      </p>
+      <p class="badge bg-warning mb-0" v-if="probe.invoiceStatus === 'IGNORED'">
+        {{ $t("_view.probe_ignored") }}
       </p>
     </td>
   </tr>
@@ -67,9 +73,10 @@ import {router} from "../../services/api";
 import LabeledValue from "../Library/View/LabeledValue.vue";
 import ShortObservationBadge from "./Observation/ShortObservationBadge.vue";
 import InvoiceProbeButton from "../Action/InvoiceProbeButton.vue";
+import IgnoreInvociableProbeButton from "../Action/IgnoreInvociableProbeButton.vue";
 
 export default {
-  components: {InvoiceProbeButton, ShortObservationBadge, LabeledValue},
+  components: {IgnoreInvociableProbeButton, InvoiceProbeButton, ShortObservationBadge, LabeledValue},
   props: {
     probe: {
       type: Object,
