@@ -8,6 +8,7 @@ use App\Services\Interfaces\ExportServiceInterface;
 use App\Services\Interfaces\InvoiceServiceInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,25 +21,10 @@ readonly class InvoiceService implements InvoiceServiceInterface
 
     public function invoicePatients(\DateTimeImmutable $from, \DateTimeImmutable $to): Response
     {
-        /** @var Invoice[] $invoices */
-        $invoices = $this->managerRegistry
-            ->getRepository(Invoice::class)
-            ->createQueryBuilder('i')
-            ->andWhere('i.date IS NOT NULL')
-            ->andWhere('i.date >= :from')
-            ->andWhere('i.date <= :to')
-            ->andWhere('i.receiver = :receiver')
-            ->setParameter('from', $from)
-            ->setParameter('to', $to)
-            ->setParameter('receiver', InvoiceReceiver::PATIENT->value)
-            ->orderBy('i.date', 'ASC')
-            ->getQuery()
-            ->getResult();
+        $invoices = $this->findInvoices($from, $to, InvoiceReceiver::PATIENT);
 
         $fullPath = __DIR__ . "/../../assets/resources/invoice/invoice_patients_template.xlsx";
-        $reader = IOFactory::createReaderForFile($fullPath);
-
-        $spreadsheet = $reader->load($fullPath);
+        $spreadsheet = $this->readSpreadsheet($fullPath);
 
         $templateSheet = $spreadsheet->getSheet(0);
         $summarySheet = $spreadsheet->getSheet($spreadsheet->getSheetCount() - 1);
@@ -65,6 +51,85 @@ readonly class InvoiceService implements InvoiceServiceInterface
         return $this->exportService->createExcelResponse($writer, "invoices_patients.xlsx");
     }
 
+
+    public function invoiceOrderers(\DateTimeImmutable $from, \DateTimeImmutable $to): Response
+    {
+        $invoices = $this->findInvoices($from, $to, InvoiceReceiver::ORDERER);
+        $invoicesPerOrderer = [];
+        foreach ($invoices as $invoice) {
+            $probe = $invoice->getProbe();
+            if (!$probe) {
+                continue;
+            }
+
+            $address = $invoice->getAddress();
+            $ordererFullAddress = $probe->getOrdererOrg() ? $probe->getOrdererOrgFullAddress() : $probe->getOrdererPracFullAddress();
+            $key = $address . "DIVIDER" . $ordererFullAddress;
+            if (!isset($invoicesPerOrderer[$key])) {
+                $invoicesPerOrderer[$key] = [];
+            }
+
+            $invoicesPerOrderer[$key][] = $invoice;
+        }
+
+        $fullPath = __DIR__ . "/../../assets/resources/invoice/invoice_orderers_template.xlsx";
+        $spreadsheet = $this->readSpreadsheet($fullPath);
+
+        $templateSheet = $spreadsheet->getSheet(0);
+        $summarySheet = $spreadsheet->getSheet($spreadsheet->getSheetCount() - 1);
+
+        $period = $from->format('d.m.Y') . ' - ' . $to->format('d.m.Y');
+        $summaryRows = [];
+        $fullTotal = 0.0;
+        foreach ($invoicesPerOrderer as $invoices) {
+            $firstInvoice = $invoices[0] ?? null;
+            if (!$firstInvoice) {
+                continue;
+            }
+
+            $firstProbe = $firstInvoice?->getProbe();
+            if (!$firstProbe) {
+                continue;
+            }
+
+            $ordererShortAddress = $firstProbe->getOrdererOrg() ? $firstProbe->getOrdererOrgShortAddress() : $firstProbe->getOrdererPracShortAddress();
+
+            $invoiceSheet = clone $templateSheet;
+            $invoiceSheet->setTitle($ordererShortAddress);
+            $spreadsheet->addSheet($invoiceSheet, 1);
+
+            $invoiceTotal = $this->fillOrdererInvoiceSheet($invoiceSheet, $invoices, $period);
+            $summaryRows[] = [$ordererShortAddress, $firstInvoice->getAddress(), $invoiceTotal];
+            $fullTotal += $invoiceTotal;
+        }
+
+        $this->fillOrdererSummarySheet($summarySheet, array_reverse($summaryRows), $fullTotal, $period);
+        $spreadsheet->removeSheetByIndex(0);
+
+        $writer = IOFactory::createWriter($spreadsheet, IOFactory::WRITER_XLSX);
+        return $this->exportService->createExcelResponse($writer, "invoices_orderers.xlsx");
+    }
+
+    /**
+     * @return Invoice[]
+     */
+    private function findInvoices(\DateTimeImmutable $from, \DateTimeImmutable $to, InvoiceReceiver $receiver): array
+    {
+        return $this->managerRegistry
+            ->getRepository(Invoice::class)
+            ->createQueryBuilder('i')
+            ->andWhere('i.date IS NOT NULL')
+            ->andWhere('i.date >= :from')
+            ->andWhere('i.date <= :to')
+            ->andWhere('i.receiver = :receiver')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->setParameter('receiver', InvoiceReceiver::PATIENT->value)
+            ->orderBy('i.date', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     private function fillInvoiceSheet(Worksheet $invoiceSheet, Invoice $invoice, string $period): float
     {
         $invoiceSheet->setCellValue('C1', (new \DateTimeImmutable())->format('d.m.Y'));
@@ -76,8 +141,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
         }
 
         $ordererFullAddress = $probe->getOrdererOrg() ? $probe->getOrdererOrgFullAddress() : $probe->getOrdererPracFullAddress();
-        $receiverFullAddress = $invoice->getReceiver() === InvoiceReceiver::PATIENT ? $probe->getPatientFullAddress() : $ordererFullAddress;
-        $invoiceSheet->setCellValue('A4', $receiverFullAddress);
+        $invoiceSheet->setCellValue('A4', $invoice->getAddress());
         $invoiceSheet->setCellValue('E4', $ordererFullAddress);
 
         $invoiceSheet->setCellValue('B6', $probe->getPatientBirthDate()?->format('d.m.Y'));
@@ -108,6 +172,92 @@ readonly class InvoiceService implements InvoiceServiceInterface
         return $totalAmount;
     }
 
+    /**
+     * @param Worksheet $invoiceSheet
+     * @param Invoice[] $invoices
+     * @param string $period
+     * @return float
+     */
+    private function fillOrdererInvoiceSheet(Worksheet $invoiceSheet, array $invoices, string $period): float
+    {
+        $invoiceSheet->setCellValue('E1', "Periode: " . $period);
+
+        $firstInvoice = $invoices[0] ?? null;
+        if (!$firstInvoice) {
+            return 0.0;
+        }
+
+        $firstProbe = $firstInvoice->getProbe();
+        if (!$firstProbe) {
+            return 0.0;
+        }
+
+        $ordererFullAddress = $firstProbe->getOrdererOrg() ? $firstProbe->getOrdererOrgFullAddress() : $firstProbe->getOrdererPracFullAddress();
+        $invoiceSheet->setCellValue('A1', "Auftraggeber:\n" . $ordererFullAddress);
+        $invoiceSheet->setCellValue('H1', "Rechnungsaddresse:\n" . $firstInvoice->getAddress());
+
+        $totalTP = 0.0;
+        $totalAmount = 0.0;
+        foreach ($invoices as $invoice) {
+            foreach ($invoice->getLineItems() as $lineItem) {
+                $totalTP += $lineItem['tp'];
+                $totalAmount += $lineItem['tp'] * $lineItem['tpw'];
+            }
+        }
+        $invoiceSheet->setCellValue('I5', $totalTP);
+        $invoiceSheet->setCellValue('J5', $totalAmount);
+        self::setAmountCellStyle($invoiceSheet, 'J5');
+
+        foreach (array_reverse($invoices) as $invoice) {
+            $invoiceSheet->insertNewRowBefore(4);
+            $probe = $invoice->getProbe();
+            if (!$probe) {
+                continue;
+            }
+
+            $invoiceSheet->setCellValue('A4', $probe->getIdentifier());
+            $invoiceSheet->setCellValue('B4', $probe->getRequisitionIdentifier());
+            $invoiceSheet->setCellValue('C4', $probe->getSpecimenCollectionDate()?->format('d.m.Y'));
+            $invoiceSheet->setCellValue('D4', $probe->getPatientFamilyName() . ", " . $probe->getPatientFamilyName());
+            $invoiceSheet->setCellValue('E4', $probe->getPatientBirthDate()?->format('d.m.Y'));
+
+            if (count($invoice->getLineItems()) === 1) {
+                $lineItem = $invoice->getLineItems()[0];
+                $invoiceSheet->setCellValue('F4', $lineItem['tarif']);
+                $invoiceSheet->setCellValue('G4', $lineItem['position']);
+                $invoiceSheet->setCellValue('H4', $lineItem['service']);
+                $invoiceSheet->setCellValue('I4', " " . $lineItem['tp']);
+                $invoiceSheet->setCellValue('J4', $lineItem['tp'] * $lineItem['tpw']);
+                self::setAmountCellStyle($invoiceSheet, 'J4');
+                continue;
+            }
+
+            // add total row
+            $totalPatientTP = 0.0;
+            $totalPatientAmount = 0.0;
+            foreach ($invoice->getLineItems() as $lineItem) {
+                $totalPatientTP += $lineItem['tp'];
+                $totalPatientAmount += $lineItem['tp'] * $lineItem['tpw'];
+            }
+            $invoiceSheet->setCellValue('H4', "Subtotal");
+            $invoiceSheet->setCellValue('I4', " " . $totalPatientTP);
+            $invoiceSheet->setCellValue('J4', $totalPatientAmount);
+
+            foreach (array_reverse($invoice->getLineItems()) as $lineItem) {
+                $invoiceSheet->insertNewRowBefore(5);
+
+                $invoiceSheet->setCellValue('F5', $lineItem['tarif']);
+                $invoiceSheet->setCellValue('G5', $lineItem['position']);
+                $invoiceSheet->setCellValue('H5', $lineItem['service']);
+                $invoiceSheet->setCellValue('I5', " " . $lineItem['tp']);
+                $invoiceSheet->setCellValue('J5', $lineItem['tp'] * $lineItem['tpw']);
+                self::setAmountCellStyle($invoiceSheet, 'J5');
+            }
+        }
+
+        return $totalAmount;
+    }
+
     private function fillSummarySheet(Worksheet $summarySheet, array $summaryRows, float $fullTotal, string $period): void
     {
         $summarySheet->setCellValue('D5', $fullTotal);
@@ -124,8 +274,31 @@ readonly class InvoiceService implements InvoiceServiceInterface
         }
     }
 
+    private function fillOrdererSummarySheet(Worksheet $summarySheet, array $summaryRows, float $fullTotal, string $period): void
+    {
+        $summarySheet->setCellValue('D5', $fullTotal);
+        self::setAmountCellStyle($summarySheet, 'D5');
+
+        $summarySheet->setCellValue('D1', "Periode: " . $period);
+
+        foreach (array_reverse($summaryRows) as $summaryRow) {
+            $summarySheet->insertNewRowBefore(4);
+            $summarySheet->setCellValue('A4', $summaryRow[0]);
+            $summarySheet->setCellValue('B4', $summaryRow[1]);
+            $summarySheet->setCellValue('C4', $summaryRow[2]);
+            self::setAmountCellStyle($summarySheet, 'C4');
+        }
+    }
+
     private static function setAmountCellStyle(Worksheet $worksheet, string $cellCoordinate): void
     {
         $worksheet->getStyle($cellCoordinate)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
+    }
+
+    public function readSpreadsheet(string $fullPath): Spreadsheet
+    {
+        $reader = IOFactory::createReaderForFile($fullPath);
+
+        return $reader->load($fullPath);
     }
 }

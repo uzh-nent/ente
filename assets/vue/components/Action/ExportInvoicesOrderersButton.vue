@@ -1,6 +1,6 @@
 <template>
   <button-confirm-modal
-    :title="$t('_action.export_patient_invoices.title')" icon="fas fa-download"
+    :title="$t('_action.export_orderers_invoices.title')" icon="fas fa-download"
     :confirm-label="$t('_action.download')" :can-confirm="canConfirm" :confirm="confirm"
     @showing="focusPeriod">
     <period-form :template="extendedTemplate" @update="period = $event" />
@@ -29,8 +29,8 @@ export default {
   mixins: [periodExport],
   methods: {
     confirm: async function () {
-      const response = await api.getInvoicesPatientsExcel(this.payload)
-      await downloadFile(response, excelMimeType, 'invoices-patients.xlsx')
+      const response = await api.getInvoicesOrderersExcel(this.payload)
+      await downloadFile(response, excelMimeType, 'invoices-orderers.xlsx')
     },
   }
 }

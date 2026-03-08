@@ -194,6 +194,10 @@ const api = {
     const url = restClient._getFullUrl('/invoices/patients', query)
     return restClient.getExcel(url)
   },
+  getInvoicesOrderersExcel: function (query) {
+    const url = restClient._getFullUrl('/invoices/orderers', query)
+    return restClient.getExcel(url)
+  },
   poll: function (entity) {
     return restClient.poll(entity)
   },
