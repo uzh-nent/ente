@@ -16,6 +16,7 @@
     "use_reference": "Stammdaten übertragen",
     "store_reference": "Stammdaten aktualisieren",
     "unlink_reference": "Entfernen",
+    "period": "Periode",
     "timeFilter": {
       "from": "Von",
       "until": "Bis"
@@ -144,6 +145,9 @@
       "export_pre_2025_p": "P pre-2025",
       "export_pre_2025_n": "N pre-2025"
     },
+    "export_patient_invoices": {
+      "title": "Patientenrechnungen"
+    },
     "download_probe_worksheet": {
       "download": "Arbeitsblatt herunterladen"
     },
@@ -184,6 +188,7 @@
     "add": "hinzufügen",
     "ignore": "ignorieren",
     "edit": "speichern",
+    "download": "herunterladen",
     "remove": "entfernen",
     "set_filter": "Filter setzen",
     "reset_filter": "Filter zurücksetzen",

@@ -14,7 +14,12 @@
                      :placeholder="$t('_view.search_by_requisition_identifier')"
                      v-model="searchRequisitionIdentifier">
               <url-filter-probe-view :url-filter="urlFilter"/>
-              <export-probes-dropdown class="ms-auto" :filter="filter" v-if="view === 'result'"/>
+              <div v-if="view === 'result'" class="ms-auto">
+                <export-probes-dropdown  :filter="filter"/>
+              </div>
+              <div v-if="view === 'invoice'" class="ms-auto">
+                <export-invoices-patients-button />
+              </div>
             </div>
           </th>
         </tr>
@@ -61,9 +66,11 @@ import ProbeTableRow from "./ProbeTableRow.vue";
 import FilterProbeButton from "../Action/FilterProbeButton.vue";
 import UrlFilterProbeView from "./Probe/UrlFilterProbeView.vue";
 import ExportProbesDropdown from "../Action/ExportProbesDropdown.vue";
+import ExportInvoicesPatientsButton from "../Action/ExportInvoicesPatientsButton.vue";
 
 export default {
   components: {
+    ExportInvoicesPatientsButton,
     ExportProbesDropdown,
     UrlFilterProbeView,
     FilterProbeButton,
