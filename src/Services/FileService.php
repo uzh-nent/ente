@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Enum\LaboratoryFunction;
 use App\Services\Interfaces\FileServiceInterface;
 
-class FileService implements FileServiceInterface
+readonly class FileService implements FileServiceInterface
 {
     private string $persistentFilesDir;
 

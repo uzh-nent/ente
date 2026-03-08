@@ -234,4 +234,9 @@ trait PatientCopy
             $countryPrefix . $city
         ]));
     }
+
+    public function getPatientFullAddress(): string
+    {
+        return $this->getPatientFullName() . "\n" . $this->getPatientAddress();
+    }
 }

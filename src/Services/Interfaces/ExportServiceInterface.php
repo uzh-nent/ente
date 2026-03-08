@@ -2,7 +2,9 @@
 
 namespace App\Services\Interfaces;
 
+use PhpOffice\PhpSpreadsheet\Writer\IWriter;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 interface ExportServiceInterface
 {
@@ -12,4 +14,5 @@ interface ExportServiceInterface
      * @param string[][] $content
      */
     public function exportAsExcel(string $filename, array $header, array $content): Response;
+    public function createExcelResponse(IWriter $writer, string $filename): StreamedResponse;
 }
