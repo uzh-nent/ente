@@ -9,7 +9,7 @@ use PhpOffice\PhpSpreadsheet\Writer\IWriter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class ExportService implements ExportServiceInterface
+readonly class ExportService implements ExportServiceInterface
 {
     public function exportAsExcel(string $filename, array $header, array $content): Response
     {
@@ -31,10 +31,10 @@ class ExportService implements ExportServiceInterface
 
         $writer = IOFactory::createWriter($spreadsheet, IOFactory::WRITER_XLSX);
 
-        return $this->createResponse($writer, $filename);
+        return $this->createExcelResponse($writer, $filename);
     }
 
-    public function createResponse(IWriter $writer, string $filename): StreamedResponse
+    public function createExcelResponse(IWriter $writer, string $filename): StreamedResponse
     {
         $response = new StreamedResponse(
             function () use ($writer) {

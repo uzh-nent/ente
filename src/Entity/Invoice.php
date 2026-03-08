@@ -111,6 +111,9 @@ class Invoice
         $this->receiver = $receiver;
     }
 
+    /**
+     * @return null|array<array{'service': ?string, 'tarif': ?string, 'position'?: ?string, 'tp': ?float, 'tpw'?: ?float}
+     */
     public function getLineItems(): ?array
     {
         return $this->lineItems;
