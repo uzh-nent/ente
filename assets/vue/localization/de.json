@@ -149,8 +149,11 @@
     },
     "ignore_invoicable_probe": {
       "title": "Probe ignorieren",
-      "help": "Die Probe für die Rechnungstellung ignorieren. Diese wird dann ausgeblendet, wenn nach zu verrechneten Proben gesucht wird.",
+      "help": "Die Probe für die Rechnungstellung ignorieren.",
       "ignored": "Probe ignoriert."
+    },
+    "reset_invoicable_probe": {
+      "reset": "Probe zurückgesetzt"
     },
     "toggle_finished": {
       "finish": "Abschliessen",
@@ -172,6 +175,11 @@
     },
     "filter_probe": {
       "title": "Proben filtern"
+    },
+    "remove_invoice": {
+      "title": "Rechnung entfernen",
+      "help": "Die Rechnung wird entfernt. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "removed": "Rechnung entfernt."
     },
     "add": "hinzufügen",
     "ignore": "ignorieren",
@@ -195,7 +203,7 @@
   },
   "_view": {
     "filter_yields_no_entries": "Keine Einträge, die dem Filter entsprechen.",
-    "filter_yields_no_entries_invoicable_probes": "Keine zu verrechnende Proben, die dem Filter entsprechen.",
+    "filter_yields_no_entries_invoicable_probes": "Keine zu verrechnenden Proben, die dem Filter entsprechen.",
     "search_by_name": "Suche nach Name",
     "search_by_text": "Suche nach Text",
     "search_by_family_name": "Suche nach Nachname",
@@ -207,8 +215,8 @@
     "search_by_identifier": "Suche nach Probe",
     "search_by_requisition_identifier": "Suche nach Probe-Referenz",
     "no_medical_validation": "Keine medizinische Validierung.",
-    "invoice_created": "Rechnung erstellt.",
-    "probe_ignored": "Probe ignoriert.",
+    "invoice_created": "Rechnung erstellt",
+    "probe_ignored": "Probe ignoriert",
     "from": "Von",
     "until": "Bis",
     "probe_navigation": {

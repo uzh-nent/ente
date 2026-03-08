@@ -46,16 +46,22 @@
       </a>
     </td>
     <td v-if="view === 'invoice'" class="whitespace-nowrap">
-      <span class="btn-group" v-if="!probe.invoiceStatus">
-        <invoice-probe-button :probe="probe"/>
+      <div class="btn-group" v-for="invoice in probe.invoices" :key="invoice['@id']">
+        <span class="mb-0 btn border">
+          {{ formatDate(invoice.date) }}
+        </span>
+        <remove-invoice-button :invoice="invoice" @removed="probe.invoices = probe.invoices.filter(i => i['@id'] !== invoice['@id'])"/>
+      </div>
+      <div class="btn-group" v-if="probe.invoiceStatus === 'IGNORED'">
+        <span class="mb-0 btn border">
+          {{ $t("_view.probe_ignored") }}
+        </span>
+        <reset-invoicable-probe-button :probe="probe"/>
+      </div>
+      <span class="btn-group" v-else-if="probe.invoices.length === 0">
+        <invoice-probe-button :probe="probe" @added="probe.invoices.push($event)"/>
         <ignore-invociable-probe-button :probe="probe"/>
       </span>
-      <p class="badge bg-success mb-0" v-if="probe.invoiceStatus === 'INVOICED'">
-        {{ $t("_view.invoice_created") }}
-      </p>
-      <p class="badge bg-warning mb-0" v-if="probe.invoiceStatus === 'IGNORED'">
-        {{ $t("_view.probe_ignored") }}
-      </p>
     </td>
   </tr>
 </template>
@@ -69,14 +75,21 @@ import {
   formatOrganizationShort, formatPatientName, formatPatientShort,
   formatProbeService, formatSpecimenSourceText
 } from "../../services/domain/formatter";
-import {router} from "../../services/api";
+import {api, router} from "../../services/api";
 import LabeledValue from "../Library/View/LabeledValue.vue";
 import ShortObservationBadge from "./Observation/ShortObservationBadge.vue";
 import InvoiceProbeButton from "../Action/InvoiceProbeButton.vue";
 import IgnoreInvociableProbeButton from "../Action/IgnoreInvociableProbeButton.vue";
+import {displaySuccess} from "../../services/notifiers";
+import ResetInvoicableProbeButton from "../Action/ResetInvoicableProbeButton.vue";
+import RemoveInvoiceButton from "../Action/RemoveInvoiceButton.vue";
 
 export default {
-  components: {IgnoreInvociableProbeButton, InvoiceProbeButton, ShortObservationBadge, LabeledValue},
+  components: {
+    RemoveInvoiceButton,
+    ResetInvoicableProbeButton,
+    IgnoreInvociableProbeButton, InvoiceProbeButton, ShortObservationBadge, LabeledValue
+  },
   props: {
     probe: {
       type: Object,
@@ -123,7 +136,6 @@ export default {
     formatDate,
     formatSpecimenSourceText,
     formatPatientName,
-    formatDateTime,
   }
 }
 

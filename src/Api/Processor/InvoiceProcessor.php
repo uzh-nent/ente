@@ -2,6 +2,7 @@
 
 namespace App\Api\Processor;
 
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\State\ProcessorInterface;
@@ -25,6 +26,8 @@ readonly class InvoiceProcessor implements ProcessorInterface
     public function __construct(
         #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
         private ProcessorInterface $persistProcessor,
+        #[Autowire(service: 'api_platform.doctrine.orm.state.remove_processor')]
+        private ProcessorInterface $removeProcessor,
         private TokenStorageInterface $tokenStorage,
         private PdfServiceInterface $pdfService,
         private FileServiceInterface $fileService,
@@ -37,6 +40,10 @@ readonly class InvoiceProcessor implements ProcessorInterface
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
+        if ($operation instanceof Delete) {
+            return $this->removeProcessor->process($data, $operation, $uriVariables, $context);
+        }
+
         /** @var User $user */
         $user = $this->tokenStorage->getToken()->getUser();
         $data->attribute($user);
