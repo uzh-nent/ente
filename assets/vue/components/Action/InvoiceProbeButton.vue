@@ -77,7 +77,7 @@ export default {
       }).filter((_, index) => this.shownLineItems.includes(index))
     },
     payload: function () {
-      const payload = {...this.invoiceMetaTemplate, probe: this.probe['@id']}
+      const payload = {...this.invoiceMetaTemplate, ...this.invoiceMeta, probe: this.probe['@id']}
       payload.lineItems = this.invoicedLineItems
 
       return payload

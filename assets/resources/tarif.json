@@ -51,14 +51,14 @@
     {
       "precondition": ["3426.00", "3349.00", "3424.00"],
       "pathogen": "ESCHERICHIA_COLI",
-      "analysisType": "EC_STEC",
+      "analysisType": "EC_EIEC",
       "position": "3425.10",
       "service": "Enteroinvasive E. coli (EIEC) / Shigella",
       "tp": 47.7
     },
     {
       "pathogen": "ESCHERICHIA_COLI",
-      "analysisType": "EC_STEC",
+      "analysisType": "EC_EIEC",
       "position": "3425.00",
       "service": "Enteroinvasive E. coli (EIEC) / Shigella",
       "tp": 119.7

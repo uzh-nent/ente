@@ -1,6 +1,6 @@
 export const createLineItems = function (probe, tarif, translator) {
   const lineItemBase = {
-    tarif: tarif.tarif,
+    tarif: tarif.tarifCode,
     tpw: tarif.tpw,
   }
   const invoicedEntries = []
