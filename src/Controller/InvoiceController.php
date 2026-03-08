@@ -25,6 +25,25 @@ class InvoiceController extends AbstractController
     #[Route('/invoices/patients', name: 'invoice_patients')]
     public function patients(Request $request, InvoiceServiceInterface $invoiceService): Response
     {
+        [$after, $before] = $this->parsePeriod($request);
+
+        return $invoiceService->invoicePatients($after, $before);
+    }
+
+    #[Route('/invoices/orderers', name: 'invoice_orderers')]
+    public function orderers(Request $request, InvoiceServiceInterface $invoiceService): Response
+    {
+        [$after, $before] = $this->parsePeriod($request);
+
+        return $invoiceService->invoiceOrderers($after, $before);
+    }
+
+    /**
+     * @param Request $request
+     * @return array{\DateTimeImmutable, \DateTimeImmutable}
+     */
+    private function parsePeriod(Request $request): array
+    {
         $period = $request->query->all()['period'] ?? [];
 
         try {
@@ -34,6 +53,6 @@ class InvoiceController extends AbstractController
             throw new BadRequestHttpException('Invalid date range.');
         }
 
-        return $invoiceService->invoicePatients($after, $before);
+        return [$after, $before];
     }
 }

@@ -148,6 +148,9 @@
     "export_patient_invoices": {
       "title": "Patientenrechnungen"
     },
+    "export_orderers_invoices": {
+      "title": "Sammelrechnungen"
+    },
     "download_probe_worksheet": {
       "download": "Arbeitsblatt herunterladen"
     },

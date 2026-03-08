@@ -7,4 +7,5 @@ use Symfony\Component\HttpFoundation\Response;
 interface InvoiceServiceInterface
 {
     public function invoicePatients(\DateTimeImmutable $from, \DateTimeImmutable $to): Response;
+    public function invoiceOrderers(\DateTimeImmutable $from, \DateTimeImmutable $to): Response;
 }

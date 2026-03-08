@@ -66,6 +66,10 @@ class Invoice
     #[Groups(['invoice:read', 'invoice:write'])]
     private ?InvoiceReceiver $receiver = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['invoice:read', 'invoice:write'])]
+    private ?string $address = null;
+
     /**
      * @var null|array<array{'service': ?string, 'tarif': ?string, 'position'?: ?string, 'tp': ?float, 'tpw'?: ?float}>
      */
@@ -109,6 +113,16 @@ class Invoice
     public function setReceiver(?InvoiceReceiver $receiver): void
     {
         $this->receiver = $receiver;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): void
+    {
+        $this->address = $address;
     }
 
     /**
