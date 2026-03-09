@@ -20,6 +20,7 @@ use Famoser\PdfGenerator\Frontend\Layout\Block;
 use Famoser\PdfGenerator\Frontend\Layout\ContentBlock;
 use Famoser\PdfGenerator\Frontend\Layout\Flow;
 use Famoser\PdfGenerator\Frontend\Layout\Parts\Row;
+use Famoser\PdfGenerator\Frontend\Layout\Style\ColumnSize;
 use Famoser\PdfGenerator\Frontend\Layout\Style\ElementStyle;
 use Famoser\PdfGenerator\Frontend\Layout\Style\FlowDirection;
 use Famoser\PdfGenerator\Frontend\Layout\Table;
@@ -174,6 +175,7 @@ class PdfService implements PdfServiceInterface
             if ($i > 0) {
                 $document->addPage();
             }
+            $startPage = $document->getPageCount() - 1;
 
             $flow = new Flow(FlowDirection::COLUMN, $this->spacer / 2);
 
@@ -193,12 +195,12 @@ class PdfService implements PdfServiceInterface
             $this->addSpace($flow, $this->spacer);
 
             $this->addInvoiceTable($invoice, $flow);
-        }
+            $document->add($flow);
 
-        // TODO fix page numbers
-        // TODO add ZSR to document, possibly other numbers
-        for ($i = 0; $i < $document->getPageCount(); $i++) {
-            $this->printReportLayout($document, $i, $layout, $contentWidth);
+            $totalPages = $document->getPageCount() - $startPage;
+            for ($i = $startPage; $i < $document->getPageCount(); $i++) {
+                $this->printReceiptLayout($document, $i, $startPage, $totalPages, $layout, $contentWidth);
+            }
         }
 
         return $document->save();
@@ -223,8 +225,8 @@ class PdfService implements PdfServiceInterface
         $innerFlow = new Flow(FlowDirection::ROW);
 
         $text = new Text();
-        $text->addSpan("Rückfoderungsbeleg - Rechnung " . $invoice->getInvoiceIdentifier(), $this->boldTextStyle, $this->fontSize * 1.6);
-        $text->addSpan((new \DateTimeImmutable())->format("d.m.Y") . " / " . $invoice->getCreatedBy()->getAbbreviation() . " / " . $generatedByAbbreviation, $this->textStyle, $this->fontSize);
+        $text->addSpan((new \DateTimeImmutable())->format("d.m.Y") . " / " . $invoice->getCreatedBy()->getAbbreviation() . " / " . $generatedByAbbreviation . "\n", $this->textStyle, $this->fontSize);
+        $text->addSpan("Rückforderungsbeleg - Rechnung " . $invoice->getInvoiceIdentifier() . " ", $this->boldTextStyle, $this->fontSize * 1.3);
 
         $innerFlow->add($text);
 
@@ -280,18 +282,20 @@ class PdfService implements PdfServiceInterface
 
     private function addInvoiceTable(Invoice $invoice, Flow $flow): void
     {
-        $createInvoiceRow = function (array $content) {
+        $createInvoiceRow = function (array $content, bool $bold = false, bool $small = false) {
             $row = new Row();
             foreach ($content as $index => $cell) {
                 $alignment = $index === count($content) - 1 ? Text\Alignment::ALIGNMENT_RIGHT : Text\Alignment::ALIGNMENT_LEFT;
                 $text = new Text(alignment: $alignment);
-                $text->addSpan($cell, $this->textStyle, $this->fontSize);
+                $text->setMargin([$this->spacer / 2, $this->spacer / 8, $this->spacer / 2, $this->spacer / 4]);
+                $text->addSpan($cell, $bold ? $this->boldTextStyle : $this->textStyle, $small ? $this->smallFontSize : $this->fontSize);
                 $row->set($index, $text);
             }
+
             return $row;
         };
 
-        $table = new Table();
+        $table = new Table([240]);
         $header = ['Analyse', 'Tarif', 'AL-Pos', 'TP', 'Anz', 'Betrag'];
 
         $row = $createInvoiceRow($header);
@@ -302,13 +306,15 @@ class PdfService implements PdfServiceInterface
         $totalTp = 0;
         foreach ($invoice->getLineItems() as $lineItem) {
             $amount = $lineItem['tp'] * $lineItem['tpw'];
+            $total += $amount;
+            $totalTp += $lineItem['tp'];
             $content = [$lineItem['service'], $lineItem['tarif'], $lineItem['position'], $lineItem['tp'], 1, number_format($amount, 2)];
-            $row = $createInvoiceRow($content);
+            $row = $createInvoiceRow($content, small: true);
             $table->addBody($row);
         }
 
-        $totalContent = ['Total', '', '', '', $totalTp, '', number_format($total, 2)];
-        $row = $createInvoiceRow($totalContent);
+        $totalContent = ['Total', '', '', $totalTp, '', number_format($total, 2)];
+        $row = $createInvoiceRow($totalContent, true);
         $table->addBody($row);
 
         $flow->add($table);
@@ -318,6 +324,54 @@ class PdfService implements PdfServiceInterface
      * @param mixed[] $layout
      */
     private function printReportLayout(Document $document, int $pageIndex, array $layout, float $contentWidth): void
+    {
+        $this->printUZHLayout($document, $pageIndex, $layout, $contentWidth);
+
+        // footer
+        $flow = new Flow(FlowDirection::COLUMN);
+        $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_JUSTIFIED);
+        $text->addSpan($layout['conditions'], $this->textStyle, $this->tinyFontSize, 1);
+        $flow->add($text);
+        $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_RIGHT);
+        $text->addSpan(($pageIndex + 1) . "/" . $document->getPageCount(), $this->textStyle, $this->fontSize, 1);
+        $flow->add($text);
+
+        // size & print footer
+        $allocationVisitor = new AllocationVisitor($contentWidth, mm2p(270));
+        $allocation = $flow->accept($allocationVisitor);
+        $printer = $document->setPosition(0, $pageIndex)->createPrinter();
+        $footerPrinter = $printer->position(top: mm2p(179) + $this->spacer); // 297 - 80 - 38 (the two vertical margins)
+        $footerPrinter->place($allocation);
+    }
+
+    /**
+     * @param mixed[] $layout
+     */
+    private function printReceiptLayout(Document $document, int $pageIndex, int $pageNumber, int $totalPages, array $layout, float $contentWidth): void
+    {
+        $this->printUZHLayout($document, $pageIndex, $layout, $contentWidth);
+
+        // footer
+        $flow = new Flow(FlowDirection::COLUMN);
+        $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_JUSTIFIED);
+        $text->addSpan($layout['receipt_conditions'], $this->textStyle, $this->tinyFontSize, 1);
+        $flow->add($text);
+        $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_RIGHT);
+        $text->addSpan(($pageNumber + 1) . "/" . $totalPages, $this->textStyle, $this->fontSize, 1);
+        $flow->add($text);
+
+        // size & print footer
+        $allocationVisitor = new AllocationVisitor($contentWidth, mm2p(270));
+        $allocation = $flow->accept($allocationVisitor);
+        $printer = $document->setPosition(0, $pageIndex)->createPrinter();
+        $footerPrinter = $printer->position(top: mm2p(179) + $this->spacer); // 297 - 80 - 38 (the two vertical margins)
+        $footerPrinter->place($allocation);
+    }
+
+    /**
+     * @param mixed[] $layout
+     */
+    private function printUZHLayout(Document $document, int $pageIndex, array $layout, float $contentWidth): void
     {
         $printer = $document->setPosition(0, $pageIndex)->createPrinter();
         $noMarginPrinter = $printer->position(mm2p(-32), mm2p(-80)); // minus the left / top margins
@@ -376,21 +430,6 @@ class PdfService implements PdfServiceInterface
         $allocation = $flow->accept($allocationVisitor);
         $logoPrinter = $noMarginPrinter->position(mm2p(121), mm2p(8)); // 121 + 89 = 210 = A4 width
         $logoPrinter->place($allocation);
-
-        // footer
-        $flow = new Flow(FlowDirection::COLUMN);
-        $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_JUSTIFIED);
-        $text->addSpan($layout['conditions'], $this->textStyle, $this->tinyFontSize, 1);
-        $flow->add($text);
-        $text = new Text(Text\Structure::Paragraph, Text\Alignment::ALIGNMENT_RIGHT);
-        $text->addSpan(($pageIndex + 1) . "/" . $document->getPageCount(), $this->textStyle, $this->fontSize, 1);
-        $flow->add($text);
-
-        // size & print footer
-        $allocationVisitor = new AllocationVisitor($contentWidth, mm2p(270));
-        $allocation = $flow->accept($allocationVisitor);
-        $footerPrinter = $printer->position(top: mm2p(179) + $this->spacer); // 297 - 80 - 38 (the two vertical margins)
-        $footerPrinter->place($allocation);
     }
 
     /**
