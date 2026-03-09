@@ -765,7 +765,7 @@ class PdfService implements PdfServiceInterface
 
         if ($reportDate) {
             $label = $this->translator->trans("Date", [], "entity_report");
-            $value = $reportDate->format("d.m.Y") ?? "";
+            $value = $reportDate->format("d.m.Y");
             $innerFlow->add($this->createLabeledValue($label, $value));
         }
 

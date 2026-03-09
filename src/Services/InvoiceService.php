@@ -87,7 +87,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
                 continue;
             }
 
-            $firstProbe = $firstInvoice?->getProbe();
+            $firstProbe = $firstInvoice->getProbe();
             if (!$firstProbe) {
                 continue;
             }
@@ -259,6 +259,9 @@ readonly class InvoiceService implements InvoiceServiceInterface
         return $totalAmount;
     }
 
+    /**
+     * @param array{array{string, string|null, float}} $summaryRows
+     */
     private function fillSummarySheet(Worksheet $summarySheet, array $summaryRows, float $fullTotal, string $period): void
     {
         $summarySheet->setCellValue('D5', $fullTotal);
@@ -275,6 +278,9 @@ readonly class InvoiceService implements InvoiceServiceInterface
         }
     }
 
+    /**
+     * @param array{array{int, string, string, float}} $summaryRows
+     */
     private function fillOrdererSummarySheet(Worksheet $summarySheet, array $summaryRows, float $fullTotal, string $period): void
     {
         $summarySheet->setCellValue('D5', $fullTotal);
