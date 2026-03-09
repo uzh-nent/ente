@@ -4,11 +4,9 @@ namespace App\Api\Processor;
 
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Operation;
-use ApiPlatform\Metadata\Post;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Invoice;
 use App\Entity\User;
-use App\Helper\DoctrineHelper;
 use App\Services\Interfaces\FileServiceInterface;
 use App\Services\Interfaces\PdfServiceInterface;
 use Doctrine\Persistence\ManagerRegistry;

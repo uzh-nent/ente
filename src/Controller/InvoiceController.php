@@ -5,17 +5,13 @@ namespace App\Controller;
 use App\Entity\Invoice;
 use App\Entity\Probe;
 use App\Entity\User;
-use App\Enum\LaboratoryFunction;
 use App\Helper\DoctrineHelper;
-use App\Services\Interfaces\FileServiceInterface;
 use App\Services\Interfaces\InvoiceServiceInterface;
 use App\Services\Interfaces\PdfServiceInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use PhpOffice\PhpSpreadsheet\Writer\IWriter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 

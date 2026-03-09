@@ -10,12 +10,10 @@
 <script>
 
 import { api } from '../../services/api'
-import { displaySuccess } from '../../services/notifiers'
 import LoopingRhombusSpinner from '../Library/View/Base/LoopingRhombusSpinner.vue'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import PatientForm from "../Form/PatientForm.vue";
 import PeriodForm from "../Form/PeriodForm.vue";
-import moment from "moment";
 import {downloadFile, excelMimeType} from "./utils/download";
 import {periodExport} from "./utils/periodExport";
 
