@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Entity\Invoice;
 use App\Entity\Probe;
 use App\Entity\Report;
 use App\Enum\AnalysisType;
@@ -13,16 +14,21 @@ use Famoser\PdfGenerator\Frontend\Content\ImagePlacement;
 use Famoser\PdfGenerator\Frontend\Content\Rectangle;
 use Famoser\PdfGenerator\Frontend\Content\Style\DrawingStyle;
 use Famoser\PdfGenerator\Frontend\Content\Style\TextStyle;
+use Famoser\PdfGenerator\Frontend\Content\TextBlock;
 use Famoser\PdfGenerator\Frontend\Document;
 use Famoser\PdfGenerator\Frontend\Layout\AbstractElement;
 use Famoser\PdfGenerator\Frontend\Layout\Block;
 use Famoser\PdfGenerator\Frontend\Layout\ContentBlock;
 use Famoser\PdfGenerator\Frontend\Layout\Flow;
+use Famoser\PdfGenerator\Frontend\Layout\Parts\Row;
+use Famoser\PdfGenerator\Frontend\Layout\Style\ElementStyle;
 use Famoser\PdfGenerator\Frontend\Layout\Style\FlowDirection;
+use Famoser\PdfGenerator\Frontend\Layout\Table;
 use Famoser\PdfGenerator\Frontend\Layout\Text;
 use Famoser\PdfGenerator\Frontend\LayoutEngine\Allocate\AllocationVisitor;
 use Famoser\PdfGenerator\Frontend\Resource\Font;
 use Famoser\PdfGenerator\Frontend\Resource\Image;
+use Famoser\PdfGenerator\IR\Document\Content\Common\Color;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 function mm2p(mixed $mm): mixed
@@ -131,9 +137,9 @@ class PdfService implements PdfServiceInterface
             $this->addServiceRequest($report->getProbe(), $flow, $report->getCopyToAddresses());
             $this->addDivider($flow, $contentWidth);
 
-            $this->addReportProbeMeta($report, $flow, $contentWidth);
+            $this->addSpecimenMeta($report->getProbe(), $flow, $contentWidth);
             $this->addDivider($flow, $contentWidth);
-            $this->addReportServiceTimeElement($report, $flow);
+            $this->addReportServiceTimeElement($report->getProbe(), $report->getDate(), $flow);
             $this->addSpace($flow, $this->spacer);
 
             $this->addReportResultHeader($flow);
@@ -154,6 +160,52 @@ class PdfService implements PdfServiceInterface
         return $document->save();
     }
 
+    /**
+     * @param Invoice[] $invoices
+     */
+    public function generateReceipts(array $invoices, string $generatedByAbbreviation): string
+    {
+        $document = new Document(pageSize: mm2p([210, 297]), margin: mm2p([32, 80, 22, 38]));
+        $contentWidth = mm2p(210 - (32 + 22));
+
+        $layoutJson = file_get_contents($this->reportResourcesDir . "/layout.json");
+        $layout = json_decode($layoutJson, true);
+
+        foreach ($invoices as $i => $invoice) {
+            if ($i > 0) {
+                $document->addPage();
+            }
+
+            $flow = new Flow(FlowDirection::COLUMN, $this->spacer / 2);
+
+            $this->addAddress($document, $layout, $invoice->getAddress());
+            $this->addSpace($flow, $this->spacer * 3);
+            $this->addReceiptHeader($invoice, $generatedByAbbreviation, $flow);
+            $this->addDivider($flow, $contentWidth);
+            $this->addInvoiceData($invoice, $flow);
+            $this->addDivider($flow, $contentWidth);
+
+            $probe = $invoice->getProbe();
+            $this->addSpecimenMeta($probe, $flow, $contentWidth);
+            $this->addDivider($flow, $contentWidth);
+            /** @var ?Report $firstReport */
+            $firstReport = $probe->getReports()[0] ?? null;
+            $this->addReportServiceTimeElement($probe, $firstReport?->getDate(), $flow);
+            $this->addSpace($flow, $this->spacer);
+
+            $this->addInvoiceTable($invoice, $flow);
+        }
+
+        // TODO fix page numbers
+        // TODO add ZSR to document, possibly other numbers
+        for ($i = 0; $i < $document->getPageCount(); $i++) {
+            $this->printReportLayout($document, $i, $layout, $contentWidth);
+        }
+
+        return $document->save();
+    }
+
+
     private function addReportHeader(Report $report, Flow $flow): void
     {
         $innerFlow = new Flow(FlowDirection::ROW);
@@ -167,17 +219,30 @@ class PdfService implements PdfServiceInterface
         $flow->add($innerFlow);
     }
 
-    private function addReportProbeMeta(Report $report, Flow $flow, float $width): void
+    private function addReceiptHeader(Invoice $invoice, string $generatedByAbbreviation, Flow $flow): void
+    {
+        $innerFlow = new Flow(FlowDirection::ROW);
+
+        $text = new Text();
+        $text->addSpan("Rückfoderungsbeleg - Rechnung " . $invoice->getInvoiceIdentifier(), $this->boldTextStyle, $this->fontSize * 1.6);
+        $text->addSpan((new \DateTimeImmutable())->format("d.m.Y") . " / " . $invoice->getCreatedBy()->getAbbreviation() . " / " . $generatedByAbbreviation, $this->textStyle, $this->fontSize);
+
+        $innerFlow->add($text);
+
+        $flow->add($innerFlow);
+    }
+
+    private function addSpecimenMeta(Probe $probe, Flow $flow, float $width): void
     {
         $gap = $this->spacer;
         $innerFlow = new Flow(FlowDirection::ROW, $gap);
 
-        $specimenMetaElement = $this->createSpecimenMetaElement($report->getProbe());
+        $specimenMetaElement = $this->createSpecimenMetaElement($probe);
         $specimenMetaColumnWidth = mm2p(62);
         $specimenMetaElement->setWidth($specimenMetaColumnWidth);
         $innerFlow->add($specimenMetaElement);
 
-        $specimenSourceElement = $this->createSpecimenSourceElement($report->getProbe());
+        $specimenSourceElement = $this->createSpecimenSourceElement($probe);
         if ($specimenSourceElement) {
             $specimenSourceElement->setWidth($width - $specimenMetaColumnWidth - $gap - 1);
             $innerFlow->add($specimenSourceElement);
@@ -212,6 +277,42 @@ class PdfService implements PdfServiceInterface
             $certificationImagePath = $this->reportResourcesDir . "/certification.png";
             $certificationPrinter->printImage($imgSize, $imgSize, $certificationImagePath);
         }
+    }
+
+    private function addInvoiceTable(Invoice $invoice, Flow $flow): void
+    {
+        $createInvoiceRow = function (array $content) {
+            $row = new Row();
+            foreach ($content as $index => $cell) {
+                $alignment = $index === count($content) - 1 ? Text\Alignment::ALIGNMENT_RIGHT : Text\Alignment::ALIGNMENT_LEFT;
+                $text = new Text(alignment: $alignment);
+                $text->addSpan($cell, $this->textStyle, $this->fontSize);
+                $row->set($index, $text);
+            }
+            return $row;
+        };
+
+        $table = new Table();
+        $header = ['Analyse', 'Tarif', 'AL-Pos', 'TP', 'Anz', 'Betrag'];
+
+        $row = $createInvoiceRow($header);
+        $row->setStyle(new ElementStyle(backgroundColor: new Color(230, 230, 230)));
+        $table->addHead($row);
+
+        $total = 0.0;
+        $totalTp = 0;
+        foreach ($invoice->getLineItems() as $lineItem) {
+            $amount = $lineItem['tp'] * $lineItem['tpw'];
+            $content = [$lineItem['service'], $lineItem['tarif'], $lineItem['position'], $lineItem['tp'], 1, number_format($amount, 2)];
+            $row = $createInvoiceRow($content);
+            $table->addBody($row);
+        }
+
+        $totalContent = ['Total', '', '', '', $totalTp, '', number_format($total, 2)];
+        $row = $createInvoiceRow($totalContent);
+        $table->addBody($row);
+
+        $flow->add($table);
     }
 
     /**
@@ -438,6 +539,19 @@ class PdfService implements PdfServiceInterface
         $flow->add(new ContentBlock($divider));
     }
 
+    private function addInvoiceData(Invoice $invoice, Flow $flow): void
+    {
+        $label = $this->translator->trans("Date", [], "entity_invoice");
+        $labelWidth = mm2p(25);
+        $flow->add($this->createLabeledValue($label, $invoice->getDate()->format("d.m.Y"), primary: true, labelWidth: $labelWidth));
+
+        $probe = $invoice->getProbe();
+        $this->addOrdererPrimaryLabeledValues($probe, $flow, $labelWidth);
+
+        $label = $this->translator->trans("Requisition identifier", [], "trait_probe_service_request");
+        $flow->add($this->createLabeledValue($label, $probe->getRequisitionIdentifier(), primary: true, boldValue: true, labelWidth: $labelWidth));
+    }
+
     /**
      * @param array<array{'name': ?string, 'addressLines': ?string, 'cityLine': ?string}>|null $copyToAddresses
      */
@@ -453,15 +567,7 @@ class PdfService implements PdfServiceInterface
         $labelWidth = mm2p(25);
         $flow->add($this->createLabeledValue($label, $value, primary: true, labelWidth: $labelWidth));
 
-        if ($probe->getOrdererOrg()) {
-            $label = $this->translator->trans("Orderer", [], "entity_probe");
-            $flow->add($this->createLabeledValue($label, $probe->getOrdererOrgShortAddress(), primary: true, labelWidth: $labelWidth));
-        }
-
-        if ($probe->getOrdererPrac()) {
-            $label = $probe->getOrdererOrg() ? $this->translator->trans("Orderer prac", [], "entity_probe") : $this->translator->trans("Orderer", [], "entity_probe");
-            $flow->add($this->createLabeledValue($label, $probe->getOrdererPracShortAddress(), primary: true, labelWidth: $labelWidth));
-        }
+        $this->addOrdererPrimaryLabeledValues($probe, $flow, $labelWidth);
 
         $label = $this->translator->trans("Requisition identifier", [], "trait_probe_service_request");
         $flow->add($this->createLabeledValue($label, $probe->getRequisitionIdentifier(), primary: true, boldValue: true, labelWidth: $labelWidth));
@@ -600,21 +706,23 @@ class PdfService implements PdfServiceInterface
         return $ordererFlow;
     }
 
-    private function addReportServiceTimeElement(Report $report, Flow $flow): void
+    private function addReportServiceTimeElement(Probe $probe, ?\DateTimeImmutable $reportDate, Flow $flow): void
     {
         $innerFlow = new Flow(FlowDirection::ROW, mm2p(4));
 
         $label = $this->translator->trans("Received date", [], "trait_probe_service_time");
-        $value = $report->getProbe()->getReceivedDate()?->format("d.m.Y") ?? "";
+        $value = $probe->getReceivedDate()?->format("d.m.Y") ?? "";
         $innerFlow->add($this->createLabeledValue($label, $value));
 
         $label = $this->translator->trans("Analysis start date", [], "trait_probe_service_time");
-        $value = $report->getProbe()->getAnalysisStartDate()?->format("d.m.Y") ?? "";
+        $value = $probe->getAnalysisStartDate()?->format("d.m.Y") ?? "";
         $innerFlow->add($this->createLabeledValue($label, $value));
 
-        $label = $this->translator->trans("Date", [], "entity_report");
-        $value = $report->getDate()?->format("d.m.Y") ?? "";
-        $innerFlow->add($this->createLabeledValue($label, $value));
+        if ($reportDate) {
+            $label = $this->translator->trans("Date", [], "entity_report");
+            $value = $reportDate->format("d.m.Y") ?? "";
+            $innerFlow->add($this->createLabeledValue($label, $value));
+        }
 
         $flow->add($innerFlow);
     }
@@ -725,5 +833,18 @@ class PdfService implements PdfServiceInterface
         $labelFlow->add($text);
 
         return $labelFlow;
+    }
+
+    public function addOrdererPrimaryLabeledValues(Probe $probe, Flow $flow, float $labelWidth): void
+    {
+        if ($probe->getOrdererOrg()) {
+            $label = $this->translator->trans("Orderer", [], "entity_probe");
+            $flow->add($this->createLabeledValue($label, $probe->getOrdererOrgShortAddress(), primary: true, labelWidth: $labelWidth));
+        }
+
+        if ($probe->getOrdererPrac()) {
+            $label = $probe->getOrdererOrg() ? $this->translator->trans("Orderer prac", [], "entity_probe") : $this->translator->trans("Orderer", [], "entity_probe");
+            $flow->add($this->createLabeledValue($label, $probe->getOrdererPracShortAddress(), primary: true, labelWidth: $labelWidth));
+        }
     }
 }

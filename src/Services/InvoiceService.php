@@ -132,7 +132,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
 
     private function fillInvoiceSheet(Worksheet $invoiceSheet, Invoice $invoice, string $period): float
     {
-        $invoiceSheet->setCellValue('C1', (new \DateTimeImmutable())->format('d.m.Y'));
+        $invoiceSheet->setCellValue('C1', $invoice->getDate()->format('d.m.Y'));
         $invoiceSheet->setCellValue('E1', "Periode: " . $period);
 
         $probe = $invoice->getProbe();
