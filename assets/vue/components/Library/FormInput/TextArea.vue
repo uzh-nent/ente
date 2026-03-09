@@ -1,6 +1,6 @@
 <template>
   <textarea
-    :id="id" class="form-control" :rows="rows" :required="required"
+    :id="id" class="form-control" :rows="rows" :required="required" :disabled="disabled"
     :class="{'is-valid': field?.valid, 'is-invalid': field?.invalid }"
     :value="modelValue"
     @input="$emit('update:modelValue', $event.target.value)"
@@ -28,6 +28,10 @@ export default {
     field: {
       type: Object,
       default: null
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     },
     rows: {
       type: Number,

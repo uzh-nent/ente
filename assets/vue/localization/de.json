@@ -370,7 +370,8 @@
     "_name": "Kontakt",
     "email": "E-Mail",
     "phone": "Telefon",
-    "contact": "Weitere Kontaktinformationen"
+    "contact": "Kontakt",
+    "invoice_address": "Rechnungsadresse"
   },
   "person": {
     "name": "Name",

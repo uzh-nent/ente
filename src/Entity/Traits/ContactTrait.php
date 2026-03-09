@@ -29,6 +29,10 @@ trait ContactTrait
     #[Groups(['contact:read', 'contact:write'])]
     private ?string $contact = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['contact:read', 'contact:write'])]
+    private ?string $invoiceAddress = null;
+
     public function getEmail(): ?string
     {
         return $this->email;
@@ -57,5 +61,15 @@ trait ContactTrait
     public function setContact(?string $contact): void
     {
         $this->contact = $contact;
+    }
+
+    public function getInvoiceAddress(): ?string
+    {
+        return $this->invoiceAddress;
+    }
+
+    public function setInvoiceAddress(?string $invoiceAddress): void
+    {
+        $this->invoiceAddress = $invoiceAddress;
     }
 }
