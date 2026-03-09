@@ -36,7 +36,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
             $probe = $invoice->getProbe();
 
             $invoiceSheet = clone $templateSheet;
-            $invoiceSheet->setTitle($probe->getIdentifier());
+            $invoiceSheet->setTitle(self::parseSafeTitle($invoiceSheet, $probe->getIdentifier()));
             $spreadsheet->addSheet($invoiceSheet, 1);
 
             $invoiceTotal = $this->fillInvoiceSheet($invoiceSheet, $invoice, $period);
@@ -95,11 +95,11 @@ readonly class InvoiceService implements InvoiceServiceInterface
             $ordererShortAddress = $firstProbe->getOrdererOrg() ? $firstProbe->getOrdererOrgShortAddress() : $firstProbe->getOrdererPracShortAddress();
 
             $invoiceSheet = clone $templateSheet;
-            $invoiceSheet->setTitle($ordererShortAddress);
+            $invoiceSheet->setTitle(self::parseSafeTitle($invoiceSheet, $ordererShortAddress));
             $spreadsheet->addSheet($invoiceSheet, 1);
 
             $invoiceTotal = $this->fillOrdererInvoiceSheet($invoiceSheet, $invoices, $period);
-            $summaryRows[] = [$ordererShortAddress, $firstInvoice->getAddress(), $invoiceTotal];
+            $summaryRows[] = [count($invoicesPerOrderer) - count($summaryRows), $ordererShortAddress, $firstInvoice->getAddress(), $invoiceTotal];
             $fullTotal += $invoiceTotal;
         }
 
@@ -124,7 +124,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
             ->andWhere('i.receiver = :receiver')
             ->setParameter('from', $from)
             ->setParameter('to', $to)
-            ->setParameter('receiver', InvoiceReceiver::PATIENT->value)
+            ->setParameter('receiver', $receiver->value)
             ->orderBy('i.date', 'ASC')
             ->getQuery()
             ->getResult();
@@ -162,7 +162,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
         foreach (array_reverse($invoice->getLineItems()) as $lineItem) {
             $invoiceSheet->insertNewRowBefore(10);
             $invoiceSheet->setCellValue('A10', $lineItem['service']);
-            $invoiceSheet->setCellValue('D10', $lineItem['tarif']);
+            $invoiceSheet->setCellValue('D10', " " . $lineItem['tarif']);
             $invoiceSheet->setCellValue('E10', " " . $lineItem['position']);
             $invoiceSheet->setCellValue('F10', " " . $lineItem['tp']);
             $invoiceSheet->setCellValue('G10', $lineItem['tp'] * $lineItem['tpw']);
@@ -218,13 +218,13 @@ readonly class InvoiceService implements InvoiceServiceInterface
             $invoiceSheet->setCellValue('A4', $probe->getIdentifier());
             $invoiceSheet->setCellValue('B4', $probe->getRequisitionIdentifier());
             $invoiceSheet->setCellValue('C4', $probe->getSpecimenCollectionDate()?->format('d.m.Y'));
-            $invoiceSheet->setCellValue('D4', $probe->getPatientFamilyName() . ", " . $probe->getPatientFamilyName());
+            $invoiceSheet->setCellValue('D4', $probe->getPatientFamilyName() . ", " . $probe->getPatientGivenName());
             $invoiceSheet->setCellValue('E4', $probe->getPatientBirthDate()?->format('d.m.Y'));
 
             if (count($invoice->getLineItems()) === 1) {
                 $lineItem = $invoice->getLineItems()[0];
-                $invoiceSheet->setCellValue('F4', $lineItem['tarif']);
-                $invoiceSheet->setCellValue('G4', $lineItem['position']);
+                $invoiceSheet->setCellValue('F4', " " . $lineItem['tarif']);
+                $invoiceSheet->setCellValue('G4', " " . $lineItem['position']);
                 $invoiceSheet->setCellValue('H4', $lineItem['service']);
                 $invoiceSheet->setCellValue('I4', " " . $lineItem['tp']);
                 $invoiceSheet->setCellValue('J4', $lineItem['tp'] * $lineItem['tpw']);
@@ -242,12 +242,13 @@ readonly class InvoiceService implements InvoiceServiceInterface
             $invoiceSheet->setCellValue('H4', "Subtotal");
             $invoiceSheet->setCellValue('I4', " " . $totalPatientTP);
             $invoiceSheet->setCellValue('J4', $totalPatientAmount);
+            self::setAmountCellStyle($invoiceSheet, 'J4');
 
             foreach (array_reverse($invoice->getLineItems()) as $lineItem) {
                 $invoiceSheet->insertNewRowBefore(5);
 
-                $invoiceSheet->setCellValue('F5', $lineItem['tarif']);
-                $invoiceSheet->setCellValue('G5', $lineItem['position']);
+                $invoiceSheet->setCellValue('F5', " " . $lineItem['tarif']);
+                $invoiceSheet->setCellValue('G5', " " . $lineItem['position']);
                 $invoiceSheet->setCellValue('H5', $lineItem['service']);
                 $invoiceSheet->setCellValue('I5', " " . $lineItem['tp']);
                 $invoiceSheet->setCellValue('J5', $lineItem['tp'] * $lineItem['tpw']);
@@ -286,6 +287,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
             $summarySheet->setCellValue('A4', $summaryRow[0]);
             $summarySheet->setCellValue('B4', $summaryRow[1]);
             $summarySheet->setCellValue('C4', $summaryRow[2]);
+            $summarySheet->setCellValue('D4', $summaryRow[3]);
             self::setAmountCellStyle($summarySheet, 'C4');
         }
     }
@@ -293,6 +295,12 @@ readonly class InvoiceService implements InvoiceServiceInterface
     private static function setAmountCellStyle(Worksheet $worksheet, string $cellCoordinate): void
     {
         $worksheet->getStyle($cellCoordinate)->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
+    }
+
+    private static function parseSafeTitle(Worksheet $worksheet, string $proposedTitle): string
+    {
+        $safeTitle = preg_replace('/[^0-9a-zA-Z -,]/', '', $proposedTitle);
+        return substr($safeTitle, 0, $worksheet::SHEET_TITLE_MAXIMUM_LENGTH - 5); // -5 to account for duplicated sheet titles that receive a counter at the end
     }
 
     public function readSpreadsheet(string $fullPath): Spreadsheet

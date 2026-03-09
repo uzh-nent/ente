@@ -2,8 +2,12 @@
   <button-confirm-modal
       :title="$t('_action.add_invoice.title')" icon="fas fa-plus"
       :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm"
-      @showing="focusAddressAdd">
-    <invoice-meta-form :template="invoiceMetaTemplate" :probe="probe" @update="invoiceMeta = $event"/>
+      @showing="load">
+    <invoice-meta-form
+        :template="invoiceMetaTemplate" :probe="probe"
+        :is-loading-entities="entitiesLoading" :patient="patient" :organization="organization"
+        :practitioner="practitioner"
+        @update="invoiceMeta = $event"/>
 
     <hr/>
 
@@ -14,12 +18,12 @@
             :model-value="shownLineItems.includes(i)" @update:modelValue="toggleShownLineItems(i, $event)"
         />
         <invoice-line-item-form class="mt-2" v-if="shownLineItems.includes(i)"
-                        :template="lineItem" @update="lineItems[i] = $event"/>
+                                :template="lineItem" @update="lineItems[i] = $event"/>
       </div>
     </div>
 
     <div class="d-flex justify-content-between mt-3">
-      <b>{{$t('_action.add_invoice.total')}}</b>
+      <b>{{ $t('_action.add_invoice.total') }}</b>
       <b>CHF {{ total.toFixed(2) }}</b>
     </div>
   </button-confirm-modal>
@@ -49,7 +53,12 @@ export default {
     return {
       invoiceMeta: null,
       lineItems: [],
-      shownLineItems: []
+      shownLineItems: [],
+
+      entitiesLoading: true,
+      patient: null,
+      organization: null,
+      practitioner: null,
     }
   },
   props: {
@@ -100,10 +109,22 @@ export default {
 
       await api.patch(this.probe, {invoiceStatus: 'INVOICED'})
     },
-    focusAddressAdd: function () {
+    load: async function () {
       this.$nextTick(() => {
         document.getElementById('receiver_ORDERER')?.focus()
       })
+
+      this.entitiesLoading = true
+      const [patient, organization, practitioner] = await Promise.all([
+        api.get(this.probe.patient),
+        this.probe.ordererOrg ? api.get(this.probe.ordererOrg) : Promise.resolve(null),
+        this.probe.ordererPrac ? api.get(this.probe.ordererPrac) : Promise.resolve(null),
+      ])
+
+      this.patient = patient
+      this.organization = organization
+      this.practitioner = practitioner
+      this.entitiesLoading = false
     }
   },
   mounted() {
