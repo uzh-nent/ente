@@ -32,7 +32,6 @@ use App\Entity\Traits\CommentTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
 use App\Enum\InvoiceStatus;
-use App\Enum\SpecimenFoodType;
 use App\Repository\ProbeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

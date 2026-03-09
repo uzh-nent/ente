@@ -14,7 +14,6 @@ use Famoser\PdfGenerator\Frontend\Content\ImagePlacement;
 use Famoser\PdfGenerator\Frontend\Content\Rectangle;
 use Famoser\PdfGenerator\Frontend\Content\Style\DrawingStyle;
 use Famoser\PdfGenerator\Frontend\Content\Style\TextStyle;
-use Famoser\PdfGenerator\Frontend\Content\TextBlock;
 use Famoser\PdfGenerator\Frontend\Document;
 use Famoser\PdfGenerator\Frontend\Layout\AbstractElement;
 use Famoser\PdfGenerator\Frontend\Layout\Block;
