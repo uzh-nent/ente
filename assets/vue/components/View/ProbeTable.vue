@@ -17,7 +17,7 @@
               <div v-if="view === 'result'" class="ms-auto">
                 <export-probes-dropdown  :filter="filter"/>
               </div>
-              <div v-if="view === 'invoice'" class="ms-auto">
+              <div v-if="view === 'invoice'" class="ms-auto btn-group">
                 <export-invoices-patients-button />
                 <export-invoices-orderers-button />
               </div>

@@ -75,20 +75,29 @@ export const formatBusinessIdentifiers = function (value, placeholder = "-") {
 }
 
 
-export const formatOrganizationAddress = function (value) {
+export const formatOrganizationAddress = function (value, placeholder = '-') {
   if (!value) {
-    return '-'
+    return placeholder
   }
 
   return value.name + "\n" + formatAddress(value)
 }
 
-export const formatPractitionerAddress = function (value) {
+export const formatPractitionerAddress = function (value, placeholder = '-') {
   if (!value) {
-    return '-'
+    return placeholder
   }
 
   const nameValues = [value.title, value.givenName, value.familyName]
+  return nameValues.filter(v => v).join(" ") + "\n" + formatAddress(value)
+}
+
+export const formatPatientAddress = function (value, placeholder = '-') {
+  if (!value) {
+    return placeholder
+  }
+
+  const nameValues = [value.givenName, value.familyName]
   return nameValues.filter(v => v).join(" ") + "\n" + formatAddress(value)
 }
 

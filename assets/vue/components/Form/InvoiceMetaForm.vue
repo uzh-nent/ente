@@ -11,6 +11,12 @@
       <radio id="receiver" :choices="receivers" :field="fields.receiver"
              v-model="entity.receiver" @update:model-value="validateField('receiver')"/>
     </form-field>
+    <form-field for-id="address" :label="$t('invoice.address')" v-if="entity.receiver"
+                :field="fields.address">
+      <text-area id="address" :field="fields.address"  :disabled="isLoadingEntities"
+             v-model="entity.address" @update:model-value="validateField('address')"/>
+      <p class="form-text">{{ $t('_form.invoice.use_of_invoice_address_if_defined') }}</p>
+    </form-field>
   </div>
 </template>
 
@@ -20,6 +26,13 @@ import FormField from '../Library/FormLayout/FormField'
 import TextInput from '../Library/FormInput/TextInput.vue'
 import DateTimeInput from '../Library/FormInput/DateTimeInput.vue'
 import Radio from "../Library/FormInput/Radio.vue";
+import {probeConverter} from "../../services/domain/converters";
+import {
+  formatOrganizationAddress,
+  formatPatientAddress,
+  formatPractitionerAddress
+} from "../../services/domain/formatter";
+import TextArea from "../Library/FormInput/TextArea.vue";
 
 const createReceiver = function (translator) {
   const values = ['ORDERER', 'PATIENT']
@@ -29,6 +42,7 @@ const createReceiver = function (translator) {
 export default {
   emits: ['update'],
   components: {
+    TextArea,
     Radio,
     DateTimeInput,
     TextInput,
@@ -40,10 +54,12 @@ export default {
       fields: {
         date: createField(requiredRule),
         receiver: createField(requiredRule),
+        address: createField(requiredRule),
       },
       entity: {
         date: null,
         receiver: null,
+        address: null,
       },
     }
   },
@@ -52,11 +68,52 @@ export default {
       type: Object,
       required: false
     },
+    patient: {
+      type: Object,
+      required: false
+    },
+    organization: {
+      type: Object,
+      required: false
+    },
+    practitioner: {
+      type: Object,
+      required: false
+    },
+    isLoadingEntities: {
+      type: Boolean,
+      required: false
+    },
   },
   computed: {
     receivers: function () {
       return createReceiver(this.$t)
     },
+  },
+  methods: {
+    setDefaultAddress: function () {
+      console.log("called")
+      if (this.isLoadingEntities || !this.entity.receiver) {
+        return
+      }
+
+      console.log("executed")
+      if (this.entity.receiver === 'PATIENT') {
+        const patient = this.patient ?? probeConverter.reconstructPatient(this.probe)
+        this.entity.address = patient.invoiceAddress ?? formatPatientAddress(patient)
+      } else if (this.entity.receiver === 'ORDERER') {
+        const organization = this.organization ?? probeConverter.reconstructOrdererOrg(this.probe)
+        const practitioner = this.practitioner ?? probeConverter.reconstructOrdererPrac(this.probe)
+        this.entity.address = organization ?
+            (organization.invoiceAddress ?? formatOrganizationAddress(organization)) :
+            (practitioner.invoiceAddress ?? formatPractitionerAddress(practitioner))
+      }
+      // no case for animal keeper, as not needed so far
+    }
+  },
+  watch: {
+    'entity.receiver': function () { this.setDefaultAddress() },
+    isLoadingEntities: function () { this.setDefaultAddress() }
   }
 }
 </script>

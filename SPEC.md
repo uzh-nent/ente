@@ -104,6 +104,7 @@ questions:
 - stx1/2 not added, too much confusing UX (e.g., in invoicing)
 - export: patient address useful why?
 - tarif position with .10 if reduced rate, correct?
+- invoicing towards animal keepers?
 
 still TODO:
 - invoicing:
@@ -114,6 +115,7 @@ still TODO:
 
 features v?:
 - let customer create service request online
+- improve statistics: add visuals to all-probes view
 - improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc)
 - improve reference data: allow single reference to be in multiple collections, then prevent double storage
 - track analysis, not result (e.g., STEC E. coli Stx1, Stx2 separate tracking); possibly track more analysis results from the Laborblatt

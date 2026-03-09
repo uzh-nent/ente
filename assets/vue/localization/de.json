@@ -34,6 +34,9 @@
       "identification": {
         "no_organism_defined": "Kein Organismus definiert für dieses Pathogen."
       }
+    },
+    "invoice": {
+      "use_of_invoice_address_if_defined": "Es wird die Rechnungsadresse aus den aktuellen Stammdaten verwendet, falls definiert."
     }
   },
   "_action": {
@@ -482,6 +485,7 @@
     "_name": "Rechnung",
     "date": "Rechnungsdatum",
     "receiver": "Empfänger",
+    "address": "Rechnungsadresse",
     "line_item": {
       "service": "Leistung",
       "position": "Position",
