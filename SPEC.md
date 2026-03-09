@@ -98,6 +98,12 @@ new features v1.3:
 - add monocytogenes to primary probes, polish custom pathogen case
 - Statistik (until 2025) -> separate P/N probes, allow to choose date
 - Statistik (from 2025) -> allow to export csv from table search result, with observation results inline
+- Invoicing:
+  - add invoice per probe
+  - download invoices per patient (einzelrechnungen)
+  - download invoices per orderer (sammelrechnungen)
+  - set invoice number
+  - download rückforderungsbelege
 
 questions:
 - for all primary probes, append (PCR) in PDF report, or only for E.coli?
@@ -105,13 +111,6 @@ questions:
 - export: patient address useful why?
 - tarif position with .10 if reduced rate, correct?
 - invoicing towards animal keepers?
-
-still TODO:
-- invoicing:
-  - for all primary probes, track whether "ambulant" or "stationär"; when "ambulant" invoice patient, else invoice customer
-  - cost is 119.7 per PCF; 47.7 for multi-pcr additional results
-  - need to be able to correct price to any price
-  - for ambulant, need to be able to generate rückforderungsbeleg
 
 features v?:
 - let customer create service request online
