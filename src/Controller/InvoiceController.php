@@ -39,23 +39,28 @@ class InvoiceController extends AbstractController
         return $invoiceService->invoiceOrderers($after, $before);
     }
 
-    #[Route('/invoices/set_numbers', name: 'invoice_set_numbers')]
-    public function setInvoiceNumbers(Request $request, ManagerRegistry $managerRegistry): Response
+    #[Route('/invoices/set_identifiers', name: 'invoice_set_identifiers')]
+    public function setInvoiceIdentifiers(Request $request, ManagerRegistry $managerRegistry): Response
     {
-        $identifiers = explode("\n", $request->query->get('identifiers', ""));
-        $invoiceIdentifiers = explode("\n", $request->query->get('invoiceIdentifiers', ""));
+        $body = json_decode($request->getContent(), true);
+        $probeIdentifiers = explode("\n", $body['probeIdentifiers']);
+        $invoiceIdentifiers = explode("\n", $body['invoiceIdentifiers']);
 
         $errors = [];
         $successful = 0;
-        foreach ($identifiers as $index => $identifier) {
+        foreach ($probeIdentifiers as $index => $identifier) {
+            if (empty($identifier)) {
+                continue;
+            }
+
             $probe = $managerRegistry->getRepository(Probe::class)->findOneBy(['identifier' => $identifier]);
             if (!$probe) {
                 $errors[] = "Probe $identifier not found.";
                 continue;
             }
 
-            if (count($probe->getInvoices()) !== 0) {
-                $errors[] = "No invoice defined to probe $identifier.";
+            if (count($probe->getInvoices()) !== 1) {
+                $errors[] = "No unique invoice defined for probe $identifier.";
                 continue;
             }
 
@@ -71,8 +76,9 @@ class InvoiceController extends AbstractController
     #[Route('/invoices/receipts', name: 'invoice_receipts')]
     public function receipts(Request $request, ManagerRegistry $managerRegistry, PdfServiceInterface $pdfService): Response
     {
-        $identifiers = explode("\n", $request->query->get('invoiceNumbers', ""));
-        $nonEmptyIdentifiers = array_filter($identifiers);
+        $body = json_decode($request->getContent(), true);
+        $invoiceIdentifiers = explode("\n", $body['invoiceIdentifiers']);
+        $nonEmptyIdentifiers = array_filter($invoiceIdentifiers);
         $invoices = $managerRegistry->getRepository(Invoice::class)->findBy(['invoiceIdentifier' => $nonEmptyIdentifiers]);
 
         /** @var User $user */

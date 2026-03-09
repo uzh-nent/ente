@@ -7,6 +7,7 @@ const iriToId = function (iri) {
 }
 
 const xlsxMimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+const pdfMimeType = 'application/pdf'
 const restClient = {
   setupErrorNotifications: function () {
     axios.interceptors.response.use(
@@ -101,6 +102,11 @@ const restClient = {
   },
   getExcel: async function (url) {
     const response = await axios.get(url, {responseType: 'blob', headers: {'Accept': xlsxMimeType}})
+    return response.data
+  },
+  postPdf: async function (url, post) {
+    const normalizedPost = this._normalizePayload(post)
+    const response = await axios.post(url, normalizedPost, {responseType: 'blob', headers: {'Accept': pdfMimeType}})
     return response.data
   },
   poll: async function (instance) {
@@ -249,7 +255,13 @@ const api = {
   },
   postInvoice: function (payload) {
     return restClient.post('/api/invoices', payload)
-  }
+  },
+  postSetIdentifiers: function (payload) {
+    return restClient.post('/invoices/set_identifiers', payload)
+  },
+  postDownloadReceipts: function (payload) {
+    return restClient.postPdf('/invoices/receipts', payload)
+  },
 }
 
 export {preloadApi, api, router}
