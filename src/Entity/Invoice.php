@@ -126,13 +126,17 @@ class Invoice
     }
 
     /**
-     * @return null|array<array{'service': ?string, 'tarif': ?string, 'position'?: ?string, 'tp': ?float, 'tpw'?: ?float}
+     * @return null|array<array{'service': ?string, 'tarif': ?string, 'position'?: ?string, 'tp': ?float, 'tpw'?: ?float}>
      */
     public function getLineItems(): ?array
     {
         return $this->lineItems;
     }
 
+    /**
+     * @param null|array<array{'service': ?string, 'tarif': ?string, 'position'?: ?string, 'tp': ?float, 'tpw'?: ?float}> $lineItems
+     * @return void
+     */
     public function setLineItems(?array $lineItems): void
     {
         $this->lineItems = $lineItems;

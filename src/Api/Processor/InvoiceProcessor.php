@@ -20,6 +20,7 @@ readonly class InvoiceProcessor implements ProcessorInterface
 {
     /**
      * @param ProcessorInterface<Invoice, Invoice> $persistProcessor
+     * @param ProcessorInterface<Invoice, Invoice> $removeProcessor
      */
     public function __construct(
         #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
@@ -27,9 +28,6 @@ readonly class InvoiceProcessor implements ProcessorInterface
         #[Autowire(service: 'api_platform.doctrine.orm.state.remove_processor')]
         private ProcessorInterface $removeProcessor,
         private TokenStorageInterface $tokenStorage,
-        private PdfServiceInterface $pdfService,
-        private FileServiceInterface $fileService,
-        private ManagerRegistry $registry
     ) {
     }
 
@@ -46,10 +44,6 @@ readonly class InvoiceProcessor implements ProcessorInterface
         $user = $this->tokenStorage->getToken()->getUser();
         $data->attribute($user);
 
-        $result = $this->persistProcessor->process($data, $operation, $uriVariables, $context);
-        if ($result->getInvoiceIdentifier() && !$result->getReimbursementVoucherFilename()) {
-        }
-
-        return $result;
+        return $this->persistProcessor->process($data, $operation, $uriVariables, $context);
     }
 }
