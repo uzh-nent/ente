@@ -124,6 +124,9 @@ export default {
     }
   },
   computed: {
+    persistedStateKey: function () {
+      return document.getElementById('shortname').textContent + "_probe-table_" + this.view;
+    },
     query: function () {
       const search = sanitizeSearchFilter({
         identifier: this.searchIdentifier,
