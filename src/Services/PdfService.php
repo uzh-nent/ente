@@ -199,7 +199,7 @@ class PdfService implements PdfServiceInterface
 
             $totalPages = $document->getPageCount() - $startPage;
             for ($i = $startPage; $i < $document->getPageCount(); $i++) {
-                $this->printReceiptLayout($document, $i, $startPage, $totalPages, $layout, $contentWidth);
+                $this->printReceiptLayout($document, $i, $i - $startPage, $totalPages, $layout, $contentWidth);
             }
         }
 
