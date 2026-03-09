@@ -288,7 +288,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
             $summarySheet->setCellValue('B4', $summaryRow[1]);
             $summarySheet->setCellValue('C4', $summaryRow[2]);
             $summarySheet->setCellValue('D4', $summaryRow[3]);
-            self::setAmountCellStyle($summarySheet, 'C4');
+            self::setAmountCellStyle($summarySheet, 'D4');
         }
     }
 
