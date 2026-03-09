@@ -17,6 +17,7 @@ class SpecimenType extends AbstractType
         $builder->add('hideable', HideableType::class, ['inherit_data' => true, 'label' => false]);
         $builder->add('codedIdentifier', CodedIdentifierType::class, ['inherit_data' => true, 'label' => false]);
         $builder->add('specimenGroup', TextType::class, ['required' => false]);
+        $builder->add('reportTranslation', TextType::class, ['required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

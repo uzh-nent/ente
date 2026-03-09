@@ -45,7 +45,21 @@ class Specimen
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['specimen:read'])]
+    private ?string $reportTranslation = null;
+
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[Groups(['specimen:read'])]
     private ?string $specimenGroup = null;
+
+    public function getReportTranslation(): ?string
+    {
+        return $this->reportTranslation;
+    }
+
+    public function setReportTranslation(?string $reportTranslation): void
+    {
+        $this->reportTranslation = $reportTranslation;
+    }
 
     public function getSpecimenGroup(): ?string
     {
