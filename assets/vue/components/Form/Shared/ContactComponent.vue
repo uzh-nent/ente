@@ -12,6 +12,10 @@
       <i class="fas fa-plus"></i>
       {{ $t('contact.contact') }}
     </button>
+    <button class="btn btn-sm btn-outline-secondary" @click="show.invoiceAddress = true" v-if="!showInvoiceAddress">
+      <i class="fas fa-plus"></i>
+      {{ $t('contact.invoice_address') }}
+    </button>
   </div>
 
 
@@ -28,6 +32,11 @@
   <form-field for-id="contact" :label="$t('contact.contact')" :field="fields.contact" v-if="showContact">
     <text-area id="contact" :field="fields.contact" v-model="entity.contact"
                @blur="blurField('contact')" @update:modelValue="validateField('contact')"/>
+  </form-field>
+
+  <form-field for-id="invoiceAddress" :label="$t('contact.invoice_address')" :field="fields.invoiceAddress" v-if="showInvoiceAddress">
+    <text-area id="invoiceAddress" :field="fields.invoiceAddress" v-model="entity.invoiceAddress"
+               @blur="blurField('invoiceAddress')" @update:modelValue="validateField('invoiceAddress')"/>
   </form-field>
 </template>
 
@@ -51,16 +60,19 @@ export default {
         email: createField(emailRule),
         phone: createField(),
         contact: createField(),
+        invoiceAddress: createField(),
       },
       entity: {
         email: null,
         phone: null,
         contact: null,
+        invoiceAddress: null,
       },
       show: {
         email: false,
         phone: false,
         contact: false,
+        invoiceAddress: false,
       },
     }
   },
@@ -85,6 +97,13 @@ export default {
           document.getElementById('contact')?.focus()
         })
       }
+    },
+    showInvoiceAddress: function (newValue) {
+      if (newValue) {
+        this.$nextTick(() => {
+          document.getElementById('invoiceAddress')?.focus()
+        })
+      }
     }
   },
   computed: {
@@ -97,8 +116,11 @@ export default {
     showContact: function () {
       return this.show.contact || this.entity.contact || this.template.contact
     },
+    showInvoiceAddress: function () {
+      return this.show.invoiceAddress || this.entity.invoiceAddress || this.template.invoiceAddress
+    },
   }
 }
 
-export const contactFields = ["email", "phone", "contact"]
+export const contactFields = ["email", "phone", "contact", "invoiceAddress"]
 </script>
