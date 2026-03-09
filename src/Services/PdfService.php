@@ -660,7 +660,11 @@ class PdfService implements PdfServiceInterface
         if ($probe->getSpecimenSource() === SpecimenSource::HUMAN) {
             $label = $this->translator->trans("entity.title", [], "entity_specimen");
             if ($probe->getSpecimen()) {
-                $value = str_replace(" specimen", "", $probe->getSpecimen()->getDisplayName());
+                if ($probe->getSpecimen()->getReportTranslation()) {
+                    $value = $probe->getSpecimen()->getReportTranslation();
+                } else {
+                    $value = str_replace(" specimen", "", $probe->getSpecimen()->getDisplayName());
+                }
             } else {
                 $value = $probe->getSpecimenText();
             }
