@@ -1,4 +1,5 @@
 export const excelMimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+export const pdfMimeType = 'application/pdf'
 
 export const downloadFile = async (response, mimeType, filename) => {
   const blob = new Blob([response], {type: mimeType,})

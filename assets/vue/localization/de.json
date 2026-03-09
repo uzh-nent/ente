@@ -165,6 +165,12 @@
     "reset_invoicable_probe": {
       "reset": "Probe zurückgesetzt"
     },
+    "export_invoice_receipts": {
+      "title": "Rückforderungsbelege",
+      "set_identifiers": "Rechnungsnummer setzen",
+      "set_identifiers_successful": "Rechnungsnummern gesetzt für {count} Rechnungen. Sie können die Belege nun herunterladen.",
+      "set_identifiers_errored": "Einige Rechnungensnummern konnten nicht zugeordnet werden."
+    },
     "toggle_finished": {
       "finish": "Abschliessen",
       "finished": "Probe abgeschlossen.",
@@ -293,6 +299,7 @@
     "analysis_start_date_short": "Ansatz",
     "orderer": "Auftraggeber",
     "identifier": "Identifikation",
+    "identifiers": "Proben-Identifikationen",
     "method_types": "Methoden",
     "anamnesis_travels": "Reiseländer",
     "_pathogen": {
@@ -486,6 +493,7 @@
     "date": "Rechnungsdatum",
     "receiver": "Empfänger",
     "address": "Rechnungsadresse",
+    "invoice_identifiers": "Rechnungsnummern",
     "line_item": {
       "service": "Leistung",
       "position": "Position",

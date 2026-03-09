@@ -20,6 +20,7 @@
               <div v-if="view === 'invoice'" class="ms-auto btn-group">
                 <export-invoices-patients-button />
                 <export-invoices-orderers-button />
+                <export-invoices-receipts-button />
               </div>
             </div>
           </th>
@@ -69,9 +70,11 @@ import UrlFilterProbeView from "./Probe/UrlFilterProbeView.vue";
 import ExportProbesDropdown from "../Action/ExportProbesDropdown.vue";
 import ExportInvoicesPatientsButton from "../Action/ExportInvoicesPatientsButton.vue";
 import ExportInvoicesOrderersButton from "../Action/ExportInvoicesOrderersButton.vue";
+import ExportInvoicesReceiptsButton from "../Action/ExportInvoicesReceiptsButton.vue";
 
 export default {
   components: {
+    ExportInvoicesReceiptsButton,
     ExportInvoicesOrderersButton,
     ExportInvoicesPatientsButton,
     ExportProbesDropdown,
