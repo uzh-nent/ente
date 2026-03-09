@@ -586,6 +586,9 @@ class PdfService implements PdfServiceInterface
         $probe = $invoice->getProbe();
         $this->addOrdererPrimaryLabeledValues($probe, $flow, $labelWidth);
 
+        $label = $this->translator->trans("Identifier", [], "entity_probe");
+        $flow->add($this->createLabeledValue($label, $probe->getIdentifier(), primary: true, boldValue: true, labelWidth: $labelWidth));
+
         $label = $this->translator->trans("Requisition identifier", [], "trait_probe_service_request");
         $flow->add($this->createLabeledValue($label, $probe->getRequisitionIdentifier(), primary: true, boldValue: true, labelWidth: $labelWidth));
     }
