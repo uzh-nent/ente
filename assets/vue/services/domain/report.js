@@ -6,7 +6,9 @@ export const createResults = function (probe, observations, organisms, translato
       let result = translator('report._interpretation.NONE')
       if (o.interpretation) {
         const organism = o.organism ? organisms.find(org => org['@id'] === o.organism) : null
-        const resultPrefix = o.interpretationMeta ? translator('observation._interpretation_meta.' + o.interpretationMeta) : translator('report._interpretation.' + o.interpretation)
+        const resultPrefix = (o.interpretation === 'NEG') ?
+          translator('observation._interpretation_meta.' + o.interpretationMeta ?? 'NONE') :
+          translator('report._interpretation.' + o.interpretation)
         result = resultPrefix + " " + (organism ? organism.displayName.replace(" (organism)", "") : pathogenLabel)
       }
       return {

@@ -60,9 +60,8 @@ import SearchableRadio from "../../Library/FormInput/SearchableRadio.vue";
 import TextAreaWithStandardText from "../../Library/FormInput/TextAreaWithStandardText.vue";
 
 const createInterpretationMetas = function (translator) {
-  const values = ['NO_GROWTH', 'MIXED_CULTURE', 'NEGATIVE']
+  const values = ['NO_GROWTH', 'MIXED_CULTURE', 'NEGATIVE', 'NONE']
   return values.map(value => ({label: translator(`observation._interpretation_meta.${value}`), value}))
-      .concat({label: translator('_form.no_information'), value: null})
 }
 
 export default {
