@@ -486,6 +486,12 @@
       "NONE": "Keine Aussage möglich",
       "PENDING": "Resultat folgt (Analyse in Bearbeitung)"
     },
+    "_interpretation_meta": {
+      "NO_GROWTH": "Keine Aussage (kein Wachstum) zu",
+      "MIXED_CULTURE": "Keine Aussage (Mischkultur) zu",
+      "NEGATIVE": "Kein Nachweis von",
+      "NONE": "Keine Aussage zu"
+    },
     "service": {
       "identification_of": "Identifizierung / Typisierung von"
     },
