@@ -28,7 +28,7 @@ export const createResults = function (probe, observations, organisms, translato
         result = resultPrefix + " " + analysisType
       }
       return {
-        analysis: analysisType + " (PCR)",
+        analysis: analysisType,
         method: mapToPcrMethodCode(o.analysisType),
         result,
       }
@@ -50,7 +50,7 @@ export const createResults = function (probe, observations, organisms, translato
       } else {
         const analysisTypeLabel = translator('report._analysis_type.' + analysisType);
         return {
-          analysis: analysisTypeLabel + " (PCR)",
+          analysis: analysisTypeLabel,
           method: mapToPcrMethodCode(analysisTypeLabel),
           result,
         }
