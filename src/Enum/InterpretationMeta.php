@@ -9,6 +9,7 @@ enum InterpretationMeta : string implements TranslatableInterface
 {
     case NO_GROWTH = 'NO_GROWTH';
     case MIXED_CULTURE = 'MIXED_CULTURE';
+    case NEGATIVE = 'NEGATIVE';
 
     public function trans(TranslatorInterface $translator, ?string $locale = null): string
     {

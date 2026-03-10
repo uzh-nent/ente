@@ -11,6 +11,7 @@
   "_form": {
     "other_or_unknown": "Anderes/Unbekannt",
     "other": "Anderes",
+    "no_information": "Kein Aussage",
     "search": "Suchen",
     "reference_is_different": "Die Stammdaten sind anders wie hier erfasst.",
     "use_reference": "Stammdaten übertragen",
@@ -404,7 +405,13 @@
     },
     "_interpretation_meta": {
       "NO_GROWTH": "Kein Wachstum",
-      "MIXED_CULTURE": "Mischkultur"
+      "MIXED_CULTURE": "Mischkultur",
+      "NEGATIVE": "Kein Nachweis"
+    },
+    "_interpretation_meta_short": {
+      "NO_GROWTH": "kA Kein Wachstum",
+      "MIXED_CULTURE": "kA Mischkultur",
+      "NEGATIVE": "Kein Nachweis"
     }
   },
   "elm_report": {
