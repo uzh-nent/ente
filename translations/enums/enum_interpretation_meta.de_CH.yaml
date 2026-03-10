@@ -1,5 +1,6 @@
 enum:
   title: "Grund"
 
-NO_GROWTH: 'Kein Wachstum'
-MIXED_CULTURE: 'Mischkultur'
+NO_GROWTH: 'Keine Aussage - Kein Wachstum'
+MIXED_CULTURE: 'Keine Aussage - Mischkultur'
+NEGATIVE: 'Kein Nachweis'

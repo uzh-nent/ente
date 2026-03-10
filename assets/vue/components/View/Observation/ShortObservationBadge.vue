@@ -30,7 +30,7 @@ export default {
       if (this.observation.analysisType === 'IDENTIFICATION') {
         if (this.observation.interpretation === 'NEG') {
           if (this.observation.interpretationMeta) {
-            return this.$t(`observation._interpretation_meta.${this.observation.interpretationMeta}`)
+            return this.$t(`observation._interpretation_meta_short.${this.observation.interpretationMeta}`)
           }
 
           return this.$t('observation.identification_failed')
