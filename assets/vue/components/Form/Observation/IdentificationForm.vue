@@ -135,9 +135,11 @@ export default {
       handler: function (identificationSuccessful) {
         if (identificationSuccessful) {
           this.fields.organism.rules = [requiredRule]
+          this.fields.interpretationMeta.rules = []
           this.entity.interpretationMeta = null
         } else {
           this.entity.interpretationMeta = 'MIXED_CULTURE'
+          this.fields.interpretationMeta.rules = [requiredRule]
           this.searchOrganism = ''
           this.entity.organism = null
           this.fields.organism.rules = []
