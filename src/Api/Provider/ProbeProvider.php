@@ -95,6 +95,15 @@ readonly class ProbeProvider implements ProviderInterface
             ...$observationHeader
         ];
 
+        $proposedWidths = [
+            15, 20, 20, 15, 15,
+            30, 30,
+            15, 10, 30, 15, 15,
+            30, 15, 15, 15, 15, 15,
+            15,
+            ...array_fill(0, count($observationHeader), 20),
+        ];
+
         $content = [];
 
 
@@ -123,7 +132,7 @@ readonly class ProbeProvider implements ProviderInterface
                 $probe->getOrdererOrgName(),
                 $probe->getOrdererPracFullName(),
 
-                $probe->getSpecimenCollectionDate()?->format('Y-m-d') ?? '',
+                $probe->getSpecimenCollectionDate()?->format('d.m.Y') ?? '',
                 $specimenSource,
                 $specimen,
                 $probe->getSpecimenLocation(),
@@ -136,13 +145,13 @@ readonly class ProbeProvider implements ProviderInterface
                 $probe->getAnimalKeeperName(),
                 $probe->getAnimalName(),
 
-                $probe->getAnalysisStartDate()?->format('Y-m-d') ?? '',
+                $probe->getAnalysisStartDate()?->format('d.m.Y') ?? '',
 
                 ...$observations,
             ];
         }
 
-        return $this->exportService->exportAsExcel('probes.xlsx', $header, $content);
+        return $this->exportService->exportAsExcel('probes.xlsx', $header, $content, $proposedWidths);
     }
 
     /**
