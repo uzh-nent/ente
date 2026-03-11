@@ -85,6 +85,8 @@ readonly class ProbeProvider implements ProviderInterface
 
             $this->translator->trans("entity.title", [], "entity_patient"),
             $this->translator->trans("Birth date", [], "entity_patient"),
+            $this->translator->trans("City", [], "trait_address"),
+            $this->translator->trans("Address lines", [], "trait_address"),
             $this->translator->trans("entity.title", [], "entity_animal_keeper"),
             $this->translator->trans("Animal name", [], "trait_probe_specimen_meta"),
 
@@ -128,7 +130,9 @@ readonly class ProbeProvider implements ProviderInterface
                 $probe->getAnamnesisTravels(),
 
                 $probe->getPatientFullName(),
-                $probe->getPatientBirthDate()?->format('Y-m-d') ?? '',
+                $probe->getPatientBirthDate()?->format('d.m.Y') ?? '',
+                $probe->getPatientPostalCode() . ' ' . $probe->getPatientCity(),
+                str_replace("\n", ", ", $probe->getPatientAddressLines() ?? ""),
                 $probe->getAnimalKeeperName(),
                 $probe->getAnimalName(),
 
