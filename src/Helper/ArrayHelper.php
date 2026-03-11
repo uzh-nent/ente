@@ -16,7 +16,7 @@ class ArrayHelper
         foreach ($array as $key => $value) {
             if ($value === null) {
                 unset($array[$key]);
-            } else if (is_array($value)) {
+            } elseif (is_array($value)) {
                 $entries = self::stripNullEntries($value);
                 if (count($entries) > 0) {
                     $array[$key] = $entries;
