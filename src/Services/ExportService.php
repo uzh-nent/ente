@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Services\Interfaces\ExportServiceInterface;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\IWriter;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 readonly class ExportService implements ExportServiceInterface
 {
-    public function exportAsExcel(string $filename, array $header, array $content): Response
+    public function exportAsExcel(string $filename, array $header, array $content, array $proposedWidths): Response
     {
         $spreadsheet = new Spreadsheet();
         $activeWorksheet = $spreadsheet->getActiveSheet();
@@ -20,6 +21,11 @@ readonly class ExportService implements ExportServiceInterface
             $coordinate = [$i + 1, 1];
             $activeWorksheet->getStyle($coordinate)->getFont()->setBold(true);
             $activeWorksheet->setCellValue($coordinate, $header[$i]);
+        }
+
+        for ($i = 0; $i < count($proposedWidths); ++$i) {
+            $columnLetter = Coordinate::stringFromColumnIndex($i + 1);
+            $activeWorksheet->getColumnDimension($columnLetter)->setWidth($proposedWidths[$i]);
         }
 
         for ($i = 0; $i < count($content); ++$i) {

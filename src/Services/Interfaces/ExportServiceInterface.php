@@ -12,7 +12,8 @@ interface ExportServiceInterface
     /**
      * @param string[]   $header
      * @param string[][] $content
+     * @param int[]      $proposedWidths
      */
-    public function exportAsExcel(string $filename, array $header, array $content): Response;
+    public function exportAsExcel(string $filename, array $header, array $content, array $proposedWidths): Response;
     public function createExcelResponse(IWriter $writer, string $filename): StreamedResponse;
 }
