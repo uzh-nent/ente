@@ -1,12 +1,14 @@
 <template>
-  <template ref="anchor"/>
-  <flat-pickr
-      :placeholder="placeholder"
-      :id="id" class="form-control" :required="required"
-      :model-value="modelValue"
-      :config="datePickerConfig"
-      ref="flatPickr"
-      @blur="$emit('blur')"/>
+  <div>
+    <template ref="anchor"/>
+    <flat-pickr
+        :placeholder="placeholder"
+        :id="id" class="form-control" :required="required"
+        :model-value="modelValue"
+        :config="datePickerConfig"
+        ref="flatPickr"
+        @blur="$emit('blur')"/>
+  </div>
 </template>
 
 <script>

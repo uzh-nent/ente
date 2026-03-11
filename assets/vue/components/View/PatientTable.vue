@@ -7,19 +7,18 @@
           <th colspan="100">
             <div class="d-flex flex-row reset-table-styles gap-2">
               <filter-patient-button :template="this.filter" @filtered="filter = $event"/>
-              <div class="mw-10">
-                <date-time-input
-                    id="birthDateFilter" format="date"
-                    :placeholder="$t('_view.filter_by_birth_date')"
-                    v-model="filterBirthDate"/>
-              </div>
+              <date-time-input
+                  id="birthDateFilter" format="date"
+                  class="mw-10"
+                  :placeholder="$t('_view.filter_by_birth_date')"
+                  v-model="filterBirthDate"/>
               <input type="text" class="form-control mw-30"
                      :placeholder="$t('_view.search_by_family_name')"
                      v-model="searchFamilyName">
               <ahv-number-input class="form-control mw-30"
                                 id="ahvNumberFilter"
                                 :placeholder="$t('_view.search_by_ahv_numer')"
-                                v-model="searchAhvNumber" />
+                                v-model="searchAhvNumber"/>
             </div>
           </th>
         </tr>
