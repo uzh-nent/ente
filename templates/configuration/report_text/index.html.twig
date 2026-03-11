@@ -28,10 +28,16 @@
                 <td>{{ reportText.pathogen|trans }}</td>
                 <td>{{ reportText.text }}</td>
                 <td class="w-minimal">
-                    <a class="btn btn-outline-secondary"
-                       href="{{ path("configuration_report_text_edit", {"reportText" : reportText.id}) }}">
-                        <i class="fas fa-edit"></i>
-                    </a>
+                    <span class="btn-group">
+                        <a class="btn btn-outline-secondary"
+                           href="{{ path("configuration_report_text_edit", {"reportText" : reportText.id}) }}">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="btn btn-outline-danger"
+                           href="{{ path("configuration_report_text_remove", {"reportText" : reportText.id}) }}">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </span>
                 </td>
             </tr>
         {% endfor %}
