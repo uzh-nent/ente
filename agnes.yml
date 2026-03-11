@@ -24,6 +24,8 @@ data:
       required: false
     - path: .cert/elm-sslkey.key
       required: false
+    - path: public/favicon.ico
+      required: false
 
 scripts:
   build:

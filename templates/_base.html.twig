@@ -13,7 +13,7 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
-<body>
+<body {% if "staging" in app.request.host or true %}class="staging"{% endif %}>
 
 {% if shows_flashes is not defined %}
     {% set flashes = app.session.flashbag.all() %}

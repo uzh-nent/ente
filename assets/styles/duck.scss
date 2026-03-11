@@ -4,10 +4,19 @@
   --color-light-orange-1: #fece00;
   --color-light-orange-2: #fcaa1d;
   --color-orange: #f57a00;
+  --color-blue: #80d1ff;
   --color-blue-1: #48befd;
   --color-blue-2: #3ba5f1;
+  --color-dark-blue: #1893ec;
   --duck-speed: 1s;
   --duck-speed-half: calc(var(--duck-speed) / 2);
+}
+
+body.staging {
+  --color-yellow: var(--color-blue);
+  --color-light-orange-1: var(--color-blue-1);
+  --color-light-orange-2: var(--color-blue-2);
+  --color-orange: var(--color-dark-blue);
 }
 
 .duck__outer-wrapper {
