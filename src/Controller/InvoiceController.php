@@ -59,8 +59,13 @@ class InvoiceController extends AbstractController
                 continue;
             }
 
-            if (count($probe->getInvoices()) !== 1) {
-                $errors[] = "No unique invoice defined for probe $identifier.";
+            if (count($probe->getInvoices()) === 0) {
+                $errors[] = "No invoice defined for probe $identifier.";
+                continue;
+            }
+
+            if (count($probe->getInvoices()) > 1) {
+                $errors[] = "Multiple invoices defined for probe $identifier.";
                 continue;
             }
 
