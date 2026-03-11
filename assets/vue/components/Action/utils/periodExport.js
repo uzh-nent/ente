@@ -19,7 +19,7 @@ export const periodExport = {
     },
     extendedTemplate: function () {
       const from = moment().startOf('month').subtract(1, 'month')
-      const to = moment().startOf('month').subtract(1, 'day')
+      const to = moment()
       return {
         ...this.template,
         'period[after]': from.format('YYYY-MM-DD'),
