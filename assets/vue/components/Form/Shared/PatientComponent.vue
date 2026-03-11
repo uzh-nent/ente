@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       fields: {
-        birthDate: createField(requiredRule),
+        birthDate: createField(),
         ahvNumber: createField(ahvNumberLengthRule,ahvNumberCheckRule),
       },
       entity: {

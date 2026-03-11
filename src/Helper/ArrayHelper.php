@@ -14,16 +14,15 @@ class ArrayHelper
     public static function stripNullEntries(array $array): array
     {
         foreach ($array as $key => $value) {
-            if (is_array($value)) {
+            if ($value === null) {
+                unset($array[$key]);
+            } else if (is_array($value)) {
                 $entries = self::stripNullEntries($value);
                 if (count($entries) > 0) {
                     $array[$key] = $entries;
                 } else {
                     unset($array[$key]);
                 }
-            }
-            if ($array[$key] === null) {
-                unset($array[$key]);
             }
         }
         return $array;
