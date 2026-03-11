@@ -27,17 +27,6 @@ export default {}
 </script>
 
 <style scoped>
-:root {
-  --color-yellow: #ffed02;
-  --color-light-orange-1: #fece00;
-  --color-light-orange-2: #fcaa1d;
-  --color-orange: #f57a00;
-  --color-blue-1: #48befd;
-  --color-blue-2: #3ba5f1;
-  --duck-speed: 1s;
-  --duck-speed-half: calc(var(--duck-speed) / 2);
-}
-
 .duck__outer-wrapper {
   display: inline-block;
   margin-top: -0.5em;
