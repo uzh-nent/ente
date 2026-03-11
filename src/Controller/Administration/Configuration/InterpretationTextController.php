@@ -2,7 +2,10 @@
 
 namespace App\Controller\Administration\Configuration;
 
+use App\Entity\Era;
+use App\Entity\EraEntry;
 use App\Entity\InterpretationText;
+use App\Form\DeleteType;
 use App\Form\InterpretationTextType;
 use App\Helper\DoctrineHelper;
 use Doctrine\Persistence\ManagerRegistry;
@@ -64,5 +67,24 @@ class InterpretationTextController extends AbstractController
         }
 
         return $this->render('configuration/interpretation_text/edit.html.twig', ['form' => $form->createView()]);
+    }
+
+    #[Route('/interpretation_text/{interpretationText}/remove', name: 'configuration_interpretation_text_remove')]
+    public function remove(Request $request, InterpretationText $interpretationText, TranslatorInterface $translator, ManagerRegistry $registry): Response
+    {
+        $form = $this->createForm(DeleteType::class, $interpretationText)
+            ->add('submit', SubmitType::class, ['label' => 'interpretation_text_remove.submit', 'translation_domain' => 'configuration', 'attr' => ['class' => 'btn btn-danger']]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            DoctrineHelper::removeAndFlush($registry, $interpretationText);
+
+            $message = $translator->trans('interpretation_text_remove.success.removed', [], 'configuration');
+            $this->addFlash('success', $message);
+
+            return $this->redirect($this->generateUrl('configuration_interpretation_texts'));
+        }
+
+        return $this->render('configuration/interpretation_text/remove.html.twig', ['form' => $form->createView(), 'interpretationText' => $interpretationText]);
     }
 }

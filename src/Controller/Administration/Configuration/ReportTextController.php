@@ -2,7 +2,9 @@
 
 namespace App\Controller\Administration\Configuration;
 
+use App\Entity\InterpretationText;
 use App\Entity\ReportText;
+use App\Form\DeleteType;
 use App\Form\ReportTextType;
 use App\Helper\DoctrineHelper;
 use Doctrine\Persistence\ManagerRegistry;
@@ -64,5 +66,24 @@ class ReportTextController extends AbstractController
         }
 
         return $this->render('configuration/report_text/edit.html.twig', ['form' => $form->createView()]);
+    }
+
+    #[Route('/report_text/{reportText}/remove', name: 'configuration_report_text_remove')]
+    public function remove(Request $request, ReportText $reportText, TranslatorInterface $translator, ManagerRegistry $registry): Response
+    {
+        $form = $this->createForm(DeleteType::class, $reportText)
+            ->add('submit', SubmitType::class, ['label' => 'report_text_remove.submit', 'translation_domain' => 'configuration', 'attr' => ['class' => 'btn btn-danger']]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            DoctrineHelper::removeAndFlush($registry, $reportText);
+
+            $message = $translator->trans('report_text_remove.success.removed', [], 'configuration');
+            $this->addFlash('success', $message);
+
+            return $this->redirect($this->generateUrl('configuration_report_texts'));
+        }
+
+        return $this->render('configuration/report_text/remove.html.twig', ['form' => $form->createView(), 'reportText' => $reportText]);
     }
 }

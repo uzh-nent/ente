@@ -33,6 +33,14 @@ report_text_edit:
   success:
     stored: 'Textbaustein erfolgreich gespeichert.'
 
+report_text_remove:
+  title: "Textbaustein Bericht entfernen"
+  description: "Textbaustein entfernen"
+  submit: 'Entfernen'
+  success:
+    removed: 'Textbaustein erfolgreich entfernt.'
+  confirm: 'Wirklich den Textbaustein entfernen?'
+
 interpretation_texts:
   title: "Textbausteine Resultat"
   description: "Alle Textbausteine"
@@ -48,3 +56,11 @@ interpretation_text_edit:
   description: "Textbaustein bearbeiten"
   success:
     stored: 'Textbaustein erfolgreich gespeichert.'
+
+interpretation_text_remove:
+  title: "Textbaustein Resultat entfernen"
+  description: "Textbaustein entfernen"
+  submit: 'Entfernen'
+  success:
+    removed: 'Textbaustein erfolgreich entfernt.'
+  confirm: 'Wirklich den Textbaustein entfernen?'

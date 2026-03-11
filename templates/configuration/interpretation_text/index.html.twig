@@ -28,10 +28,16 @@
                 <td>{{ interpretationText.pathogen|trans }}</td>
                 <td>{{ interpretationText.text }}</td>
                 <td class="w-minimal">
-                    <a class="btn btn-outline-secondary"
-                       href="{{ path("configuration_interpretation_text_edit", {"interpretationText" : interpretationText.id}) }}">
-                        <i class="fas fa-edit"></i>
-                    </a>
+                    <span class="btn-group">
+                        <a class="btn btn-outline-secondary"
+                           href="{{ path("configuration_interpretation_text_edit", {"interpretationText" : interpretationText.id}) }}">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="btn btn-outline-danger"
+                           href="{{ path("configuration_interpretation_text_remove", {"interpretationText" : interpretationText.id}) }}">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </span>
                 </td>
             </tr>
         {% endfor %}

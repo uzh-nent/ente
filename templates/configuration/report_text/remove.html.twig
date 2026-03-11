@@ -1,0 +1,12 @@
+{% extends "_content.html.twig" %}
+
+{% block title %}{{ 'report_text_remove.title'|trans }}{% endblock %}
+
+{% trans_default_domain "configuration" %}
+
+{% block inner_content %}
+    <div class="container-text">
+        <p class="alert alert-warning">{{ "report_text_remove.confirm"|trans }}</p>
+        {{ form(form) }}
+    </div>
+{% endblock %}
