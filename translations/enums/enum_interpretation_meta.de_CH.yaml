@@ -4,3 +4,4 @@ enum:
 NO_GROWTH: 'Keine Aussage - Kein Wachstum'
 MIXED_CULTURE: 'Keine Aussage - Mischkultur'
 NEGATIVE: 'Kein Nachweis'
+NONE: 'Keine Aussage'
