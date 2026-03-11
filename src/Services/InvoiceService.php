@@ -208,8 +208,12 @@ readonly class InvoiceService implements InvoiceServiceInterface
         $invoiceSheet->setCellValue('J5', $totalAmount);
         self::setAmountCellStyle($invoiceSheet, 'J5');
 
-        foreach (array_reverse($invoices) as $invoice) {
+        foreach (array_reverse($invoices) as $index => $invoice) {
             $invoiceSheet->insertNewRowBefore(4);
+            if ($index > 0) {
+                $invoiceSheet->insertNewRowBefore(4);
+            }
+
             $probe = $invoice->getProbe();
             if (!$probe) {
                 continue;
