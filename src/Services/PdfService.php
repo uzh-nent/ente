@@ -579,9 +579,7 @@ class PdfService implements PdfServiceInterface
 
     private function addInvoiceData(Invoice $invoice, Flow $flow): void
     {
-        $label = $this->translator->trans("Date", [], "entity_invoice");
         $labelWidth = mm2p(25);
-        $flow->add($this->createLabeledValue($label, $invoice->getDate()->format("d.m.Y"), primary: true, labelWidth: $labelWidth));
 
         $probe = $invoice->getProbe();
         $this->addOrdererPrimaryLabeledValues($probe, $flow, $labelWidth);
