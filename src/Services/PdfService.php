@@ -519,12 +519,11 @@ class PdfService implements PdfServiceInterface
             $innerFlow = new Flow(FlowDirection::COLUMN);
 
             $text = new Text();
+            $pathogen = $probe->getPathogen() ? $probe->getPathogen()->trans($this->translator) : $probe->getPathogenName();
             if ($analysisType === AnalysisType::IDENTIFICATION) {
                 $text->addSpan($analysisLabel . " ", $this->boldTextStyle, $this->fontSize);
-                $pathogen = $probe->getPathogen() ? $probe->getPathogen()->trans($this->translator) : $probe->getPathogenName();
                 $text->addSpan($pathogen, $this->emphasisTextStyle, $this->fontSize);
             } else {
-                $pathogen = Pathogen::ESCHERICHIA_COLI->trans($this->translator);
                 $text->addSpan($pathogen . " ", $this->emphasisTextStyle, $this->fontSize);
                 $text->addSpan($analysisLabel, $this->boldTextStyle, $this->fontSize);
             }

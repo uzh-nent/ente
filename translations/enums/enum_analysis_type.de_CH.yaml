@@ -9,6 +9,7 @@ EC_EPEC: Enteropathogene (EPEC)
 EC_ETEC: Enterotoxische (ETEC)
 EC_EIEC: Enteroinvasive (EIEC) / Shigella
 EC_EAEC: Enteroaggregative (EAEC)
+VB_TOXIN: Cholera-Toxin (CTX)
 
 short:
   IDENTIFICATION: Ident.
