@@ -42,7 +42,7 @@ class InterpretationText
     #[Groups(['interpretation-text:read'])]
     private ?Pathogen $pathogen = null;
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['interpretation-text:read'])]
     private ?string $text = null;
 
