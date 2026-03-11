@@ -856,7 +856,7 @@ class PdfService implements PdfServiceInterface
         return $contentBlock;
     }
 
-    private function createLabeledValue(string $label, ?string $value = "", bool $primary = false, bool $boldValue = false, ?float $labelWidth = null): AbstractElement
+    private function createLabeledValue(string $label, ?string $value = null, bool $primary = false, bool $boldValue = false, ?float $labelWidth = null): AbstractElement
     {
         $labelFlow = new Flow();
 
@@ -872,7 +872,7 @@ class PdfService implements PdfServiceInterface
         $labelFlow->add($contentBlock);
 
         $text = new Text();
-        $text->addSpan($value, $boldValue ? $this->boldTextStyle : $this->textStyle, $this->fontSize, 1);
+        $text->addSpan($value ?? "", $boldValue ? $this->boldTextStyle : $this->textStyle, $this->fontSize, 1);
         $labelFlow->add($text);
 
         return $labelFlow;

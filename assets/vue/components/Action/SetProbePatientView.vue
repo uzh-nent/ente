@@ -1,32 +1,32 @@
 <template>
-    <form-field for-id="patient" :label="$t('patient._name')">
-      <actionable-preview class="mb-2" v-if="patient">
-        <patient-view :patient="patient"/>
-        <template #actions>
-          <edit-linked-patient-button class="m-2" :entity="patient" @update="patientOverride = $event" />
-        </template>
-      </actionable-preview>
+  <form-field for-id="patient" :label="$t('patient._name')">
+    <actionable-preview class="mb-2" v-if="patient">
+      <patient-view :patient="patient"/>
+      <template #actions>
+        <edit-linked-patient-button class="m-2" :entity="patient" @update="patientOverride = $event"/>
+      </template>
+    </actionable-preview>
 
-      <div class="d-flex flex-row reset-table-styles gap-2 mb-2">
-        <date-time-input
-            class="mw-10" id="birthDateFilter" format="date"
-            :placeholder="$t('_view.filter_by_birth_date')"
-            v-model="filterBirthDate"/>
-        <input type="text" class="form-control flex-grow-1"
-               :placeholder="$t('_view.search_by_ahv_numer')"
-               v-model="searchAhvNumber">
-        <add-patient-button
-            button-size="sm"
-            :template="{birthDate: filterBirthDate, ahvNumber: searchAhvNumber}" @added="addedPatient"/>
-      </div>
+    <div class="d-flex flex-row reset-table-styles gap-2 mb-2">
+      <date-time-input
+          class="mw-10" id="birthDateFilter" format="date"
+          :placeholder="$t('_view.filter_by_birth_date')"
+          v-model="filterBirthDate"/>
+      <input type="text" class="form-control flex-grow-1"
+             :placeholder="$t('_view.search_by_ahv_numer')"
+             v-model="searchAhvNumber">
+      <add-patient-button
+          button-size="sm"
+          :template="{birthDate: filterBirthDate, ahvNumber: searchAhvNumber}" @added="addedPatient"/>
+    </div>
 
-      <div class="mb-2">
-        <radio id="patient" :choices="patients" :value-string="value => value['@id']"
-               v-model="selectedPatient" />
-        <span class="form-text">{{ itemHits }}</span>
-      </div>
+    <div class="mb-2">
+      <radio id="patient" :choices="patients" :value-string="value => value['@id']"
+             v-model="selectedPatient"/>
+      <span class="form-text">{{ itemHits }}</span>
+    </div>
 
-    </form-field>
+  </form-field>
 </template>
 
 <script>
@@ -155,6 +155,10 @@ export default {
       this.filterBirthDate = this.searchAhvNumber = null // first empty to ensure afterwards reload
       this.filterBirthDate = patient.birthDate
       this.searchAhvNumber = patient.ahvNumber
+
+      if (!patient.birthDate && !patient.ahvNumber) {
+        this.items = [patient]
+      }
     },
   }
 }

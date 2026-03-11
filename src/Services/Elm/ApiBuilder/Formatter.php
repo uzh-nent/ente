@@ -72,7 +72,7 @@ readonly class Formatter
 
     public function normalizeNullableArray(array $array): array
     {
-        /** empty entries must not be delivered to the API TODO cite */
+        /** empty entries must not be delivered to the API */
         return ArrayHelper::stripNullEntries($array);
     }
 

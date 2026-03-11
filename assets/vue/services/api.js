@@ -48,7 +48,7 @@ const restClient = {
     // undefined values would not be serialized, hence transform to null
     const instance = { ...payload}
     for (const prop in payload) {
-      if (Object.prototype.hasOwnProperty.call(payload, prop) && payload[prop] === undefined) {
+      if (Object.prototype.hasOwnProperty.call(payload, prop) && (payload[prop] === undefined || payload[prop] === "")) {
         instance[prop] = null
       }
     }
