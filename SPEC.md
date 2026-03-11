@@ -14,6 +14,13 @@ perform analysis & report results:
 - submit ELM-report Salmonella, Shingella, Listeria, Vibrio Cholerae and STEC (EHEC). 
 - generate PDF-report of results for customers
 
+statistics & invoice:
+- export fixed pre-2025 data
+- export filtered post-2025 data
+- specify amount invoice per probe
+- generate single invoices for patients and joint invoices for orderers
+- generate vouchers for patients to recover their payed amount
+
 manage data:
 - view active and all probes
 - manage master data (organizations, practitioners, patients, animal keeperts)
@@ -85,38 +92,16 @@ Probedaten:
 - ElmReport für (ELM BAG API)[https://elm.wiki.bagapps.ch/], Report für PDF
 
 
-## Future features
+## Possible next development steps
 
-new features v1.3:
-- interne textbausteine
-- reason for "identification not possible": "kein wachstum", "mischkultur", "andere". check if other default texts useful
-- refactor address / contact partial forms
-  -	add structured contact info (email, tel) to animal keeper / practitioner / organization / patient
-  -	add GLN to practitioner
-  -	add UID/BER to organization / animal keeper
-- extend ELM API with new fields
-- add monocytogenes to primary probes, polish custom pathogen case
-- Statistik (until 2025) -> separate P/N probes, allow to choose date
-- Statistik (from 2025) -> allow to export csv from table search result, with observation results inline
-- Invoicing:
-  - add invoice per probe
-  - download invoices per patient (einzelrechnungen)
-  - download invoices per orderer (sammelrechnungen)
-  - set invoice number
-  - download rückforderungsbelege
-
-questions:
-- for all primary probes, append (PCR) in PDF report, or only for E.coli?
-- stx1/2 not added, too much confusing UX (e.g., in invoicing)
-- export: patient address useful why?
-- tarif position with .10 if reduced rate, correct?
-- invoicing towards animal keepers?
-
-features v?:
+major:
 - let customer create service request online
+- track analysis, not result (e.g., STEC E. coli Stx1, Stx2 separate tracking); possibly track more analysis results from the Laborblatt
+
+minor:
 - improve statistics: add visuals to all-probes view
 - improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc)
 - improve reference data: allow single reference to be in multiple collections, then prevent double storage
-- track analysis, not result (e.g., STEC E. coli Stx1, Stx2 separate tracking); possibly track more analysis results from the Laborblatt
 - improve ELM api integration (sync value sets, add patient reporting type such as anonymous (for new pathogens) or initials (campylobacter) to leading codes, add current location of patient)
 - invoice runs for more safety during invoicing (e.g., no probe is forgotten to invoice), to safely invoice many probes
+- send report directly per (HIN-)mail
