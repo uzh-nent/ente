@@ -193,6 +193,7 @@ const api = {
     return restClient.get(id)
   },
   getProbesExcel: function (query) {
+    query['pagination'] = 0
     const url = restClient._getFullUrl('/api/probes', query)
     return restClient.getExcel(url)
   },
