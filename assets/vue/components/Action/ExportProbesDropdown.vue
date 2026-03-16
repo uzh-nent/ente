@@ -59,7 +59,7 @@ export default {
       return this.exportProbes({})
     },
     exportOldProbes: function (laboratoryFunction) {
-      window.location.href = router.pre2025ProbesExport(laboratoryFunction)
+      window.location.href = router.pre2026ProbesExport(laboratoryFunction)
     },
     exportProbes: async function (filter) {
       this.downloading = true;
