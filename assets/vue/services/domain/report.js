@@ -26,7 +26,7 @@ export const createResults = function (probe, observations, organisms, translato
       }
       return {
         analysis: analysisType,
-        method: mapToPcrMethodCode(o.analysisType),
+        method: mapToMethodCode(o.analysisType),
         result,
       }
     }
@@ -48,7 +48,7 @@ export const createResults = function (probe, observations, organisms, translato
         const analysisTypeLabel = translator('report._analysis_type.' + analysisType);
         return {
           analysis: analysisTypeLabel,
-          method: mapToPcrMethodCode(analysisTypeLabel),
+          method: mapToMethodCode(analysisTypeLabel),
           result,
         }
       }
@@ -57,7 +57,7 @@ export const createResults = function (probe, observations, organisms, translato
   return observationResults.concat(otherResults)
 }
 
-const mapToPcrMethodCode = function (analysisType) {
+const mapToMethodCode = function (analysisType) {
   switch (analysisType) {
     case 'EC_EAEC':
       return 58;
