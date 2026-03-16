@@ -596,11 +596,12 @@ class PdfService implements PdfServiceInterface
     private function addServiceRequest(Probe $probe, Flow $flow, ?array $copyToAddresses): void
     {
         $label = $this->translator->trans("Service", [], "entity_probe");
+        $pathogen = $probe->getPathogen() ? $probe->getPathogen()->trans($this->translator) : $probe->getPathogenName();
         if ($probe->getLaboratoryFunction() === LaboratoryFunction::REFERENCE) {
-            $value = AnalysisType::IDENTIFICATION->trans($this->translator) . " " . $probe->getPathogen()->trans($this->translator);
+            $value = AnalysisType::IDENTIFICATION->trans($this->translator) . " " . $pathogen;
         } else {
             $analysisTypes = array_map(fn(AnalysisType $v) => $v->trans($this->translator), $probe->getAnalysisTypes());
-            $value = Pathogen::ESCHERICHIA_COLI->trans($this->translator) . " " . join(", ", $analysisTypes);
+            $value = $pathogen . " " . join(", ", $analysisTypes);
         }
         $labelWidth = mm2p(25);
         $flow->add($this->createLabeledValue($label, $value, primary: true, labelWidth: $labelWidth));
