@@ -147,8 +147,8 @@ const router = {
   reportPdf: function (report) {
     return '/reports/' + iriToId(report['@id']) + '/download/' + report.filename
   },
-  pre2025ProbesExport: function (laboratoryFunction) {
-    return '/probes/export/pre2025?laboratoryFunction=' + laboratoryFunction
+  pre2026ProbesExport: function (laboratoryFunction) {
+    return '/probes/export/pre2026?laboratoryFunction=' + laboratoryFunction
   }
 }
 

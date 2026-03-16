@@ -51,9 +51,9 @@ readonly class FileService implements FileServiceInterface
         return $this->persistentFilesDir . '/' . $folder;
     }
 
-    public function getProbesExportPre2025(LaboratoryFunction $function): string
+    public function getProbesExportPre2026(LaboratoryFunction $function): string
     {
         $filename = $function === LaboratoryFunction::PRIMARY ? 'primary' : 'reference';
-        return  $this->persistentFilesDir . '/pre2025/' . $filename . '.xlsx';
+        return  $this->persistentFilesDir . '/pre2026/' . $filename . '.xlsx';
     }
 }

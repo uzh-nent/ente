@@ -96,13 +96,13 @@ class ProbeController extends AbstractController
         return $this->render('probe/all_view.html.twig', ['probe' => $probe]);
     }
 
-    #[Route('/probes/export/pre2025', name: 'probe_export_all')]
+    #[Route('/probes/export/pre2026', name: 'probe_export_all')]
     public function exportOldView(Request $request, FileServiceInterface $fileService): Response
     {
         $rawLaboratoryFunction = $request->query->get('laboratoryFunction');
         $laboratoryFunction = LaboratoryFunction::tryFrom($rawLaboratoryFunction ?? "") ?? LaboratoryFunction::REFERENCE;
 
-        $path = $fileService->getProbesExportPre2025($laboratoryFunction);
+        $path = $fileService->getProbesExportPre2026($laboratoryFunction);
         return $this->file($path);
     }
 
