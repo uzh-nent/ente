@@ -100,7 +100,7 @@ major:
 
 minor:
 - improve statistics: add visuals to all-probes view
-- improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc)
+- improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc), multiple invoice addresses
 - improve reference data: allow single reference to be in multiple collections, then prevent double storage
 - improve ELM api integration (sync value sets, add patient reporting type such as anonymous (for new pathogens) or initials (campylobacter) to leading codes, add current location of patient)
 - invoice runs for more safety during invoicing (e.g., no probe is forgotten to invoice), to safely invoice many probes
