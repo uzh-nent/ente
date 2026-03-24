@@ -9,6 +9,7 @@
     <form-field for-id="receiver" :label="$t('invoice.receiver')"
                 :field="fields.receiver">
       <radio id="receiver" :choices="receivers" :field="fields.receiver"
+             :disabled="receivers.length === 1"
              v-model="entity.receiver" @update:model-value="validateField('receiver')"/>
     </form-field>
     <form-field for-id="address" :label="$t('invoice.address')" v-if="entity.receiver"
@@ -34,7 +35,7 @@ import {
 } from "../../services/domain/formatter";
 import TextArea from "../Library/FormInput/TextArea.vue";
 
-const createReceiver = function (translator) {
+const createReceivers = function (translator) {
   const values = ['ORDERER', 'PATIENT']
   return values.map(value => ({label: translator(`invoice._receiver.${value}`), value}))
 }
@@ -87,7 +88,12 @@ export default {
   },
   computed: {
     receivers: function () {
-      return createReceiver(this.$t)
+      const receivers = createReceivers(this.$t)
+      if (!this.patient) {
+        return receivers.filter(r => r.value !== 'PATIENT')
+      }
+
+      return receivers
     },
   },
   methods: {
@@ -111,7 +117,15 @@ export default {
   },
   watch: {
     'entity.receiver': function () { this.setDefaultAddress() },
-    isLoadingEntities: function () { this.setDefaultAddress() }
+    isLoadingEntities: function () { this.setDefaultAddress() },
+    receivers: {
+      immediate: true,
+      handler: function (receivers) {
+        if (receivers.length === 1) {
+          this.entity.receiver = receivers[0].value
+        }
+      }
+    },
   }
 }
 </script>

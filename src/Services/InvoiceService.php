@@ -209,6 +209,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
         self::setAmountCellStyle($invoiceSheet, 'J5');
 
         foreach (array_reverse($invoices) as $index => $invoice) {
+            /** @var Invoice $invoice */
             $invoiceSheet->insertNewRowBefore(4);
             if ($index > 0) {
                 $invoiceSheet->insertNewRowBefore(4);
@@ -222,8 +223,12 @@ readonly class InvoiceService implements InvoiceServiceInterface
             $invoiceSheet->setCellValue('A4', $probe->getIdentifier());
             $invoiceSheet->setCellValue('B4', $probe->getRequisitionIdentifier());
             $invoiceSheet->setCellValue('C4', $probe->getSpecimenCollectionDate()?->format('d.m.Y'));
-            $invoiceSheet->setCellValue('D4', $probe->getPatientFamilyName() . ", " . $probe->getPatientGivenName());
-            $invoiceSheet->setCellValue('E4', $probe->getPatientBirthDate()?->format('d.m.Y'));
+            if ($probe->getPatient()) {
+                $invoiceSheet->setCellValue('D4', $probe->getPatientFamilyName() . ", " . $probe->getPatientGivenName());
+                $invoiceSheet->setCellValue('E4', $probe->getPatientBirthDate()?->format('d.m.Y'));
+            } else {
+                $invoiceSheet->setCellValue('D4', $probe->getAnimalName());
+            }
 
             if (count($invoice->getLineItems()) === 1) {
                 $lineItem = $invoice->getLineItems()[0];

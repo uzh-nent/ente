@@ -115,11 +115,10 @@ export default {
       })
 
       this.entitiesLoading = true
-      const [patient, organization, practitioner] = await Promise.all([
-        api.get(this.probe.patient),
-        this.probe.ordererOrg ? api.get(this.probe.ordererOrg) : Promise.resolve(null),
-        this.probe.ordererPrac ? api.get(this.probe.ordererPrac) : Promise.resolve(null),
-      ])
+      const [patient, organization, practitioner] = await Promise.all(
+          [this.probe.patient, this.probe.ordererOrg, this.probe.ordererPrac]
+              .map(e => e ? api.get(e) : Promise.resolve(null))
+      )
 
       this.patient = patient
       this.organization = organization
