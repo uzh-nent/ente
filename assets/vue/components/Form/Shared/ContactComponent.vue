@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex gap-2 mb-3" v-if="!showEmail || !showPhone || !showContact">
+  <div class="d-flex gap-2 mb-3" v-if="!showEmail || !showPhone || !showContact || !showInvoiceAddress">
     <button class="btn btn-sm btn-outline-secondary" @click="show.email = true" v-if="!showEmail">
       <i class="fas fa-plus"></i>
       {{ $t('contact.email') }}
