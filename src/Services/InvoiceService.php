@@ -12,10 +12,11 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 readonly class InvoiceService implements InvoiceServiceInterface
 {
-    public function __construct(private ManagerRegistry $managerRegistry, private ExportServiceInterface $exportService)
+    public function __construct(private ManagerRegistry $managerRegistry, private ExportServiceInterface $exportService, private TranslatorInterface $translator)
     {
     }
 
@@ -227,7 +228,8 @@ readonly class InvoiceService implements InvoiceServiceInterface
                 $invoiceSheet->setCellValue('D4', $probe->getPatientFamilyName() . ", " . $probe->getPatientGivenName());
                 $invoiceSheet->setCellValue('E4', $probe->getPatientBirthDate()?->format('d.m.Y'));
             } else {
-                $invoiceSheet->setCellValue('D4', $probe->getAnimalName());
+                $description = trim($probe->getSpecimenTypeFormatted($this->translator) . " " . $probe->getAnimalName());
+                $invoiceSheet->setCellValue('D4', $description);
             }
 
             if (count($invoice->getLineItems()) === 1) {

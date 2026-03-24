@@ -642,15 +642,7 @@ class PdfService implements PdfServiceInterface
         if (!$probe->getSpecimenSource()) {
             $value = $probe->getSpecimenSourceText() ?? "";
         } else {
-            $value = $probe->getSpecimenSource()->trans($this->translator) . " ";
-
-            if ($probe->getSpecimenSource() === SpecimenSource::FOOD) {
-                $value .= $probe->getSpecimenFoodType()?->trans($this->translator) ?? $probe->getSpecimenTypeText();
-            } elseif ($probe->getSpecimenSource() === SpecimenSource::ANIMAL) {
-                $value .= $probe->getSpecimenAnimalType()?->trans($this->translator) ?? $probe->getSpecimenTypeText();
-            } elseif ($probe->getSpecimenSource() !== SpecimenSource::HUMAN) {
-                $value .= $probe->getSpecimenTypeText();
-            }
+            $value = $probe->getSpecimenSource()->trans($this->translator) . " " . $probe->getSpecimenTypeFormatted($this->translator);
         }
         $flow->add($this->createLabeledValue($label, $value, labelWidth: $labelWidth));
 

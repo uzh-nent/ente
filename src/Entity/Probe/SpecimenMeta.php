@@ -12,6 +12,7 @@ use App\Enum\SpecimenSource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 trait SpecimenMeta
 {
@@ -224,5 +225,19 @@ trait SpecimenMeta
     public function setAnamnesisTravels(?string $anamnesisTravels): void
     {
         $this->anamnesisTravels = $anamnesisTravels;
+    }
+
+    public function getSpecimenTypeFormatted(TranslatorInterface $translator): string
+    {
+        $value = '';
+        if ($this->getSpecimenSource() === SpecimenSource::FOOD) {
+            $value .= $this->getSpecimenFoodType()?->trans($translator) ?? $this->getSpecimenTypeText();
+        } elseif ($this->getSpecimenSource() === SpecimenSource::ANIMAL) {
+            $value .= $this->getSpecimenAnimalType()?->trans($translator) ?? $this->getSpecimenTypeText();
+        } elseif ($this->getSpecimenSource() !== SpecimenSource::HUMAN) {
+            $value .= $this->getSpecimenTypeText();
+        }
+
+        return $value;
     }
 }
