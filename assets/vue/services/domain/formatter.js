@@ -227,25 +227,15 @@ export const formatPatientShort = function (value) {
 }
 
 export const formatProbeService = (probe, t) => {
-  if (probe.laboratoryFunction === 'PRIMARY') {
-    const identification = t('probe._analysis_type_short.EC');
+    const identification = t('probe._analysis_type_short.IDENTIFICATION');
+    const pathogenLabel = probe.pathogen
+      ? t(`probe._pathogen_short.${probe.pathogen}`)
+      : (probe.pathogenName || '');
     const types = probe.analysisTypes
       .map(tKey => t(`probe._analysis_type_short.${tKey}`))
       .join(', ');
 
-    return `${identification} ${types}`.trim();
-  }
-
-  if (probe.laboratoryFunction === 'REFERENCE') {
-    const identification = t('probe._analysis_type_short.IDENTIFICATION');
-    const pathogenLabel = probe.pathogen
-      ? t(`probe._pathogen.${probe.pathogen}`)
-      : (probe.pathogenName || '');
-
-    return `${identification} ${pathogenLabel}`.trim();
-  }
-
-  return '';
+    return `${pathogenLabel} ${types}`.trim();
 };
 
 

@@ -312,6 +312,16 @@
       "CAMPYLOBACTER": "Campylobacter",
       "OTHER": "Andere"
     },
+    "_pathogen_short": {
+      "SALMONELLA": "Salmonella",
+      "SHIGELLA": "Shigella",
+      "YERSINIA": "Yersinia",
+      "LISTERIA_MONOCYTOGENES": "Listeria",
+      "VIBRIO_CHOLERAE": "Vibrio",
+      "ESCHERICHIA_COLI": "E. coli",
+      "CAMPYLOBACTER": "Campylobacter",
+      "OTHER": "Andere"
+    },
     "laboratory_function": "Bereich",
     "_laboratory_function": {
       "PRIMARY": "Primärlabor",
@@ -335,7 +345,6 @@
     },
     "_analysis_type_short": {
       "IDENTIFICATION": "Ident.",
-      "EC": "E.coli",
       "EC_STEC": "STEC",
       "EC_EPEC": "EPEC",
       "EC_ETEC": "ETEC",
