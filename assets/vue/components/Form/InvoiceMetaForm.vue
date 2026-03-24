@@ -92,12 +92,10 @@ export default {
   },
   methods: {
     setDefaultAddress: function () {
-      console.log("called")
       if (this.isLoadingEntities || !this.entity.receiver) {
         return
       }
 
-      console.log("executed")
       if (this.entity.receiver === 'PATIENT') {
         const patient = this.patient ?? probeConverter.reconstructPatient(this.probe)
         this.entity.address = patient.invoiceAddress ?? formatPatientAddress(patient)

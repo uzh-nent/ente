@@ -92,7 +92,6 @@ export default {
         const first = parts.shift()
         parts[0] = first + '-' + parts[0]
       }
-      console.log(digits, parts)
 
       return parts.join('.')
     },
