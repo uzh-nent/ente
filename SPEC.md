@@ -99,13 +99,14 @@ next:
 - consider PLZ with different locations
 - "auf Beiblatt und RF-Beleg unter Analyse Listeria monocytogenes ausschreiben"
 
+next technical:
+- improve reference data: allow single reference to be in multiple collections
+
 major:
 - let customer create service request online
 - track analysis, not result (e.g., STEC E. coli Stx1, Stx2 separate tracking); possibly track more analysis results from the Laborblatt
-
-minor:
 - improve statistics: add visuals to all-probes view
 - improve probes: when updating observations also keep original date (e.g., when adding cgmlst)
 - improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc), multiple invoice addresses, allow to remove stammdaten (possibly by relinking probes to other)
-- improve reference data: allow single reference to be in multiple collections & then prevent double storage, ELM api integration (sync value sets, add patient reporting type such as anonymous (for new pathogens) or initials (campylobacter) to leading codes), add current location of patient
+- improve reference data: ELM api integration (sync value sets, add patient reporting type such as anonymous (for new pathogens) or initials (campylobacter) to leading codes), add current location of patient
 - improve invoices: invoice runs for more safety during invoicing (e.g., no probe is forgotten to invoice), allow to download / store voucher per probe
