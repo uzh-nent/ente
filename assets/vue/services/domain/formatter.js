@@ -227,7 +227,6 @@ export const formatPatientShort = function (value) {
 }
 
 export const formatProbeService = (probe, t) => {
-    const identification = t('probe._analysis_type_short.IDENTIFICATION');
     const pathogenLabel = probe.pathogen
       ? t(`probe._pathogen_short.${probe.pathogen}`)
       : (probe.pathogenName || '');
