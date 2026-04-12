@@ -96,7 +96,6 @@ Probedaten:
 
 next:
 - send report directly per (HIN-)mail
-- consider PLZ with different locations
 - "auf Beiblatt und RF-Beleg unter Analyse Listeria monocytogenes ausschreiben"
 
 next technical:

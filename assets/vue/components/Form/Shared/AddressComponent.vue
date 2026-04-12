@@ -66,7 +66,7 @@ export default {
           return
         }
 
-        if (!this.fields.city.dirty) {
+        if (!this.fields.city.dirty && !this.entity.city) {
           const numberPostalCode = Number(postalCode)
           this.entity.city = postalCodes.find(entry => entry.pc === numberPostalCode)?.c
         }
