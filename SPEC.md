@@ -96,10 +96,10 @@ Probedaten:
 
 next:
 - send report directly per (HIN-)mail
-- "auf Beiblatt und RF-Beleg unter Analyse Listeria monocytogenes ausschreiben"
 
 next technical:
 - improve reference data: allow single reference to be in multiple collections
+- allow to remove probe, retake identifier for new probe?
 
 major:
 - let customer create service request online
