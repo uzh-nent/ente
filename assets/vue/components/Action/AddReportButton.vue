@@ -16,7 +16,7 @@
                           ref="addAddressButton" @add="copyToAddresses.push($event)"/>
       <div v-for="address in copyToAddresses" :key="address" class="bg-light p-2 rounded d-flex">
         <div class="flex-grow-1">
-          {{ [address.name, address.addressLines, address.cityLine].join("\n").replaceAll("\n", ", ") }}
+          {{ [address.name, address.addressLines, address.cityLine].filter(e => e).join("\n").replaceAll("\n", ", ") }}
         </div>
         <div class="ms-2">
           <button class="btn btn-sm btn-outline-danger"
