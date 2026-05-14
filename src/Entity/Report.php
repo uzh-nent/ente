@@ -125,7 +125,7 @@ class Report
     }
 
     /**
-     * @return array<array{'name': ?string, 'addressLines': ?string, 'cityLine': ?string}>|null
+     * @return array<array{'name': ?string, 'addressLines'?: ?string, 'cityLine'?: ?string}>|null
      */
     public function getCopyToAddresses(): ?array
     {
@@ -133,7 +133,7 @@ class Report
     }
 
     /**
-     * @param array<array{'name': ?string, 'addressLines': ?string, 'cityLine': ?string}>|null $copyToAddresses
+     * @param array<array{'name': ?string, 'addressLines'?: ?string, 'cityLine'?: ?string}>|null $copyToAddresses
      */
     public function setCopyToAddresses(?array $copyToAddresses): void
     {

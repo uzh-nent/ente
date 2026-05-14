@@ -119,7 +119,8 @@ class PdfService implements PdfServiceInterface
         }
         if ($report->getCopyToAddresses()) {
             foreach ($report->getCopyToAddresses() as $copyToAddress) {
-                $addresses[] = join("\n", [$copyToAddress['name'], $copyToAddress['addressLines'], $copyToAddress['cityLine']]);
+                $lines = array_filter([$copyToAddress['name'], $copyToAddress['addressLines'] ?? "", $copyToAddress['cityLine'] ?? ""]);
+                $addresses[] = join("\n", $lines);
             }
         }
 
@@ -591,7 +592,7 @@ class PdfService implements PdfServiceInterface
     }
 
     /**
-     * @param array<array{'name': ?string, 'addressLines': ?string, 'cityLine': ?string}>|null $copyToAddresses
+     * @param array<array{'name': ?string, 'addressLines'?: ?string, 'cityLine'?: ?string}>|null $copyToAddresses
      */
     private function addServiceRequest(Probe $probe, Flow $flow, ?array $copyToAddresses): void
     {
@@ -614,7 +615,7 @@ class PdfService implements PdfServiceInterface
         if ($copyToAddresses) {
             $shortAddresses = [];
             foreach ($copyToAddresses as $address) {
-                $entries = array_filter([$address['name'], $address['cityLine']]);
+                $entries = array_filter([$address['name'], $address['cityLine'] ?? ""]);
                 $shortAddresses[] = join(", ", $entries);
             }
 
