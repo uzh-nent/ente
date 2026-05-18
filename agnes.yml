@@ -10,8 +10,9 @@ github:
 
 config:
   path: .agnes
-  # repository:
-  #  url: git@gitlab.uzh.ch:nent/ente-config
+  encryption_key: '%env(ANGES_ENCRYPTION_KEY)%'
+  repository:
+    url: git@gitlab.uzh.ch:nent/ente-config
 
 data:
   shared_folders:
@@ -20,10 +21,13 @@ data:
   files:
     - path: .env.local
       required: true
+      encrypted: true
     - path: .cert/elm-sslcertificate.fullchain.pem
       required: false
+      encrypted: true
     - path: .cert/elm-sslkey.key
       required: false
+      encrypted: true
     - path: public/favicon.ico
       required: false
 
