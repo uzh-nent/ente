@@ -17,9 +17,7 @@
     </labeled-value>
     <hr/>
     <labeled-value width="w-25" :label="$t('report_email.sent')">
-      <span class="whitespace-preserve-newlines">
       {{ formatDateTime(reportEmail.sentAt) }} / {{ sentBy?.abbreviation }}
-      </span>
     </labeled-value>
   </div>
 </template>

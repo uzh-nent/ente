@@ -40,7 +40,7 @@
         <tbody>
         <probe-table-row
             v-for="probe in items" :key="probe['@id']"
-            :probe="probe" :organisms="organisms" :specimens="specimens"
+            :probe="probe" :organisms="organisms" :specimens="specimens" :users="users"
             :view="view"/>
         <tr v-if="totalItems === 0">
           <td colspan="200" v-if="view === 'result'">{{ $t('_view.filter_yields_no_entries') }}</td>
@@ -97,6 +97,10 @@ export default {
       required: true
     },
     organisms: {
+      type: Array,
+      required: true
+    },
+    users: {
       type: Array,
       required: true
     },

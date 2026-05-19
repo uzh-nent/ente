@@ -1,5 +1,5 @@
 <template>
-  <probe-table :organisms="organisms" :specimens="specimens" view="invoice" />
+  <probe-table :organisms="organisms" :specimens="specimens" :users="users" view="invoice" />
 </template>
 
 <script>
@@ -16,12 +16,14 @@ export default {
     return {
       organisms: undefined,
       specimens: undefined,
+      users: undefined,
     }
   },
   beforeMount() {
-    const {organisms,specimens} = preloadApi.getAllProbes()
+    const {organisms,specimens,users} = preloadApi.getAllProbes()
     this.organisms = organisms
     this.specimens = specimens
+    this.users = users
   }
 }
 </script>

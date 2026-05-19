@@ -145,6 +145,9 @@
     "view_report_email": {
       "title": "E-Mail anzeigen"
     },
+    "view_invoice": {
+      "title": "Rechnung anzeigen"
+    },
     "export_probes": {
       "export_all": "Alle",
       "export_filtered": "Gefiltert",
@@ -525,7 +528,9 @@
     "date": "Rechnungsdatum",
     "receiver": "Empfänger",
     "address": "Rechnungsadresse",
+    "invoice_identifier": "Rechnungsnummer",
     "invoice_identifiers": "Rechnungsnummern",
+    "created": "Erstellt",
     "line_item": {
       "service": "Leistung",
       "position": "Position",

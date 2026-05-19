@@ -23,6 +23,10 @@ export default {
       type: String,
       required: true
     },
+    titleContext: {
+      type: String,
+      default: null
+    },
     icon: {
       type: Array,
       default: null
