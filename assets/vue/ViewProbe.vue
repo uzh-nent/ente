@@ -138,6 +138,7 @@ import ObservationTable from "./components/View/ObservationTable.vue";
 import TooltipWrap from "./components/Library/View/TooltipWrap.vue";
 import OrdererView from "./components/View/Probe/OrdererView.vue";
 import ActionableCard from "./components/Library/View/ActionableCard.vue";
+import {checkHasMedicalValidation} from "./services/domain/authorization";
 
 export default {
   emits: ['added'],
@@ -193,10 +194,7 @@ export default {
       )
     },
     hasMedicalValidation: function () {
-      const shortname = document.getElementById("shortname").textContent
-      const user = this.users.find(u => u.shortname === shortname)
-
-      return user?.medicalValidation
+      return checkHasMedicalValidation(this.users)
     }
   },
   mounted() {

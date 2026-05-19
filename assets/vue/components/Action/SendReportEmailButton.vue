@@ -2,8 +2,9 @@
   <button-confirm-modal
     :title="$t('_action.send_report_email.title')" icon="fas fa-envelope" button-size="sm"
     :confirm-label="$t('_action.send')" :can-confirm="canConfirm" :confirm="confirm"
+    :disabled="disabled"
     @showing="focusTo">
-    <report-email-form :probe="probe" :report="report" @update="post = $event" />
+    <report-email-form :probe="probe" :report="report" :users="users" @update="post = $event" />
   </button-confirm-modal>
 </template>
 
@@ -37,7 +38,15 @@ export default {
     report: {
       type: Object,
       required: true,
-    }
+    },
+    users: {
+      type: Array,
+      required: true,
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
   },
   computed: {
     canConfirm: function () {
