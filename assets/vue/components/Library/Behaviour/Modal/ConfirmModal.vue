@@ -1,5 +1,5 @@
 <template>
-  <modal :title="title" :size="size" :show="show" @hide="tryHide">
+  <modal :title="title" :title-context="titleContext" :size="size" :show="show" @hide="tryHide">
     <slot />
     <template #footer>
       <div class="modal-footer">
@@ -30,6 +30,10 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    titleContext: {
+      type: String,
+      default: null
     },
     size: {
       type: String,
