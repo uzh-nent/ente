@@ -167,6 +167,7 @@ const preloadApi = {
     return {
       organisms: window.organisms.member,
       specimens: window.specimens.member,
+      users: window.users.member,
     }
   },
   getViewActiveProbe: function () {

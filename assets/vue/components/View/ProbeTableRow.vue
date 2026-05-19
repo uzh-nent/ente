@@ -47,9 +47,7 @@
     </td>
     <td v-if="view === 'invoice'" class="whitespace-nowrap">
       <div class="btn-group" v-for="invoice in probe.invoices" :key="invoice['@id']">
-        <span class="mb-0 btn border">
-          {{ formatDate(invoice.date) }}
-        </span>
+        <view-invoice-button :users="users" :invoice="invoice" :probe="probe" />
         <remove-invoice-button :invoice="invoice" @removed="probe.invoices = probe.invoices.filter(i => i['@id'] !== invoice['@id'])"/>
       </div>
       <div class="btn-group" v-if="probe.invoiceStatus === 'IGNORED'">
@@ -83,9 +81,11 @@ import IgnoreInvociableProbeButton from "../Action/IgnoreInvociableProbeButton.v
 import {displaySuccess} from "../../services/notifiers";
 import ResetInvoicableProbeButton from "../Action/ResetInvoicableProbeButton.vue";
 import RemoveInvoiceButton from "../Action/RemoveInvoiceButton.vue";
+import ViewInvoiceButton from "../Action/ViewInvoiceButton.vue";
 
 export default {
   components: {
+    ViewInvoiceButton,
     RemoveInvoiceButton,
     ResetInvoicableProbeButton,
     IgnoreInvociableProbeButton, InvoiceProbeButton, ShortObservationBadge, LabeledValue
@@ -100,6 +100,10 @@ export default {
       required: true
     },
     organisms: {
+      type: Array,
+      required: true
+    },
+    users: {
       type: Array,
       required: true
     },
