@@ -244,9 +244,20 @@ export const emailRule = {
       return true
     }
 
-    return emailRegex.test(value)
+    return emailRegex.test(value) && value.contains(",") === false
   },
   errorMessage: '_validation.not_an_email'
+}
+export const emailsRule = {
+  isValid: function (value) {
+    if (!value) {
+      return true
+    }
+
+    const emails = value.split(',')
+    return emails.every(email => emailRegex.test(email.trim()))
+  },
+  errorMessage: '_validation.not_emails'
 }
 
 export const countryCode = {
@@ -258,17 +269,6 @@ export const countryCode = {
     return value.toUpperCase() === value && value.length >= 2 && value.length <= 3
   },
   errorMessage: '_validation.not_a_country_code'
-}
-
-export const emailsRule = {
-  isValid: function (value) {
-    if (!value) {
-      return true
-    }
-
-    return !value.split('\n').some(entry => !emailRegex.test(entry))
-  },
-  errorMessage: '_validation.one_not_an_email'
 }
 
 const validateField = function (field, value) {

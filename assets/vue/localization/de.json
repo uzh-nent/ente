@@ -216,7 +216,8 @@
     "invalid_uid_checksum": "Keine gültige UID-Nummer (Prüfziffer inkorrekt).",
     "invalid_gln_length": "Keine gültige GLN-Nummer (nicht 13 Ziffern lang).",
     "invalid_gln_checksum": "Keine gültige GLN-Nummer (Prüfziffer inkorrekt).",
-    "not_an_email": "Dies ist keine valide E-Mail."
+    "not_an_email": "Dies ist keine valide E-Mail.",
+    "not_emails": "E-Mails sind nicht alle valide. Mehrere E-Mails durch Komma trennen."
   },
   "_view": {
     "filter_yields_no_entries": "Keine Einträge, die dem Filter entsprechen.",
