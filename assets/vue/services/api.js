@@ -239,6 +239,9 @@ const api = {
   postPatient: function (payload) {
     return restClient.post('/api/patients', payload)
   },
+  postReportEmail: function (payload) {
+    return restClient.post('/api/report_emails', payload)
+  },
   postAnimalKeeper: function (payload) {
     return restClient.post('/api/animal_keepers', payload)
   },

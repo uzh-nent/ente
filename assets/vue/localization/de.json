@@ -165,6 +165,10 @@
     "reset_invoicable_probe": {
       "reset": "Probe zurückgesetzt"
     },
+    "send_report_email": {
+      "title": "Bericht per E-Mail versenden",
+      "sent": "Der Bericht wurde per E-Mail versandt."
+    },
     "export_invoice_receipts": {
       "title": "Rückforderungsbelege",
       "set_identifiers": "Rechnungsnummer setzen",
@@ -202,6 +206,7 @@
     "edit": "speichern",
     "download": "herunterladen",
     "remove": "entfernen",
+    "send": "versenden",
     "set_filter": "Filter setzen",
     "reset_filter": "Filter zurücksetzen",
     "hits": "{hits} Ergebnisse"
@@ -527,5 +532,11 @@
       "ORDERER": "Auftraggeber",
       "PATIENT": "Patient"
     }
+  },
+  "report_email": {
+    "receivers": "An",
+    "cc_receivers": "CC",
+    "subject": "Betreff",
+    "body": "Nachricht"
   }
 }
