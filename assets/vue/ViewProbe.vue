@@ -69,7 +69,7 @@
         <observation-table
             v-if="observations.length > 0" class="mt-2"
             :users="users" :observations="observations" :probe="probe" :organisms="organisms"
-        :interpretation-texts="interpretationTexts"/>
+            :interpretation-texts="interpretationTexts"/>
 
         <div class="mt-5"
              v-if="probe.patient && observations.length > 0 && (!probe.finishedAt || elmReports.length > 0)">
@@ -99,7 +99,8 @@
                 @added="addedReport($event)"
             />
           </tooltip-wrap>
-          <report-table class="mt-2" :users="users" :probe="probe" :reports="reports" :report-emails="reportEmails"/>
+          <report-table class="mt-2" :users="users" :probe="probe" :reports="reports" :report-emails="reportEmails"
+                        @sent-email="reportEmails.push($event)"/>
         </div>
 
         <div class="mt-5" v-if="missingObservations.length === 0">

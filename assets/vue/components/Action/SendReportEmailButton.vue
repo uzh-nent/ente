@@ -18,7 +18,7 @@ import PatientForm from "../Form/PatientForm.vue";
 import ReportEmailForm from "../Form/ReportEmailForm.vue";
 
 export default {
-  emits: ['added'],
+  emits: ['sent'],
   components: {
     ReportEmailForm,
     PatientForm,
@@ -57,7 +57,7 @@ export default {
     confirm: async function () {
       const payload = { ...this.post, probe: this.probe['@id'], report: this.report['@id'] }
       const reportEmail = await api.postReportEmail(payload)
-      this.$emit('added', reportEmail)
+      this.$emit('sent', reportEmail)
 
       const successMessage = this.$t('_action.send_report_email.sent')
       displaySuccess(successMessage)

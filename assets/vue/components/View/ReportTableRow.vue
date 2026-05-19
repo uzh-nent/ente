@@ -12,7 +12,8 @@
     <td class="w-minimal">
       <send-report-email-button
           v-if="!sentReportEmail" class="me-2"
-          :report="report" :probe="probe" :users="users" :disabled="!hasMedicalValidation"/>
+          :report="report" :probe="probe" :users="users" :disabled="!hasMedicalValidation"
+          @sent="$emit('sent-email', $event)"/>
       <view-report-email-button
           v-if="sentReportEmail" class="me-2" :report-email="sentReportEmail" :users="users"/>
       <a class="btn btn-secondary" :href="pdfLink" target="_blank" :id="'download-report-' + this.report['@id']">
@@ -37,6 +38,7 @@ import ViewReportEmailButton from "../Action/ViewReportEmailButton.vue";
 import {checkHasMedicalValidation} from "../../services/domain/authorization";
 
 export default {
+  emits: ['sent-email'],
   components: {
     ViewReportEmailButton,
     SendReportEmailButton,
