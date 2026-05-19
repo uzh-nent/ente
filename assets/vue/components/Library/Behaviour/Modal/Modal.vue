@@ -10,7 +10,10 @@
         <div class="modal-content shadow">
           <div class="modal-header">
             <slot name="header">
-              <h5 class="modal-title" id="modal-title">{{ title }}</h5>
+              <h5 class="modal-title" id="modal-title">
+                {{ title }}
+                <span v-if="titleContext" class="text-muted">({{ titleContext }})</span>
+              </h5>
             </slot>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     @click="$emit('hide')" />
@@ -36,6 +39,10 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    titleContext: {
+      type: String,
+      default: null
     },
     size: {
       type: String,

@@ -5,7 +5,8 @@
     <template v-if="buttonSize !== 'sm' || !icon">&nbsp;{{ title }}</template>
 
     <confirm-modal
-        :title="title" :size="modalSize" :show="show" @hide="tryHide" :color="color"
+        :title="title" :title-context="titleContext" :size="modalSize" :color="color"
+        :show="show" @hide="tryHide"
         :can-confirm="canConfirm" :confirm="confirm" :confirm-label="confirmLabel"
         :disable-loading-animation="disableLoadingAnimation"
         :can-abort="canAbort" :abort="abort" :abort-label="abortLabel">
@@ -27,6 +28,10 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    titleContext: {
+      type: String,
+      default: null
     },
     icon: {
       type: String,

@@ -1,6 +1,6 @@
 <template>
   <button-confirm-modal
-      :title="$t('_action.add_invoice.title')" icon="fas fa-plus"
+      :title="$t('_action.add_invoice.title')" :title-context="this.probe.identifier" icon="fas fa-plus"
       :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm"
       @showing="load">
     <invoice-meta-form

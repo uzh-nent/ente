@@ -1,7 +1,7 @@
 <template>
   <button-confirm-modal
-      :title="$t('_action.ignore_invoicable_probe.title')" icon="fas fa-eye-slash"
-      button-size="sm"
+      :title="$t('_action.ignore_invoicable_probe.title')"  :title-context="this.probe.identifier"
+      icon="fas fa-eye-slash" button-size="sm"
       :confirm-label="$t('_action.ignore')" :confirm="confirm">
     <p class="alert alert-warning">
       {{ $t("_action.ignore_invoicable_probe.help")}}
