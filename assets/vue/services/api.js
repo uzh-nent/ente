@@ -176,6 +176,7 @@ const preloadApi = {
       observations: window.observations.member,
       elmReports: window.elmReports.member,
       reports: window.reports.member,
+      reportEmails: window.reportEmails.member,
 
       specimens: window.specimens.member,
       leadingCodes: window.leadingCodes.member,

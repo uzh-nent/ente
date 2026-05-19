@@ -10,7 +10,8 @@
       <attribution-view :users="users" :entity="report"/>
     </td>
     <td class="w-minimal">
-      <send-report-email-button class="me-2" :report="report" :probe="probe" />
+      <send-report-email-button v-if="!sentReportEmail" class="me-2" :report="report" :probe="probe" />
+      <view-report-email-button v-if="sentReportEmail" class="me-2" :report-email="sentReportEmail" :users="users" />
       <a class="btn btn-secondary" :href="pdfLink" target="_blank" :id="'download-report-' + this.report['@id']">
         <i class="fas fa-download"></i>
       </a>
@@ -29,9 +30,11 @@ import {
   formatPractitionerAddress, formatPractitionerName, formatPractitionerShort
 } from "../../services/domain/formatter";
 import SendReportEmailButton from "../Action/SendReportEmailButton.vue";
+import ViewReportEmailButton from "../Action/ViewReportEmailButton.vue";
 
 export default {
   components: {
+    ViewReportEmailButton,
     SendReportEmailButton,
     ViewElmReportStepLabel,
     AttributionView},
@@ -44,6 +47,10 @@ export default {
       type: Object,
       required: true
     },
+    reportEmails: {
+      type: Array,
+      required: true
+    },
     users: {
       type: Array,
       required: true
@@ -52,6 +59,9 @@ export default {
   computed: {
     pdfLink: function () {
       return router.reportPdf(this.report)
+    },
+    sentReportEmail: function () {
+      return this.reportEmails.filter(re => re.sentAt)[0]
     },
     receivers: function () {
       const receivers = []

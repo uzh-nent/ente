@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <div class="w-50">
+    <div :class="width" class="flex-shrink-0">
       <u>{{ label }}</u>:&nbsp;
     </div>
     <div class="flex-grow-1">
@@ -17,6 +17,10 @@ export default {
     label: {
       type: String,
       required: true
+    },
+    width: {
+      type: String,
+      default: 'w-50'
     },
   }
 }
