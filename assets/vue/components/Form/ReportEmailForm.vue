@@ -36,6 +36,7 @@ import IdentificationView from "../View/Observation/IdentificationView.vue";
 import TestView from "../View/Observation/TestView.vue";
 import {probeConverter} from "../../services/domain/converters";
 import email from '../../../resources/report/email.json'
+import {getCurrentUser} from "../../services/domain/authorization";
 
 
 
@@ -60,6 +61,10 @@ export default {
     },
     report: {
       type: Object,
+      required: true,
+    },
+    users: {
+      type: Array,
       required: true,
     }
   },
@@ -110,6 +115,7 @@ export default {
       result += "\n* " + email.comment_notice
     }
     body = body.replace(/<report_results>/g, result)
+    body = body.replace(/<user_name>/g, getCurrentUser(this.users)?.name)
     this.entity.body = body
   }
 }
