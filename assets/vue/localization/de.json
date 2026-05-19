@@ -142,6 +142,9 @@
       "edited": "Patient:in gespeichert.",
       "title": "Patient:in bearbeiten"
     },
+    "view_report_email": {
+      "title": "E-Mail anzeigen"
+    },
     "export_probes": {
       "export_all": "Alle",
       "export_filtered": "Gefiltert",
@@ -537,6 +540,7 @@
     "receivers": "An",
     "cc_receivers": "CC",
     "subject": "Betreff",
-    "body": "Nachricht"
+    "body": "Nachricht",
+    "sent": "Versandt"
   }
 }

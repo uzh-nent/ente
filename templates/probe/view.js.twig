@@ -3,6 +3,7 @@ window.probe = JSON.parse({{ subRequest('/api/probes/'~probe.id)|json_encode|raw
 window.observations = JSON.parse({{ subRequest('/api/observations?probe='~probe.id)|json_encode|raw }})
 window.elmReports = JSON.parse({{ subRequest('/api/elm_reports?probe='~probe.id)|json_encode|raw }})
 window.reports = JSON.parse({{ subRequest('/api/reports?probe='~probe.id)|json_encode|raw }})
+window.reportEmails = JSON.parse({{ subRequest('/api/report_emails?probe='~probe.id)|json_encode|raw }})
 
 window.specimens = JSON.parse({{ subRequest('/api/specimens')|json_encode|raw }})
 window.leadingCodes = JSON.parse({{ subRequest('/api/leading_codes')|json_encode|raw }})

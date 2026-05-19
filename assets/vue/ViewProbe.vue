@@ -99,7 +99,7 @@
                 @added="addedReport($event)"
             />
           </tooltip-wrap>
-          <report-table class="mt-2" :users="users" :probe="probe" :reports="reports"/>
+          <report-table class="mt-2" :users="users" :probe="probe" :reports="reports" :report-emails="reportEmails"/>
         </div>
 
         <div class="mt-5" v-if="missingObservations.length === 0">
@@ -175,6 +175,7 @@ export default {
       observations: undefined,
       elmReports: undefined,
       reports: undefined,
+      reportEmails: undefined,
 
       specimens: undefined,
       leadingCodes: undefined,
@@ -204,6 +205,7 @@ export default {
       observations,
       elmReports,
       reports,
+      reportEmails,
       specimens,
       leadingCodes,
       organisms,
@@ -216,6 +218,7 @@ export default {
     this.observations = observations
     this.elmReports = elmReports
     this.reports = reports
+    this.reportEmails = reportEmails
 
     this.specimens = specimens
     this.leadingCodes = leadingCodes

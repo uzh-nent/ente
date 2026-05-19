@@ -48,12 +48,12 @@ class ReportEmail
     use AttributionTrait;
     use TimeTrait;
 
-    #[ORM\ManyToOne(targetEntity: Probe::class, inversedBy: "reports")]
+    #[ORM\ManyToOne(targetEntity: Probe::class)]
     #[ApiProperty(readableLink: false, writableLink: false)]
     #[Groups(['report-email:read', 'report-email:write'])]
     private ?Probe $probe = null;
 
-    #[ORM\ManyToOne(targetEntity: Report::class, inversedBy: "reports")]
+    #[ORM\ManyToOne(targetEntity: Report::class)]
     #[ApiProperty(readableLink: false, writableLink: false)]
     #[Groups(['report-email:read', 'report-email:write'])]
     private ?Report $report = null;
