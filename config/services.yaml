@@ -20,6 +20,7 @@ services:
             $elmBaseUrl: '%env(ELM_BASE_URL)%'
             $elmSSLCertPath: '%kernel.project_dir%/%env(ELM_SSLCERT_RELATIVE_PATH)%'
             $elmSSLKeyPath: '%kernel.project_dir%/%env(ELM_SSLKEY_RELATIVE_PATH)%'
+            $mailerSender: '%env(MAILER_SENDER)%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
