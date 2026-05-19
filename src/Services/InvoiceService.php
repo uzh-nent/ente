@@ -119,6 +119,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
         return $this->managerRegistry
             ->getRepository(Invoice::class)
             ->createQueryBuilder('i')
+            ->join('i.probe', 'p')
             ->andWhere('i.date IS NOT NULL')
             ->andWhere('i.date >= :from')
             ->andWhere('i.date <= :to')
@@ -126,7 +127,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
             ->setParameter('from', $from)
             ->setParameter('to', $to)
             ->setParameter('receiver', $receiver->value)
-            ->orderBy('i.date', 'ASC')
+            ->orderBy('p.identifier', 'ASC')
             ->getQuery()
             ->getResult();
     }
