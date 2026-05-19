@@ -12,7 +12,7 @@ config:
   path: .agnes
   encryption_key: '%env(ANGES_ENCRYPTION_KEY)%'
   repository:
-    url: git@gitlab.uzh.ch:nent/ente-config
+    url: git@gitlab.uzh.ch:nent/ente-deploy
 
 data:
   shared_folders:
