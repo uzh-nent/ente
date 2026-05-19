@@ -20,6 +20,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
+use App\Api\Processor\ReportEmailProcessor;
 use App\Api\Processor\ReportProcessor;
 use App\Entity\Traits\AttributionTrait;
 use App\Entity\Traits\CommentTrait;
@@ -32,7 +33,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ApiResource(
-    processor: ReportProcessor::class,
+    processor: ReportEmailProcessor::class,
     denormalizationContext: ['groups' => ['comment:write', 'report-email:write']],
     normalizationContext: ['groups' => ['time:read', 'attribution:read', 'report-email:read']],
     paginationEnabled: false
@@ -57,19 +58,13 @@ class ReportEmail
     #[Groups(['report-email:read', 'report-email:write'])]
     private ?Report $report = null;
 
-    /**
-     * @var string[]
-     */
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[ORM\Column(type: Types::STRING)]
     #[Groups(['report-email:read', 'report-email:write'])]
-    private array $to = [];
+    private string $receivers = '';
 
-    /**
-     * @var string[]
-     */
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['report-email:read', 'report-email:write'])]
-    private array $cc = [];
+    private ?string $ccReceivers = null;
 
     #[ORM\Column(type: Types::STRING)]
     #[Groups(['report-email:read', 'report-email:write'])]
@@ -103,36 +98,44 @@ class ReportEmail
         $this->report = $report;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getTo(): array
+    public function getReceivers(): string
     {
-        return $this->to;
-    }
-
-    /**
-     * @param string[] $to
-     */
-    public function setTo(array $to): void
-    {
-        $this->to = $to;
+        return $this->receivers;
     }
 
     /**
      * @return string[]
      */
-    public function getCc(): array
+    public function getReceiversArray(): array
     {
-        return $this->cc;
+        return array_map(fn ($email) => trim($email), explode(",", $this->receivers));
+    }
+
+    public function setReceivers(string $receivers): void
+    {
+        $this->receivers = $receivers;
+    }
+
+    public function getCcReceivers(): ?string
+    {
+        return $this->ccReceivers;
     }
 
     /**
-     * @param string[] $cc
+     * @return string[]
      */
-    public function setCc(array $cc): void
+    public function getCCReceiversArray(): array
     {
-        $this->cc = $cc;
+        if (!$this->ccReceivers || trim($this->ccReceivers) === '') {
+            return [];
+        }
+
+        return array_map(fn ($email) => trim($email), explode(",", $this->ccReceivers));
+    }
+
+    public function setCcReceivers(?string $ccReceivers): void
+    {
+        $this->ccReceivers = $ccReceivers;
     }
 
     public function getSubject(): ?string

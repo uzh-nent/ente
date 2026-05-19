@@ -159,6 +159,7 @@ export const addressConverter = {
       name: organization.name,
       addressLines: formatAddressLines(organization),
       cityLine: formatCityLine(organization),
+      email: organization.email,
     }
   },
   createFromPractitioner: function (practitioner) {
@@ -166,6 +167,7 @@ export const addressConverter = {
       name: formatPractitionerName(practitioner),
       addressLines: formatAddressLines(practitioner),
       cityLine: formatCityLine(practitioner),
+      email: practitioner.email,
     }
   },
   createFromText: function (text) {

@@ -10,6 +10,7 @@
       <attribution-view :users="users" :entity="report"/>
     </td>
     <td class="w-minimal">
+      <send-report-email-button class="me-2" :report="report" :probe="probe" />
       <a class="btn btn-secondary" :href="pdfLink" target="_blank" :id="'download-report-' + this.report['@id']">
         <i class="fas fa-download"></i>
       </a>
@@ -27,9 +28,11 @@ import {
   formatOrganizationShort,
   formatPractitionerAddress, formatPractitionerName, formatPractitionerShort
 } from "../../services/domain/formatter";
+import SendReportEmailButton from "../Action/SendReportEmailButton.vue";
 
 export default {
   components: {
+    SendReportEmailButton,
     ViewElmReportStepLabel,
     AttributionView},
   props: {

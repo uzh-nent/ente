@@ -1,0 +1,5 @@
+{
+  "subject_template": "NENT <report_title> <probe_requisition_identifier>",
+  "body_template": "Sehr geehrte Damen und Herren\n\nIm Anhang der <report_title> zu <probe_requisition_identifier> (NENT-Referenz <probe_identifier>) mit folgenden Resultaten:\n<report_results>\n\nFreundliche Grüsse\nNENT",
+  "comment_notice": "Bitte beachten Sie die Hinweise im Bericht"
+}

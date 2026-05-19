@@ -16,16 +16,17 @@ readonly class EmailService implements EmailServiceInterface
     {
     }
 
-    public function send(ReportEmail $email, ?string &$error = null): bool
+    public function sendReportEmail(ReportEmail $email, ?string &$error = null): bool
     {
         $templatedEmail = new TemplatedEmail();
 
         $folder = $this->fileService->getFolderPath(FileServiceInterface::REPORT_FOLDER);
         $filepath = $folder . DIRECTORY_SEPARATOR . $email->getReport()->getFilename();
 
+        dump($email->getReceiversArray(), $email->getCCReceiversArray(), $this->mailerSender);
         $templatedEmail
-            ->to(...$email->getTo())
-            ->cc(...$email->getCc())
+            ->to(...$email->getReceiversArray())
+            ->cc(...$email->getCCReceiversArray())
             ->bcc($this->mailerSender)
             ->subject($email->getSubject())
             ->text($email->getBody())

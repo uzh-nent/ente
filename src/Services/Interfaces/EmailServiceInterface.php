@@ -6,5 +6,5 @@ use App\Entity\ReportEmail;
 
 interface EmailServiceInterface
 {
-    public function send(ReportEmail $email, ?string &$error = null): bool;
+    public function sendReportEmail(ReportEmail $email, ?string &$error = null): bool;
 }

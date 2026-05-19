@@ -47,7 +47,7 @@ readonly class ReportEmailProcessor implements ProcessorInterface
 
         $result = $this->persistProcessor->process($data, $operation, $uriVariables, $context);
 
-        $this->emailService->send($data);
+        $this->emailService->sendReportEmail($data);
         DoctrineHelper::persistAndFlush($this->registry, $data);
 
         return $result;
