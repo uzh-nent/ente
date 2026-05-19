@@ -1,14 +1,13 @@
 <template>
-  <div>
-    <template ref="anchor"/>
-    <flat-pickr
-        :placeholder="placeholder"
-        :id="id" class="form-control" :required="required"
-        :model-value="modelValue"
-        :config="datePickerConfig"
-        ref="flatPickr"
-        @blur="$emit('blur')"/>
-  </div>
+  <!-- no root div, as stuff would break with form layouts; for example the period form -->
+  <template ref="anchor"/>
+  <flat-pickr
+      :placeholder="placeholder"
+      :id="id" class="form-control" :required="required"
+      :model-value="modelValue"
+      :config="datePickerConfig"
+      ref="flatPickr"
+      @blur="$emit('blur')"/>
 </template>
 
 <script>
