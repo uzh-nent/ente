@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import {templatedForm, createField, emailRule} from '../utils/form'
+import {templatedForm, createField, emailsRule} from '../utils/form'
 import FormField from '../../Library/FormLayout/FormField'
 import TextArea from "../../Library/FormInput/TextArea.vue";
 import TextInput from "../../Library/FormInput/TextInput.vue";
@@ -57,7 +57,7 @@ export default {
   data() {
     return {
       fields: {
-        email: createField(emailRule),
+        email: createField(emailsRule),
         phone: createField(),
         contact: createField(),
         invoiceAddress: createField(),
