@@ -70,4 +70,10 @@ class Specimen
     {
         $this->specimenGroup = $specimenGroup;
     }
+
+    public function getIndividualSpecimenGroups(): array
+    {
+        $groups = array_map(fn($entry) => trim($entry), explode(",", $this->specimenGroup));
+        return array_filter($groups);
+    }
 }

@@ -27,11 +27,11 @@
         {% for organism in organisms %}
             <tr>
                 <td>
-                    {% if organism.organismGroup %}
+                    {% for group in organism.individualOrganismGroups %}
                         <span class="badge bg-cyan">
-                            {{ organism.organismGroup }}
+                            {{ group }}
                         </span>
-                    {% endif %}
+                    {% endfor %}
                 </td>
                 <td>{{ organism.pathogen|trans }}</td>
                 <td>
