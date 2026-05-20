@@ -94,10 +94,8 @@ Probedaten:
 
 ## Possible next development steps
 
-next technical:
-- allow to remove probe, retake identifier for new probe?
-
 major:
+- allow to remove probe (reuse identifiers?)
 - let customer create service request online
 - track analysis, not result (e.g., STEC E. coli Stx1, Stx2 separate tracking); possibly track more analysis results from the Laborblatt
 - improve statistics: add visuals to all-probes view
