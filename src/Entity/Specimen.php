@@ -71,6 +71,9 @@ class Specimen
         $this->specimenGroup = $specimenGroup;
     }
 
+    /**
+     * @return string[]
+     */
     public function getIndividualSpecimenGroups(): array
     {
         $groups = array_map(fn($entry) => trim($entry), explode(",", $this->specimenGroup));
