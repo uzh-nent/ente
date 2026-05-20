@@ -57,6 +57,9 @@ class Organism
         return $this->organismGroup;
     }
 
+    /**
+     * @return string[]
+     */
     public function getIndividualOrganismGroups(): array
     {
         $groups = array_map(fn($entry) => trim($entry), explode(",", $this->organismGroup));
