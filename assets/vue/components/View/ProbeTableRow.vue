@@ -45,7 +45,7 @@
         <i v-else class="fas fa-edit"></i>
       </a>
     </td>
-    <td v-if="view === 'invoice'" class="whitespace-nowrap">
+    <td v-if="view === 'invoice'" class="whitespace-nowrap text-end">
       <div class="btn-group" v-for="invoice in probe.invoices" :key="invoice['@id']">
         <view-invoice-button :users="users" :invoice="invoice" :probe="probe" />
         <remove-invoice-button :invoice="invoice" @removed="probe.invoices = probe.invoices.filter(i => i['@id'] !== invoice['@id'])"/>

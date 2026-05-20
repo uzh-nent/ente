@@ -94,9 +94,6 @@ Probedaten:
 
 ## Possible next development steps
 
-next:
-- send report directly per (HIN-)mail
-
 next technical:
 - allow to remove probe, retake identifier for new probe?
 
