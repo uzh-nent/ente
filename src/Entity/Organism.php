@@ -71,13 +71,4 @@ class Organism
     {
         $this->pathogen = $pathogen;
     }
-
-    public function isDuplicateOf(Organism $other): bool
-    {
-        // check properties that would exclude duplicates
-        // for example, possible that same code is in different organism groups, hence checked
-        // but same code for different pathogens makes no sense, hence not checked
-        return $this->getSystem() === $other->getSystem() && $this->getCode() === $other->getCode() &&
-            $this->getOrganismGroup() === $other->getOrganismGroup();
-    }
 }
