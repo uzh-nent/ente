@@ -26,11 +26,11 @@
         {% for specimen in specimens %}
             <tr>
                 <td>
-                    {% if specimen.specimenGroup %}
+                    {% for group in specimen.individualSpecimenGroups %}
                         <span class="badge bg-purple">
-                            {{ specimen.specimenGroup }}
+                            {{ group }}
                         </span>
-                    {% endif %}
+                    {% endfor %}
                 </td>
                 <td>
                     {{ components.render_code(specimen) }}

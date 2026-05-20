@@ -98,7 +98,6 @@ next:
 - send report directly per (HIN-)mail
 
 next technical:
-- improve reference data: allow single reference to be in multiple collections
 - allow to remove probe, retake identifier for new probe?
 
 major:

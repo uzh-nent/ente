@@ -142,9 +142,7 @@ export default {
     organismChoices: function () {
       let filtered = this.organisms.filter(o => isElmRecognisedSystem(o.system))
       if (this.entity.leadingCode?.organismGroup) {
-        filtered = filtered.filter(s => s.organismGroup == this.entity.leadingCode.organismGroup)
-      } else {
-        filtered = filtered.filter(s => !s.organismGroup)
+        filtered = filtered.filter(s => s.organismGroup && s.organismGroup.includes(this.entity.leadingCode.organismGroup))
       }
       return filtered.map(organism => ({label: organism.displayName, value: organism}))
     },
@@ -153,7 +151,7 @@ export default {
       if (this.entity.leadingCode?.specimen) {
         filtered = [filtered.find(s => s['@id'] === this.entity.leadingCode.specimen)].filter(s => s)
       } else if (this.entity.leadingCode?.specimenGroup) {
-        filtered = filtered.filter(s => s.specimenGroup == this.entity.leadingCode.specimenGroup)
+        filtered = filtered.filter(s => s.specimenGroup && s.specimenGroup.includes(this.entity.leadingCode.specimenGroup))
       }
 
       return filtered.map(specimen => ({label: specimen.displayName, value: specimen}))
