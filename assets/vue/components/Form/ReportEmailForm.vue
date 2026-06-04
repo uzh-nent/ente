@@ -88,12 +88,10 @@ export default {
     const receivers = [];
     if (this.probe.ordererOrg) {
       const organization = probeConverter.reconstructOrdererOrg(this.probe)
-      console.log(organization)
       receivers.push(organization.email)
     }
     if (this.probe.ordererPrac) {
       const practitioner = probeConverter.reconstructOrdererPrac(this.probe)
-      console.log(practitioner)
       receivers.push(practitioner.email)
     }
     this.entity.receivers = receivers.join(", ")
