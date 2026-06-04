@@ -10,6 +10,7 @@ EC_ETEC: Enterotoxische (ETEC)
 EC_EIEC: Enteroinvasive (EIEC) / Shigella
 EC_EAEC: Enteroaggregative (EAEC)
 VB_TOXIN: Cholera-Toxin (CTX)
+CG_MLST: cgMLST
 
 short:
   IDENTIFICATION: Ident.
@@ -19,3 +20,4 @@ short:
   "EC_EIEC": "EIEC/Shig."
   "EC_EAEC": "EAEC"
   "VB_TOXIN": "CTX"
+  "CG_MLST": "cgMLST"
