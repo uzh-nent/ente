@@ -23,7 +23,6 @@ readonly class EmailService implements EmailServiceInterface
         $folder = $this->fileService->getFolderPath(FileServiceInterface::REPORT_FOLDER);
         $filepath = $folder . DIRECTORY_SEPARATOR . $email->getReport()->getFilename();
 
-        dump($email->getReceiversArray(), $email->getCCReceiversArray(), $this->mailerSender);
         $templatedEmail
             ->to(...$email->getReceiversArray())
             ->cc(...$email->getCCReceiversArray())
