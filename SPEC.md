@@ -94,12 +94,14 @@ Probedaten:
 
 ## Possible next development steps
 
-major:
+technical:
+- track CGMLST as separate observation (notably to have separate edit date)
 - allow to remove probe (reuse identifiers?)
+
+major:
 - let customer create service request online
 - track analysis, not result (e.g., STEC E. coli Stx1, Stx2 separate tracking); possibly track more analysis results from the Laborblatt
 - improve statistics: add visuals to all-probes view
-- improve probes: when updating observations also keep original date (e.g., when adding cgmlst)
 - improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc), multiple invoice addresses, allow to remove stammdaten (possibly by relinking probes to other)
 - improve reference data: ELM api integration (sync value sets, add patient reporting type such as anonymous (for new pathogens) or initials (campylobacter) to leading codes), add current location of patient
 - improve invoices: invoice runs for more safety during invoicing (e.g., no probe is forgotten to invoice), allow to download / store voucher per probe
