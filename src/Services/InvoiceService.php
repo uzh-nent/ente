@@ -38,7 +38,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
 
             $invoiceSheet = clone $templateSheet;
             $invoiceSheet->setTitle(self::parseSafeTitle($invoiceSheet, $probe->getIdentifier()));
-            $spreadsheet->addSheet($invoiceSheet, 1);
+            $spreadsheet->addSheet($invoiceSheet, 1, true);
 
             $invoiceTotal = $this->fillInvoiceSheet($invoiceSheet, $invoice, $period);
             $summaryRows[] = [$probe->getIdentifier(), $probe->getRequisitionIdentifier(), $invoiceTotal];
@@ -97,7 +97,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
 
             $invoiceSheet = clone $templateSheet;
             $invoiceSheet->setTitle(self::parseSafeTitle($invoiceSheet, $ordererShortAddress));
-            $spreadsheet->addSheet($invoiceSheet, 1);
+            $spreadsheet->addSheet($invoiceSheet, 1, true);
 
             $invoiceTotal = $this->fillOrdererInvoiceSheet($invoiceSheet, $invoices, $period);
             $summaryRows[] = [count($invoicesPerOrderer) - count($summaryRows), $ordererShortAddress, $firstInvoice->getAddress(), $invoiceTotal];
