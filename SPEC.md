@@ -97,10 +97,10 @@ Probedaten:
 technical:
 - track CGMLST as separate observation (notably to have separate edit date)
 - allow to remove probe (reuse identifiers?)
-- stammdaten aktualisieren: remove checkbox; behave as if always active. simplify code
+- stammdaten aktualisieren: remove checkbox; behave as if always active. take over automatically in open probes (but inform user).
 - simplify dependencies (remove axios, lodash, noty, vuei18n)
-- cleanup null/empty in practitioner GLN/title fields
-- remove unused reference data (coordinate with NENT)
+- cleanup in DB: the practitioner GLN/title fields: if empty string, set to NULL
+- cleanup in DB: remove unused reference data (coordinate with NENT)
 
 major:
 - let customer create service request online
