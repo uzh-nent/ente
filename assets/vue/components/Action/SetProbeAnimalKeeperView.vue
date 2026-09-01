@@ -65,6 +65,7 @@ export default {
     return {
       selectedAnimalKeeper: null,
       animalKeeperOverride: undefined,
+      preselectAnimalKeeper: null,
 
       searchName: "",
       searchPostalCode: "",
@@ -120,6 +121,12 @@ export default {
   watch: {
     items: {
       handler: function (items) {
+        if (this.preselectAnimalKeeper) {
+          this.selectedAnimalKeeper = items.find(i => i['@id'] === this.preselectAnimalKeeper['@id'])
+          this.preselectAnimalKeeper = null
+          return
+        }
+
         if (items.length === 1 && !this.probe?.animalKeeper && !this.animalKeeperOverride) {
           this.selectedAnimalKeeper = items[0]
         }
@@ -153,6 +160,9 @@ export default {
       this.searchPostalCode = this.searchName = null // first empty to ensure afterwards reload
       this.searchPostalCode = animalKeeper.postalCode
       this.searchName = animalKeeper.name
+
+      // preselect after reload
+      this.preselectAnimalKeeper = animalKeeper;
     },
   }
 }

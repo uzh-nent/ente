@@ -70,6 +70,7 @@ export default {
     return {
       selectedPractitioner: null,
       practitionerOverride: undefined,
+      preselectPractitioner: null,
 
       searchFamilyName: "",
       searchPostalCode: "",
@@ -129,6 +130,12 @@ export default {
   watch: {
     items: {
       handler: function (items) {
+        if (this.preselectPractitioner) {
+          this.selectedPractitioner = items.find(i => i['@id'] === this.preselectPractitioner['@id'])
+          this.preselectPractitioner = null
+          return
+        }
+
         if (items.length === 1 && !this.probe?.ordererPrac && !this.practitionerOverride) {
           this.selectedPractitioner = items[0]
         }
@@ -162,6 +169,8 @@ export default {
       this.searchPostalCode = this.searchFamilyName = null // first empty to ensure afterwards reload
       this.searchPostalCode = practitioner.postalCode
       this.searchFamilyName = practitioner.familyName
+
+      this.preselectPractitioner = practitioner
     },
   }
 }

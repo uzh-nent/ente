@@ -66,6 +66,7 @@ export default {
     return {
       selectedOrganization: null,
       organizationOverride: undefined,
+      preselectOrganization: null,
 
       searchName: "",
       searchPostalCode: "",
@@ -125,6 +126,12 @@ export default {
   watch: {
     items: {
       handler: function (items) {
+        if (this.preselectOrganization) {
+          this.selectedOrganization = items.find(i => i['@id'] === this.preselectOrganization['@id'])
+          this.preselectOrganization = null
+          return
+        }
+
         if (items.length === 1 && !this.probe?.ordererOrg && !this.organizationOverride) {
           this.selectedOrganization = items[0]
         }
@@ -158,6 +165,8 @@ export default {
       this.searchPostalCode = this.searchName = null // first empty to ensure afterwards reload
       this.searchPostalCode = organization.postalCode
       this.searchName = organization.name
+
+      this.preselectOrganization = organization;
     },
   }
 }
