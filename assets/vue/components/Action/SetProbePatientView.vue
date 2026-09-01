@@ -9,7 +9,7 @@
 
     <div class="d-flex flex-row reset-table-styles gap-2 mb-2">
       <date-time-input
-          class="mw-10" id="birthDateFilter" format="date"
+          id="birthDateFilter" format="date"
           :placeholder="$t('_view.filter_by_birth_date')"
           v-model="filterBirthDate"/>
       <input type="text" class="form-control flex-grow-1"
