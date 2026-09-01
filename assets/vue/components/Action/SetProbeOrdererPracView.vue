@@ -3,6 +3,7 @@
       <actionable-preview class="mb-2" v-if="practitioner">
         <practitioner-view :practitioner="practitioner"/>
         <template #actions>
+          <add-probe-filter-button :query="{'ordererPrac': this.practitioner['@id']}" />
           <edit-linked-practitioner-button
               class="m-2"  :can-unlink="canUnlink" :entity="practitioner" @update="practitionerOverride = $event" />
         </template>
@@ -48,10 +49,12 @@ import EditLinkedPractitionerButton from "./EditLinkedPractitionerButton.vue";
 import EditLinkedAnimalKeeperButton from "./EditLinkedAnimalKeeperButton.vue";
 import EditLinkedOrganizationButton from "./EditLinkedOrganizationButton.vue";
 import {createCleanPatch} from "./utils/linkedEntity";
+import AddProbeFilterButton from "../View/Probe/AddProbeFilterButton.vue";
 
 export default {
   emits: ['update'],
   components: {
+    AddProbeFilterButton,
     EditLinkedOrganizationButton,
     EditLinkedAnimalKeeperButton,
     EditLinkedPractitionerButton,

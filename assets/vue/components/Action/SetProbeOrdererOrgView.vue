@@ -3,6 +3,7 @@
       <actionable-preview class="mb-2" v-if="organization">
         <organization-view :organization="organization"/>
         <template #actions>
+          <add-probe-filter-button :query="{'ordererOrg': this.organization['@id']}" />
           <edit-linked-organization-button
               class="m-2" :can-unlink="canUnlink" :entity="organization" @update="organizationOverride = $event" />
         </template>
@@ -46,10 +47,12 @@ import EditOrganizationButton from "./EditOrganizationButton.vue";
 import {probeConverter} from "../../services/domain/converters";
 import EditLinkedOrganizationButton from "./EditLinkedOrganizationButton.vue";
 import {createCleanPatch} from "./utils/linkedEntity";
+import AddProbeFilterButton from "../View/Probe/AddProbeFilterButton.vue";
 
 export default {
   emits: ['update'],
   components: {
+    AddProbeFilterButton,
     EditLinkedOrganizationButton,
     EditOrganizationButton,
     PatientView, ActionablePreview, EditPatientButton,
