@@ -17,6 +17,7 @@
     "store_reference": "Stammdaten aktualisieren",
     "unlink_reference": "Entfernen",
     "period": "Periode",
+    "use_arrow_keys_to_change_city": "{current}/{total} Orte gefunden, mit Pfeiltasten nach unten/oben ändern.",
     "timeFilter": {
       "from": "Von",
       "until": "Bis"
