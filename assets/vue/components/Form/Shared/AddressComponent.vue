@@ -105,6 +105,11 @@ export default {
         this.entity.city = this.matchingCities[this.suggestedCity]
       }
     }
+  },
+  mounted() {
+    if (this.matchingCities.length > 0) {
+      this.entity.city = this.matchingCities[0]
+    }
   }
 }
 
