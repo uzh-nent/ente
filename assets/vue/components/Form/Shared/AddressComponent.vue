@@ -44,6 +44,7 @@ export default {
   mixins: [templatedForm],
   data() {
     return {
+      postalCodeFocus: false,
       fields: {
         addressLines: createField(),
         countryCode: createField(countryCode),
@@ -58,19 +59,14 @@ export default {
       }
     }
   },
-  watch: {
-    'entity.postalCode': {
-      immediate: true,
-      handler: function (postalCode) {
-        if (!postalCode || postalCode.length !== 4) {
-          return
-        }
+  computed: {
+    matchingCities: function () {
+      if (!this.entity.postalCode || this.entity.postalCode.length !== 4) {
+        return []
+      }
 
-        if (!this.fields.city.dirty && !this.entity.city) {
-          const numberPostalCode = Number(postalCode)
-          this.entity.city = postalCodes.find(entry => entry.pc === numberPostalCode)?.c
-        }
-      },
+      const numberPostalCode = Number(this.entity.postalCode)
+      return postalCodes.filter(entry => entry.pc === numberPostalCode)?.c
     }
   }
 }
