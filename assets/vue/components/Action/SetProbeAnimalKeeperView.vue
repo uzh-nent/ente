@@ -4,7 +4,7 @@
         <animal-keeper-view :animal-keeper="animalKeeper"/>
         <template #actions>
           <add-probe-filter-button :query="{'animalKeeper': this.animalKeeper['@id']}" />
-          <edit-linked-animal-keeper-button class="m-2" can-unlink :entity="animalKeeper" @update="animalKeeperOverride = $event" />
+          <edit-linked-animal-keeper-button class="m-2" can-unlink :entity="animalKeeper" :probe="probe" @update="animalKeeperOverride = $event" />
         </template>
       </actionable-preview>
 

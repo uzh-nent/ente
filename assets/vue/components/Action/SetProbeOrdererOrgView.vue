@@ -5,7 +5,7 @@
         <template #actions>
           <add-probe-filter-button :query="{'ordererOrg': this.organization['@id']}" />
           <edit-linked-organization-button
-              class="m-2" :can-unlink="canUnlink" :entity="organization" @update="organizationOverride = $event" />
+              class="m-2" :can-unlink="canUnlink" :entity="organization" :probe="probe" @update="organizationOverride = $event" />
         </template>
       </actionable-preview>
 

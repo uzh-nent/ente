@@ -4,7 +4,7 @@
       <patient-view :patient="patient"/>
       <template #actions>
         <add-probe-filter-button :query="{'patient': patient['@id']}" />
-        <edit-linked-patient-button class="m-2" :entity="patient" @update="patientOverride = $event"/>
+        <edit-linked-patient-button class="m-2" :entity="patient" :probe="probe" @update="patientOverride = $event"/>
       </template>
     </actionable-preview>
 
