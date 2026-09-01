@@ -29,7 +29,7 @@ readonly class EmailService implements EmailServiceInterface
             ->bcc($this->mailerSender)
             ->subject($email->getSubject())
             ->text($email->getBody())
-            ->addPart(DataPart::fromPath($filepath, 'report.pdf', 'application/pdf'));
+            ->addPart(DataPart::fromPath($filepath, $email->getReport()->getFilename(), 'application/pdf'));
 
         try {
             $this->mailer->send($templatedEmail);
