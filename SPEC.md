@@ -99,7 +99,7 @@ technical:
 - allow to remove probe (reuse identifiers?)
 - stammdaten aktualisieren: remove checkbox; behave as if always active. simplify code
 - simplify dependencies (remove axios, lodash, noty, vuei18n)
-- cleanup null/empty in pracitioner GLN/title fields
+- cleanup null/empty in practitioner GLN/title fields
 - remove unused reference data (coordinate with NENT)
 
 major:

@@ -13,6 +13,7 @@
     "other": "Anderes",
     "search": "Suchen",
     "reference_is_different": "Die Stammdaten sind anders wie hier erfasst.",
+    "other_open_probes_reference_entity": "Folgende offene Proben referenzieren die gleichen Stammdaten, und müssen ggf. nach dem Speichern noch manuell aktualisiert werden:",
     "use_reference": "Stammdaten übertragen",
     "store_reference": "Stammdaten aktualisieren",
     "unlink_reference": "Entfernen",

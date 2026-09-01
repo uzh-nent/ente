@@ -9,6 +9,8 @@ export const linkedEntityEditAction = {
       storeReference: true,
       reference: null,
 
+      otherReferencedOpenProbes: [],
+
       patch: null,
     }
   },
@@ -16,6 +18,10 @@ export const linkedEntityEditAction = {
     entity: {
       type: Object,
       required: true
+    },
+    probe: {
+      type: Object,
+      required: false
     },
     canUnlink: {
       type: Boolean,
@@ -62,7 +68,7 @@ export const linkedEntityEditAction = {
   },
   methods: {
     confirm: async function () {
-      if (this.storeReference) {
+      if (this.storeReference && this.referenceIsDifferent) {
         await api.patch(this.reference, this.payload)
 
         const successMessage = this.$t('_action.edit_reference.edited')

@@ -16,6 +16,10 @@
       <checkbox v-if="referenceIsDifferent"
                 id="storeReference" :label="$t('_form.store_reference')"
                 v-model="storeReference"/>
+      <p v-if="referenceIsDifferent && storeReference && otherReferencedOpenProbes.length > 0" class="alert alert-warning">
+        {{ $t('_form.other_open_probes_reference_entity')}}
+        <link-to-probes-list :probes="otherReferencedOpenProbes" />
+      </p>
     </template>
   </button-confirm-modal>
 </template>
@@ -26,10 +30,13 @@ import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vu
 import Checkbox from "../Library/FormInput/Checkbox.vue";
 import {linkedEntityEditAction} from "./utils/linkedEntity";
 import AnimalKeeperForm, {animalKeeperFields} from "../Form/AnimalKeeperForm.vue";
+import {api} from "../../services/api";
+import LinkToProbesList from "../View/Probe/LinkToProbesList.vue";
 
 export default {
   mixins: [linkedEntityEditAction],
   components: {
+    LinkToProbesList,
     AnimalKeeperForm,
     Checkbox,
     ButtonConfirmModal,
@@ -40,9 +47,12 @@ export default {
     },
   },
   methods: {
-    focusAnimalKeeper: function () {
+    focusAnimalKeeper: async function () {
       document.getElementById('name')?.focus()
-      this.reloadReference()
+      await this.reloadReference()
+
+      const referencedOpenProbes = await api.getOpenProbes({"animalKeeper": this.reference['@id']})
+      this.otherReferencedOpenProbes = this.probe ? referencedOpenProbes.filter(p => p['@id'] !== this.probe['@id']) : referencedOpenProbes
     }
   }
 }
