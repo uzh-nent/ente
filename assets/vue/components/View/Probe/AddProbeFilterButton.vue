@@ -1,7 +1,7 @@
 <template>
-      <a class="btn btn-outline-secondary" :href="filterProbesUrl">
-        <i class="fas fa-filter"></i>
-      </a>
+    <a class="btn btn-link" :href="filterProbesUrl">
+      <i class="fas fa-filter"></i>
+    </a>
 </template>
 
 <script>

@@ -3,6 +3,7 @@
     <actionable-preview class="mb-2" v-if="patient">
       <patient-view :patient="patient"/>
       <template #actions>
+        <add-probe-filter-button :query="{'patient': patient['@id']}" />
         <edit-linked-patient-button class="m-2" :entity="patient" @update="patientOverride = $event"/>
       </template>
     </actionable-preview>
@@ -46,10 +47,12 @@ import EditLinkedPatientButton from "./EditLinkedPatientButton.vue";
 import DateTimeInput from "../Library/FormInput/DateTimeInput.vue";
 import EditLinkedAnimalKeeperButton from "./EditLinkedAnimalKeeperButton.vue";
 import {createCleanPatch} from "./utils/linkedEntity";
+import AddProbeFilterButton from "../View/Probe/AddProbeFilterButton.vue";
 
 export default {
   emits: ['update'],
   components: {
+    AddProbeFilterButton,
     EditLinkedAnimalKeeperButton,
     DateTimeInput,
     EditLinkedPatientButton,

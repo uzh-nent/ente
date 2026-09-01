@@ -3,6 +3,7 @@
       <actionable-preview class="mb-2" v-if="animalKeeper">
         <animal-keeper-view :animal-keeper="animalKeeper"/>
         <template #actions>
+          <add-probe-filter-button :query="{'animalKeeper': this.animalKeeper['@id']}" />
           <edit-linked-animal-keeper-button class="m-2" can-unlink :entity="animalKeeper" @update="animalKeeperOverride = $event" />
         </template>
       </actionable-preview>
@@ -45,10 +46,12 @@ import EditAnimalKeeperButton from "./EditAnimalKeeperButton.vue";
 import {probeConverter} from "../../services/domain/converters";
 import EditLinkedAnimalKeeperButton from "./EditLinkedAnimalKeeperButton.vue";
 import {createCleanPatch} from "./utils/linkedEntity";
+import AddProbeFilterButton from "../View/Probe/AddProbeFilterButton.vue";
 
 export default {
   emits: ['update'],
   components: {
+    AddProbeFilterButton,
     EditLinkedAnimalKeeperButton,
     EditAnimalKeeperButton,
     PatientView, ActionablePreview, EditPatientButton,
