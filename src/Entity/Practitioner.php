@@ -56,13 +56,13 @@ class Practitioner
     use AddressTrait;
     use ContactTrait;
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['practitioner:read', 'practitioner:write'])]
-    private ?string $gln = '';
+    private ?string $gln;
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['practitioner:read', 'practitioner:write'])]
-    private ?string $title = '';
+    private ?string $title;
 
     /**
      * @var Collection<int, Probe>
