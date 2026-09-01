@@ -125,7 +125,7 @@ export default {
       handler: function (items) {
         if (this.preselectPatient) {
           this.selectedPatient = items.find(i => i['@id'] === this.preselectPatient['@id'])
-          // this.preselectPatient = null
+          this.preselectPatient = null
           return
         }
 
