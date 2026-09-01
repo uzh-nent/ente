@@ -107,7 +107,7 @@ export default {
     }
   },
   mounted() {
-    if (this.matchingCities.length > 0) {
+    if (this.matchingCities.length > 0 && !this.entity.city) {
       this.entity.city = this.matchingCities[0]
     }
   }
