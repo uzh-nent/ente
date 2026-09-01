@@ -91,6 +91,7 @@ readonly class ProbeProvider implements ProviderInterface
             $this->translator->trans("Animal name", [], "trait_probe_specimen_meta"),
 
             $this->translator->trans("Analysis start date", [], "entity_probe"),
+            $this->translator->trans("Finished at", [], "entity_probe"),
 
             ...$observationHeader
         ];
@@ -146,6 +147,7 @@ readonly class ProbeProvider implements ProviderInterface
                 $probe->getAnimalName(),
 
                 $probe->getAnalysisStartDate()?->format('d.m.Y') ?? '',
+                $probe->getFinishedAt()?->format('d.m.Y') ?? '',
 
                 ...$observations,
             ];
