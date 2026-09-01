@@ -66,6 +66,7 @@ export default {
   data() {
     return {
       selectedPatient: null,
+      preselectPatient: null,
       patientOverride: undefined,
 
       searchAhvNumber: "",
@@ -122,6 +123,12 @@ export default {
   watch: {
     items: {
       handler: function (items) {
+        if (this.preselectPatient) {
+          this.selectedPatient = items.find(i => i['@id'] === this.preselectPatient['@id'])
+          // this.preselectPatient = null
+          return
+        }
+
         if (items.length === 1 && !this.probe?.patient && !this.patientOverride) {
           this.selectedPatient = items[0]
         }
@@ -158,6 +165,9 @@ export default {
 
       if (!patient.birthDate && !patient.ahvNumber) {
         this.items = [patient]
+      } else {
+        // ensure patient is selected after reload
+        this.preselectPatient = patient;
       }
     },
   }

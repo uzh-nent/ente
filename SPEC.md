@@ -97,6 +97,7 @@ Probedaten:
 technical:
 - track CGMLST as separate observation (notably to have separate edit date)
 - allow to remove probe (reuse identifiers?)
+- stammdaten aktualisieren: remove checkbox; behave as if always active. simplify code.
 
 major:
 - let customer create service request online
