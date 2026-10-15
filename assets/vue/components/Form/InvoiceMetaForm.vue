@@ -27,12 +27,12 @@ import FormField from '../Library/FormLayout/FormField'
 import TextInput from '../Library/FormInput/TextInput.vue'
 import DateTimeInput from '../Library/FormInput/DateTimeInput.vue'
 import Radio from "../Library/FormInput/Radio.vue";
-import {probeConverter} from "../../services/domain/converters";
+import {probeConverter} from "../../domain/converters";
 import {
   formatOrganizationAddress,
   formatPatientAddress,
   formatPractitionerAddress
-} from "../../services/domain/formatter";
+} from "../../domain/formatter";
 import TextArea from "../Library/FormInput/TextArea.vue";
 
 const createReceivers = function (translator) {

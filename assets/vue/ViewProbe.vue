@@ -139,7 +139,7 @@ import ObservationTable from "./components/View/ObservationTable.vue";
 import TooltipWrap from "./components/Library/View/TooltipWrap.vue";
 import OrdererView from "./components/View/Probe/OrdererView.vue";
 import ActionableCard from "./components/Library/View/ActionableCard.vue";
-import {checkHasMedicalValidation} from "./services/domain/authorization";
+import {checkHasMedicalValidation} from "./domain/authorization";
 
 export default {
   emits: ['added'],

@@ -31,7 +31,7 @@ import {
   formatAhvNumber,
   formatContact,
   formatDate,
-} from "../../services/domain/formatter";
+} from "../../domain/formatter";
 import EditPatientButton from "../Action/EditPatientButton.vue";
 import AddProbeFilterButton from "./Probe/AddProbeFilterButton.vue";
 

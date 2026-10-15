@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import {formatAddress, formatAhvNumber, formatContact, formatDate} from "../../services/domain/formatter";
+import {formatAddress, formatAhvNumber, formatContact, formatDate} from "../../domain/formatter";
 
 export default {
   methods: {formatAhvNumber, formatDate},

@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {formatAddress, formatAddressCity, formatContact} from "../../services/domain/formatter";
+import {formatAddress, formatAddressCity, formatContact} from "../../domain/formatter";
 import EditPractitionerButton from "../Action/EditPractitionerButton.vue";
 import AddProbeFilterButton from "./Probe/AddProbeFilterButton.vue";
 

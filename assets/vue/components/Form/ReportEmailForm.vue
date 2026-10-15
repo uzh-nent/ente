@@ -34,9 +34,9 @@ import CustomSelect from "../Library/FormInput/CustomSelect.vue";
 import Checkbox from "../Library/FormInput/Checkbox.vue";
 import IdentificationView from "../View/Observation/IdentificationView.vue";
 import TestView from "../View/Observation/TestView.vue";
-import {probeConverter} from "../../services/domain/converters";
+import {probeConverter} from "../../domain/converters";
 import email from '../../../resources/report/email.json'
-import {getCurrentUser} from "../../services/domain/authorization";
+import {getCurrentUser} from "../../domain/authorization";
 
 
 

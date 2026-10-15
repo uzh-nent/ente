@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import {formatAddress, formatAddressCity, formatContact, formatUidNumber} from "../../services/domain/formatter";
+import {formatAddress, formatAddressCity, formatContact, formatUidNumber} from "../../domain/formatter";
 import EditOrganizationButton from "../Action/EditOrganizationButton.vue";
 import AddProbeFilterButton from "./Probe/AddProbeFilterButton.vue";
 

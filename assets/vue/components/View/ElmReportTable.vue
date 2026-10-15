@@ -14,7 +14,7 @@
 
 <script>
 
-import {formatDate, formatDateTime} from "../../services/domain/formatter";
+import {formatDate, formatDateTime} from "../../domain/formatter";
 import ElmReportTableRow from "./ElmReportTableRow.vue";
 
 export default {

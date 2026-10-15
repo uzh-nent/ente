@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import {formatAddress, formatBusinessIdentifiers, formatContact} from "../../services/domain/formatter";
+import {formatAddress, formatBusinessIdentifiers, formatContact} from "../../domain/formatter";
 
 export default {
   props: {

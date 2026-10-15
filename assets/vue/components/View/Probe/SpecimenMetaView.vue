@@ -37,7 +37,7 @@
 
 <script>
 import LabeledValue from "../../Library/View/LabeledValue.vue";
-import {formatDate, formatSpecimenSourceText} from "../../../services/domain/formatter";
+import {formatDate, formatSpecimenSourceText} from "../../../domain/formatter";
 
 export default {
   methods: {formatSpecimenSourceText, formatDate},

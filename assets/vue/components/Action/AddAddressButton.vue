@@ -25,7 +25,7 @@ import Radio from "../Library/FormInput/Radio.vue";
 import TextArea from "../Library/FormInput/TextArea.vue";
 import OrganizationAddressForm from "../Form/Address/OrganizationAddressForm.vue";
 import PractitionerAddressForm from "../Form/Address/PractitionerAddressForm.vue";
-import {addressConverter} from "../../services/domain/converters";
+import {addressConverter} from "../../domain/converters";
 
 const createAddressSources = function (translator) {
   return [

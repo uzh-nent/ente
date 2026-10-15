@@ -27,15 +27,15 @@
 import AttributionView from "./AttributionView.vue";
 import ViewElmReportStepLabel from "../Action/ViewElmReportStepLabel.vue";
 import {router} from "../../services/api";
-import {probeConverter} from "../../services/domain/converters";
+import {probeConverter} from "../../domain/converters";
 import {
   formatOrganizationAddress,
   formatOrganizationShort,
   formatPractitionerAddress, formatPractitionerName, formatPractitionerShort
-} from "../../services/domain/formatter";
+} from "../../domain/formatter";
 import SendReportEmailButton from "../Action/SendReportEmailButton.vue";
 import ViewReportEmailButton from "../Action/ViewReportEmailButton.vue";
-import {checkHasMedicalValidation} from "../../services/domain/authorization";
+import {checkHasMedicalValidation} from "../../domain/authorization";
 
 export default {
   emits: ['sent-email'],
