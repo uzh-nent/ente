@@ -83,11 +83,7 @@ readonly class InvoiceService implements InvoiceServiceInterface
         $summaryRows = [];
         $fullTotal = 0.0;
         foreach ($invoicesPerOrderer as $invoices) {
-            $firstInvoice = $invoices[0] ?? null;
-            if (!$firstInvoice) {
-                continue;
-            }
-
+            $firstInvoice = $invoices[0];
             $firstProbe = $firstInvoice->getProbe();
             if (!$firstProbe) {
                 continue;
