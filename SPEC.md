@@ -103,7 +103,8 @@ technical:
 
 major:
 - let customer create service request online
-- track analysis, not result (e.g., STEC E. coli Stx1, Stx2 separate tracking); possibly track more analysis results from the Laborblatt
+- track analysis, not result (e.g., STEC E. coli Stx1, Stx2 separate tracking); possibly track more analysis results from the Laborblatt; drop "interpretationText" from probe and keep only "comment" or cgMLST
+- improve co-working: add comments to probe, possibly show when probe has been modified 
 - improve statistics: add visuals to all-probes view
 - improve stammdaten: add attribution, when changed propose to apply to all probes, include standard text into stammdaten (hence frontend edit etc), multiple invoice addresses, allow to remove stammdaten (possibly by relinking probes to other)
 - improve reference data: ELM api integration (sync value sets, add patient reporting type such as anonymous (for new pathogens) or initials (campylobacter) to leading codes), add current location of patient
