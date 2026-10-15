@@ -53,7 +53,6 @@ import DateTimeInput from '../../Library/FormInput/DateTimeInput.vue'
 import Radio from "../../Library/FormInput/Radio.vue";
 import CustomSelect from "../../Library/FormInput/CustomSelect.vue";
 import Checkbox from "../../Library/FormInput/Checkbox.vue";
-import debounce from "lodash.debounce";
 import {sortOrganisms} from "../../../services/domain/sorters";
 import {formatOrganism} from "../../../services/domain/formatter";
 import SearchableRadio from "../../Library/FormInput/SearchableRadio.vue";

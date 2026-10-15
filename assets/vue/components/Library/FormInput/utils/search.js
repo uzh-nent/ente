@@ -1,4 +1,4 @@
-import debounce from "lodash.debounce";
+import {debounce} from "../../../../services/utils";
 
 const SEARCH_CUTOFF = 50
 
@@ -55,7 +55,7 @@ export const searchableChoices = {
     searchChoice: {
       handler: debounce(function (searchChoice) {
         this.filterChoices(searchChoice)
-      }, 200, {'leading': true}),
+      }, 200),
     }
   }
 }
