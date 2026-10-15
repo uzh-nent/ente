@@ -7,9 +7,9 @@
         <span v-if="observation.interpretation === 'NEG'" class="badge bg-danger">
           {{ $t(`observation._interpretation_meta_short.${this.observation.interpretationMeta ?? 'NONE'}`) }}
         </span>
-        <span class="d-block" v-if="observation.cgMLST">
-          {{ $t(`observation.cgMLST`) }}: {{ observation.cgMLST }}
-        </span>
+      </template>
+      <template v-if="observation.analysisType === 'CG_MLST'">
+        {{ observation.cgMLST }}
       </template>
       <template v-else>
         <test-interpretation-badge :observation="observation"/>
