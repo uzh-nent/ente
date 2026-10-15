@@ -78,11 +78,6 @@ Encore
     .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
 
     .configureDefinePlugin(options => {
-      options.__VUE_I18N_LEGACY_API__ = true
-      options.__VUE_I18N_FULL_INSTALL__ = true
-      options.__INTLIFY_PROD_DEVTOOLS__ = false
-      options.__VUE_I18N_PROD_DEVTOOLS__ = false
-
       options.__VUE_OPTIONS_API__ = true
       options.__VUE_PROD_DEVTOOLS__ = false
     })
