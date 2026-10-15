@@ -12,12 +12,11 @@
 
 <script>
 
-import {formatDate, formatDateTime, formatOrganism} from "../../../domain/formatter";
+import {formatDate, formatDateTime} from "../../../domain/formatter";
 import LabeledValue from "../../Library/View/LabeledValue.vue";
-import TestInterpretationBadge from "./TestInterpretationBadge.vue";
 
 export default {
-  components: {TestInterpretationBadge, LabeledValue},
+  components: {LabeledValue},
   methods: {formatDateTime, formatDate},
   props: {
     observation: {

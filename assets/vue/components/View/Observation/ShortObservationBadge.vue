@@ -1,9 +1,5 @@
 <template>
-    <span class="badge" :class="{
-          'bg-warning': !observation.interpretation,
-          'bg-success': observation.interpretation === 'POS' ,
-          'bg-danger': observation.interpretation === 'NEG'
-        }">
+    <span class="badge" :class="cssClass">
       {{ content }}
     </span>
 </template>
@@ -26,6 +22,17 @@ export default {
     },
   },
   computed: {
+    cssClass: function () {
+      if (this.observation.analysisType === 'CG_MLST') {
+        return 'bg-info'
+      }
+
+      if (!this.observation.interpretation) {
+        return 'bg-warning'
+      }
+
+      return this.observation.interpretation === 'POS' ?  'bg-success' : 'bg-danger'
+    },
     content: function () {
       if (this.observation.analysisType === 'IDENTIFICATION') {
         if (this.observation.interpretation === 'NEG') {
@@ -33,6 +40,10 @@ export default {
         }
 
         return formatOrganism(this.organisms.find(o => o['@id'] === this.observation.organism))
+      }
+
+      if (this.observation.analysisType === 'CG_MLST') {
+        return this.observation.interpretationText
       }
 
       return this.$t(`probe._analysis_type_short.${this.observation.analysisType}`)
