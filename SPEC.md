@@ -95,6 +95,7 @@ Probedaten:
 ## Possible next development steps
 
 technical:
+- wait next release, then remove unused observation.cgMGLS column
 
 major:
 - let customer create service request online
