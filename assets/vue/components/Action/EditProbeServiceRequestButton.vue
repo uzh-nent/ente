@@ -10,11 +10,11 @@
 
 <script>
 
-import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import PatientForm from "../Form/PatientForm.vue";
 import ServiceRequestForm from "../Form/Probe/ServiceRequestForm.vue";
+import {api} from "../../domain/api";
 
 export default {
   emits: ['edited'],

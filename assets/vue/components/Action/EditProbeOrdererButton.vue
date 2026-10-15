@@ -12,13 +12,13 @@
 
 <script>
 
-import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import ServiceRequestForm from "../Form/Probe/ServiceRequestForm.vue";
 import RequisitionIdentifierForm from "../Form/Probe/RequisitionIdentifierForm.vue";
 import SetProbeOrdererOrgView from "./SetProbeOrdererOrgView.vue";
 import SetProbeOrdererPracView from "./SetProbeOrdererPracView.vue";
+import {api} from "../../domain/api";
 
 export default {
   emits: ['edited'],

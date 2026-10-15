@@ -9,13 +9,13 @@
 
 <script>
 
-import { api } from '../../services/api'
 import LoopingRhombusSpinner from '../Library/View/Base/LoopingRhombusSpinner.vue'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import PatientForm from "../Form/PatientForm.vue";
 import PeriodForm from "../Form/PeriodForm.vue";
 import {downloadFile, excelMimeType} from "./utils/download";
 import {periodExport} from "./utils/periodExport";
+import {api} from "../../domain/api";
 
 export default {
   components: {

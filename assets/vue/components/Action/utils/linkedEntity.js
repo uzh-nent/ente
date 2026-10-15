@@ -1,5 +1,5 @@
-import {api} from "../../../services/api";
 import {displaySuccess} from "../../../services/notifiers";
+import {api} from "../../../domain/api";
 
 export const linkedEntityEditAction = {
   emits: ['update'],

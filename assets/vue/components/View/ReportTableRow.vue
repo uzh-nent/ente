@@ -26,7 +26,6 @@
 <script>
 import AttributionView from "./AttributionView.vue";
 import ViewElmReportStepLabel from "../Action/ViewElmReportStepLabel.vue";
-import {router} from "../../services/api";
 import {probeConverter} from "../../domain/converters";
 import {
   formatOrganizationAddress,
@@ -36,6 +35,7 @@ import {
 import SendReportEmailButton from "../Action/SendReportEmailButton.vue";
 import ViewReportEmailButton from "../Action/ViewReportEmailButton.vue";
 import {checkHasMedicalValidation} from "../../domain/authorization";
+import {router} from "../../domain/api";
 
 export default {
   emits: ['sent-email'],

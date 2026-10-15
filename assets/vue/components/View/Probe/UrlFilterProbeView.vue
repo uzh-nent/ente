@@ -10,7 +10,8 @@
 <script>
 import LabeledValue from "../../Library/View/LabeledValue.vue";
 import {formatDate, formatSpecimenSourceText} from "../../../domain/formatter";
-import {api} from "../../../services/api";
+
+import {api} from "../../../domain/api";
 
 export default {
   methods: {formatSpecimenSourceText, formatDate},

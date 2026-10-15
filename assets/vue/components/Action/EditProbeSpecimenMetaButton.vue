@@ -10,12 +10,12 @@
 
 <script>
 
-import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import PatientForm from "../Form/PatientForm.vue";
 import SpecimenMetaForm from "../Form/Probe/SpecimenMetaForm.vue";
 import {probeConverter} from "../../domain/converters";
+import {api} from "../../domain/api";
 
 export default {
   emits: ['edited'],

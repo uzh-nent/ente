@@ -17,8 +17,8 @@
 
 <script>
 
-import {preloadApi} from './services/api'
 import ProbeNavigationView from "./components/View/ProbeNavigationView.vue";
+import {preloadApi} from "./domain/api";
 
 export default {
   emits: ['added'],

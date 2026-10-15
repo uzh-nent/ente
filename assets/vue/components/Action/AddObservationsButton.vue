@@ -47,7 +47,6 @@
 
 <script>
 
-import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import LoopingRhombusSpinner from '../Library/View/Base/LoopingRhombusSpinner.vue'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
@@ -57,6 +56,7 @@ import moment from "moment/moment";
 import TestSharedForm from "../Form/Observation/TestSharedForm.vue";
 import TestForm from "../Form/Observation/TestForm.vue";
 import Checkbox from "../Library/FormInput/Checkbox.vue";
+import {api} from "../../domain/api";
 
 export default {
   emits: ['added'],

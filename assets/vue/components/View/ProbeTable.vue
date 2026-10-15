@@ -62,7 +62,6 @@ import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
 import OrganizationTableRow from "./OrganizationTableRow.vue";
 import {orderFilter, sanitizeSearchFilter} from "../../services/query";
 import {localStoragePersisted} from "./utils/state";
-import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
 import ProbeTableRow from "./ProbeTableRow.vue";
 import FilterProbeButton from "../Action/FilterProbeButton.vue";
@@ -71,6 +70,7 @@ import ExportProbesDropdown from "../Action/ExportProbesDropdown.vue";
 import ExportInvoicesPatientsButton from "../Action/ExportInvoicesPatientsButton.vue";
 import ExportInvoicesOrderersButton from "../Action/ExportInvoicesOrderersButton.vue";
 import ExportInvoicesReceiptsButton from "../Action/ExportInvoicesReceiptsButton.vue";
+import {api} from "../../domain/api";
 
 export default {
   components: {

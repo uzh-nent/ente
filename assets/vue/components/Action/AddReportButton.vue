@@ -46,7 +46,6 @@
 
 <script>
 
-import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import ElmReportForm from "../Form/ElmReportForm.vue";
@@ -58,6 +57,7 @@ import ReportResultForm from "../Form/ReportResultForm.vue";
 import {probeConverter} from "../../domain/converters";
 import {formatOrganizationAddress, formatPractitionerAddress} from "../../domain/formatter";
 import Checkbox from "../Library/FormInput/Checkbox.vue";
+import {api} from "../../domain/api";
 
 export default {
   emits: ['added'],

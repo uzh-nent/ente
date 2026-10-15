@@ -16,7 +16,6 @@
 
 <script>
 
-import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import PatientForm from "../Form/PatientForm.vue";
@@ -26,6 +25,7 @@ import TextArea from "../Library/FormInput/TextArea.vue";
 import OrganizationAddressForm from "../Form/Address/OrganizationAddressForm.vue";
 import PractitionerAddressForm from "../Form/Address/PractitionerAddressForm.vue";
 import {addressConverter} from "../../domain/converters";
+import {api} from "../../domain/api";
 
 const createAddressSources = function (translator) {
   return [

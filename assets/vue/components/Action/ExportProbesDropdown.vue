@@ -31,13 +31,13 @@
 
 <script>
 
-import {api, router} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import LoopingRhombusSpinner from '../Library/View/Base/LoopingRhombusSpinner.vue'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import AnimalKeeperForm from "../Form/AnimalKeeperForm.vue";
 import moment from "moment/moment";
 import {downloadFile, excelMimeType} from "./utils/download";
+import {api, router} from "../../domain/api";
 
 export default {
   props: {

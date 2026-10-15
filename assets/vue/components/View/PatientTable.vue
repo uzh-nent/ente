@@ -57,12 +57,12 @@ import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
 import PatientTableRow from "./PatientTableRow.vue";
 import {orderFilter, sanitizeSearchFilter} from "../../services/query";
 import {localStoragePersisted} from "./utils/state";
-import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
 import FormField from "../Library/FormLayout/FormField.vue";
 import DateTimeInput from "../Library/FormInput/DateTimeInput.vue";
 import FilterPatientButton from "../Action/FilterPatientButton.vue";
 import AhvNumberInput from "../Library/FormInput/AhvNumberInput.vue";
+import {api} from "../../domain/api";
 
 export default {
   components: {

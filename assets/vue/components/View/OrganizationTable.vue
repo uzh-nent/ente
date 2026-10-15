@@ -56,11 +56,11 @@ import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
 import OrganizationTableRow from "./OrganizationTableRow.vue";
 import {orderFilter, sanitizeSearchFilter} from "../../services/query";
 import {localStoragePersisted} from "./utils/state";
-import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
 import FilterPractitionerButton from "../Action/FilterPractitionerButton.vue";
 import FilterOrganizationButton from "../Action/FilterOrganizationButton.vue";
 import UidNumberInput from "../Library/FormInput/UidNumberInput.vue";
+import {api} from "../../domain/api";
 
 export default {
   components: {
