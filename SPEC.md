@@ -95,7 +95,6 @@ Probedaten:
 ## Possible next development steps
 
 technical:
-- stammdaten aktualisieren: remove checkbox; behave as if always active. take over automatically in open probes (but inform user).
 
 major:
 - let customer create service request online

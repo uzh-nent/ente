@@ -68,11 +68,21 @@ export const linkedEntityEditAction = {
   },
   methods: {
     confirm: async function () {
-      if (this.storeReference && this.referenceIsDifferent) {
+      if (this.storeReference && this.referenceIsDifferent && this.hasPatch) {
         await api.patch(this.reference, this.payload)
 
         const successMessage = this.$t('_action.edit_reference.edited')
         displaySuccess(successMessage)
+
+        if (this.otherReferencedOpenProbes.length > 0) {
+          const probePatch = this.copyFromLinkedEntity(this.reference)
+          await Promise.all(this.otherReferencedOpenProbes.map(probe => {
+            api.patch(probe, probePatch)
+          }))
+
+          const successMessage = this.$t('_action.edit_reference.edited_referenced_open_probes')
+          displaySuccess(successMessage)
+        }
       }
 
       this.$emit('update', this.payload)

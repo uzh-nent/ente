@@ -13,9 +13,10 @@
     "other": "Anderes",
     "search": "Suchen",
     "reference_is_different": "Die Stammdaten sind anders wie hier erfasst.",
-    "other_open_probes_reference_entity": "Folgende offene Proben referenzieren die gleichen Stammdaten, und müssen ggf. nach dem Speichern noch manuell aktualisiert werden:",
-    "use_reference": "Stammdaten übertragen",
+    "other_open_probes_reference_entity": "Folgende offene Proben referenzieren die gleichen Stammdaten:",
+    "use_reference": "Aus Stammdaten übernehmen",
     "store_reference": "Stammdaten aktualisieren",
+    "store_reference_and_update_open_probes": "Stammdaten und offene Proben aktualisieren",
     "unlink_reference": "Entfernen",
     "period": "Periode",
     "use_arrow_keys_to_change_city": "{current}/{total} Orte gefunden, mit Pfeiltasten nach unten/oben ändern.",
@@ -92,7 +93,8 @@
       "title": "Patient:in bearbeiten"
     },
     "edit_reference": {
-      "edited": "Stammdaten gespeichert."
+      "edited": "Stammdaten gespeichert.",
+      "edited_referenced_open_probes": "Verlinkte offene Proben aktualisiert"
     },
     "add_animal_keeper": {
       "added": "Tierhalter:in hinzugefügt.",
