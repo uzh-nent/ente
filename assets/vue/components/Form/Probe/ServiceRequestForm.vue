@@ -16,8 +16,20 @@
                  @change="$event.target.checked ? entity.pathogen = choice.value : null">
           <label class="form-check-label clickable" :for="'pathogen_' + choice.value">{{ choice.label }}</label>
         </div>
+        <template v-if="choice.value === 'SALMONELLA' && choice.value === entity.pathogen">
+          <checkboxes id="analysisTypes" class="mb-2" :choices="salmonellaAnalysisTypes"
+                      :field="fields.analysisTypes"
+                      :disabled="value => value === 'IDENTIFICATION'"
+                      v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
+        </template>
+        <template v-if="choice.value === 'LISTERIA_MONOCYTOGENES' && choice.value === entity.pathogen">
+          <checkboxes id="analysisTypes" class="mb-2" :choices="listeriaMonocytogenesAnalysisTypes"
+                      :field="fields.analysisTypes"
+                      :disabled="value => value === 'IDENTIFICATION'"
+                      v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
+        </template>
         <template v-if="choice.value === 'VIBRIO_CHOLERAE' && choice.value === entity.pathogen">
-          <checkboxes id="analysisTypes" class="mb-2" :choices="referenceVibrioCholeraeAnalysisTypes"
+          <checkboxes id="analysisTypes" class="mb-2" :choices="vibrioCholeraeAnalysisTypes"
                       :field="fields.analysisTypes"
                       :disabled="value => value === 'IDENTIFICATION'"
                       v-model="entity.analysisTypes" @update:model-value="validateField('analysisTypes')"/>
@@ -81,7 +93,17 @@ const createEscherichiaColiAnalysisTypes = function (translator) {
   return values.map(value => ({label: translator(`probe._analysis_type.${value}`), value}))
 }
 
-const createReferenceVibrioCholeraeAnalysisTypes = function (translator) {
+const createSalmonellaAnalysisTypes = function (translator) {
+  const values = ['IDENTIFICATION', 'CG_MLST']
+  return values.map(value => ({label: translator(`probe._analysis_type.${value}`), value}))
+}
+
+const createListeriaMonocytogenesAnalysisTypes = function (translator) {
+  const values = ['IDENTIFICATION', 'CG_MLST']
+  return values.map(value => ({label: translator(`probe._analysis_type.${value}`), value}))
+}
+
+const createVibrioCholeraeAnalysisTypes = function (translator) {
   const values = ['IDENTIFICATION', 'VB_TOXIN']
   return values.map(value => ({label: translator(`probe._analysis_type.${value}`), value}))
 }
@@ -137,11 +159,17 @@ export default {
     availablePathogens: function () {
       return this.entity.laboratoryFunction === 'PRIMARY' ? this.primaryPathogens : this.referencePathogens
     },
+    salmonellaAnalysisTypes: function () {
+      return createSalmonellaAnalysisTypes(this.$t)
+    },
+    listeriaMonocytogenesAnalysisTypes: function () {
+      return createListeriaMonocytogenesAnalysisTypes(this.$t)
+    },
     escherichiaColiAnalysisTypes: function () {
       return createEscherichiaColiAnalysisTypes(this.$t)
     },
-    referenceVibrioCholeraeAnalysisTypes: function () {
-      return createReferenceVibrioCholeraeAnalysisTypes(this.$t)
+    vibrioCholeraeAnalysisTypes: function () {
+      return createVibrioCholeraeAnalysisTypes(this.$t)
     },
     methodTypes: function () {
       return createMethodTypes(this.$t)

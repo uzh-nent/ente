@@ -343,6 +343,7 @@
     },
     "_analysis_type": {
       "IDENTIFICATION": "Identif-/Typisierung",
+      "CG_MLST": "cgMLST",
       "EC_STEC": "Shigatoxin bildend (STEC)",
       "EC_EPEC": "Enteropathogene (EPEC)",
       "EC_ETEC": "Enterotoxische (ETEC)",
@@ -350,21 +351,22 @@
       "EC_EAEC": "Enteroaggregative (EAEC)",
       "VB_TOXIN": "Cholera-Toxin (CTX)"
     },
-    "_method_type": {
-      "SOP": "SOP",
-      "RTPCR": "rtPCR",
-      "MLST": "MLST",
-      "WGS": "WGS",
-      "GDS": "GDS"
-    },
     "_analysis_type_short": {
       "IDENTIFICATION": "Ident.",
+      "CG_MLST": "cgMLST",
       "EC_STEC": "STEC",
       "EC_EPEC": "EPEC",
       "EC_ETEC": "ETEC",
       "EC_EIEC": "EIEC/Shig.",
       "EC_EAEC": "EAEC",
       "VB_TOXIN": "CTX"
+    },
+    "_method_type": {
+      "SOP": "SOP",
+      "RTPCR": "rtPCR",
+      "MLST": "MLST",
+      "WGS": "WGS",
+      "GDS": "GDS"
     },
     "_specimen_source": {
       "HUMAN": "Mensch",
@@ -418,8 +420,8 @@
     "identification_successful": "Identifizierung erfolgreich",
     "identification_failed": "Identifizierung fehlgeschlagen",
     "interpretation_text": "Kommentar",
+    "interpretation_text_cgmlst": "cgMLST",
     "interpretation_meta": "Grund",
-    "cgMLST": "cgMLST",
     "_interpretation": {
       "POS": "Nachweis (Positiv)",
       "NEG": "Kein Nachweis (Negativ)",
