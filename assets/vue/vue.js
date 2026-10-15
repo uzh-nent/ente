@@ -1,7 +1,9 @@
 // i18n
 import {createApp} from 'vue'
-import {createI18n} from 'vue-i18n'
 import de from './localization/de.json'
+import {createTranslator, createVuePlugin} from "./localization/translator";
+const translator = createTranslator("de", 'de', { de })
+const i18n = createVuePlugin(translator)
 
 // flatpickr
 import Flatpickr from 'flatpickr'
@@ -33,13 +35,6 @@ Flatpickr.localize(German)
 function createVue(app) {
   const vue = createApp(app)
   vue.config.productionTip = false
-
-  const i18n = createI18n({
-    locale: 'de',
-    fallbackLocale: 'de',
-    globalInjection: true,
-    messages: {de}
-  })
   vue.use(i18n)
 
   vue.component('FontAwesomeIcon', FontAwesomeIcon)
