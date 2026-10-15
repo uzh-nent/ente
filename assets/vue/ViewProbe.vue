@@ -113,7 +113,6 @@
 
 <script>
 
-import {preloadApi} from './services/api'
 import ServiceRequestView from "./components/View/Probe/ServiceRequestView.vue";
 import PatientView from "./components/View/Probe/PatientView.vue";
 import AnimalView from "./components/View/Probe/AnimalView.vue";
@@ -140,6 +139,7 @@ import TooltipWrap from "./components/Library/View/TooltipWrap.vue";
 import OrdererView from "./components/View/Probe/OrdererView.vue";
 import ActionableCard from "./components/Library/View/ActionableCard.vue";
 import {checkHasMedicalValidation} from "./domain/authorization";
+import {preloadApi} from "./domain/api";
 
 export default {
   emits: ['added'],

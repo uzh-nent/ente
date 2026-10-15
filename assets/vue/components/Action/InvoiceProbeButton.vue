@@ -32,7 +32,6 @@
 
 <script>
 
-import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import moment from "moment";
@@ -41,6 +40,7 @@ import {createLineItems} from "../../domain/invoice";
 import InvoiceLineItemForm from "../Form/InvoiceLineItemForm.vue";
 import InvoiceMetaForm from "../Form/InvoiceMetaForm.vue";
 import tarif from '../../../resources/tarif.json'
+import {api} from "../../domain/api";
 
 export default {
   emits: ['added'],

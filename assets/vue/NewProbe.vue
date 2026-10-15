@@ -40,7 +40,6 @@
 
 <script>
 
-import {api, preloadApi, router} from './services/api'
 import {displaySuccess} from './services/notifiers'
 import LoopingRhombusSpinner from './components/Library/View/Base/LoopingRhombusSpinner.vue'
 import ButtonConfirmModal from './components/Library/Behaviour/Modal/ButtonConfirmModal.vue'
@@ -55,6 +54,7 @@ import SetProbePatientView from "./components/Action/SetProbePatientView.vue";
 import SetProbeAnimalKeeperView from "./components/Action/SetProbeAnimalKeeperView.vue";
 import AnimalNameForm from "./components/Form/Probe/AnimalNameForm.vue";
 import TooltipWrap from "./components/Library/View/TooltipWrap.vue";
+import {api, preloadApi, router} from "./domain/api";
 
 export default {
   emits: ['added'],

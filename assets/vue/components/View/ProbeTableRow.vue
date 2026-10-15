@@ -73,7 +73,6 @@ import {
   formatOrganizationShort, formatPatientName, formatPatientShort,
   formatProbeService, formatSpecimenSourceText
 } from "../../domain/formatter";
-import {api, router} from "../../services/api";
 import LabeledValue from "../Library/View/LabeledValue.vue";
 import ShortObservationBadge from "./Observation/ShortObservationBadge.vue";
 import InvoiceProbeButton from "../Action/InvoiceProbeButton.vue";
@@ -82,6 +81,7 @@ import {displaySuccess} from "../../services/notifiers";
 import ResetInvoicableProbeButton from "../Action/ResetInvoicableProbeButton.vue";
 import RemoveInvoiceButton from "../Action/RemoveInvoiceButton.vue";
 import ViewInvoiceButton from "../Action/ViewInvoiceButton.vue";
+import {api, router} from "../../domain/api";
 
 export default {
   components: {

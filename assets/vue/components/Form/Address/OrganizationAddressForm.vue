@@ -35,7 +35,6 @@ import {templatedForm, createField, requiredRule} from '../utils/form'
 import FormField from '../../Library/FormLayout/FormField.vue'
 import Radio from "../../Library/FormInput/Radio.vue";
 import {paginatedQuery} from "../../View/utils/table";
-import {api} from "../../../services/api";
 import {orderFilter, sanitizeSearchFilter} from "../../../services/query";
 import {formatOrganizationAddress, formatOrganizationShort} from "../../../domain/formatter";
 import AddOrganizationButton from "../../Action/AddOrganizationButton.vue";
@@ -46,6 +45,7 @@ import ActionablePreview from "../../Library/View/ActionablePreview.vue";
 import PatientView from "../../View/PatientView.vue";
 import EditOrganizationButton from "../../Action/EditOrganizationButton.vue";
 import {addressConverter} from "../../../domain/converters";
+import {api} from "../../../domain/api";
 
 export default {
   emits: ['update'],

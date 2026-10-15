@@ -11,9 +11,9 @@
 
 <script>
 
-import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
+import {api} from "../../domain/api";
 
 export default {
   emits: ['added'],

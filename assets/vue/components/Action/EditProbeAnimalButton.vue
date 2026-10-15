@@ -11,11 +11,11 @@
 
 <script>
 
-import {api} from '../../services/api'
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import SetProbeAnimalKeeperView from "./SetProbeAnimalKeeperView.vue";
 import AnimalNameForm from "../Form/Probe/AnimalNameForm.vue";
+import {api} from "../../domain/api";
 
 export default {
   emits: ['edited'],

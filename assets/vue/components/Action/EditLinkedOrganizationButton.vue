@@ -30,8 +30,8 @@ import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vu
 import OrganizationForm, {organizationFields} from "../Form/OrganizationForm.vue";
 import Checkbox from "../Library/FormInput/Checkbox.vue";
 import {linkedEntityEditAction} from "./utils/linkedEntity";
-import {api} from "../../services/api";
 import LinkToProbesList from "../View/Probe/LinkToProbesList.vue";
+import {api} from "../../domain/api";
 
 export default {
   mixins: [linkedEntityEditAction],

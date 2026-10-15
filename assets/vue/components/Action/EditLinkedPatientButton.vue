@@ -30,8 +30,8 @@ import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vu
 import Checkbox from "../Library/FormInput/Checkbox.vue";
 import {linkedEntityEditAction} from "./utils/linkedEntity";
 import PatientForm, {patientFields} from "../Form/PatientForm.vue";
-import {api} from "../../services/api";
 import LinkToProbesList from "../View/Probe/LinkToProbesList.vue";
+import {api} from "../../domain/api";
 
 export default {
   mixins: [linkedEntityEditAction],

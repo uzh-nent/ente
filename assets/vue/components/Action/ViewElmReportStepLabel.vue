@@ -55,8 +55,8 @@
 import LabeledValue from "../Library/View/LabeledValue.vue";
 import LabelModal from "../Library/Behaviour/Modal/LabelModal.vue";
 import DuckWalking from "../Library/View/Base/DuckWalking.vue";
-import {api} from "../../services/api";
 import OperationResultView from "../View/ElmReport/OperationResultView.vue";
+import {api} from "../../domain/api";
 
 export default {
   components: {OperationResultView, DuckWalking, LabelModal, LabeledValue},

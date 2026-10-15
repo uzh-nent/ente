@@ -5,9 +5,9 @@
 <script>
 import AnimalKeeperView from "../AnimalKeeperView.vue";
 import LabeledValue from "../../Library/View/LabeledValue.vue";
-import {preloadApi} from "../../../services/api";
 import PatientView from "../PatientView.vue";
 import {probeConverter} from "../../../domain/converters";
+import {preloadApi} from "../../../domain/api";
 
 export default {
   components: {PatientView, LabeledValue, AnimalKeeperView},

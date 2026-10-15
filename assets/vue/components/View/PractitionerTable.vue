@@ -52,10 +52,10 @@ import OrderTableHead from "../Library/Behaviour/OrderTableHead.vue";
 import PractitionerTableRow from "./PractitionerTableRow.vue";
 import {orderFilter, sanitizeSearchFilter} from "../../services/query";
 import {localStoragePersisted} from "./utils/state";
-import {api} from "../../services/api";
 import LoadingIndicatorOverlay from "../Library/View/LoadingIndicatorOverlay.vue";
 import FilterPatientButton from "../Action/FilterPatientButton.vue";
 import FilterPractitionerButton from "../Action/FilterPractitionerButton.vue";
+import {api} from "../../domain/api";
 
 export default {
   components: {

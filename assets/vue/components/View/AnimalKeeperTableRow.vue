@@ -25,8 +25,8 @@
 <script>
 import {formatAddress, formatAddressCity, formatContact, formatUidNumber} from "../../domain/formatter";
 import EditAnimalKeeperButton from "../Action/EditAnimalKeeperButton.vue";
-import {router} from "../../services/api";
 import AddProbeFilterButton from "./Probe/AddProbeFilterButton.vue";
+import {router} from "../../domain/api";
 
 export default {
   methods: {formatUidNumber},

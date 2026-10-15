@@ -44,7 +44,8 @@
 <script>
 
 import {formatProbeService} from "../../domain/formatter";
-import {router} from "../../services/api";
+
+import {router} from "../../domain/api";
 
 const PREFIX_LENGTH = 4
 

@@ -9,11 +9,11 @@
 
 <script>
 
-import { api } from '../../services/api'
 import { displaySuccess } from '../../services/notifiers'
 import LoopingRhombusSpinner from '../Library/View/Base/LoopingRhombusSpinner.vue'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import PractitionerForm from "../Form/PractitionerForm.vue";
+import {api} from "../../domain/api";
 
 export default {
   emits: ['added'],

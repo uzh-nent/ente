@@ -4,8 +4,8 @@
 
 <script>
 
-import {preloadApi} from './services/api'
 import ProbeTable from "./components/View/ProbeTable.vue";
+import {preloadApi} from "./domain/api";
 
 export default {
   emits: ['added'],

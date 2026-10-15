@@ -33,7 +33,6 @@
 import FormField from '../Library/FormLayout/FormField.vue'
 import Radio from "../Library/FormInput/Radio.vue";
 import {paginatedQuery} from "../View/utils/table";
-import {api} from "../../services/api";
 import {orderFilter, sanitizeSearchFilter} from "../../services/query";
 import {formatAnimalKeeperShort} from "../../domain/formatter";
 import AddAnimalKeeperButton from "./AddAnimalKeeperButton.vue";
@@ -47,6 +46,7 @@ import {probeConverter} from "../../domain/converters";
 import EditLinkedAnimalKeeperButton from "./EditLinkedAnimalKeeperButton.vue";
 import {createCleanPatch} from "./utils/linkedEntity";
 import AddProbeFilterButton from "../View/Probe/AddProbeFilterButton.vue";
+import {api} from "../../domain/api";
 
 export default {
   emits: ['update'],

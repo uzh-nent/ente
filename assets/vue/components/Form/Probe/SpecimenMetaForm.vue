@@ -110,11 +110,11 @@ import DateTimeInput from '../../Library/FormInput/DateTimeInput.vue'
 import Radio from "../../Library/FormInput/Radio.vue";
 import Checkboxes from "../../Library/FormInput/Checkboxes.vue";
 import {paginatedQuery} from "../../View/utils/table";
-import {api} from "../../../services/api";
 import AddOrganizationButton from "../../Action/AddOrganizationButton.vue";
 import OrganizationView from "../../View/OrganizationView.vue";
 import CustomSelect from "../../Library/FormInput/CustomSelect.vue";
 import Checkbox from "../../Library/FormInput/Checkbox.vue";
+import {api} from "../../../domain/api";
 
 const createSpecimenSource = function (translator) {
   const values = ['HUMAN', 'ANIMAL', 'FOOD', 'FEED', 'ENVIRONMENT', 'LABORATORY_STRAIN']
