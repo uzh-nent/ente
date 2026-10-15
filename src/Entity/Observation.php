@@ -83,9 +83,12 @@ class Observation
     #[Groups(['observation:read', 'observation:write'])]
     private ?string $interpretationText = null;
 
+    /**
+     * @deprecated Remove once migration is done
+     */
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Groups(['observation:read', 'observation:write'])]
-    private ?string $cgMLST = null; // https://www.cgmlst.org/
+    private ?string $cgMLST = null;
 
     #[ORM\ManyToOne(targetEntity: Organism::class)]
     #[ApiProperty(readableLink: false, writableLink: false)]
@@ -167,11 +170,17 @@ class Observation
         $this->interpretationText = $interpretationText;
     }
 
+    /**
+     * @deprecated Remove once migration is done
+     */
     public function getCgMLST(): ?string
     {
         return $this->cgMLST;
     }
 
+    /**
+     * @deprecated Remove once migration is done
+     */
     public function setCgMLST(?string $cgMLST): void
     {
         $this->cgMLST = $cgMLST;

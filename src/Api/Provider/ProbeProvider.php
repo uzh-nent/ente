@@ -180,11 +180,6 @@ readonly class ProbeProvider implements ProviderInterface
                 } else {
                     $nonstandardObservations[$observation->getPathogenName()] = true;
                 }
-
-                // CGMLST not tracked yet as separate observation, although it should be treated as such
-                if ($observation->getCgMLST()) {
-                    $possibleObservations[$observation->getPathogen()->value][AnalysisType::CG_MLST->value]++;
-                }
             }
         }
 
@@ -234,13 +229,6 @@ readonly class ProbeProvider implements ProviderInterface
             $cellContentBlocks[] = $observation->getInterpretationText();
 
             $result[$cellIndex] = join(", ", array_filter($cellContentBlocks));
-
-            // CGMLST not tracked yet as separate observation, although it should be treated as such
-            if ($observation->getCgMLST()) {
-                $marker = $observation->getPathogen()->value . "_" . AnalysisType::CG_MLST->value;
-                $cellIndex = array_search($marker, $actualObservations);
-                $result[$cellIndex] = $observation->getCgMLST();
-            }
         }
 
         return $result;

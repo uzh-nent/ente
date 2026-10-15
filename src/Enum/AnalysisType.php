@@ -8,7 +8,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 enum AnalysisType: string implements TranslatableInterface
 {
     case IDENTIFICATION = "IDENTIFICATION";
-    case CG_MLST = "CG_MLST";
+    case CG_MLST = "CG_MLST"; // https://www.cgmlst.org/
 
     /**
      * synonyms: VTEC, EHEC = enterohämorrhagischer E.Coli
