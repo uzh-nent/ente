@@ -1,8 +1,8 @@
-import {iriToId, restClient} from "../services/api";
+import {iriToId, restClient, restRouter} from "../services/api";
 
 export const router = {
     probesView: function (query = {}) {
-        return restClient._getFullUrl('/probes/all', query)
+        return restRouter.getQueryUrl('/probes/all', query)
     },
     probeView: function (probe) {
         return '/probes/all/' + iriToId(probe['@id']) + '/view'
@@ -65,16 +65,13 @@ export const api = {
     },
     getProbesExcel: function (query) {
         query['pagination'] = 0
-        const url = restClient._getFullUrl('/api/probes', query)
-        return restClient.getExcel(url)
+        return restClient.getExcel('/api/probes', query)
     },
     getInvoicesPatientsExcel: function (query) {
-        const url = restClient._getFullUrl('/invoices/patients', query)
-        return restClient.getExcel(url)
+        return restClient.getExcel('/invoices/patients', query)
     },
     getInvoicesOrderersExcel: function (query) {
-        const url = restClient._getFullUrl('/invoices/orderers', query)
-        return restClient.getExcel(url)
+        return restClient.getExcel('/invoices/orderers', query)
     },
     poll: function (entity) {
         return restClient.poll(entity)
