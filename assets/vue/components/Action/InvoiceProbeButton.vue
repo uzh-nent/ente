@@ -37,7 +37,7 @@ import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import moment from "moment";
 import Checkbox from "../Library/FormInput/Checkbox.vue";
-import {createLineItems} from "../../services/domain/invoice";
+import {createLineItems} from "../../domain/invoice";
 import InvoiceLineItemForm from "../Form/InvoiceLineItemForm.vue";
 import InvoiceMetaForm from "../Form/InvoiceMetaForm.vue";
 import tarif from '../../../resources/tarif.json'

@@ -11,7 +11,7 @@
 <script>
 
 import TestInterpretationBadge from "./TestInterpretationBadge.vue";
-import {formatOrganism} from "../../../services/domain/formatter";
+import {formatOrganism} from "../../../domain/formatter";
 
 export default {
   components: {TestInterpretationBadge},

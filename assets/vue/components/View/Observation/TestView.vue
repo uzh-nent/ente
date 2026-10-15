@@ -16,7 +16,7 @@
 
 <script>
 
-import {formatDate, formatDateTime, formatOrganism} from "../../../services/domain/formatter";
+import {formatDate, formatDateTime, formatOrganism} from "../../../domain/formatter";
 import LabeledValue from "../../Library/View/LabeledValue.vue";
 import TestInterpretationBadge from "./TestInterpretationBadge.vue";
 

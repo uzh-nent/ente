@@ -53,10 +53,10 @@ import ElmReportForm from "../Form/ElmReportForm.vue";
 import ReportMetaForm from "../Form/ReportMetaForm.vue";
 import moment from "moment";
 import AddAddressButton from "./AddAddressButton.vue";
-import {createResults} from "../../services/domain/report";
+import {createResults} from "../../domain/report";
 import ReportResultForm from "../Form/ReportResultForm.vue";
-import {probeConverter} from "../../services/domain/converters";
-import {formatOrganizationAddress, formatPractitionerAddress} from "../../services/domain/formatter";
+import {probeConverter} from "../../domain/converters";
+import {formatOrganizationAddress, formatPractitionerAddress} from "../../domain/formatter";
 import Checkbox from "../Library/FormInput/Checkbox.vue";
 
 export default {

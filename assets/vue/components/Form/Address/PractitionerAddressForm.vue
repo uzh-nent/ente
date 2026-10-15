@@ -37,7 +37,7 @@ import Radio from "../../Library/FormInput/Radio.vue";
 import {paginatedQuery} from "../../View/utils/table";
 import {api} from "../../../services/api";
 import {orderFilter, sanitizeSearchFilter} from "../../../services/query";
-import {formatPractitionerAddress, formatPractitionerShort} from "../../../services/domain/formatter";
+import {formatPractitionerAddress, formatPractitionerShort} from "../../../domain/formatter";
 import AddPractitionerButton from "../../Action/AddPractitionerButton.vue";
 import PractitionerView from "../../View/PractitionerView.vue";
 import TextInput from "../../Library/FormInput/TextInput.vue";
@@ -45,7 +45,7 @@ import EditPatientButton from "../../Action/EditPatientButton.vue";
 import ActionablePreview from "../../Library/View/ActionablePreview.vue";
 import PatientView from "../../View/PatientView.vue";
 import EditPractitionerButton from "../../Action/EditPractitionerButton.vue";
-import {addressConverter} from "../../../services/domain/converters";
+import {addressConverter} from "../../../domain/converters";
 
 export default {
   emits: ['update'],

@@ -32,7 +32,7 @@
 
 <script>
 
-import {formatDate, formatDateTime, formatOrganism} from "../../services/domain/formatter";
+import {formatDate, formatDateTime, formatOrganism} from "../../domain/formatter";
 import AttributionView from "./AttributionView.vue";
 import TestInterpretationBadge from "./Observation/TestInterpretationBadge.vue";
 import EditObservationButton from "../Action/EditObservationButton.vue";

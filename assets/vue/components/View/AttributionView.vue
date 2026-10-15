@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {formatAddressCity, formatDateTime} from "../../services/domain/formatter";
+import {formatAddressCity, formatDateTime} from "../../domain/formatter";
 import EditAnimalKeeperButton from "../Action/EditAnimalKeeperButton.vue";
 
 export default {

@@ -32,7 +32,7 @@
 <script>
 import LabeledValue from "../../Library/View/LabeledValue.vue";
 import OrganizationView from "../OrganizationView.vue";
-import {probeConverter} from "../../../services/domain/converters";
+import {probeConverter} from "../../../domain/converters";
 
 export default {
   components: {OrganizationView, LabeledValue},

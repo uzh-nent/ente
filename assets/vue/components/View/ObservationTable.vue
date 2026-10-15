@@ -20,7 +20,7 @@
 
 <script>
 
-import {formatDate, formatDateTime} from "../../services/domain/formatter";
+import {formatDate, formatDateTime} from "../../domain/formatter";
 import ObservationTableRow from "./ObservationTableRow.vue";
 
 export default {

@@ -23,7 +23,7 @@
 
 <script>
 import LabeledValue from "../Library/View/LabeledValue.vue";
-import {formatDate, formatDateTime} from "../../services/domain/formatter";
+import {formatDate, formatDateTime} from "../../domain/formatter";
 
 export default {
   methods: {formatDate, formatDateTime},

@@ -15,7 +15,7 @@ import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
 import PatientForm from "../Form/PatientForm.vue";
 import SpecimenMetaForm from "../Form/Probe/SpecimenMetaForm.vue";
-import {probeConverter} from "../../services/domain/converters";
+import {probeConverter} from "../../domain/converters";
 
 export default {
   emits: ['edited'],

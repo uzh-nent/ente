@@ -28,7 +28,7 @@ import CustomSelect from "../Library/FormInput/CustomSelect.vue";
 import Checkbox from "../Library/FormInput/Checkbox.vue";
 import IdentificationView from "../View/Observation/IdentificationView.vue";
 import ActionablePreview from "../Library/View/ActionablePreview.vue";
-import {formatObservation} from "../../services/domain/formatter";
+import {formatObservation} from "../../domain/formatter";
 import SearchableSelect from "../Library/FormInput/SearchableSelect.vue";
 import TestView from "../View/Observation/TestView.vue";
 import TextAreaWithStandardText from "../Library/FormInput/TextAreaWithStandardText.vue";

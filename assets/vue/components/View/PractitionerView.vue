@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {formatAddress, formatContact} from "../../services/domain/formatter";
+import {formatAddress, formatContact} from "../../domain/formatter";
 
 export default {
   props: {

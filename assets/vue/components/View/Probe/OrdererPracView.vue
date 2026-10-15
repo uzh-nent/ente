@@ -8,7 +8,7 @@
 <script>
 import LabeledValue from "../../Library/View/LabeledValue.vue";
 import PractitionerView from "../PractitionerView.vue";
-import {probeConverter} from "../../../services/domain/converters";
+import {probeConverter} from "../../../domain/converters";
 
 export default {
   components: {PractitionerView, LabeledValue},

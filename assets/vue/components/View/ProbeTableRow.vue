@@ -72,7 +72,7 @@ import {
   formatOrganism,
   formatOrganizationShort, formatPatientName, formatPatientShort,
   formatProbeService, formatSpecimenSourceText
-} from "../../services/domain/formatter";
+} from "../../domain/formatter";
 import {api, router} from "../../services/api";
 import LabeledValue from "../Library/View/LabeledValue.vue";
 import ShortObservationBadge from "./Observation/ShortObservationBadge.vue";

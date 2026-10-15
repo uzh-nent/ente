@@ -8,7 +8,7 @@
 <script>
 import AnimalKeeperView from "../AnimalKeeperView.vue";
 import LabeledValue from "../../Library/View/LabeledValue.vue";
-import {probeConverter} from "../../../services/domain/converters";
+import {probeConverter} from "../../../domain/converters";
 
 export default {
   components: {LabeledValue, AnimalKeeperView},
