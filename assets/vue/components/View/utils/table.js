@@ -1,4 +1,4 @@
-import debounce from 'lodash.debounce'
+import {debounce} from "../../../services/utils";
 
 export const order = {
   data() {
@@ -39,7 +39,7 @@ export const paginatedQuery = function (itemsPerPage, loadItems) {
       query: {
         handler: debounce(function (newQuery) {
           this.load(this.page, newQuery)
-        }, 200, {'leading': true}),
+        }, 200),
         deep: true,
       },
       page: {

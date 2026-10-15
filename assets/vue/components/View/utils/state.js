@@ -1,4 +1,4 @@
-import debounce from "lodash.debounce";
+import {debounce} from "../../../services/utils";
 
 export const localStoragePersisted = function(componentIdentifier, properties) {
   return {
@@ -6,7 +6,7 @@ export const localStoragePersisted = function(componentIdentifier, properties) {
       persistedState: {
         handler: debounce(function (newVal) {
           localStorage.setItem(this.persistedStateKey, JSON.stringify(newVal))
-        }, 200, {'leading': true}),
+        }, 200),
         deep: true
       },
     },
