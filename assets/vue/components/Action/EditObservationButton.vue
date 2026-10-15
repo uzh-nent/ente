@@ -10,9 +10,12 @@
         :organisms="organisms" :pathogen="observation.pathogen" :template="identificationTemplate"
         :interpretation-texts="interpretationTexts"
         @update="identificationPatch = $event"/>
+    <cg-m-l-s-t-form
+        v-else-if="observation.analysisType === 'CG_MLST'"
+        :template="observation" @update="testPatch = $event"/>
     <test-form
         v-else
-        :id="observation.analysisType" :template="observation"
+        :analysis-type="observation.analysisType" :template="observation"
         :interpretation-texts="interpretationTexts" :pathogen="probe.pathogen"
         @update="testPatch = $event"
     />
@@ -28,10 +31,12 @@ import TestSharedForm from "../Form/Observation/TestSharedForm.vue";
 import moment from "moment";
 import IdentificationForm from "../Form/Observation/IdentificationForm.vue";
 import {api} from "../../domain/api";
+import CgMLSTForm from "../Form/Observation/cgMLSTForm.vue";
 
 export default {
   emits: ['edited'],
   components: {
+    CgMLSTForm,
     IdentificationForm,
     TestSharedForm,
     TestForm,
@@ -113,6 +118,8 @@ export default {
     focusInterpretation: function () {
       if (this.observation.analysisType === 'IDENTIFICATION') {
         document.getElementById('searchOrganism')?.focus()
+      } else if (this.observation.analysisType === 'CG_MLST') {
+        document.getElementById('interpretationText-CG_MLST')?.focus()
       } else {
         document.getElementById('interpretation-' + this.observation.analysisType)?.focus()
       }

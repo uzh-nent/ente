@@ -15,8 +15,11 @@
             v-if="missingAnalysisTypes[0] === 'IDENTIFICATION'" :pathogen="probe.pathogen" :organisms="organisms"
             :interpretation-texts="interpretationTexts"
             :template="identificationTemplate" @update="updateIdentificationObservation($event)"/>
+        <cg-m-l-s-t-form
+            v-else-if="missingAnalysisTypes[0] === 'CG_MLST'"
+            @update="updateObservation('CG_MLST', $event)"/>
         <test-form
-            v-else :id="missingAnalysisTypes[0]" :template="testTemplate"
+            v-else :analysis-type="missingAnalysisTypes[0]" :template="testTemplate"
             :interpretation-texts="interpretationTexts" :pathogen="probe.pathogen"
             @update="updateTestObservation(missingAnalysisTypes[0], $event)"/>
       </template>
@@ -34,8 +37,11 @@
                 v-if="analysisType === 'IDENTIFICATION'" :pathogen="probe.pathogen" :organisms="organisms"
                 :interpretation-texts="interpretationTexts"
                 :template="identificationTemplate" @update="updateIdentificationObservation($event)"/>
+            <cg-m-l-s-t-form
+                v-else-if="analysisType === 'CG_MLST'"
+                @update="updateObservation('CG_MLST', $event)"/>
             <test-form
-                v-else :id="analysisType" :template="testTemplate"
+                v-else :analysis-type="analysisType" :template="testTemplate"
                 :interpretation-texts="interpretationTexts" :pathogen="probe.pathogen"
                 @update="updateTestObservation(analysisType, $event)"/>
           </div>
@@ -57,10 +63,12 @@ import TestSharedForm from "../Form/Observation/TestSharedForm.vue";
 import TestForm from "../Form/Observation/TestForm.vue";
 import Checkbox from "../Library/FormInput/Checkbox.vue";
 import {api} from "../../domain/api";
+import CgMLSTForm from "../Form/Observation/cgMLSTForm.vue";
 
 export default {
   emits: ['added'],
   components: {
+    CgMLSTForm,
     Checkbox,
     TestForm,
     TestSharedForm,
