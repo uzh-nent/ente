@@ -7,14 +7,22 @@ export const createResults = function (probe, observations, organisms, translato
       if (o.interpretation) {
         const organism = o.organism ? organisms.find(org => org['@id'] === o.organism) : null
         const resultPrefix = (o.interpretation === 'NEG') ?
-          translator('report._interpretation_meta.' + o.interpretationMeta ?? 'NONE') :
-          translator('report._interpretation.' + o.interpretation)
+            translator('report._interpretation_meta.' + o.interpretationMeta ?? 'NONE') :
+            translator('report._interpretation.' + o.interpretation)
         result = resultPrefix + " " + (organism ? organism.displayName.replace(" (organism)", "") : pathogenLabel)
       }
       return {
         analysis: translator('report.service.identification_of') + " " + pathogenLabel,
         method: mapToIdentificationMethodCode(o.pathogen),
         result,
+      }
+    } else if (o.analysisType === 'CG_MLST') {
+      const analysisType = translator('report._analysis_type.' + o.analysisType);
+
+      return {
+        analysis: analysisType,
+        method: null,
+        result: o.interpretationText,
       }
     } else {
       const analysisType = translator('report._analysis_type.' + o.analysisType);
@@ -42,6 +50,13 @@ export const createResults = function (probe, observations, organisms, translato
         return {
           analysis: translator('report.service.identification_of') + " " + pathogenLabel,
           method: mapToIdentificationMethodCode(probe.pathogen),
+          result,
+        }
+      } else if (analysisType === 'CG_MLST') {
+        const analysisTypeLabel = translator('report._analysis_type.' + analysisType);
+        return {
+          analysis: analysisTypeLabel,
+          method: null,
           result,
         }
       } else {
