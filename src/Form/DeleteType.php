@@ -8,6 +8,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @template T
+ * @extends AbstractType<T>
+ */
 class DeleteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void

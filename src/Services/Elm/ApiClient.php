@@ -47,12 +47,12 @@ readonly class ApiClient
         // post if payload is set
         if ($payload) {
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json+fhir'));
-            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         }
 
-        curl_setopt($ch, CURLOPT_HEADER, 0); // do not return headers
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // store response in a variable
+        curl_setopt($ch, CURLOPT_HEADER, false); // do not return headers
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // store response in a variable
 
         $responseJson = curl_exec($ch);
         if (curl_errno($ch)) {
