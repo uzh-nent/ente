@@ -28,7 +28,7 @@ export default {
       default: null
     },
     icon: {
-      type: Array,
+      type: String,
       default: null
     },
     active: {
