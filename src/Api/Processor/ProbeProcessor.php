@@ -23,6 +23,7 @@ readonly class ProbeProcessor implements ProcessorInterface
 {
     /**
      * @param ProcessorInterface<Probe, Probe> $persistProcessor
+     * @param ProcessorInterface<Probe, Probe> $removeProcessor
      */
     public function __construct(
         #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
