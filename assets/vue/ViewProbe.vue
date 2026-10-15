@@ -50,7 +50,10 @@
       <actionable-card class="w-50">
         <service-time-view :probe="probe" :users="users"/>
         <template v-slot:actions v-if="!probe.finishedAt">
-          <edit-probe-service-time-button :probe="probe"/>
+          <div class="d-flex flex-column gap-2">
+            <edit-probe-service-time-button :probe="probe"/>
+            <remove-probe-button v-if="isFreshProbe" :probe="probe" @removed="removedProbe"/>
+          </div>
         </template>
       </actionable-card>
 
@@ -139,11 +142,13 @@ import TooltipWrap from "./components/Library/View/TooltipWrap.vue";
 import OrdererView from "./components/View/Probe/OrdererView.vue";
 import ActionableCard from "./components/Library/View/ActionableCard.vue";
 import {checkHasMedicalValidation} from "./domain/authorization";
-import {preloadApi} from "./domain/api";
+import {preloadApi, router} from "./domain/api";
+import RemoveProbeButton from "./components/Action/RemoveProbeButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    RemoveProbeButton,
     ActionableCard,
     AnimalView,
     OrdererView,
@@ -196,6 +201,24 @@ export default {
     },
     hasMedicalValidation: function () {
       return checkHasMedicalValidation(this.users)
+    },
+    isFreshProbe: function () {
+      const oneHourAgo = Date.now() - (60 * 60 * 1000)
+      return this.probe.createdAt === this.probe.lastChangedAt &&
+          new Date(this.probe.createdAt) > oneHourAgo &&
+          this.observations.length === 0 &&
+          this.reports.length === 0
+    }
+  },
+  methods: {
+    addedReport: function (report) {
+      this.reports.push(report)
+      this.$nextTick(() => {
+        document.getElementById('download-report-' + report['@id'])?.click()
+      })
+    },
+    removedProbe: function () {
+      window.location = router.probeNew()
     }
   },
   mounted() {
@@ -236,14 +259,6 @@ export default {
     } else if (this.missingObservations.length > 0) {
       this.$nextTick(() => {
         this.$refs.addObservationsButton.$el?.focus()
-      })
-    }
-  },
-  methods: {
-    addedReport: function (report) {
-      this.reports.push(report)
-      this.$nextTick(() => {
-        document.getElementById('download-report-' + report['@id'])?.click()
       })
     }
   }
