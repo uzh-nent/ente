@@ -209,6 +209,11 @@
       "help": "Die Rechnung wird entfernt. Diese Aktion kann nicht rückgängig gemacht werden.",
       "removed": "Rechnung entfernt."
     },
+    "remove_probe": {
+      "title": "Probe entfernen",
+      "help": "Gerade erstellte und noch nicht bearbeitete Proben können wieder entfernt werden. Die Identifikation kann wiederverwendet werden. Bitte bereits erstellte Arbeitsblätter vernichten.",
+      "removed": "Probe entfernt"
+    },
     "add": "hinzufügen",
     "ignore": "ignorieren",
     "edit": "speichern",

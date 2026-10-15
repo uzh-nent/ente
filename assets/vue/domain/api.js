@@ -4,6 +4,9 @@ export const router = {
     probesView: function (query = {}) {
         return restRouter.getQueryUrl('/probes/all', query)
     },
+    probeNew: function () {
+        return '/probe/new'
+    },
     probeView: function (probe) {
         return '/probes/all/' + iriToId(probe['@id']) + '/view'
     },

@@ -2,6 +2,8 @@
 
 namespace App\Api\Processor;
 
+use ApiPlatform\Doctrine\Common\State\RemoveProcessor;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
@@ -12,6 +14,7 @@ use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @implements ProcessorInterface<Probe, Probe>
@@ -24,6 +27,8 @@ readonly class ProbeProcessor implements ProcessorInterface
     public function __construct(
         #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
         private ProcessorInterface $persistProcessor,
+        #[Autowire(service: 'api_platform.doctrine.orm.state.remove_processor')]
+        private ProcessorInterface $removeProcessor,
         private ManagerRegistry $registry,
         private TokenStorageInterface $tokenStorage,
     ) {
@@ -34,6 +39,18 @@ readonly class ProbeProcessor implements ProcessorInterface
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
+        if ($operation instanceof Delete) {
+            if ($data->getCreatedAt()->getMicrosecond() !== $data->getLastChangedAt()->getMicrosecond()) {
+                throw new AccessDeniedException('Access Denied. You cannot remove a probe that has already been edited.');
+            }
+
+            if (!$data->getObservations()->isEmpty() || !$data->getReports()->isEmpty() || !$data->getInvoices()->isEmpty()) {
+                throw new AccessDeniedException('Access Denied. You cannot remove a probe for which already observations, reports or invoices are attached.');
+            }
+
+            return $this->removeProcessor->process($data, $operation, $uriVariables);
+        }
+
         if ($operation instanceof Post) {
             $nextIdentifier = $this->registry->getRepository(Probe::class)->getNextIdentifier($data->getLaboratoryFunction());
             $data->setIdentifier($nextIdentifier);
