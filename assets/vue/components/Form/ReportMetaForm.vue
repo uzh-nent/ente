@@ -36,9 +36,7 @@ import DateTimeInput from '../Library/FormInput/DateTimeInput.vue'
 import Radio from "../Library/FormInput/Radio.vue";
 import CustomSelect from "../Library/FormInput/CustomSelect.vue";
 import Checkbox from "../Library/FormInput/Checkbox.vue";
-import IdentificationView from "../View/Observation/IdentificationView.vue";
 import ActionablePreview from "../Library/View/ActionablePreview.vue";
-import {formatObservation} from "../../domain/formatter";
 import SearchableSelect from "../Library/FormInput/SearchableSelect.vue";
 import TestView from "../View/Observation/TestView.vue";
 
@@ -54,7 +52,6 @@ export default {
     TestView,
     SearchableSelect,
     ActionablePreview,
-    IdentificationView,
     Checkbox,
     CustomSelect,
     Radio,

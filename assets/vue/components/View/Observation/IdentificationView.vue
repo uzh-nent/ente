@@ -15,10 +15,6 @@
       </template>
     </labeled-value>
 
-    <labeled-value :label="$t(`observation.cgMLST`)" v-if="observation.cgMLST">
-      {{ observation.cgMLST }}
-    </labeled-value>
-
     <div v-if="observation.interpretationText" class="mt-3 whitespace-preserve-newlines p-2 bg-light">
       {{ observation.interpretationText }}
     </div>
