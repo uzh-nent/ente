@@ -3,15 +3,15 @@
     <div class="col-md-12">
       <radio
           class="mb-3"
-          :id="'interpretation-' + id"
+          :id="'interpretation-' + analysisType"
           :choices="interpretations" :field="fields.interpretation"
           v-model="entity.interpretation" @update:model-value="validateField('interpretation')"/>
     </div>
     <div class="col-md-12">
-      <form-field :for-id="'interpretationText-' + id" :label="$t('observation.interpretation_text')"
+      <form-field :for-id="'interpretationText-' + analysisType" :label="$t('observation.interpretation_text')"
                   :field="fields.interpretationText">
         <text-area-with-standard-text
-            :id="'interpretationText-' + id" :field="fields.interpretationText" v-model="entity.interpretationText"
+            :id="'interpretationText-' + analysisType" :field="fields.interpretationText" v-model="entity.interpretationText"
             :standard-texts="filteredInterpretationTexts"
             @blur="blurField('interpretationText')" @update:modelValue="validateField('interpretationText')"/>
       </form-field>
@@ -54,7 +54,7 @@ export default {
     }
   },
   props: {
-    id: {
+    analysisType: {
       type: String,
       required: true
     },

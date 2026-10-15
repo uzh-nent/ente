@@ -17,13 +17,6 @@
           <p v-else class="form-text">{{ $t('_form.observation.identification.no_organism_defined') }}</p>
         </form-field>
       </div>
-      <div class="col-md-12">
-        <form-field for-id="cgMLST" :label="$t('observation.cgMLST')"
-                    :field="fields.cgMLST">
-          <text-input id="cgMLST" :field="fields.cgMLST" v-model="entity.cgMLST"
-                      @blur="blurField('cgMLST')" @update:modelValue="validateField('cgMLST')"/>
-        </form-field>
-      </div>
     </template>
     <template v-else>
       <form-field for-id="interpretationMeta" :label="$t('observation.interpretation_meta')"
@@ -83,7 +76,6 @@ export default {
         identificationSuccessful: createField(),
 
         organism: createField(),
-        cgMLST: createField(),
 
         interpretationMeta: createField(),
         interpretationText: createField(),
@@ -92,7 +84,6 @@ export default {
         identificationSuccessful: null,
 
         organism: null,
-        cgMLST: null,
 
         interpretationMeta: null,
         interpretationText: null,
