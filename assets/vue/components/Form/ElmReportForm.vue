@@ -8,6 +8,7 @@
   <actionable-preview v-if="entity.observation">
     <identification-view v-if="entity.observation.analysisType === 'IDENTIFICATION'"
                          :organisms="organisms" :observation="entity.observation"/>
+    <cg-m-l-s-t-view v-else-if="entity.observation.analysisType === 'CG_MLST'" :observation="entity.observation"/>
     <test-view v-else :observation="entity.observation"/>
   </actionable-preview>
 
@@ -59,6 +60,7 @@ import ActionablePreview from "../Library/View/ActionablePreview.vue";
 import {formatObservation} from "../../domain/formatter";
 import SearchableSelect from "../Library/FormInput/SearchableSelect.vue";
 import TestView from "../View/Observation/TestView.vue";
+import CgMLSTView from "../View/Observation/cgMLSTView.vue";
 
 const isElmRecognisedSystem = function (system) {
   return ['LOINC', 'SNOMED', 'FOPH_CODE_RESERVE'].includes(system)
@@ -67,6 +69,7 @@ const isElmRecognisedSystem = function (system) {
 export default {
   emits: ['update'],
   components: {
+    CgMLSTView,
     TestView,
     SearchableSelect,
     ActionablePreview,

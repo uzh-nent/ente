@@ -31,6 +31,8 @@ export const formatObservation = function (observation, organisms, translator) {
       const organism = organisms.find(s => s['@id'] === observation.organism)
       return observationLabel + organism?.displayName
     }
+  } else if (observation.analysisType === 'CG_MLST') {
+    return observationLabel + analysisLabel
   } else {
     if (observation.interpretation) {
       const interpretationLabel = translator('observation._interpretation.' + observation.interpretation);

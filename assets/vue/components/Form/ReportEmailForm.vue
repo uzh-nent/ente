@@ -32,7 +32,6 @@ import DateTimeInput from '../Library/FormInput/DateTimeInput.vue'
 import Radio from "../Library/FormInput/Radio.vue";
 import CustomSelect from "../Library/FormInput/CustomSelect.vue";
 import Checkbox from "../Library/FormInput/Checkbox.vue";
-import IdentificationView from "../View/Observation/IdentificationView.vue";
 import TestView from "../View/Observation/TestView.vue";
 import {probeConverter} from "../../domain/converters";
 import email from '../../../resources/report/email.json'
@@ -44,7 +43,6 @@ export default {
   emits: ['update'],
   components: {
     TestView,
-    IdentificationView,
     Checkbox,
     CustomSelect,
     Radio,
