@@ -80,7 +80,7 @@ ENTE design decisions:
 
 Stammdaten:
 - zu Auftraggeber, zu Mediziner, zu Patienten, zu Halter
-- Kopie davon wird jeweils in Probe hineinkopiert (nachträgliche Änderungen an Stammdaten, z.B. Adresse, hat keinen Effekt auf Probedaten)
+- Kopie davon wird jeweils in Probe hineinkopiert (nachträgliche Änderungen an Stammdaten, z.B. Adresse, hat keinen Effekt auf Probedaten. Wichtig für langfristige Statistiken.)
 
 Medizinische Stammdaten:
 - Leading LOINC, Organism, Specimen
