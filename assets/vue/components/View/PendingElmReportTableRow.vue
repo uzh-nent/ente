@@ -6,13 +6,13 @@
       </a>
     </td>
     <td>
-      <view-elm-report-step-label :report="elmReport" step="queue" />
+      <view-elm-report-step-label :report="elmReport" step="queue"/>
     </td>
     <td>
       <attribution-view :users="users" :entity="elmReport" :show-always-created="true"/>
     </td>
     <td>
-      <acknowledge-elm-report-button v-if="elmReport.apiStatus === 'FAILED'" :elm-report="elmReport" />
+      <acknowledge-elm-report-button v-if="elmReport.apiStatus === 'FAILED'" :elm-report="elmReport"/>
     </td>
   </tr>
 </template>
@@ -27,7 +27,8 @@ export default {
   components: {
     AcknowledgeElmReportButton,
     ViewElmReportStepLabel,
-    AttributionView},
+    AttributionView
+  },
   props: {
     probe: {
       type: Object,
@@ -44,6 +45,10 @@ export default {
   },
   computed: {
     probeView: function () {
+      if (!this.probe) {
+        return null;
+      }
+      
       return router.probeView(this.probe)
     }
   }
