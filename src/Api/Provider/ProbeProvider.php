@@ -79,6 +79,7 @@ readonly class ProbeProvider implements ProviderInterface
 
             $this->translator->trans("Specimen collection date", [], "trait_probe_specimen_meta"),
             $this->translator->trans("Specimen source", [], "trait_probe_specimen_meta"),
+            $this->translator->trans("Specimen source type", [], "trait_probe_specimen_meta"),
             $this->translator->trans("entity.title", [], "entity_specimen"),
             $this->translator->trans("Specimen location", [], "trait_probe_specimen_meta"),
             $this->translator->trans("Anamnesis travels", [], "trait_probe_specimen_meta"),
@@ -110,10 +111,11 @@ readonly class ProbeProvider implements ProviderInterface
 
         foreach ($probes as $probe) {
             $specimenSource = $probe->getSpecimenSource()?->trans($this->translator) ?? $probe->getSpecimenSourceText();
+            $specimenSourceType = '';
             if ($probe->getSpecimenSource() === SpecimenSource::FEED) {
-                $specimenSource .= " " . ($probe->getSpecimenFoodType()?->trans($this->translator) ?? $probe->getSpecimenTypeText());
+                $specimenSourceType = $probe->getSpecimenFoodType()?->trans($this->translator) ?? $probe->getSpecimenTypeText();
             } elseif ($probe->getSpecimenSource() === SpecimenSource::ANIMAL) {
-                $specimenSource .= " " . ($probe->getSpecimenAnimalType()?->trans($this->translator) ?? $probe->getSpecimenTypeText());
+                $specimenSourceType = $probe->getSpecimenAnimalType()?->trans($this->translator) ?? $probe->getSpecimenTypeText();
             }
 
             $specimen = $probe->getSpecimen()?->getDisplayName() ?? $probe->getSpecimenText();
@@ -135,6 +137,7 @@ readonly class ProbeProvider implements ProviderInterface
 
                 $probe->getSpecimenCollectionDate()?->format('d.m.Y') ?? '',
                 $specimenSource,
+                $specimenSourceType,
                 $specimen,
                 $probe->getSpecimenLocation(),
                 $probe->getAnamnesisTravels(),
