@@ -102,6 +102,11 @@ readonly class ElmService implements ElmServiceInterface
     public function checkProgress(ElmReport $report): void
     {
         $error = null;
+        $minPollDuration = new \DateInterval('PT15S');
+        if ($report->getLastChangedAt()->add($minPollDuration) > new \DateTime()) {
+            return;
+        }
+
         $responseJson = $this->apiClient->getDocumentReference($report, $error);
         $report->setLastDocumentReferenceResponseJson($responseJson);
 
