@@ -6,7 +6,6 @@
       @showing="focusOrderer">
     <requisition-identifier-form class="mw-20" :template="probe" @update="requisitionIdentifier = $event"/>
     <set-probe-orderer-org-view :probe="probe" :can-unlink="hasOrdererPrac" @update="ordererOrg = $event"/>
-    <set-probe-orderer-prac-view :probe="probe" :can-unlink="hasOrdererOrg" @update="ordererPrac = $event"/>
   </button-confirm-modal>
 </template>
 
