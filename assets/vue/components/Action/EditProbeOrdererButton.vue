@@ -14,7 +14,6 @@
 
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
-import ServiceRequestForm from "../Form/Probe/ServiceRequestForm.vue";
 import RequisitionIdentifierForm from "../Form/Probe/RequisitionIdentifierForm.vue";
 import SetProbeOrdererOrgView from "./SetProbeOrdererOrgView.vue";
 import SetProbeOrdererPracView from "./SetProbeOrdererPracView.vue";
@@ -26,7 +25,6 @@ export default {
     SetProbeOrdererPracView,
     SetProbeOrdererOrgView,
     RequisitionIdentifierForm,
-    ServiceRequestForm,
     ButtonConfirmModal,
   },
   data() {

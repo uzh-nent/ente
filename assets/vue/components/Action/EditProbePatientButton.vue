@@ -11,7 +11,6 @@
 
 import {displaySuccess} from '../../services/notifiers'
 import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
-import ServiceRequestForm from "../Form/Probe/ServiceRequestForm.vue";
 import SetProbePatientView from "./SetProbePatientView.vue";
 import {api} from "../../domain/api";
 
@@ -19,7 +18,6 @@ export default {
   emits: ['edited'],
   components: {
     SetProbePatientView,
-    ServiceRequestForm,
     ButtonConfirmModal,
   },
   data() {
