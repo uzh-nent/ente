@@ -35,19 +35,19 @@ readonly class ElmReportProcessor implements ProcessorInterface
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
-        if (!$operation instanceof Post) {
-            throw new \RuntimeException('Only POST operations are supported.');
+        if ($operation instanceof Post) {
+            /** @var User $user */
+            $user = $this->tokenStorage->getToken()->getUser();
+            $data->attribute($user);
+
+            $result = $this->persistProcessor->process($data, $operation, $uriVariables, $context);
+
+            $this->elmService->send($data);
+            DoctrineHelper::persistAndFlush($this->registry, $data);
+
+            return $result;
         }
 
-        /** @var User $user */
-        $user = $this->tokenStorage->getToken()->getUser();
-        $data->attribute($user);
-
-        $result = $this->persistProcessor->process($data, $operation, $uriVariables, $context);
-
-        $this->elmService->send($data);
-        DoctrineHelper::persistAndFlush($this->registry, $data);
-
-        return $result;
+        return $this->persistProcessor->process($data, $operation, $uriVariables, $context);
     }
 }

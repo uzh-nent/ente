@@ -12,6 +12,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Doctrine\Common\Filter\SearchFilterInterface;
+use ApiPlatform\Doctrine\Orm\Filter\ExistsFilter;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
@@ -19,6 +20,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Api\Processor\ElmReportProcessor;
 use App\Api\Provider\ElmReportProvider;
@@ -43,9 +45,14 @@ use Symfony\Component\Serializer\Attribute\Groups;
 )]
 #[Get]
 #[Post]
+#[Patch(denormalizationContext: ['groups' => ['elm-report:update']])]
 #[GetCollection]
-#[ApiFilter(SearchFilter::class, properties: ['probe' => SearchFilterInterface::STRATEGY_EXACT])]
+#[ApiFilter(SearchFilter::class, properties: [
+    'probe' => SearchFilterInterface::STRATEGY_EXACT, 'apiStatus' => SearchFilterInterface::STRATEGY_EXACT
+])]
 #[ApiFilter(OrderFilter::class, properties: ['effectiveAt'])]
+#[ApiFilter(ExistsFilter::class, properties: ['acknowledgedAt'])]
+#[ApiFilter(OrderFilter::class, properties: ['createdAt'])]
 class ElmReport
 {
     use IdTrait;
@@ -98,6 +105,10 @@ class ElmReport
     #[ORM\Column(type: Types::JSON, nullable: true)]
     #[Groups(['elm-report:read'])]
     private ?string $lastDocumentReferenceResponseJson = null;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[Groups(['elm-report:read', 'elm-report:update'])]
+    private ?\DateTimeImmutable $acknowledgedAt;
 
     public function getProbe(): Probe
     {
@@ -207,5 +218,15 @@ class ElmReport
     public function setLastDocumentReferenceResponseJson(?string $lastStatusResponseJson): void
     {
         $this->lastDocumentReferenceResponseJson = $lastStatusResponseJson;
+    }
+
+    public function getAcknowledgedAt(): ?\DateTimeImmutable
+    {
+        return $this->acknowledgedAt;
+    }
+
+    public function setAcknowledgedAt(?\DateTimeImmutable $acknowledgedAt): void
+    {
+        $this->acknowledgedAt = $acknowledgedAt;
     }
 }
