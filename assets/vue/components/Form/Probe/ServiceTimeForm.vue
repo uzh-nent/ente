@@ -6,22 +6,26 @@
     </form-field>
 
     <form-field for-id="analysisStartDate" :label="$t('probe.analysis_start_date')" :field="fields.analysisStartDate">
-      <date-time-input id="analysisStartDate" :field="fields.analysisStartDate" v-model="entity.analysisStartDate" format="date"
+      <date-time-input id="analysisStartDate" :field="fields.analysisStartDate" v-model="entity.analysisStartDate"
+                       format="date"
                        @blur="blurField('analysisStartDate')" @update:modelValue="validateField('analysisStartDate')"/>
     </form-field>
 
-    <form-field for-id="analysisStopDate" :label="$t('probe.analysis_stop_date')" :field="fields.analysisStopDate">
-      <date-time-input id="analysisStopDate" :field="fields.analysisStopDate" v-model="entity.analysisStopDate" format="date"
-                       @blur="blurField('analysisStopDate')" @update:modelValue="validateField('analysisStopDate')"/>
-    </form-field>
+    <template v-if="editMode">
+      <form-field for-id="analysisStopDate" :label="$t('probe.analysis_stop_date')" :field="fields.analysisStopDate">
+        <date-time-input id="analysisStopDate" :field="fields.analysisStopDate" v-model="entity.analysisStopDate"
+                         format="date"
+                         @blur="blurField('analysisStopDate')" @update:modelValue="validateField('analysisStopDate')"/>
+      </form-field>
 
-    <hr/>
-    <form-field for-id="comment" :label="$t('probe.comment')"
-                :field="fields.comment">
-      <text-area
-          id="comment" :field="fields.comment" v-model="entity.comment"
-          @blur="blurField('comment')" @update:modelValue="validateField('comment')"/>
-    </form-field>
+      <hr/>
+      <form-field for-id="comment" :label="$t('probe.comment')"
+                  :field="fields.comment">
+        <text-area
+            id="comment" :field="fields.comment" v-model="entity.comment"
+            @blur="blurField('comment')" @update:modelValue="validateField('comment')"/>
+      </form-field>
+    </template>
   </div>
 </template>
 
@@ -58,6 +62,12 @@ export default {
         comment: null,
       },
     }
-  }
+  },
+  props: {
+    editMode: {
+      type: Boolean,
+      default: false
+    },
+  },
 }
 </script>

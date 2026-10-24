@@ -130,7 +130,6 @@ import EditProbePatientButton from "./components/Action/EditProbePatientButton.v
 import EditProbeAnimalButton from "./components/Action/EditProbeAnimalButton.vue";
 import SpecimenMetaView from "./components/View/Probe/SpecimenMetaView.vue";
 import EditProbeSpecimenMetaButton from "./components/Action/EditProbeSpecimenMetaButton.vue";
-import ServiceTimeForm from "./components/Form/Probe/ServiceTimeForm.vue";
 import ServiceTimeView from "./components/View/Probe/ServiceTimeView.vue";
 import EditProbeServiceTimeButton from "./components/Action/EditProbeServiceTimeButton.vue";
 import OrdererPracView from "./components/View/Probe/OrdererPracView.vue";
@@ -171,7 +170,6 @@ export default {
     OrdererPracView,
     EditProbeServiceTimeButton,
     ServiceTimeView,
-    ServiceTimeForm,
     EditProbeSpecimenMetaButton,
     SpecimenMetaView,
     EditProbePatientButton,
