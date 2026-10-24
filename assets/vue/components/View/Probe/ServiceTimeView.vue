@@ -12,9 +12,17 @@
       {{ formatDate(probe.analysisStartDate) }}
     </labeled-value>
 
-    <labeled-value class="mt-2" :label="$t('probe.finished_at')" v-if="probe.finishedAt">
-      {{ formatDateTime(probe.finishedAt) }} / {{ finishedBy?.abbreviation }}
+    <labeled-value :label="$t('probe.analysis_stop_date')" v-if="probe.analysisStopDate">
+      {{ formatDate(probe.analysisStopDate) }}
     </labeled-value>
+
+    <labeled-value class="mt-2" :label="$t('probe.closed_at')" v-if="probe.closedAt">
+      {{ formatDateTime(probe.closedAt) }} / {{ closedBy?.abbreviation }}
+    </labeled-value>
+
+    <div v-if="probe.comment" class="mt-3 whitespace-preserve-newlines p-2 bg-light">
+      {{ probe.comment }}
+    </div>
   </div>
 </template>
 
@@ -40,8 +48,8 @@ export default {
     createdBy: function () {
       return this.users.find(u => u['@id'] === this.probe.createdBy)
     },
-    finishedBy: function () {
-      return this.users.find(u => u['@id'] === this.probe.finishedBy)
+    closedBy: function () {
+      return this.users.find(u => u['@id'] === this.probe.closedBy)
     },
   }
 }

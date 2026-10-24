@@ -62,10 +62,10 @@ readonly class ProbeProcessor implements ProcessorInterface
             $user = $this->tokenStorage->getToken()->getUser();
             $data->attribute($user);
 
-            if ($data->getFinishedAt() && !$data->getFinishedBy()) {
-                $data->setFinishedBy($user);
-            } elseif (!$data->getFinishedAt()) {
-                $data->setFinishedBy(null);
+            if ($data->getClosedAt() && !$data->getClosedBy()) {
+                $data->setClosedBy($user);
+            } elseif (!$data->getClosedAt()) {
+                $data->setClosedBy(null);
             }
         }
 
