@@ -195,7 +195,15 @@ export default {
   },
   computed: {
     missingObservations: function () {
-      return this.probe.analysisTypes.filter(at =>
+      const allAnalysisTypes = [...this.probe.analysisTypes]
+      if (this.probe.methodTypes.includes("MLST")) {
+        allAnalysisTypes.push("MLST")
+      }
+      if (this.probe.methodTypes.includes("WGS")) {
+        allAnalysisTypes.push("CG_MLST")
+      }
+
+      return allAnalysisTypes.filter(at =>
           !this.observations.some(o => this.probe.pathogen == o.pathogen && this.probe.pathogenName == o.pathogenName && o.analysisType === at)
       )
     },

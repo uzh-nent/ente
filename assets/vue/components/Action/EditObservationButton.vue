@@ -10,8 +10,9 @@
         :organisms="organisms" :pathogen="observation.pathogen" :template="identificationTemplate"
         :interpretation-texts="interpretationTexts"
         @update="identificationPatch = $event"/>
-    <cg-m-l-s-t-form
-        v-else-if="observation.analysisType === 'CG_MLST'"
+    <interpretation-form
+        v-else-if="isInterpretationAnalysis(observation.analysisType)"
+        :analysis-type="observation.analysisType"
         :template="observation" @update="testPatch = $event"/>
     <test-form
         v-else
@@ -31,12 +32,13 @@ import TestSharedForm from "../Form/Observation/TestSharedForm.vue";
 import moment from "moment";
 import IdentificationForm from "../Form/Observation/IdentificationForm.vue";
 import {api} from "../../domain/api";
-import CgMLSTForm from "../Form/Observation/cgMLSTForm.vue";
+import InterpretationForm from "../Form/Observation/InterpretationForm.vue";
+import {isInterpretationAnalysis} from "../../domain/domain";
 
 export default {
   emits: ['edited'],
   components: {
-    CgMLSTForm,
+    InterpretationForm,
     IdentificationForm,
     TestSharedForm,
     TestForm,
@@ -107,6 +109,7 @@ export default {
     }
   },
   methods: {
+    isInterpretationAnalysis,
     confirm: async function () {
       await api.patch(this.observation, this.payload)
 
@@ -118,8 +121,8 @@ export default {
     focusInterpretation: function () {
       if (this.observation.analysisType === 'IDENTIFICATION') {
         document.getElementById('searchOrganism')?.focus()
-      } else if (this.observation.analysisType === 'CG_MLST') {
-        document.getElementById('interpretationText-CG_MLST')?.focus()
+      } else if (isInterpretationAnalysis(this.observation.analysisType)) {
+        document.getElementById('interpretationText-' + this.observation.analysisType)?.focus()
       } else {
         document.getElementById('interpretation-' + this.observation.analysisType)?.focus()
       }

@@ -1,9 +1,9 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <form-field :for-id="'interpretationText-CG_MLST'" :label="$t('observation.interpretation_text_cgmlst')"
+      <form-field :for-id="'interpretationText-' + analysisType" :label="$t('probe._analysis_type.' + analysisType)"
                   :field="fields.interpretationText">
-        <text-input :id="'interpretationText-CG_MLST'" type="text" :field="fields.interpretationText"
+        <text-input :id="'interpretationText-' + analysisType" type="text" :field="fields.interpretationText"
                     v-model="entity.interpretationText"
                     @blur="blurField('interpretationText')" @update:modelValue="validateField('interpretationText')"/>
       </form-field>
@@ -36,6 +36,12 @@ export default {
         interpretationText: null,
       },
     }
-  }
+  },
+  props: {
+    analysisType: {
+      type: String,
+      required: true
+    },
+  },
 }
 </script>
