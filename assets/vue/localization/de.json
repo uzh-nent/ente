@@ -507,6 +507,7 @@
     "_analysis_type": {
       "IDENTIFICATION": "Identifizierung / Typisierung",
       "CG_MLST": "cgMLST",
+      "MLST": "MLST",
       "EC_STEC": "Shigatoxin bildende E. coli (STEC)",
       "EC_EPEC": "Enteropathogene E. coli (EPEC)",
       "EC_ETEC": "Enterotoxische E. coli (ETEC)",
