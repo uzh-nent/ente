@@ -7,7 +7,6 @@
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
       <requisition-identifier-form class="mw-20" @update="requisitionIdentifier = $event"/>
       <set-probe-orderer-org-view :can-unlink="true" @update="ordererOrg = $event"/>
-      <set-probe-orderer-prac-view :can-unlink="true" @update="ordererPrac = $event"/>
     </div>
     <div class="col-lg-4 col-md-6">
       <h3>{{ $t('probe._name') }}</h3>
