@@ -4,7 +4,7 @@
       {{ formatDateTime(observation.effectiveAt) }}
     </labeled-value>
 
-    <labeled-value :label="$t(`observation.interpretation_text_cgmlst`)">
+    <labeled-value :label="$t(`probe._analysis_type.` + observation.analysisType)">
       {{ observation.interpretationText }}
     </labeled-value>
   </div>

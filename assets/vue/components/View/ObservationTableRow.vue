@@ -8,10 +8,7 @@
           {{ $t(`observation._interpretation_meta_short.${this.observation.interpretationMeta ?? 'NONE'}`) }}
         </span>
       </template>
-      <template v-if="observation.analysisType === 'CG_MLST'">
-        {{ observation.cgMLST }}
-      </template>
-      <template v-else>
+      <template v-else-if="!isInterpretationAnalysis(observation.analysisType)">
         <test-interpretation-badge :observation="observation"/>
       </template>
       <span class="d-block whitespace-preserve-newlines" v-if="observation.interpretationText">
@@ -36,10 +33,11 @@ import {formatDate, formatDateTime, formatOrganism} from "../../domain/formatter
 import AttributionView from "./AttributionView.vue";
 import TestInterpretationBadge from "./Observation/TestInterpretationBadge.vue";
 import EditObservationButton from "../Action/EditObservationButton.vue";
+import {isInterpretationAnalysis} from "../../domain/domain";
 
 export default {
   components: {EditObservationButton, TestInterpretationBadge, AttributionView},
-  methods: {formatDate, formatDateTime},
+  methods: {isInterpretationAnalysis, formatDate, formatDateTime},
   props: {
     observation: {
       type: Object,

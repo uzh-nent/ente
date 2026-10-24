@@ -1,3 +1,5 @@
+import {isInterpretationAnalysis} from "./domain";
+
 export const createResults = function (probe, observations, organisms, translator) {
   const observationResults = observations.map(o => {
     if (o.analysisType === 'IDENTIFICATION') {
@@ -16,7 +18,7 @@ export const createResults = function (probe, observations, organisms, translato
         method: mapToIdentificationMethodCode(o.pathogen),
         result,
       }
-    } else if (o.analysisType === 'CG_MLST') {
+    } else if (isInterpretationAnalysis(o.analysisType)) {
       const analysisType = translator('report._analysis_type.' + o.analysisType);
 
       return {
@@ -52,7 +54,7 @@ export const createResults = function (probe, observations, organisms, translato
           method: mapToIdentificationMethodCode(probe.pathogen),
           result,
         }
-      } else if (analysisType === 'CG_MLST') {
+      } else if (isInterpretationAnalysis(analysisType)) {
         const analysisTypeLabel = translator('report._analysis_type.' + analysisType);
         return {
           analysis: analysisTypeLabel,

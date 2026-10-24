@@ -8,7 +8,7 @@
   <actionable-preview v-if="entity.observation">
     <identification-view v-if="entity.observation.analysisType === 'IDENTIFICATION'"
                          :organisms="organisms" :observation="entity.observation"/>
-    <cg-m-l-s-t-view v-else-if="entity.observation.analysisType === 'CG_MLST'" :observation="entity.observation"/>
+    <interpretation-view v-else-if="isInterpretationAnalysis(entity.observation.analysisType)" :observation="entity.observation"/>
     <test-view v-else :observation="entity.observation"/>
   </actionable-preview>
 
@@ -60,7 +60,8 @@ import ActionablePreview from "../Library/View/ActionablePreview.vue";
 import {formatObservation} from "../../domain/formatter";
 import SearchableSelect from "../Library/FormInput/SearchableSelect.vue";
 import TestView from "../View/Observation/TestView.vue";
-import CgMLSTView from "../View/Observation/cgMLSTView.vue";
+import InterpretationView from "../View/Observation/InterpretationView.vue";
+import {isInterpretationAnalysis} from "../../domain/domain";
 
 const isElmRecognisedSystem = function (system) {
   return ['LOINC', 'SNOMED', 'FOPH_CODE_RESERVE'].includes(system)
@@ -69,7 +70,7 @@ const isElmRecognisedSystem = function (system) {
 export default {
   emits: ['update'],
   components: {
-    CgMLSTView,
+    InterpretationView,
     TestView,
     SearchableSelect,
     ActionablePreview,
@@ -176,6 +177,7 @@ export default {
     },
   },
   methods: {
+    isInterpretationAnalysis,
     defaultChoice: function (currentValue, templateValue, validChoices, required) {
       if (currentValue && validChoices.some(c => c.value === currentValue)) {
         return currentValue
