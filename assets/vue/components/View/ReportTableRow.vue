@@ -11,7 +11,7 @@
     </td>
     <td class="w-minimal">
       <send-report-email-button
-          v-if="!sentReportEmail" class="me-2"
+          v-if="!sentReportEmail && !readonly" class="me-2"
           :report="report" :probe="probe" :users="users" :disabled="!hasMedicalValidation"
           @sent="$emit('sent-email', $event)"/>
       <view-report-email-button
@@ -57,6 +57,10 @@ export default {
     users: {
       type: Array,
       required: true
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     },
   },
   computed: {

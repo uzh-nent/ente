@@ -21,6 +21,7 @@
     </td>
     <td>
       <edit-observation-button
+          v-if="!readonly"
           :probe="probe" :organisms="organisms" :observation="observation"
           :interpretation-texts="interpretationTexts"/>
     </td>
@@ -58,6 +59,10 @@ export default {
     interpretationTexts: {
       type: Array,
       required: true
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     },
   },
   computed: {
