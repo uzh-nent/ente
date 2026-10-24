@@ -3,50 +3,47 @@
       :title="$t('_action.add_observations.title')" icon="fas fa-plus"
       :confirm-label="$t('_action.add')" :can-confirm="canConfirm" :confirm="confirm"
       @showing="focusIdentification">
-    <p v-if="missingAnalysisTypes.length === 0">
-      {{ $t('_action.add_observations.no_missing_observations') }}
-    </p>
-    <template v-else>
-      <test-shared-form :template="sharedTemplate" @update="sharedPost = $event"/>
+    <test-shared-form :template="sharedTemplate" @update="sharedPost = $event"/>
 
-      <template v-if="missingAnalysisTypes.length === 1">
-        <h3 class="mt-3">{{ $t('probe._analysis_type.' + missingAnalysisTypes[0]) }}</h3>
-        <identification-form
-            v-if="missingAnalysisTypes[0] === 'IDENTIFICATION'" :pathogen="probe.pathogen" :organisms="organisms"
-            :interpretation-texts="interpretationTexts"
-            :template="identificationTemplate" @update="updateIdentificationObservation($event)"/>
-        <cg-m-l-s-t-form
-            v-else-if="missingAnalysisTypes[0] === 'CG_MLST'"
-            @update="updateObservation('CG_MLST', $event)"/>
-        <test-form
-            v-else :analysis-type="missingAnalysisTypes[0]" :template="testTemplate"
-            :interpretation-texts="interpretationTexts" :pathogen="probe.pathogen"
-            @update="updateTestObservation(missingAnalysisTypes[0], $event)"/>
-      </template>
-      <template v-else>
-        <div v-for="analysisType in missingAnalysisTypes" :key="analysisType" class="mt-3">
-          <div class="p-2 bg-light border">
-            <checkbox
-                :id="'toggle-' + analysisType" :label="$t('probe._analysis_type.' + analysisType)"
-                :model-value="observationEnabled(analysisType)"
-                @update:modelValue="toggleObservation(analysisType, $event)"
-            />
-          </div>
-          <div class="p-2 bg-light-subtle border border-top-0" v-if="observationEnabled(analysisType)">
-            <identification-form
-                v-if="analysisType === 'IDENTIFICATION'" :pathogen="probe.pathogen" :organisms="organisms"
-                :interpretation-texts="interpretationTexts"
-                :template="identificationTemplate" @update="updateIdentificationObservation($event)"/>
-            <cg-m-l-s-t-form
-                v-else-if="analysisType === 'CG_MLST'"
-                @update="updateObservation('CG_MLST', $event)"/>
-            <test-form
-                v-else :analysis-type="analysisType" :template="testTemplate"
-                :interpretation-texts="interpretationTexts" :pathogen="probe.pathogen"
-                @update="updateTestObservation(analysisType, $event)"/>
-          </div>
+    <template v-if="missingAnalysisTypes.length === 1">
+      <h3 class="mt-3">{{ $t('probe._analysis_type.' + missingAnalysisTypes[0]) }}</h3>
+      <identification-form
+          v-if="missingAnalysisTypes[0] === 'IDENTIFICATION'" :pathogen="probe.pathogen" :organisms="organisms"
+          :interpretation-texts="interpretationTexts"
+          :template="identificationTemplate" @update="updateIdentificationObservation($event)"/>
+      <interpretation-form
+          v-else-if="isInterpretationAnalysis(missingAnalysisTypes[0])"
+          :analysis-type="missingAnalysisTypes[0]"
+          @update="updateObservation(missingAnalysisTypes[0], $event)"/>
+      <test-form
+          v-else :analysis-type="missingAnalysisTypes[0]" :template="testTemplate"
+          :interpretation-texts="interpretationTexts" :pathogen="probe.pathogen"
+          @update="updateTestObservation(missingAnalysisTypes[0], $event)"/>
+    </template>
+    <template v-else>
+      <div v-for="analysisType in missingAnalysisTypes" :key="analysisType" class="mt-3">
+        <div class="p-2 bg-light border">
+          <checkbox
+              :id="'toggle-' + analysisType" :label="$t('probe._analysis_type.' + analysisType)"
+              :model-value="observationEnabled(analysisType)"
+              @update:modelValue="toggleObservation(analysisType, $event)"
+          />
         </div>
-      </template>
+        <div class="p-2 bg-light-subtle border border-top-0" v-if="observationEnabled(analysisType)">
+          <identification-form
+              v-if="analysisType === 'IDENTIFICATION'" :pathogen="probe.pathogen" :organisms="organisms"
+              :interpretation-texts="interpretationTexts"
+              :template="identificationTemplate" @update="updateIdentificationObservation($event)"/>
+          <interpretation-form
+              v-else-if="isInterpretationAnalysis(analysisType)"
+              :analysis-type="analysisType"
+              @update="updateObservation(analysisType, $event)"/>
+          <test-form
+              v-else :analysis-type="analysisType" :template="testTemplate"
+              :interpretation-texts="interpretationTexts" :pathogen="probe.pathogen"
+              @update="updateTestObservation(analysisType, $event)"/>
+        </div>
+      </div>
     </template>
   </button-confirm-modal>
 </template>
@@ -63,12 +60,13 @@ import TestSharedForm from "../Form/Observation/TestSharedForm.vue";
 import TestForm from "../Form/Observation/TestForm.vue";
 import Checkbox from "../Library/FormInput/Checkbox.vue";
 import {api} from "../../domain/api";
-import CgMLSTForm from "../Form/Observation/cgMLSTForm.vue";
+import InterpretationForm from "../Form/Observation/InterpretationForm.vue";
+import {isInterpretationAnalysis} from "../../domain/domain";
 
 export default {
   emits: ['added'],
   components: {
-    CgMLSTForm,
+    InterpretationForm,
     Checkbox,
     TestForm,
     TestSharedForm,
@@ -125,6 +123,7 @@ export default {
     }
   },
   methods: {
+    isInterpretationAnalysis,
     observationEnabled: function (analysisType) {
       return !!this.observations.find(o => o.analysisType === analysisType)
     },
