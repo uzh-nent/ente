@@ -18,14 +18,18 @@ trait ServiceTime
     #[Groups(['probe:read', 'probe:write'])]
     private ?\DateTimeImmutable $analysisStartDate = null;
 
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[Groups(['probe:read', 'probe:write'])]
+    private ?\DateTimeImmutable $analysisStopDate = null;
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Groups(['probe:read', 'probe:write'])]
-    private ?\DateTimeImmutable $finishedAt = null;
+    private ?\DateTimeImmutable $closedAt = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[Groups(['probe:read'])] // written in probe processor
     #[ApiProperty(readableLink: false, writableLink: false)]
-    private ?User $finishedBy = null;
+    private ?User $closedBy = null;
 
     public function getReceivedDate(): \DateTimeImmutable
     {
@@ -47,23 +51,33 @@ trait ServiceTime
         $this->analysisStartDate = $analysisStartDate;
     }
 
-    public function getFinishedAt(): ?\DateTimeImmutable
+    public function getAnalysisStopDate(): ?\DateTimeImmutable
     {
-        return $this->finishedAt;
+        return $this->analysisStopDate;
     }
 
-    public function setFinishedAt(?\DateTimeImmutable $finishedAt): void
+    public function setAnalysisStopDate(?\DateTimeImmutable $analysisStopDate): void
     {
-        $this->finishedAt = $finishedAt;
+        $this->analysisStopDate = $analysisStopDate;
     }
 
-    public function getFinishedBy(): ?User
+    public function getClosedAt(): ?\DateTimeImmutable
     {
-        return $this->finishedBy;
+        return $this->closedAt;
     }
 
-    public function setFinishedBy(?User $finishedBy): void
+    public function setClosedAt(?\DateTimeImmutable $closedAt): void
     {
-        $this->finishedBy = $finishedBy;
+        $this->closedAt = $closedAt;
+    }
+
+    public function getClosedBy(): ?User
+    {
+        return $this->closedBy;
+    }
+
+    public function setClosedBy(?User $closedBy): void
+    {
+        $this->closedBy = $closedBy;
     }
 }

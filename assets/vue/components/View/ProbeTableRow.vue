@@ -41,7 +41,7 @@
     </td>
     <td v-if="view === 'result'">
       <a class="btn btn-outline-secondary" :href="viewProbeLink">
-        <i v-if="this.probe.finishedAt" class="fas fa-eye"></i>
+        <i v-if="this.probe.closedAt" class="fas fa-eye"></i>
         <i v-else class="fas fa-edit"></i>
       </a>
     </td>
@@ -133,7 +133,7 @@ export default {
       ].filter(e => e)
     },
     viewProbeLink: function () {
-      return this.probe.finishedAt ? router.probeView(this.probe) : router.probeActiveView(this.probe)
+      return this.probe.closedAt ? router.probeView(this.probe) : router.probeActiveView(this.probe)
     }
   },
   methods: {

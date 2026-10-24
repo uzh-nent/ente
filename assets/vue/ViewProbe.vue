@@ -4,7 +4,7 @@
       <h3>{{ $t('probe.service_request') }}</h3>
       <actionable-card>
         <service-request-view :probe="probe"/>
-        <template v-slot:actions v-if="!probe.finishedAt">
+        <template v-slot:actions v-if="!probe.closedAt">
           <edit-probe-service-request-button :probe="probe"/>
         </template>
       </actionable-card>
@@ -12,7 +12,7 @@
       <h3 class="mt-5">{{ $t('probe.orderer') }}</h3>
       <actionable-card>
         <orderer-view :probe="probe"/>
-        <template v-slot:actions v-if="!probe.finishedAt">
+        <template v-slot:actions v-if="!probe.closedAt">
           <edit-probe-orderer-button :probe="probe"/>
         </template>
       </actionable-card>
@@ -20,7 +20,7 @@
       <h3 class="mt-5">{{ $t('probe._name') }}</h3>
       <actionable-card>
         <specimen-meta-view :probe="probe" :specimens="specimens"/>
-        <template v-slot:actions v-if="!probe.finishedAt">
+        <template v-slot:actions v-if="!probe.closedAt">
           <edit-probe-specimen-meta-button :specimens="specimens" :probe="probe"/>
         </template>
       </actionable-card>
@@ -29,7 +29,7 @@
         <h3 class="mt-5">{{ $t('patient._name') }}</h3>
         <actionable-card>
           <patient-view :probe="probe"/>
-          <template v-slot:actions v-if="!probe.finishedAt">
+          <template v-slot:actions v-if="!probe.closedAt">
             <edit-probe-patient-button :probe="probe"/>
           </template>
         </actionable-card>
@@ -39,7 +39,7 @@
         <h3 class="mt-5">{{ $t('animal_keeper._name') }}</h3>
         <actionable-card>
           <animal-view :probe="probe"/>
-          <template v-slot:actions v-if="!probe.finishedAt">
+          <template v-slot:actions v-if="!probe.closedAt">
             <edit-probe-animal-button :probe="probe"/>
           </template>
         </actionable-card>
@@ -49,7 +49,7 @@
       <h3>{{ $t('probe.progress') }}</h3>
       <actionable-card class="w-50">
         <service-time-view :probe="probe" :users="users"/>
-        <template v-slot:actions v-if="!probe.finishedAt">
+        <template v-slot:actions v-if="!probe.closedAt">
           <div class="d-flex flex-column gap-2">
             <edit-probe-service-time-button :probe="probe"/>
             <remove-probe-button v-if="isFreshProbe" :probe="probe" @removed="removedProbe"/>
@@ -75,11 +75,11 @@
             :interpretation-texts="interpretationTexts"/>
 
         <div class="mt-5"
-             v-if="probe.patient && observations.length > 0 && (!probe.finishedAt || elmReports.length > 0)">
+             v-if="probe.patient && observations.length > 0 && (!probe.closedAt || elmReports.length > 0)">
           <h3>{{ $t('elm_report._name') }}</h3>
           <tooltip-wrap :title="$t('_view.no_medical_validation')" :show="!hasMedicalValidation">
             <add-elm-report-button
-                v-if="!probe.finishedAt" :disabled="!hasMedicalValidation"
+                v-if="!probe.closedAt" :disabled="!hasMedicalValidation"
                 :probe="probe" :observations="observations"
                 :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
                 @added="elmReports.push($event)"
@@ -91,11 +91,11 @@
               :users="users" :organisms="organisms" :leading-codes="leadingCodes"/>
         </div>
 
-        <div class="mt-5" v-if="observations.length > 0 && (!probe.finishedAt || reports.length > 0)">
+        <div class="mt-5" v-if="observations.length > 0 && (!probe.closedAt || reports.length > 0)">
           <h3>{{ $t('report._name') }}</h3>
           <tooltip-wrap :title="$t('_view.no_medical_validation')" :show="!hasMedicalValidation">
             <add-report-button
-                v-if="!probe.finishedAt" :disabled="!hasMedicalValidation"
+                v-if="!probe.closedAt" :disabled="!hasMedicalValidation"
                 :probe="probe" :observations="observations" :reports="reports"
                 :leading-codes="leadingCodes" :organisms="organisms" :specimens="specimens"
                 :report-texts="reportTexts"
@@ -107,7 +107,7 @@
         </div>
 
         <div class="mt-5" v-if="missingObservations.length === 0">
-          <toggle-finished-button :probe="probe" :has-reports="reports.length > 0"/>
+          <toggle-closed-button :probe="probe" :has-reports="reports.length > 0"/>
         </div>
       </div>
     </div>
@@ -132,7 +132,6 @@ import EditProbeOrdererButton from "./components/Action/EditProbeOrdererButton.v
 import AddElmReportButton from "./components/Action/AddElmReportButton.vue";
 import AttributionView from "./components/View/AttributionView.vue";
 import ElmReportTable from "./components/View/ElmReportTable.vue";
-import ToggleFinishedButton from "./components/Action/ToggleFinishedButton.vue";
 import DownloadProbeWorksheetButton from "./components/Action/DownloadProbeWorksheetButton.vue";
 import AddReportButton from "./components/Action/AddReportButton.vue";
 import ReportTable from "./components/View/ReportTable.vue";
@@ -144,10 +143,12 @@ import ActionableCard from "./components/Library/View/ActionableCard.vue";
 import {checkHasMedicalValidation} from "./domain/authorization";
 import {preloadApi, router} from "./domain/api";
 import RemoveProbeButton from "./components/Action/RemoveProbeButton.vue";
+import ToggleClosedButton from "./components/Action/ToggleClosedButton.vue";
 
 export default {
   emits: ['added'],
   components: {
+    ToggleClosedButton,
     RemoveProbeButton,
     ActionableCard,
     AnimalView,
@@ -159,7 +160,6 @@ export default {
     AddReportButton,
     DownloadProbeWorksheetButton,
     EditProbeAnimalButton,
-    ToggleFinishedButton,
     ElmReportTable,
     AttributionView,
     AddElmReportButton,

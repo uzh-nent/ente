@@ -59,8 +59,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
     'pathogen' => SearchFilterInterface::STRATEGY_EXACT, 'pathogenName' => SearchFilterInterface::STRATEGY_IPARTIAL, 'laboratoryFunction' => SearchFilterInterface::STRATEGY_EXACT, 'specimenSource' => SearchFilterInterface::STRATEGY_EXACT,
     'ordererOrg' => SearchFilterInterface::STRATEGY_EXACT, 'ordererPrac' => SearchFilterInterface::STRATEGY_EXACT, 'patient' => SearchFilterInterface::STRATEGY_EXACT, 'animalKeeper' => SearchFilterInterface::STRATEGY_EXACT,
 ])]
-#[ApiFilter(DateFilter::class, properties: ['analysisStartDate'])]
-#[ApiFilter(ExistsFilter::class, properties: ['finishedAt', "specimenSource", 'invoiceStatus'])]
+#[ApiFilter(DateFilter::class, properties: ['analysisStartDate', 'analysisStopDate'])]
+#[ApiFilter(ExistsFilter::class, properties: ['closedAt', "specimenSource", 'invoiceStatus'])]
 #[ApiFilter(OrderFilter::class, properties: ['identifier'])]
 class Probe
 {

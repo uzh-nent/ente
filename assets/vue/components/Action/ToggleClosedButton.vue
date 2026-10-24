@@ -1,9 +1,9 @@
 <template>
-  <button class="btn" :class="{'btn-secondary': !recommendFinishing, 'btn-primary': recommendFinishing}"
-          @click="toggleFinish" :disabled="isLoading">
+  <button class="btn" :class="{'btn-secondary': !recommendClosing, 'btn-primary': recommendClosing}"
+          @click="togglClosed" :disabled="isLoading">
     <span class="d-flex gap-3 align-items-center">
           <looping-rhombus-spinner v-if="isLoading" class="white"/>
-          {{ probe.finishedAt ? $t('_action.toggle_finished.open') : $t('_action.toggle_finished.finish') }}
+          {{ probe.closedAt ? $t('_action.toggle_closed.open') : $t('_action.toggle_closed.close') }}
     </span>
   </button>
 </template>
@@ -12,13 +12,11 @@
 
 import {displaySuccess} from '../../services/notifiers'
 import LoopingRhombusSpinner from '../Library/View/Base/LoopingRhombusSpinner.vue'
-import ButtonConfirmModal from '../Library/Behaviour/Modal/ButtonConfirmModal.vue'
-import AnimalKeeperForm from "../Form/AnimalKeeperForm.vue";
 import moment from "moment/moment";
 import {api} from "../../domain/api";
 
 export default {
-  emits: ['finished'],
+  emits: ['closed'],
   components: {
     LoopingRhombusSpinner,
   },
@@ -38,19 +36,19 @@ export default {
     }
   },
   computed: {
-    recommendFinishing: function () {
-      return !this.probe.finishedAt && this.hasReports
+    recommendClosing: function () {
+      return !this.probe.closedAt && this.hasReports
     }
   },
   methods: {
-    toggleFinish: async function () {
+    togglClosed: async function () {
       this.isLoading = true;
-      const patch = {finishedAt: this.probe.finishedAt ? null : moment().format()}
+      const patch = {closedAt: this.probe.closedAt ? null : moment().format()}
       await api.patch(this.probe, patch)
       this.isLoading = false
-      this.$emit('finished')
+      this.$emit('closed')
 
-      const successMessage = this.probe.finishedAt ? this.$t('_action.toggle_finished.opened') : this.$t('_action.toggle_finished.finished')
+      const successMessage = this.probe.closedAt ? this.$t('_action.toggle_closed.opened') : this.$t('_action.toggle_closed.closed')
       displaySuccess(successMessage)
     },
   }

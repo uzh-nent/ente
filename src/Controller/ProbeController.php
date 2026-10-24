@@ -49,7 +49,7 @@ class ProbeController extends AbstractController
     #[Route('/probes/active/{probe}/view', name: 'probe_active_view')]
     public function activeView(Probe $probe): Response
     {
-        if ($probe->getFinishedAt()) {
+        if ($probe->getClosedAt()) {
             return $this->redirectToRoute('probe_all_view', ['probe' => $probe->getId()]);
         }
 
@@ -89,7 +89,7 @@ class ProbeController extends AbstractController
     #[Route('/probes/all/{probe}/view', name: 'probe_all_view')]
     public function allView(Probe $probe): Response
     {
-        if (!$probe->getFinishedAt()) {
+        if (!$probe->getClosedAt()) {
             return $this->redirectToRoute('probe_active_view', ['probe' => $probe->getId()]);
         }
 

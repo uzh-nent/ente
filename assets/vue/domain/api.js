@@ -87,7 +87,7 @@ export const api = {
     },
     getOpenProbes: function (query) {
         query['pagination'] = 0
-        query['exists[finishedAt]'] = 0
+        query['exists[closedAt]'] = 0
         return restClient.getCollection('/api/probes', query)
     },
     getPaginatedProbes: function (query) {
