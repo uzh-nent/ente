@@ -102,7 +102,7 @@ major:
 - let customer create service request online
 - track analysis, not result (e.g., STEC E. coli Stx1, Stx2 separate tracking); possibly track more analysis results from the Laborblatt; drop "interpretationText" from probe and keep only "comment" or cgMLST/MLST
 - derive available observations from used method (instead out of analysisTypes)
-- search by result (e.g., salmonella positive to enteriditis)
+- improve overview: search by result (e.g., salmonella positive to enteriditis), shown ELM-submission in overview table
 - improve statistics: add visuals to all-probes view
 - improve stammdaten: add attribution, allow to remove stammdaten (possibly by relinking probes to other), copy stammdaten to probe upon closing/opening? 
 - improve reference data: ELM api integration (sync value sets, add patient reporting type such as anonymous (for new pathogens) or initials (campylobacter) to leading codes), add current location of patient
