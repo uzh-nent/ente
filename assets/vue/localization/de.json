@@ -351,6 +351,7 @@
     "_analysis_type": {
       "IDENTIFICATION": "Identif-/Typisierung",
       "CG_MLST": "cgMLST",
+      "MLST": "MLST",
       "EC_STEC": "Shigatoxin bildend (STEC)",
       "EC_EPEC": "Enteropathogene (EPEC)",
       "EC_ETEC": "Enterotoxische (ETEC)",
@@ -361,6 +362,7 @@
     "_analysis_type_short": {
       "IDENTIFICATION": "Ident.",
       "CG_MLST": "cgMLST",
+      "MLST": "MLST",
       "EC_STEC": "STEC",
       "EC_EPEC": "EPEC",
       "EC_ETEC": "ETEC",
@@ -427,7 +429,6 @@
     "identification_successful": "Identifizierung erfolgreich",
     "identification_failed": "Identifizierung fehlgeschlagen",
     "interpretation_text": "Kommentar",
-    "interpretation_text_cgmlst": "cgMLST",
     "interpretation_meta": "Grund",
     "_interpretation": {
       "POS": "Nachweis (Positiv)",

@@ -9,6 +9,7 @@ enum AnalysisType: string implements TranslatableInterface
 {
     case IDENTIFICATION = "IDENTIFICATION";
     case CG_MLST = "CG_MLST"; // https://www.cgmlst.org/
+    case MLST = "MLST";
 
     /**
      * synonyms: VTEC, EHEC = enterohämorrhagischer E.Coli
