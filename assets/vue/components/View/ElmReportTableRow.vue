@@ -15,7 +15,7 @@
       <view-elm-report-step-label :report="report" step="queue" />
     </td>
     <td>
-      <attribution-view :users="users" :entity="report"/>
+      <attribution-view :users="users" :entity="report" :show-always-created="true"/>
     </td>
   </tr>
 </template>

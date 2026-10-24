@@ -1,6 +1,6 @@
 <template>
   <span class="text-nowrap">
-    <template v-if="hasChanges">
+    <template v-if="hasChanges && !showAlwaysCreated">
       {{ formatDateTime(entity.lastChangedAt) }} / {{ lastChangedBy?.abbreviation }}
     </template>
     <template v-else>
@@ -24,6 +24,10 @@ export default {
     users: {
       type: Array,
       required: true
+    },
+    showAlwaysCreated: {
+      type: Boolean,
+      default: false
     },
   },
   computed: {

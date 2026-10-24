@@ -29,11 +29,10 @@
 <script>
 import LabeledValue from "../../Library/View/LabeledValue.vue";
 import {formatDate, formatDateTime} from "../../../domain/formatter";
-import AttributionView from "../AttributionView.vue";
 
 export default {
   methods: {formatDateTime, formatDate},
-  components: {AttributionView, LabeledValue},
+  components: {LabeledValue},
   props: {
     probe: {
       type: Object,

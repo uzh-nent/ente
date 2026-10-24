@@ -7,7 +7,7 @@
       {{ receivers }}
     </td>
     <td>
-      <attribution-view :users="users" :entity="report"/>
+      <attribution-view :users="users" :entity="report" :show-always-created="true"/>
     </td>
     <td class="w-minimal">
       <send-report-email-button
@@ -27,11 +27,7 @@
 import AttributionView from "./AttributionView.vue";
 import ViewElmReportStepLabel from "../Action/ViewElmReportStepLabel.vue";
 import {probeConverter} from "../../domain/converters";
-import {
-  formatOrganizationAddress,
-  formatOrganizationShort,
-  formatPractitionerAddress, formatPractitionerName, formatPractitionerShort
-} from "../../domain/formatter";
+import {formatPractitionerName} from "../../domain/formatter";
 import SendReportEmailButton from "../Action/SendReportEmailButton.vue";
 import ViewReportEmailButton from "../Action/ViewReportEmailButton.vue";
 import {checkHasMedicalValidation} from "../../domain/authorization";

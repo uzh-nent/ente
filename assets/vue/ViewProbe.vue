@@ -133,7 +133,6 @@ import EditProbeServiceTimeButton from "./components/Action/EditProbeServiceTime
 import OrdererPracView from "./components/View/Probe/OrdererPracView.vue";
 import EditProbeOrdererButton from "./components/Action/EditProbeOrdererButton.vue";
 import AddElmReportButton from "./components/Action/AddElmReportButton.vue";
-import AttributionView from "./components/View/AttributionView.vue";
 import ElmReportTable from "./components/View/ElmReportTable.vue";
 import DownloadProbeWorksheetButton from "./components/Action/DownloadProbeWorksheetButton.vue";
 import AddReportButton from "./components/Action/AddReportButton.vue";
@@ -164,7 +163,6 @@ export default {
     DownloadProbeWorksheetButton,
     EditProbeAnimalButton,
     ElmReportTable,
-    AttributionView,
     AddElmReportButton,
     EditProbeOrdererButton,
     OrdererPracView,
