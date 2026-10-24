@@ -224,6 +224,10 @@ export default {
         return false;
       }
 
+      if (!this.probe.patient) {
+        return false;
+      }
+
       const toBeReportedPathogens = ['SALMONELLA', 'SHIGELLA', 'LISTERIA_MONOCYTOGENES', 'VIBRIO_CHOLERAE']
       const hasIdentifiedObservation = this.observations.find(o => o.analysisType === 'IDENTIFICATION' && o.organism && toBeReportedPathogens.includes(o.pathogen))
       if (hasIdentifiedObservation) {
