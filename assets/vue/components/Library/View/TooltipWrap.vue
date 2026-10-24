@@ -1,7 +1,10 @@
 <template>
-  <p ref="value" class="d-inline-block mb-0" :title="title">
-    <slot/>
-  </p>
+  <div>
+    <p v-if="show" ref="value" class="d-inline-block mb-0" :title="title">
+      <slot/>
+    </p>
+    <slot v-else/>
+  </div>
 </template>
 
 <script>
