@@ -33,6 +33,8 @@ export const preloadApi = {
     getActiveProbes: function () {
         return {
             activeProbes: window.activeProbes.member,
+            users: window.users.member,
+            pendingElmReports: window.pendingElmReports.member
         }
     },
     getAllProbes: function () {

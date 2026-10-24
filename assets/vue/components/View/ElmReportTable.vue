@@ -1,15 +1,11 @@
 <template>
-  <div>
-    <div class="table-wrapper">
-      <table class="table table-striped table-hover border">
-        <tbody>
-        <elm-report-table-row
-            v-for="report in reports" :key="report['@id']" :report="report"
-            :users="users" :leading-codes="leadingCodes" :organisms="organisms"/>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <table class="table table-striped table-hover border">
+    <tbody>
+    <elm-report-table-row
+        v-for="report in reports" :key="report['@id']" :report="report"
+        :users="users" :leading-codes="leadingCodes" :organisms="organisms"/>
+    </tbody>
+  </table>
 </template>
 
 <script>
@@ -42,13 +38,3 @@ export default {
 
 </script>
 
-<style scoped>
-.table-wrapper {
-  position: relative;
-}
-
-.reset-table-styles {
-  text-align: left;
-  font-weight: normal;
-}
-</style>

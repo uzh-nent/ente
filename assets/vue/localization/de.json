@@ -54,6 +54,10 @@
       "download_request": "Anfrage herunterladen",
       "download_response": "Antwort herunterladen"
     },
+    "acknowledge_elm_report": {
+      "acknowledged": "Fehlerhafte Übermittlung zur Kenntnis genommen.",
+      "not_acknowledged": "Kenntnisnahme rückgängig gemacht."
+    },
     "add_invoice": {
       "title": "Rechnung erstellen",
       "added": "Rechnung erstellt.",
@@ -269,7 +273,8 @@
     "until": "Bis",
     "probe_navigation": {
       "no_probes": "Keine Proben gefunden."
-    }
+    },
+    "pending_elm_reports": "Hängige ELM-Berichte"
   },
   "organization": {
     "_name": "Organisation",
