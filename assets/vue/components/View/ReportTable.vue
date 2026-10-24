@@ -12,12 +12,11 @@
 
 <script>
 
-import ElmReportTableRow from "./ElmReportTableRow.vue";
 import ReportTableRow from "./ReportTableRow.vue";
 
 export default {
   emits: ['sent-email'],
-  components: {ReportTableRow, ElmReportTableRow},
+  components: {ReportTableRow},
   props: {
     probe: {
       type: Object,

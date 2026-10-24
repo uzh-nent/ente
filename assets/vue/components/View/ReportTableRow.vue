@@ -25,7 +25,6 @@
 
 <script>
 import AttributionView from "./AttributionView.vue";
-import ViewElmReportStepLabel from "../Action/ViewElmReportStepLabel.vue";
 import {probeConverter} from "../../domain/converters";
 import {formatPractitionerName} from "../../domain/formatter";
 import SendReportEmailButton from "../Action/SendReportEmailButton.vue";
@@ -38,7 +37,6 @@ export default {
   components: {
     ViewReportEmailButton,
     SendReportEmailButton,
-    ViewElmReportStepLabel,
     AttributionView
   },
   props: {
