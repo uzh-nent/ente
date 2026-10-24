@@ -13,6 +13,7 @@
     <observation-table-row
         v-for="observation in observations" :key="observation['@id']"
         :observation="observation" :users="users" :probe="probe" :organisms="organisms"
+        :readonly="readonly"
         :interpretation-texts="interpretationTexts"/>
     </tbody>
   </table>
@@ -46,6 +47,10 @@ export default {
     interpretationTexts: {
       type: Array,
       required: true
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     },
   }
 }

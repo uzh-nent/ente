@@ -4,7 +4,8 @@
     <report-table-row
         v-for="report in reports" :key="report['@id']"
         :probe="probe" :report="report" :users="users" :report-emails="filterReportEmails(report)"
-    @sent-email="$emit('sent-email', $event)"/>
+        :readonly="readonly"
+        @sent-email="$emit('sent-email', $event)"/>
     </tbody>
   </table>
 </template>
@@ -33,6 +34,10 @@ export default {
     users: {
       type: Array,
       required: true
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     },
   },
   methods: {
