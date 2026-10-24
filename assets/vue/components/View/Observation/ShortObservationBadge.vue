@@ -8,6 +8,7 @@
 
 import TestInterpretationBadge from "./TestInterpretationBadge.vue";
 import {formatOrganism} from "../../../domain/formatter";
+import {isInterpretationAnalysis} from "../../../domain/domain";
 
 export default {
   components: {TestInterpretationBadge},
@@ -23,7 +24,7 @@ export default {
   },
   computed: {
     cssClass: function () {
-      if (this.observation.analysisType === 'CG_MLST') {
+      if (isInterpretationAnalysis(this.observation.analysisType)) {
         return 'bg-info'
       }
 
@@ -42,7 +43,7 @@ export default {
         return formatOrganism(this.organisms.find(o => o['@id'] === this.observation.organism))
       }
 
-      if (this.observation.analysisType === 'CG_MLST') {
+      if (isInterpretationAnalysis(this.observation.analysisType)) {
         return this.observation.interpretationText
       }
 
