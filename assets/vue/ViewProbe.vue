@@ -58,6 +58,7 @@
       </actionable-card>
 
       <download-probe-worksheet-button
+          v-if="!probe.closedAt"
           class="mt-5" ref="downloadWorksheetButton"
           :probe="probe" :has-observations="observations.length > 0"/>
 
