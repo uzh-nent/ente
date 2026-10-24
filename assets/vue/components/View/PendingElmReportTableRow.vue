@@ -48,7 +48,7 @@ export default {
       if (!this.probe) {
         return null;
       }
-      
+
       return router.probeView(this.probe)
     }
   }
