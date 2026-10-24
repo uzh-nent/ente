@@ -186,10 +186,15 @@
       "set_identifiers_errored": "Einige Rechnungensnummern konnten nicht zugeordnet werden."
     },
     "toggle_closed": {
+      "title": "Probe abschliessen",
       "close": "Abschliessen",
+      "force_close": "Trotzdem abschliessen",
       "closed": "Probe abgeschlossen.",
       "open": "Öffnen",
-      "opened": "Probe wieder geöffnet."
+      "opened": "Probe wieder geöffnet.",
+      "missing_observations": "Es wurden noch nicht alle Resultate erfasst.",
+      "missing_report": "Es wurde noch kein Bericht erstellt.",
+      "missing_elm_report": "Trotz positivem Befund wurde noch keine ELM Übermittlung gemacht."
     },
     "filter_animal_keeper": {
       "title": "Tierhalter:innen filtern"

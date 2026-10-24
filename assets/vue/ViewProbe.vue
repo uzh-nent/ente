@@ -106,8 +106,11 @@
                         @sent-email="reportEmails.push($event)"/>
         </div>
 
-        <div class="mt-5" v-if="missingObservations.length === 0">
-          <toggle-closed-button :probe="probe" :has-reports="reports.length > 0"/>
+        <div class="mt-5" v-if="observations.length > 0">
+          <close-probe-button
+              :probe="probe"
+              :missing-observations="missingObservations.length > 0" :missing-report="reports.length === 0"
+              :missing-elm-report="missingElmReport"/>
         </div>
       </div>
     </div>
@@ -143,12 +146,12 @@ import ActionableCard from "./components/Library/View/ActionableCard.vue";
 import {checkHasMedicalValidation} from "./domain/authorization";
 import {preloadApi, router} from "./domain/api";
 import RemoveProbeButton from "./components/Action/RemoveProbeButton.vue";
-import ToggleClosedButton from "./components/Action/ToggleClosedButton.vue";
+import CloseProbeButton from "./components/Action/CloseProbeButton.vue";
 
 export default {
   emits: ['added'],
   components: {
-    ToggleClosedButton,
+    CloseProbeButton,
     RemoveProbeButton,
     ActionableCard,
     AnimalView,
@@ -216,6 +219,24 @@ export default {
           new Date(this.probe.createdAt) > oneHourAgo &&
           this.observations.length === 0 &&
           this.reports.length === 0
+    },
+    missingElmReport: function () {
+      if (this.elmReports.length > 0) {
+        return false;
+      }
+
+      const toBeReportedPathogens = ['SALMONELLA', 'SHIGELLA', 'LISTERIA_MONOCYTOGENES', 'VIBRIO_CHOLERAE']
+      const hasIdentifiedObservation = this.observations.filter(o => o.analysisType === 'IDENTIFICATION' && o.organism && toBeReportedPathogens.includes(o.pathogen))
+      if (hasIdentifiedObservation) {
+        return true;
+      }
+
+      const hasStec = this.observations.filter(o => o.analysisType === 'EC_STEC' && o.interpretation === 'POS')
+      if (hasStec) {
+        return true;
+      }
+
+      return false;
     }
   },
   methods: {
