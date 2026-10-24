@@ -103,6 +103,6 @@ major:
 - derive available observations from used method (instead out of analysisTypes)
 - search by result (e.g., salmonella positive to enteriditis)
 - improve statistics: add visuals to all-probes view
-- improve stammdaten: add attribution, include standard text into stammdaten (hence frontend edit etc), allow to remove stammdaten (possibly by relinking probes to other)
+- improve stammdaten: add attribution, allow to remove stammdaten (possibly by relinking probes to other), remove practitioner entity, copy stammdaten to probe upon closing/opening? 
 - improve reference data: ELM api integration (sync value sets, add patient reporting type such as anonymous (for new pathogens) or initials (campylobacter) to leading codes), add current location of patient
 - improve invoices: invoice runs for more safety during invoicing (e.g., no probe is forgotten to invoice), allow to download / store voucher per probe. but human invoicing will disappear in the future.

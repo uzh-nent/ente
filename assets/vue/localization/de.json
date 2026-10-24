@@ -14,6 +14,7 @@
     "search": "Suchen",
     "reference_is_different": "Die Stammdaten sind anders wie hier erfasst.",
     "other_open_probes_reference_entity": "Folgende offene Proben referenzieren die gleichen Stammdaten:",
+    "open_probes_reference_entity_automatic_update": "Folgende offene Proben referenzieren diese Stammdaten, und werden automatisch aktualisiert:",
     "use_reference": "Aus Stammdaten übernehmen",
     "store_reference": "Stammdaten aktualisieren",
     "store_reference_and_update_open_probes": "Stammdaten und offene Proben aktualisieren",
@@ -74,6 +75,7 @@
     },
     "edit_organization": {
       "edited": "Organisation gespeichert.",
+      "edited_referenced_open_probes": "Verlinkte offene Proben aktualisiert",
       "title": "Organisation bearbeiten"
     },
     "add_practitioner": {
@@ -82,6 +84,7 @@
     },
     "edit_practitioner": {
       "edited": "Mediziner:in gespeichert.",
+      "edited_referenced_open_probes": "Verlinkte offene Proben aktualisiert",
       "title": "Mediziner:in bearbeiten"
     },
     "add_patient": {
@@ -90,6 +93,7 @@
     },
     "edit_patient": {
       "edited": "Patient:in gespeichert.",
+      "edited_referenced_open_probes": "Verlinkte offene Proben aktualisiert",
       "title": "Patient:in bearbeiten"
     },
     "edit_reference": {
@@ -102,6 +106,7 @@
     },
     "edit_animal_keeper": {
       "edited": "Tierhalter:in gespeichert.",
+      "edited_referenced_open_probes": "Verlinkte offene Proben aktualisiert",
       "title": "Tierhalter:in bearbeiten"
     },
     "add_observations": {
