@@ -227,12 +227,12 @@ export default {
       }
 
       const toBeReportedPathogens = ['SALMONELLA', 'SHIGELLA', 'LISTERIA_MONOCYTOGENES', 'VIBRIO_CHOLERAE']
-      const hasIdentifiedObservation = this.observations.filter(o => o.analysisType === 'IDENTIFICATION' && o.organism && toBeReportedPathogens.includes(o.pathogen))
+      const hasIdentifiedObservation = this.observations.find(o => o.analysisType === 'IDENTIFICATION' && o.organism && toBeReportedPathogens.includes(o.pathogen))
       if (hasIdentifiedObservation) {
         return true;
       }
 
-      const hasStec = this.observations.filter(o => o.analysisType === 'EC_STEC' && o.interpretation === 'POS')
+      const hasStec = this.observations.find(o => o.analysisType === 'EC_STEC' && o.interpretation === 'POS')
       if (hasStec) {
         return true;
       }
