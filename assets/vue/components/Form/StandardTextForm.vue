@@ -8,8 +8,8 @@
       </div>
 
       <div class="mb-2">
-        <multiline-radio id="standardText" :choices="filteredStandardTextChoices" :field="standardTextField"
-               :value-string="value => value['@id']" :multiline-labels="true" v-model="standardText" />
+        <multiline-checkbox id="standardText" :choices="filteredStandardTextChoices" :field="standardTextField"
+               :value-string="value => value['@id']" :multiline-labels="true" v-model="selectedStandardTexts" />
       </div>
 
     </form-field>
@@ -21,19 +21,19 @@ import {createField, requiredRule} from './utils/form'
 import FormField from '../Library/FormLayout/FormField.vue'
 import Radio from "../Library/FormInput/Radio.vue";
 import TextInput from "../Library/FormInput/TextInput.vue";
-import MultilineRadio from "../Library/FormInput/MultilineRadio.vue";
+import MultilineCheckbox from "../Library/FormInput/MultilineCheckbox.vue";
 
 export default {
   emits: ['update'],
   components: {
-    MultilineRadio,
+    MultilineCheckbox,
     TextInput,
     Radio,
     FormField
   },
   data() {
     return {
-      standardText: null,
+      selectedStandardTexts: [],
       standardTextField: createField(requiredRule),
 
       searchText: "",
@@ -59,10 +59,10 @@ export default {
     },
   },
   watch: {
-    standardText: {
-      handler: function (standardText) {
-        if (standardText) {
-          this.$emit('update', standardText.text)
+    selectedStandardTexts: {
+      handler: function (standardTexts) {
+        if (standardTexts) {
+          this.$emit('update', standardTexts.map(s => s.text).join("\n\n"))
         } else {
           this.$emit('update', null)
         }

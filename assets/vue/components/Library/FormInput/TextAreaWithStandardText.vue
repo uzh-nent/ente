@@ -7,7 +7,7 @@
         @input="$emit('update:modelValue', $event.target.value)"
         @blur="$emit('blur')"
     />
-    <div class="position-absolute bottom-0 end-0 mb-2 me-2" v-if="standardTexts.length > 0" >
+    <div class="position-absolute bottom-0 end-0 mb-2 me-2" v-if="standardTexts.length > 0">
       <add-standard-text-button :standard-texts="standardTexts" @add="addText($event)"/>
     </div>
   </div>
@@ -57,10 +57,13 @@ export default {
         return
       }
 
-      if (!this.modelValue.endsWith("\n")) {
+      // add an empty line in between the text lines
+      if (this.modelValue.endsWith("\n\n")) {
+        this.$emit('update:modelValue', this.modelValue + text)
+      } else if (this.modelValue.endsWith("\n")) {
         this.$emit('update:modelValue', this.modelValue + "\n" + text)
       } else {
-        this.$emit('update:modelValue', this.modelValue + text)
+        this.$emit('update:modelValue', this.modelValue + "\n\n" + text)
       }
     }
   }
