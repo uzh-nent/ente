@@ -108,14 +108,7 @@ export default {
       return this.reportMeta && this.results.length > 0
     },
     reportMetaTemplate: function () {
-      const template = {date: moment().format('YYYY-MM-DD'), claimCertification: true}
-      if (this.probe.analysisTypes.length > this.observations.length) {
-        return {...template, predefinedTitle: 'INTERMEDIATE'}
-      } else if (this.reports.length === 0) {
-        return {...template, predefinedTitle: 'FINAL'}
-      } else {
-        return {...template, predefinedTitle: 'ADDENDUM'}
-      }
+      return {date: moment().format('YYYY-MM-DD'), claimCertification: true, predefinedTitle: 'FINAL'}
     },
     resultTemplates: function () {
       return createResults(this.probe, this.observations, this.organisms, this.$t)
