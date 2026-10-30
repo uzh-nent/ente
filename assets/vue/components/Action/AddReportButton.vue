@@ -111,7 +111,16 @@ export default {
       return {date: moment().format('YYYY-MM-DD'), claimCertification: true, predefinedTitle: 'FINAL'}
     },
     resultTemplates: function () {
-      return createResults(this.probe, this.observations, this.organisms, this.$t)
+      const results = createResults(this.probe, this.observations, this.organisms, this.$t)
+      if (this.reports.length === 0) {
+        return results
+      }
+
+      const previousReport = this.reports[this.reports.length - 1]
+      return results.map(result => {
+        const previousResult = previousReport.results.find(r => r.analysis === result.analysis && r.result === result.result)
+        return {...result, comment: previousResult?.comment}
+      })
     },
     predefinedAddresses: function () {
       const addresses = [];
