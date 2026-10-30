@@ -1,5 +1,6 @@
 enum:
   title: Analysetyp
+  empty: "Anderes/Unbekannt"
 
 HUMAN: Mensch
 ANIMAL: Tier

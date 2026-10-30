@@ -110,8 +110,8 @@ readonly class ProbeProvider implements ProviderInterface
 
 
         foreach ($probes as $probe) {
-            $specimenSource = $probe->getSpecimenSource()?->trans($this->translator) ?? $probe->getSpecimenSourceText();
-            $specimenSourceType = '';
+            $specimenSource = $probe->getSpecimenSource()?->trans($this->translator) ?? $this->translator->trans("enum.empty", [], "enum_specimen_source");
+            $specimenSourceType = $probe->getSpecimenSourceText();
             if ($probe->getSpecimenSource() === SpecimenSource::FEED) {
                 $specimenSourceType = $probe->getSpecimenFoodType()?->trans($this->translator) ?? $probe->getSpecimenTypeText();
             } elseif ($probe->getSpecimenSource() === SpecimenSource::ANIMAL) {
