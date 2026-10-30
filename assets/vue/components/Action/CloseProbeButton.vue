@@ -1,12 +1,9 @@
 <template>
   <div>
-    <button-confirm-modal v-if="!probe.closedAt && (missingObservations || missingReport || missingElmReport)"
+    <button-confirm-modal v-if="!probe.closedAt && (missingReport || missingElmReport)"
                           :title="$t('_action.toggle_closed.close')" color="secondary"
                           :confirm-label="$t('_action.toggle_closed.force_close')" :confirm="toggleClosed">
       <div class="d-flex gap-2 flex-column">
-        <p v-if="missingObservations" class="alert alert-warning mb-0">
-          {{ $t('_action.toggle_closed.missing_observations') }}
-        </p>
         <p v-if="missingReport" class="alert alert-warning mb-0">
           {{ $t('_action.toggle_closed.missing_report') }}
         </p>
@@ -44,10 +41,6 @@ export default {
       type: Object,
       required: true
     },
-    missingObservations: {
-      type: Boolean,
-      required: false
-    },
     missingReport: {
       type: Boolean,
       required: false
@@ -59,7 +52,7 @@ export default {
   },
   computed: {
     recommendAction: function () {
-      return !this.probe.closedAt && !this.missingObservations && !this.missingReport && !this.missingElmReport
+      return !this.probe.closedAt && !this.missingReport && !this.missingElmReport
     }
   },
   data() {

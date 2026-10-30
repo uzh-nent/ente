@@ -110,10 +110,8 @@
         </div>
 
         <div class="mt-5" v-if="observations.length > 0">
-          <close-probe-button
-              :probe="probe"
-              :missing-observations="missingObservations.length > 0" :missing-report="reports.length === 0"
-              :missing-elm-report="missingElmReport"/>
+          <close-probe-button :probe="probe"
+                              :missing-report="reports.length === 0" :missing-elm-report="missingElmReport"/>
         </div>
       </div>
     </div>
