@@ -66,7 +66,12 @@
         "platform": {
             "php": "8.4"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "audit": {
+            "ignore-abandoned": {
+                "doctrine/common": "Package required by ApiPlatform."
+            }
+        }
     },
     "autoload": {
         "psr-4": {
