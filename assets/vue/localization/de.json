@@ -202,6 +202,7 @@
       "open": "Öffnen",
       "opened": "Probe wieder geöffnet.",
       "missing_report": "Es wurde noch kein Bericht erstellt.",
+      "missing_report_email": "Der erstellte Bericht wurde noch nicht per E-Mail versandt.",
       "missing_elm_report": "Trotz positivem Befund wurde noch keine ELM Übermittlung gemacht."
     },
     "filter_animal_keeper": {
