@@ -9,7 +9,7 @@
       {{ $t("_action.export_invoice_receipts.set_identifiers") }}
     </button>
     <p class="alert alert-success" v-if="setIdentifiersSuccessful">
-      {{ $tc("_action.export_invoice_receipts.set_identifiers_successful", {count: setIdentifiersResponse.successful}) }}
+      {{ $t("_action.export_invoice_receipts.set_identifiers_successful", {count: setIdentifiersResponse.successful}) }}
     </p>
     <p class="alert alert-warning mt-2" v-if="setIdentifiersResponse && !setIdentifiersSuccessful">
       {{ $t("_action.export_invoice_receipts.set_identifiers_errored") }}
@@ -37,7 +37,6 @@ export default {
     ButtonConfirmModal,
     LoopingRhombusSpinner,
   },
-
   data() {
     return {
       identifiers: null,
